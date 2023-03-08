@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/routes/app_pages.dart';
 
 import '../controllers/landing_controller.dart';
 
@@ -116,7 +117,7 @@ class LandingView extends GetView<LandingController> {
                         style: Theme.of(context).textTheme.button!.copyWith(
                             fontWeight: FontWeight.bold, color: Colors.white),
                       ),
-                      onPressed: () => Get.to(const SecondLanding()),
+                      onPressed: () => Get.to(() => const SecondLanding()),
                     ),
                   )
                 ],
@@ -241,7 +242,7 @@ class SecondLanding extends StatelessWidget {
                           style: Theme.of(context).textTheme.button!.copyWith(
                               fontWeight: FontWeight.bold, color: Colors.white),
                         ),
-                        onPressed: () => Get.to(const ThirdLanding()),
+                        onPressed: () => Get.to(() => const ThirdLanding()),
                       ),
                     )
                   ],
@@ -351,7 +352,7 @@ class ThirdLanding extends StatelessWidget {
                       style: Theme.of(context).textTheme.button!.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
-                    onPressed: () => Get.toNamed("/fincheck"),
+                    onPressed: () => Get.toNamed(Routes.MEMULAI),
                   ),
                 ),
               ),

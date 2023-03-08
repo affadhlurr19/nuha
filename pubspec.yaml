@@ -13,6 +13,10 @@ dependencies:
   font_awesome_flutter: 10.4.0
   flutter: 
     sdk: flutter
+  firebase_auth: ^4.2.10
+  cloud_firestore: ^4.4.4
+  firebase_storage: ^11.0.15
+  firebase_core: ^2.7.1
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
