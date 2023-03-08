@@ -8,6 +8,9 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const LANDING = _Paths.LANDING;
   static const FINCHECK = _Paths.FINCHECK;
+  static const MEMULAI = _Paths.MEMULAI;
+  static const REGISTER = _Paths.REGISTER;
+  static const LOGIN = _Paths.LOGIN;
 }
 
 abstract class _Paths {
@@ -15,4 +18,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LANDING = '/landing';
   static const FINCHECK = '/fincheck';
+  static const MEMULAI = '/memulai';
+  static const REGISTER = '/register';
+  static const LOGIN = '/login';
 }
