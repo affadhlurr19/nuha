@@ -14,11 +14,20 @@ class HomeView extends GetView<HomeController> {
         centerTitle: true,
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => controller.logout(),
-          child: const Text("LOGOUT"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () => Get.toNamed('/fincheck'),
+              child: const Text("FINCHECK"),
+            ),
+            ElevatedButton(
+              onPressed: () => controller.logout(),
+              child: const Text("LOGOUT"),
+            ),
+          ],
         ),
-      )
+      ),
     );
   }
 }

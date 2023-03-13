@@ -12,29 +12,28 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-   
+
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: auth.authStateChanges(),
-      builder: (context, snap) {
-        if(snap.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        }
-        return GetMaterialApp(
-          theme: ThemeData(textTheme: myTextTheme),
-          title: "Nuha Financial",
-          initialRoute: snap.data != null ? Routes.HOME : Routes.LANDING,
-          getPages: AppPages.routes,
-        );
-      }
-    );
+        stream: auth.authStateChanges(),
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
+          return GetMaterialApp(
+            theme: ThemeData(textTheme: myTextTheme),
+            title: "Nuha Financial",
+            initialRoute: snap.data != null ? Routes.NAVBAR : Routes.LANDING,
+            getPages: AppPages.routes,
+          );
+        });
   }
 }
