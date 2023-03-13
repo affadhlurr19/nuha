@@ -11,6 +11,8 @@ abstract class Routes {
   static const MEMULAI = _Paths.MEMULAI;
   static const REGISTER = _Paths.REGISTER;
   static const LOGIN = _Paths.LOGIN;
+  static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -21,4 +23,6 @@ abstract class _Paths {
   static const MEMULAI = '/memulai';
   static const REGISTER = '/register';
   static const LOGIN = '/login';
+  static const RESET_PASSWORD = '/reset-password';
+  static const PROFILE = '/profile';
 }

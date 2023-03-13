@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:nuha/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -12,13 +13,17 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         title: const Text('HomeView'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => Get.toNamed(Routes.PROFILE),
+            icon: const Icon(Icons.person),
+          ),
+        ],
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => controller.logout(),
-          child: const Text("LOGOUT"),
-        ),
-      )
+      floatingActionButton: FloatingActionButton(
+        onPressed: () { },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

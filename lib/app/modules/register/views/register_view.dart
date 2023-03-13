@@ -16,6 +16,7 @@ class RegisterView extends GetView<RegisterController> {
             TextField(
               autocorrect: false,
               controller: controller.emailC,
+              keyboardType: TextInputType.emailAddress,
               style: Theme.of(context).textTheme.bodyText2,
               decoration: InputDecoration(
                 labelText: "Email",
@@ -25,26 +26,65 @@ class RegisterView extends GetView<RegisterController> {
             ),
             const SizedBox(height: 20),
             TextField(
-              obscureText: true,
               autocorrect: false,
+              controller: controller.nameC,
               style: Theme.of(context).textTheme.bodyText2,
-              controller: controller.passC,
               decoration: InputDecoration(
-                labelText: "Password",
+                labelText: "Nama",
                 labelStyle: Theme.of(context).textTheme.bodyText2,
                 border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 20),
             TextField(
-              obscureText: true,
               autocorrect: false,
+              keyboardType: TextInputType.number,
+              controller: controller.phoneC,
               style: Theme.of(context).textTheme.bodyText2,
-              controller: controller.konfirpassC,
               decoration: InputDecoration(
-                labelText: "Konfirmasi Password",
+                labelText: "Nomor Telepon",
                 labelStyle: Theme.of(context).textTheme.bodyText2,
                 border: const OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Obx(
+              () => TextField(
+                obscureText: controller.isHiddenPass.value,
+                autocorrect: false,
+                style: Theme.of(context).textTheme.bodyText2,
+                controller: controller.passC,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  labelStyle: Theme.of(context).textTheme.bodyText2,
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    onPressed: () => controller.isHiddenPass.toggle(),
+                    icon: Icon(controller.isHiddenPass.isTrue
+                        ? Icons.remove_red_eye
+                        : Icons.remove_red_eye_outlined),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Obx(
+              () => TextField(
+                obscureText: controller.isHiddenConfirmPass.value,
+                autocorrect: false,
+                style: Theme.of(context).textTheme.bodyText2,
+                controller: controller.konfirpassC,
+                decoration: InputDecoration(
+                  labelText: "Konfirmasi Password",
+                  labelStyle: Theme.of(context).textTheme.bodyText2,
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    onPressed: () => controller.isHiddenConfirmPass.toggle(),
+                    icon: Icon(controller.isHiddenConfirmPass.isTrue
+                        ? Icons.remove_red_eye
+                        : Icons.remove_red_eye_outlined),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 10),

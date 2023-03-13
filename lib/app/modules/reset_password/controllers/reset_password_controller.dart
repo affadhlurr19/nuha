@@ -14,6 +14,7 @@ class ResetPasswordController extends GetxController {
       forwardAnimationCurve: Curves.easeOutBack,
       reverseAnimationCurve: Curves.easeInOutBack,
       backgroundColor: buttonColor1,
+      colorText: backgroundColor1,
       duration: const Duration(seconds: 3),
       snackPosition: SnackPosition.BOTTOM,
       "Berhasil",

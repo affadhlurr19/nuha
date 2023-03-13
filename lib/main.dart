@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/firebase_options.dart';
 
@@ -12,12 +13,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp( MyApp());
+  await GetStorage.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-   
+
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
@@ -31,10 +33,16 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           theme: ThemeData(textTheme: myTextTheme),
           title: "Nuha Financial",
-          initialRoute: snap.data != null ? Routes.HOME : Routes.LANDING,
+          initialRoute: snap.data != null && snap.data!.emailVerified == true ? Routes.HOME : Routes.LANDING,
           getPages: AppPages.routes,
         );
       }
     );
+    // return GetMaterialApp(
+    //   theme: ThemeData(textTheme: myTextTheme),
+    //   title: "Nuha Financial",
+    //   initialRoute: Routes.MEMULAI,
+    //   getPages: AppPages.routes,
+    // );
   }
 }

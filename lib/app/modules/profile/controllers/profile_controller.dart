@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 
 class ProfileController extends GetxController {
@@ -14,10 +15,25 @@ class ProfileController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isHidden = true.obs;
 
+  void successMsg(String msg) {
+    Get.snackbar(
+      forwardAnimationCurve: Curves.easeOutBack,
+      reverseAnimationCurve: Curves.easeInOutBack,
+      backgroundColor: buttonColor1,
+      colorText: backgroundColor1,
+      duration: const Duration(seconds: 3),
+      snackPosition: SnackPosition.BOTTOM,
+      "Berhasil",
+      msg,
+    );
+  }
+
   void errMsg(String msg) {
     Get.snackbar(
       forwardAnimationCurve: Curves.easeOutBack,
       reverseAnimationCurve: Curves.easeInOutBack,
+      backgroundColor: errColor,
+      colorText: backgroundColor1,
       duration: const Duration(seconds: 3),
       snackPosition: SnackPosition.BOTTOM,
       "Terjadi Kesalahan",
@@ -46,7 +62,7 @@ class ProfileController extends GetxController {
         isLoading.value = true;
         String uid = auth.currentUser!.uid;
         await firestore.collection("users").doc(uid).update({
-          "nama": nameC.text,
+          "name": nameC.text,
           "phone": phoneC.text,
         });
 

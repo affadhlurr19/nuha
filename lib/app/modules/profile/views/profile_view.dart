@@ -29,7 +29,7 @@ class ProfileView extends GetView<ProfileController> {
               } else {
                 controller.emailC.text = snapshot.data!["email"];
                 controller.phoneC.text = snapshot.data!["phone"];
-                controller.nameC.text = snapshot.data!["nama"];
+                controller.nameC.text = snapshot.data!["name"];
                 return ListView(
                   padding: const EdgeInsets.all(20),
                   children: [

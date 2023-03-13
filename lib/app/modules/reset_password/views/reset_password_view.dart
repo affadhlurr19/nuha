@@ -19,6 +19,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
           TextField(
             autocorrect: false,
             controller: controller.emailC,
+            keyboardType: TextInputType.emailAddress,
             style: Theme.of(context).textTheme.bodyText2,
             decoration: InputDecoration(
               labelText: "Email",

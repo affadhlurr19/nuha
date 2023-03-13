@@ -1,4 +1,8 @@
 import 'package:get/get.dart';
+import 'package:nuha/app/modules/profile/bindings/profile_binding.dart';
+import 'package:nuha/app/modules/profile/views/profile_view.dart';
+import 'package:nuha/app/modules/reset_password/bindings/reset_password_binding.dart';
+import 'package:nuha/app/modules/reset_password/views/reset_password_view.dart';
 
 import '../modules/fincheck/bindings/fincheck_binding.dart';
 import '../modules/fincheck/views/fincheck_view.dart';
@@ -50,8 +54,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () => const LoginView(),
+      page: () => LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PASSWORD,
+      page: () => const ResetPasswordView(),
+      binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

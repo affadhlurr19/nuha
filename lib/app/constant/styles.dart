@@ -11,6 +11,8 @@ const Color grey100 = Color(0XFFE1E1E1);
 const Color grey400 = Color(0XFF919191);
 const Color grey500 = Color(0XFF717171);
 const Color grey900 = Color(0XFF1F1F1F);
+const Color errColor = Colors.red;
+const Color succColor = Colors.green;
 
 final myTextTheme = TextTheme(
     headline1: GoogleFonts.jost(
