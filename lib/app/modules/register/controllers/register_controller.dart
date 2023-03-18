@@ -12,14 +12,13 @@ class RegisterController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
-  TextEditingController nameC = TextEditingController();
-  TextEditingController phoneC = TextEditingController();
+  TextEditingController nameC = TextEditingController();  
   TextEditingController konfirpassC = TextEditingController();
   RxBool isHiddenPass = true.obs;
   RxBool isHiddenConfirmPass = true.obs;
   RxBool isLoading = false.obs;
 
-   void successMsg(String msg) {
+  void successMsg(String msg) {
     Get.snackbar(
       forwardAnimationCurve: Curves.easeOutBack,
       reverseAnimationCurve: Curves.easeInOutBack,
@@ -48,8 +47,7 @@ class RegisterController extends GetxController {
   void register() async {
     if (emailC.text.isNotEmpty &&
         passC.text.isNotEmpty &&
-        nameC.text.isNotEmpty &&
-        phoneC.text.isNotEmpty) {
+        nameC.text.isNotEmpty) {
       if (passC.text == konfirpassC.text) {
         try {
           isLoading.value = true;
@@ -69,8 +67,7 @@ class RegisterController extends GetxController {
               .collection("users")
               .doc(userCredential.user!.uid)
               .set({
-            "name": nameC.text,
-            "phone": phoneC.text,
+            "name": nameC.text,            
             "email": emailC.text,
             "uid": userCredential.user!.uid,
             "created_at": DateTime.now().toIso8601String(),
@@ -91,7 +88,7 @@ class RegisterController extends GetxController {
         errMsg("Konfirmasi password tidak cocok!");
       }
     } else {
-      errMsg("Email dan Password tidak boleh kosong!");
+      errMsg("Semua data tidak boleh kosong!");
     }
   }
 }

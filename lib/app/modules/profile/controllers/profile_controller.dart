@@ -9,8 +9,7 @@ class ProfileController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController emailC = TextEditingController();
-  TextEditingController nameC = TextEditingController();
-  TextEditingController phoneC = TextEditingController();
+  TextEditingController nameC = TextEditingController();  
   TextEditingController passC = TextEditingController();
   RxBool isLoading = false.obs;
   RxBool isHidden = true.obs;
@@ -55,22 +54,19 @@ class ProfileController extends GetxController {
   }
 
   void updateProfile() async {
-    if (emailC.text.isNotEmpty &&
-        nameC.text.isNotEmpty &&
-        phoneC.text.isNotEmpty) {
+    if (emailC.text.isNotEmpty && nameC.text.isNotEmpty) {
       try {
         isLoading.value = true;
         String uid = auth.currentUser!.uid;
         await firestore.collection("users").doc(uid).update({
           "name": nameC.text,
-          "phone": phoneC.text,
         });
 
         if (passC.text.isNotEmpty) {
           await auth.currentUser!.updatePassword(passC.text);
           await auth.signOut();
           isLoading.value = false;
-          
+
           Get.offAllNamed(Routes.LOGIN);
         } else {
           isLoading.value = false;
