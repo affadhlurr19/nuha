@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
+import 'package:sizer/sizer.dart';
 
 import '../controllers/landing_controller.dart';
 
@@ -15,35 +16,34 @@ class LandingView extends GetView<LandingController> {
       body: SafeArea(
         child: ListView(
           children: [
-            SizedBox(
-              width: Get.width,
-              height: Get.height * 0.1,
+            Container(
+              margin: EdgeInsets.only(top: 5.12.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                         color: buttonColor1),
                   ),
-                  const SizedBox(
-                    width: 5,
+                  SizedBox(
+                    width: 1.38.w,
                   ),
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                         color: Color(0XFFF1F1F1)),
                   ),
-                  const SizedBox(
-                    width: 5,
+                  SizedBox(
+                    width: 1.38.w,
                   ),
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                         color: Color(0XFFF1F1F1)),
@@ -51,27 +51,42 @@ class LandingView extends GetView<LandingController> {
                 ],
               ),
             ),
-            SizedBox(
-              width: Get.width,
-              height: Get.height * 0.7,
+            Container(
+              padding: EdgeInsets.only(top: 4.25.h),
+              width: 100.w,
+              height: 77.125.h,
               child: Column(
                 children: [
-                  const Expanded(
-                      child: Image(
-                          image: AssetImage('assets/images/landing_page.png'))),
+                  Image(
+                    image: const AssetImage('assets/images/landing_page.png'),
+                    width: 100.w,
+                    height: 32.75.h,
+                    fit: BoxFit.cover,
+                  ),
                   Container(
-                      margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                      margin: EdgeInsets.fromLTRB(11.1.w, 2.375.h, 11.1.w, 0.h),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Halo, Selamat datang di Nuha. Solusi Keuanganmu",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(color: titleColor),
+                          RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                text: "Halo, Selamat datang di Nuha.",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(color: titleColor),
+                              ),
+                              TextSpan(
+                                text: " Solusi Keuanganmu",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(color: buttonColor1),
+                              ),
+                            ]),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 2.5.h),
                           Text(
                             "Nuha merupakan solusi keuangan yang mudah diakses kapan saja dan dimana saja. Dilengkapi dengan fitur yang pasti ngebantu banget.",
                             style: Theme.of(context)
@@ -85,14 +100,13 @@ class LandingView extends GetView<LandingController> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-              width: Get.width,
-              height: Get.height * 0.2,
+              // margin: EdgeInsets.symmetric(horizontal: 11.w),
+              margin: EdgeInsets.fromLTRB(11.1.w, 0, 11.1.w, 6.5.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    height: 44,
+                    height: 5.5.h,
                     child: TextButton(
                       child: Text(
                         "Lewati",
@@ -101,12 +115,12 @@ class LandingView extends GetView<LandingController> {
                             .button!
                             .copyWith(color: grey500),
                       ),
-                      onPressed: () => Get.toNamed("/home"),
+                      onPressed: () => Get.toNamed("/memulai"),
                     ),
                   ),
                   SizedBox(
-                    width: 143,
-                    height: 44,
+                    width: 39.7.w,
+                    height: 5.5.h,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: buttonColor1,
@@ -130,9 +144,8 @@ class LandingView extends GetView<LandingController> {
   }
 }
 
-class SecondLanding extends StatelessWidget {
-  const SecondLanding({super.key});
-
+class SecondLanding extends GetView<LandingController> {
+  const SecondLanding({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,65 +153,79 @@ class SecondLanding extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            SizedBox(
-              width: Get.width,
-              height: Get.height * 0.1,
+            Container(
+              margin: EdgeInsets.only(top: 5.12.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
-                        color: Color(0XFFF1F1F1)),
+                        color: grey50),
                   ),
-                  const SizedBox(
-                    width: 5,
+                  SizedBox(
+                    width: 1.38.w,
                   ),
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                         color: buttonColor1),
                   ),
-                  const SizedBox(
-                    width: 5,
+                  SizedBox(
+                    width: 1.38.w,
                   ),
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
-                        color: Color(0XFFF1F1F1)),
+                        color: grey50),
                   )
                 ],
               ),
             ),
-            SizedBox(
-              width: Get.width,
-              height: Get.height * 0.7,
+            Container(
+              padding: EdgeInsets.only(top: 4.25.h),
+              width: 100.w,
+              height: 77.125.h,
               child: Column(
                 children: [
-                  const Expanded(
-                      child: Image(
-                          image: AssetImage('assets/images/landing_page.png'))),
+                  Image(
+                    image: const AssetImage('assets/images/landing_page.png'),
+                    width: 100.w,
+                    height: 32.75.h,
+                    fit: BoxFit.cover,
+                  ),
                   Container(
-                      margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                      margin: EdgeInsets.fromLTRB(11.1.w, 2.375.h, 11.1.w, 0.h),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Kami Hadir Untuk Membantu Kebutuhan Finansialmu",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(color: titleColor),
+                          RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                text: "Kami Hadir Untuk Membantu Kebutuhan ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(color: titleColor),
+                              ),
+                              TextSpan(
+                                text: " Finansialmu",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(color: buttonColor1),
+                              ),
+                            ]),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 2.5.h),
                           Text(
-                            "Ayo tingkatkan kemampuan finansial dan wujudkan kesehatan finansial dimulai dari diri sendiri menggunakan aplikasi Nuha",
+                            "Ayo tingkatkan kemampuan finansial dan wujudkan kesehatan finansial dimulai dari diri sendiri menggunakan aplikasi Nuha.",
                             style: Theme.of(context)
                                 .textTheme
                                 .headline4!
@@ -210,43 +237,43 @@ class SecondLanding extends StatelessWidget {
               ),
             ),
             Container(
-                margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                width: Get.width,
-                height: Get.height * 0.2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: 44,
-                      child: TextButton(
-                        child: Text(
-                          "Lewati",
-                          style: Theme.of(context)
-                              .textTheme
-                              .button!
-                              .copyWith(color: grey500),
-                        ),
-                        onPressed: () => Get.toNamed("/home"),
+              // margin: EdgeInsets.symmetric(horizontal: 11.1.w),
+              margin: EdgeInsets.fromLTRB(11.1.w, 0.h, 11.1.w, 6.5.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 5.5.h,
+                    child: TextButton(
+                      child: Text(
+                        "Lewati",
+                        style: Theme.of(context)
+                            .textTheme
+                            .button!
+                            .copyWith(color: grey500),
                       ),
+                      onPressed: () => Get.toNamed("/memulai"),
                     ),
-                    SizedBox(
-                      width: 143,
-                      height: 44,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: buttonColor1,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                        child: Text(
-                          "Selanjutnya",
-                          style: Theme.of(context).textTheme.button!.copyWith(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                        onPressed: () => Get.to(() => const ThirdLanding()),
+                  ),
+                  SizedBox(
+                    width: 39.7.w,
+                    height: 5.5.h,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: buttonColor1,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      child: Text(
+                        "Selanjutnya",
+                        style: Theme.of(context).textTheme.button!.copyWith(
+                            fontWeight: FontWeight.bold, color: Colors.white),
                       ),
-                    )
-                  ],
-                )),
+                      onPressed: () => Get.to(() => const ThirdLanding()),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -254,46 +281,43 @@ class SecondLanding extends StatelessWidget {
   }
 }
 
-class ThirdLanding extends StatelessWidget {
-  const ThirdLanding({super.key});
-
+class ThirdLanding extends GetView<LandingController> {
+  const ThirdLanding({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //APPBAR
       backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
           children: [
-            SizedBox(
-              width: Get.width,
-              height: Get.height * 0.1,
+            Container(
+              margin: EdgeInsets.only(top: 5.12.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
-                        color: Color(0XFFF1F1F1)),
+                        color: grey50),
                   ),
-                  const SizedBox(
-                    width: 5,
+                  SizedBox(
+                    width: 1.38.w,
                   ),
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
-                        color: Color(0XFFF1F1F1)),
+                        color: grey50),
                   ),
-                  const SizedBox(
-                    width: 5,
+                  SizedBox(
+                    width: 1.38.w,
                   ),
                   Container(
-                    width: 16,
-                    height: 4,
+                    width: 4.44.w,
+                    height: 0.5.h,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                         color: buttonColor1),
@@ -301,29 +325,45 @@ class ThirdLanding extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              width: Get.width,
-              height: Get.height * 0.7,
+            Container(
+              padding: EdgeInsets.only(top: 4.25.h),
+              width: 100.w,
+              height: 77.125.h,
               child: Column(
                 children: [
-                  const Expanded(
-                      child: Image(
-                          image: AssetImage('assets/images/landing_page.png'))),
+                  Image(
+                    image: const AssetImage('assets/images/landing_page.png'),
+                    width: 100.w,
+                    height: 32.75.h,
+                    fit: BoxFit.cover,
+                  ),
                   Container(
-                      margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                      margin: EdgeInsets.fromLTRB(11.1.w, 2.375.h, 11.1.w, 0.h),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Kini, kamu tidak perlu repot untuk membayar ZIS",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(color: titleColor),
+                          RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                text:
+                                    "Kini, kamu tidak perlu repot untuk membayar ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(color: titleColor),
+                              ),
+                              TextSpan(
+                                text: " ZIS",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(color: buttonColor1),
+                              ),
+                            ]),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 2.5.h),
                           Text(
-                            "Aplikasi Nuha merupakan solusi keuangan untuk kamu yang ingin sekaligus menginginkan kemudahan dalam melakukan amalan",
+                            "Aplikasi Nuha merupakan solusi keuangan untuk kamu yang ingin sekaligus menginginkan kemudahan dalam melakukan amalan.",
                             style: Theme.of(context)
                                 .textTheme
                                 .headline4!
@@ -335,13 +375,11 @@ class ThirdLanding extends StatelessWidget {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-              width: Get.width,
-              height: Get.height * 0.2,
+              margin: EdgeInsets.fromLTRB(11.1.w, 0.h, 11.1.w, 6.5.h),
               child: Center(
                 child: SizedBox(
-                  width: 280,
-                  height: 44,
+                  width: 77.778.w,
+                  height: 5.5.h,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: buttonColor1,

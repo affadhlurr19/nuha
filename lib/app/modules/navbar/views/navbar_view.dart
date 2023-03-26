@@ -8,6 +8,7 @@ import 'package:iconify_flutter/icons/ph.dart';
 import 'package:iconify_flutter/icons/tabler.dart';
 import 'package:iconify_flutter/icons/iconoir.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/cashflow/views/cashflow_view.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_view.dart';
 import 'package:nuha/app/modules/home/views/home_view.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -26,7 +27,7 @@ class NavbarView extends StatelessWidget {
         controller: controller.pageController,
         children: [
           HomeView(),
-          FincheckView(),
+          CashflowView(),
           HomeView(),
           FincheckView(),
           HomeView()

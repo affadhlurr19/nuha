@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/cashflow/bindings/cashflow_binding.dart';
+import '../modules/cashflow/views/cashflow_view.dart';
 import '../modules/fincheck/bindings/fincheck_binding.dart';
 import '../modules/fincheck/views/fincheck_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -59,6 +61,11 @@ class AppPages {
       name: _Paths.NAVBAR,
       page: () => NavbarView(),
       binding: NavbarBinding(),
+    ),
+    GetPage(
+      name: _Paths.CASHFLOW,
+      page: () => const CashflowView(),
+      binding: CashflowBinding(),
     ),
   ];
 }

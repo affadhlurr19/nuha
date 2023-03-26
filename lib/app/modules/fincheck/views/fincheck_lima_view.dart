@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/controllers/fincheck_controller.dart';
-import 'package:nuha/app/modules/fincheck/views/fincheck_tiga_view.dart';
 import 'package:nuha/app/widgets/field_fincheck.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 
-class FincheckDuaView extends GetView<FincheckController> {
-  const FincheckDuaView({Key? key}) : super(key: key);
+class FincheckLimaView extends GetView<FincheckController> {
+  const FincheckLimaView({Key? key}) : super(key: key);
+
+  // @override
+  // final controller = Get.find<FincheckController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class FincheckDuaView extends GetView<FincheckController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Langkah 2",
+                  "Langkah 5",
                   style: Theme.of(context).textTheme.caption!.copyWith(
                         color: grey400,
                       ),
@@ -53,7 +55,7 @@ class FincheckDuaView extends GetView<FincheckController> {
                   height: 0.5.h,
                 ),
                 GradientText(
-                  "Berapa banyak uang yang berhasil kamu tabung setiap bulannya?",
+                  "Berapa total aset dan hutang yang kamu punya?",
                   style: Theme.of(context).textTheme.headline3!,
                   colors: const [
                     buttonColor1,
@@ -73,15 +75,14 @@ class FincheckDuaView extends GetView<FincheckController> {
                   height: 3.125.h,
                 ),
                 FieldFincheck(
-                  labelText: "Menabung dan Investasi",
-                  contr: controller.nabungInvestasi!,
-                  infoText:
-                      "Total dana yang disisihkan perbulan untuk menabung dan berinvestasi setiap bulannya.",
+                  labelText: "Total Aset",
+                  contr: controller.aset!,
+                  infoText: "Total aset yang kamu miliki.",
                 ),
                 FieldFincheck(
-                  labelText: "Total tabungan",
-                  contr: controller.totalTabungan!,
-                  infoText: "Total tabungan yang kamu miliki hingga saat ini.",
+                  labelText: "Total Hutang",
+                  contr: controller.hutang!,
+                  infoText: "Total hutang yang kamu miliki.",
                 ),
               ],
             ),
@@ -108,38 +109,38 @@ class FincheckDuaView extends GetView<FincheckController> {
                       height: 0.5.h,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
+                          color: grey50),
+                    ),
+                    SizedBox(
+                      width: 1.38889.w,
+                    ),
+                    Container(
+                      width: 4.4444.w,
+                      height: 0.5.h,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          color: grey50),
+                    ),
+                    SizedBox(
+                      width: 1.38889.w,
+                    ),
+                    Container(
+                      width: 4.4444.w,
+                      height: 0.5.h,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          color: grey50),
+                    ),
+                    SizedBox(
+                      width: 1.38889.w,
+                    ),
+                    Container(
+                      width: 4.4444.w,
+                      height: 0.5.h,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
                           color: buttonColor1),
-                    ),
-                    SizedBox(
-                      width: 1.38889.w,
-                    ),
-                    Container(
-                      width: 4.4444.w,
-                      height: 0.5.h,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          color: grey50),
-                    ),
-                    SizedBox(
-                      width: 1.38889.w,
-                    ),
-                    Container(
-                      width: 4.4444.w,
-                      height: 0.5.h,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          color: grey50),
-                    ),
-                    SizedBox(
-                      width: 1.38889.w,
-                    ),
-                    Container(
-                      width: 4.4444.w,
-                      height: 0.5.h,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          color: grey50),
-                    ),
+                    )
                   ],
                 ),
                 SizedBox(
@@ -178,13 +179,13 @@ class FincheckDuaView extends GetView<FincheckController> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20))),
                         child: Text(
-                          "Selanjutnya",
+                          "Lihat Hasil Tes",
                           style: Theme.of(context)
                               .textTheme
                               .bodyText2!
                               .copyWith(color: Colors.white),
                         ),
-                        onPressed: () => Get.to(FincheckTigaView()),
+                        onPressed: () => controller.result(),
                       ),
                     )
                   ],

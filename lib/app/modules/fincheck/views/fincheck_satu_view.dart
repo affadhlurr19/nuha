@@ -2,33 +2,44 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/fincheck/controllers/fincheck_controller.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_dua_view.dart';
 import 'package:nuha/app/widgets/field_fincheck.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:sizer/sizer.dart';
 
-class FincheckSatuView extends GetView {
-  FincheckSatuView({Key? key}) : super(key: key);
-  final appBarheight = AppBar().preferredSize.height;
+class FincheckSatuView extends GetView<FincheckController> {
+  const FincheckSatuView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.back(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(5.875.h),
+        child: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: titleColor,
+              size: 18.sp,
+            ),
+            onPressed: () => Get.back(),
+          ),
+          backgroundColor: backgroundColor1,
+          elevation: 0,
         ),
-        backgroundColor: backgroundColor1,
-        elevation: 0,
       ),
       body: SafeArea(
           child: ListView(
-        padding: const EdgeInsets.fromLTRB(28, 0, 28, 0),
+        padding: EdgeInsets.symmetric(
+          horizontal: 7.778.w,
+        ),
         children: [
-          SizedBox(
-            width: Get.width,
-            height: Get.height * 0.85 - appBarheight,
+          Container(
+            padding: EdgeInsets.only(top: 0.625.w),
+            width: 100.w,
+            height: 79.625.h,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -38,19 +49,19 @@ class FincheckSatuView extends GetView {
                         color: grey400,
                       ),
                 ),
-                const SizedBox(
-                  height: 4,
+                SizedBox(
+                  height: 0.5.h,
                 ),
                 GradientText(
                   "Berapa penghasilan kamu setiap bulannya?",
-                  style: Theme.of(context).textTheme.headline2!,
+                  style: Theme.of(context).textTheme.headline3!,
                   colors: const [
                     buttonColor1,
                     buttonColor2,
                   ],
                 ),
-                const SizedBox(
-                  height: 4,
+                SizedBox(
+                  height: 0.5.h,
                 ),
                 Text(
                   "(Jika tidak ada, ketika 0)",
@@ -58,73 +69,109 @@ class FincheckSatuView extends GetView {
                         color: grey400,
                       ),
                 ),
-                const SizedBox(
-                  height: 25,
+                SizedBox(
+                  height: 3.125.h,
                 ),
-                const FieldFincheck(labelText: "Pendapatan Aktif"),
-                const FieldFincheck(labelText: "Pendapatan Pasif"),
-                const FieldFincheck(labelText: "Bisnis Usaha"),
-                const FieldFincheck(labelText: "Hasil Investasi"),
-                const FieldFincheck(labelText: "Lainnya"),
+                FieldFincheck(
+                  labelText: "Pendapatan Aktif",
+                  contr: controller.pendapatanAktif!,
+                  infoText:
+                      "Penghasilan yang kamu peroleh setelah bekerja setiap bulan.",
+                ),
+                FieldFincheck(
+                  labelText: "Pendapatan Pasif",
+                  contr: controller.pendapatanPasif!,
+                  infoText:
+                      "Penghasilan yang kamu dapatkan setiap bulan tanpa terlibat aktif dalam sebuah kegiatan bisnis.",
+                ),
+                FieldFincheck(
+                  labelText: "Bisnis Usaha",
+                  contr: controller.bisnisUsaha!,
+                  infoText:
+                      "Penghasilan yang kamu dapatkan dari hasil penjualan barang atau jasa.",
+                ),
+                FieldFincheck(
+                  labelText: "Hasil Investasi",
+                  contr: controller.hasilInvestasi!,
+                  infoText:
+                      "Penghasilan yang kamu dapatkan dari pembayaran dividen atau bunga ketika kamu menanamkan modal atau menjual aset.",
+                ),
+                FieldFincheck(
+                  labelText: "Lainnya",
+                  contr: controller.lainnya!,
+                  infoText: "Penghasilan tambahan, seperti bonus.",
+                ),
               ],
             ),
           ),
           SizedBox(
-            width: Get.width,
-            height: Get.height * 0.15,
+            // margin: EdgeInsets.only(
+            //   top: 1.625.h,
+            // ),
+            width: 100.w,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 16,
-                      height: 4,
+                      width: 4.4444.w,
+                      height: 0.5.h,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                           color: buttonColor1),
                     ),
-                    const SizedBox(
-                      width: 5,
+                    SizedBox(
+                      width: 1.38889.w,
                     ),
                     Container(
-                      width: 16,
-                      height: 4,
+                      width: 4.4444.w,
+                      height: 0.5.h,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                           color: grey50),
                     ),
-                    const SizedBox(
-                      width: 5,
+                    SizedBox(
+                      width: 1.38889.w,
                     ),
                     Container(
-                      width: 16,
-                      height: 4,
+                      width: 4.4444.w,
+                      height: 0.5.h,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                           color: grey50),
                     ),
-                    const SizedBox(
-                      width: 5,
+                    SizedBox(
+                      width: 1.38889.w,
                     ),
                     Container(
-                      width: 16,
-                      height: 4,
+                      width: 4.4444.w,
+                      height: 0.5.h,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                           color: grey50),
-                    )
+                    ),
+                    SizedBox(
+                      width: 1.38889.w,
+                    ),
+                    Container(
+                      width: 4.4444.w,
+                      height: 0.5.h,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          color: grey50),
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 25,
+                SizedBox(
+                  height: 3.625.h,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: 143,
-                      height: 44,
+                      width: 39.7222.w,
+                      height: 5.5.h,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             elevation: 0,
@@ -137,15 +184,15 @@ class FincheckSatuView extends GetView {
                           "Kembali",
                           style: Theme.of(context)
                               .textTheme
-                              .button!
+                              .bodyText2!
                               .copyWith(color: buttonColor2),
                         ),
                         onPressed: () => Get.back(),
                       ),
                     ),
                     SizedBox(
-                      width: 143,
-                      height: 44,
+                      width: 39.7222.w,
+                      height: 5.5.h,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: buttonColor2,
@@ -155,7 +202,7 @@ class FincheckSatuView extends GetView {
                           "Selanjutnya",
                           style: Theme.of(context)
                               .textTheme
-                              .button!
+                              .bodyText2!
                               .copyWith(color: Colors.white),
                         ),
                         onPressed: () => Get.to(FincheckDuaView()),

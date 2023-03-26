@@ -2,29 +2,38 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/fincheck/controllers/fincheck_controller.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_empat_view.dart';
 import 'package:nuha/app/widgets/field_fincheck.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:sizer/sizer.dart';
 
-class FincheckTigaView extends GetView {
-  FincheckTigaView({Key? key}) : super(key: key);
-  final appBarheight = AppBar().preferredSize.height;
+class FincheckTigaView extends GetView<FincheckController> {
+  const FincheckTigaView({Key? key}) : super(key: key);
+  // final appBarheight = AppBar().preferredSize.height;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.back(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(5.875.h),
+        child: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: titleColor,
+              size: 18.sp,
+            ),
+            onPressed: () => Get.back(),
+          ),
+          backgroundColor: backgroundColor1,
+          elevation: 0,
         ),
-        backgroundColor: backgroundColor1,
-        elevation: 0,
       ),
       body: SafeArea(
           child: ListView(
-        padding: const EdgeInsets.fromLTRB(28, 0, 28, 0),
+        padding: EdgeInsets.fromLTRB(7.778.w, 0.625.w, 7.778.w, 0),
         children: [
           Text(
             "Langkah 3",
@@ -32,19 +41,19 @@ class FincheckTigaView extends GetView {
                   color: grey400,
                 ),
           ),
-          const SizedBox(
-            height: 4,
+          SizedBox(
+            height: 0.5.h,
           ),
           GradientText(
             "Produk investasi apa yang sudah kamu punya?",
-            style: Theme.of(context).textTheme.headline2!,
+            style: Theme.of(context).textTheme.headline3!,
             colors: const [
               buttonColor1,
               buttonColor2,
             ],
           ),
-          const SizedBox(
-            height: 4,
+          SizedBox(
+            height: 0.5.h,
           ),
           Text(
             "(Jika tidak ada, ketika 0)",
@@ -52,71 +61,115 @@ class FincheckTigaView extends GetView {
                   color: grey400,
                 ),
           ),
-          const SizedBox(
-            height: 25,
+          SizedBox(
+            height: 3.125.h,
           ),
-          const FieldFincheck(labelText: "Reksadana"),
-          const FieldFincheck(labelText: "Saham"),
-          const FieldFincheck(labelText: "Obligasi/P2P Landing"),
-          const FieldFincheck(labelText: "Unit Link"),
-          const FieldFincheck(labelText: "Deposito"),
-          const FieldFincheck(labelText: "Crowd Funding"),
-          const FieldFincheck(labelText: "EBA Ritel"),
-          const FieldFincheck(labelText: "Logam Mulia"),
-          const SizedBox(
-            height: 30,
+          FieldFincheck(
+            labelText: "Reksadana",
+            contr: controller.reksadana!,
+            infoText: "Investasi reksadana pasar uang.",
+          ),
+          FieldFincheck(
+            labelText: "Saham",
+            contr: controller.saham!,
+            infoText: "Investasi kepemilikan modal pada perusahaan.",
+          ),
+          FieldFincheck(
+            labelText: "Obligasi/P2P Landing",
+            contr: controller.obligasi!,
+            infoText: "Investasi surat hutang yang bisa diperjualbelikan.",
+          ),
+          FieldFincheck(
+            labelText: "Unit Link",
+            contr: controller.unitLink!,
+            infoText: "Investasi gabungan dari produk layanan asuransi.",
+          ),
+          FieldFincheck(
+            labelText: "Deposito",
+            contr: controller.deposito!,
+            infoText:
+                "Simpanan di bank dengan jumlah suka bunga dan dalam jangka waktu tertentu.",
+          ),
+          FieldFincheck(
+            labelText: "Crowd Funding",
+            contr: controller.crowdFunding!,
+            infoText: "Investasi dalam suatu proyek.",
+          ),
+          FieldFincheck(
+            labelText: "EBA Ritel",
+            contr: controller.ebaRitel!,
+            infoText: "Investasi pada sektor ritel.",
+          ),
+          FieldFincheck(
+            labelText: "Logam Mulia",
+            contr: controller.logamMulia!,
+            infoText:
+                "Investasi logam mulian, seperti emask, perak, dan platinum.",
+          ),
+          SizedBox(
+            height: 5.25.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 16,
-                height: 4,
+                width: 4.4444.w,
+                height: 0.5.h,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     color: grey50),
               ),
-              const SizedBox(
-                width: 5,
+              SizedBox(
+                width: 1.38889.w,
               ),
               Container(
-                width: 16,
-                height: 4,
+                width: 4.4444.w,
+                height: 0.5.h,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     color: grey50),
               ),
-              const SizedBox(
-                width: 5,
+              SizedBox(
+                width: 1.38889.w,
               ),
               Container(
-                width: 16,
-                height: 4,
+                width: 4.4444.w,
+                height: 0.5.h,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     color: buttonColor1),
               ),
-              const SizedBox(
-                width: 5,
+              SizedBox(
+                width: 1.38889.w,
               ),
               Container(
-                width: 16,
-                height: 4,
+                width: 4.4444.w,
+                height: 0.5.h,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     color: grey50),
-              )
+              ),
+              SizedBox(
+                width: 1.38889.w,
+              ),
+              Container(
+                width: 4.4444.w,
+                height: 0.5.h,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                    color: grey50),
+              ),
             ],
           ),
-          const SizedBox(
-            height: 25,
+          SizedBox(
+            height: 3.625.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 143,
-                height: 44,
+                width: 39.7222.w,
+                height: 5.5.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -128,15 +181,15 @@ class FincheckTigaView extends GetView {
                     "Kembali",
                     style: Theme.of(context)
                         .textTheme
-                        .button!
+                        .bodyText2!
                         .copyWith(color: buttonColor2),
                   ),
                   onPressed: () => Get.back(),
                 ),
               ),
               SizedBox(
-                width: 143,
-                height: 44,
+                width: 39.7222.w,
+                height: 5.5.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: buttonColor2,
@@ -146,7 +199,7 @@ class FincheckTigaView extends GetView {
                     "Selanjutnya",
                     style: Theme.of(context)
                         .textTheme
-                        .button!
+                        .bodyText2!
                         .copyWith(color: Colors.white),
                   ),
                   onPressed: () => Get.to(FincheckEmpatView()),
@@ -154,8 +207,8 @@ class FincheckTigaView extends GetView {
               ),
             ],
           ),
-          const SizedBox(
-            height: 50,
+          SizedBox(
+            height: 3.75.h,
           ),
         ],
       )),
