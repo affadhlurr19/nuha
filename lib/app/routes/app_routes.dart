@@ -13,6 +13,9 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
   static const PROFILE = _Paths.PROFILE;
+  static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+  static const PENGATURAN_KEAMANAN = _Paths.PENGATURAN_KEAMANAN;
+  static const GANTI_KATA_SANDI = _Paths.GANTI_KATA_SANDI;
 }
 
 abstract class _Paths {
@@ -25,4 +28,7 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const RESET_PASSWORD = '/reset-password';
   static const PROFILE = '/profile';
+  static const EDIT_PROFILE = '/edit-profile';
+  static const PENGATURAN_KEAMANAN = '/pengaturan-keamanan';
+  static const GANTI_KATA_SANDI = '/ganti-kata-santi';
 }

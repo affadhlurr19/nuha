@@ -70,6 +70,9 @@ class RegisterController extends GetxController {
             "name": nameC.text,            
             "email": emailC.text,
             "uid": userCredential.user!.uid,
+            "phone": "",
+            "tgl_lahir": "",
+            "pekerjaan": "",
             "created_at": DateTime.now().toIso8601String(),
           });
           Get.offAllNamed(Routes.LOGIN);

@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
-import 'package:nuha/app/modules/profile/bindings/profile_binding.dart';
-import 'package:nuha/app/modules/profile/views/profile_view.dart';
-import 'package:nuha/app/modules/reset_password/bindings/reset_password_binding.dart';
-import 'package:nuha/app/modules/reset_password/views/reset_password_view.dart';
+import 'package:nuha/app/modules/profile/views/edit_profile_view.dart';
+import 'package:nuha/app/modules/profile/views/ganti_kata_sandi_view.dart';
+import 'package:nuha/app/modules/profile/views/pengaturan_keamanan_view.dart';
 
 import '../modules/fincheck/bindings/fincheck_binding.dart';
 import '../modules/fincheck/views/fincheck_view.dart';
@@ -14,8 +13,12 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/memulai/bindings/memulai_binding.dart';
 import '../modules/memulai/views/memulai_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/reset_password/bindings/reset_password_binding.dart';
+import '../modules/reset_password/views/reset_password_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -66,6 +69,21 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
-    ),
+    ),    
+    GetPage(
+      name: _Paths.EDIT_PROFILE,
+      page: () => EditProfileView(),
+      binding: ProfileBinding(),
+    ), 
+    GetPage(
+      name: _Paths.PENGATURAN_KEAMANAN,
+      page: () => const PengaturanKeamananView(),
+      binding: ProfileBinding(),
+    ), 
+    GetPage(
+      name: _Paths.GANTI_KATA_SANDI,
+      page: () => GantiKataSandiView(),
+      binding: ProfileBinding(),
+    ), 
   ];
 }
