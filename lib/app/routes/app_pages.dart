@@ -64,7 +64,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CASHFLOW,
-      page: () => const CashflowView(),
+      page: () => CashflowView(),
       binding: CashflowBinding(),
     ),
   ];
