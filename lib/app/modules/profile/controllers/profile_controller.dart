@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
@@ -10,6 +11,7 @@ import 'package:nuha/app/routes/app_pages.dart';
 class ProfileController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   //update profile
   TextEditingController emailC = TextEditingController();
@@ -180,6 +182,16 @@ class ProfileController extends GetxController {
       Get.offAllNamed(Routes.LANDING);
     } catch (e) {
       errMsg('Gagal Logout. $e');
+    }
+  }
+
+  Future<void> logoutGoogle() async {
+    try {
+      await googleSignIn.signOut();
+      await auth.signOut();
+      Get.offAllNamed(Routes.LANDING);
+    } catch (e) {
+      print(e);
     }
   }
 }

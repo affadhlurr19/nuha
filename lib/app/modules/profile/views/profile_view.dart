@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,7 +11,9 @@ import 'package:sizer/sizer.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  ProfileView({Key? key}) : super(key: key);
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -358,44 +361,80 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 3.53125.h),
+                  SizedBox(height: 3.53125.h),                  
                   Container(
                     padding: EdgeInsets.only(right: 11.1.w, left: 11.1.w),
                     child: SizedBox(
                       width: 38.89.w,
                       height: 5.5.h,
-                      child: Obx(
-                        () => ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: buttonColor1,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20))),
-                          child: controller.isLoading.isFalse
-                              ? Text(
-                                  "Logout",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .button!
-                                      .copyWith(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 13.sp,
+                      child: auth.currentUser!.providerData[0].providerId ==
+                              'google.com'
+                          ? Obx(
+                              () => ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: buttonColor1,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20))),
+                                child: controller.isLoading.isFalse
+                                    ? Text(
+                                        "Logout",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .button!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13.sp,
+                                                color: Colors.white,
+                                                fontStyle: FontStyle.normal),
+                                      )
+                                    : SizedBox(
+                                        height: 1.5.h,
+                                        width: 1.5.h,
+                                        child: const CircularProgressIndicator(
                                           color: Colors.white,
-                                          fontStyle: FontStyle.normal),
-                                )
-                              : SizedBox(
-                                  height: 1.5.h,
-                                  width: 1.5.h,
-                                  child: const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                          onPressed: () {
-                            if (controller.isLoading.isFalse) {
-                              controller.logout();
-                            }
-                          },
-                        ),
-                      ),
+                                        ),
+                                      ),
+                                onPressed: () {
+                                  if (controller.isLoading.isFalse) {
+                                    controller.logoutGoogle();
+                                  }
+                                },
+                              ),
+                            )
+                          : Obx(
+                              () => ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: buttonColor1,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20))),
+                                child: controller.isLoading.isFalse
+                                    ? Text(
+                                        "Logout",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .button!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13.sp,
+                                                color: Colors.white,
+                                                fontStyle: FontStyle.normal),
+                                      )
+                                    : SizedBox(
+                                        height: 1.5.h,
+                                        width: 1.5.h,
+                                        child: const CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                onPressed: () {
+                                  if (controller.isLoading.isFalse) {
+                                    controller.logout();
+                                  }
+                                },
+                              ),
+                            ),
                     ),
                   ),
                   SizedBox(height: 3.53125.h),

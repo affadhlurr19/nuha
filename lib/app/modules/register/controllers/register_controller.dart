@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 
@@ -12,11 +13,15 @@ class RegisterController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
-  TextEditingController nameC = TextEditingController();  
+  TextEditingController nameC = TextEditingController();
   TextEditingController konfirpassC = TextEditingController();
   RxBool isHiddenPass = true.obs;
   RxBool isHiddenConfirmPass = true.obs;
   RxBool isLoading = false.obs;
+  RxBool isLoadingG = false.obs;
+
+  //Google Sign In
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   void successMsg(String msg) {
     Get.snackbar(
@@ -59,7 +64,6 @@ class RegisterController extends GetxController {
           );
 
           isLoading.value = false;
-
           //email verification
           await userCredential.user!.sendEmailVerification();
           //simpan data user di firestore
@@ -67,7 +71,7 @@ class RegisterController extends GetxController {
               .collection("users")
               .doc(userCredential.user!.uid)
               .set({
-            "name": nameC.text,            
+            "name": nameC.text,
             "email": emailC.text,
             "uid": userCredential.user!.uid,
             "phone": "",
@@ -92,6 +96,45 @@ class RegisterController extends GetxController {
       }
     } else {
       errMsg("Semua data tidak boleh kosong!");
+    }
+  }
+
+  void registerWithGoogle() async {
+    try {
+      isLoadingG.value = true;
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleSignInAuthentication =
+          await googleSignInAccount?.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication?.accessToken,
+        idToken: googleSignInAuthentication?.idToken,
+      );
+
+      isLoadingG.value = false;
+      await auth.signInWithCredential(credential);
+      DocumentSnapshot<Map<String, dynamic>> query =
+          await firestore.collection('users').doc(auth.currentUser!.uid).get();
+
+      if (!query.exists) {
+        await firestore.collection("users").doc(auth.currentUser!.uid).set({
+          "name": auth.currentUser!.displayName,
+          "email": auth.currentUser!.email,
+          "uid": auth.currentUser!.uid,
+          "phone": "",
+          "tgl_lahir": "",
+          "pekerjaan": "",
+          "created_at": DateTime.now().toIso8601String(),
+        });
+      }
+      Get.offAllNamed(Routes.HOME);
+    } on FirebaseAuthException catch (e) {
+      isLoadingG.value = false;
+      if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+        errMsg('This account exists with different credential.');
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

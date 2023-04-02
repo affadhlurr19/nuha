@@ -51,7 +51,7 @@ class EditProfileView extends GetView {
               c.emailC.text = snapshot.data!["email"];
               c.nameC.text = snapshot.data!["name"];
               c.phoneC.text = snapshot.data!["phone"];
-              c.bdayC.text = snapshot.data!["tgl_lahir"];              
+              c.bdayC.text = snapshot.data!["tgl_lahir"];
               c.workC.text = snapshot.data!["pekerjaan"];
               return SingleChildScrollView(
                 child: Column(
@@ -147,6 +147,8 @@ class EditProfileView extends GetView {
                                     EdgeInsets.only(right: 4.4.w, left: 4.4.w),
                                 width: widthDevice,
                                 child: TextField(
+                                  readOnly: true,
+                                  enabled: false,
                                   autocorrect: false,
                                   controller: c.emailC,
                                   keyboardType: TextInputType.emailAddress,
@@ -177,6 +179,11 @@ class EditProfileView extends GetView {
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
                                             width: 2, color: buttonColor1),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    disabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: grey50),
                                         borderRadius:
                                             BorderRadius.circular(20)),
                                   ),
@@ -265,7 +272,7 @@ class EditProfileView extends GetView {
                                     child: IgnorePointer(
                                       child: TextField(
                                         autocorrect: false,
-                                        controller: c.bdayC,                                        
+                                        controller: c.bdayC,
                                         keyboardType: TextInputType.datetime,
                                         cursorColor: buttonColor1,
                                         textInputAction: TextInputAction.next,
@@ -277,7 +284,7 @@ class EditProfileView extends GetView {
                                                 fontSize: 11.sp),
                                         decoration: InputDecoration(
                                           hintText:
-                                             'Masukkan tanggal lahir anda',
+                                              'Masukkan tanggal lahir anda',
                                           hintStyle: Theme.of(context)
                                               .textTheme
                                               .bodyText2!

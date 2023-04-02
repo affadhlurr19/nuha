@@ -94,14 +94,18 @@ class RegisterView extends GetView<RegisterController> {
                         .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                     decoration: InputDecoration(
                       hintText: 'Nuha Finansial',
-                      hintStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 11.sp,
-                          color: grey400),
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 2.h, vertical: 1.5.h),
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 11.sp,
+                              color: grey400),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 2.h, vertical: 1.5.h),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(width: 1, color: grey400),
+                          borderSide:
+                              const BorderSide(width: 1, color: grey400),
                           borderRadius: BorderRadius.circular(20)),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
@@ -138,14 +142,18 @@ class RegisterView extends GetView<RegisterController> {
                         .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                     decoration: InputDecoration(
                       hintText: 'Nuha@gmail.com',
-                      hintStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 11.sp,
-                          color: grey400),
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 2.h, vertical: 1.5.h),
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 11.sp,
+                              color: grey400),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 2.h, vertical: 1.5.h),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(width: 1, color: grey400),
+                          borderSide:
+                              const BorderSide(width: 1, color: grey400),
                           borderRadius: BorderRadius.circular(20)),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
@@ -177,10 +185,8 @@ class RegisterView extends GetView<RegisterController> {
                       controller: controller.passC,
                       cursorColor: buttonColor1,
                       textInputAction: TextInputAction.next,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          fontWeight: FontWeight.w400, fontSize: 11.sp),
                       decoration: InputDecoration(
                         hintText: 'min. 8 karakter',
                         hintStyle: Theme.of(context)
@@ -236,10 +242,8 @@ class RegisterView extends GetView<RegisterController> {
                       controller: controller.konfirpassC,
                       cursorColor: buttonColor1,
                       textInputAction: TextInputAction.done,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          fontWeight: FontWeight.w400, fontSize: 11.sp),
                       decoration: InputDecoration(
                         hintText: 'min. 8 karakter',
                         hintStyle: Theme.of(context)
@@ -273,7 +277,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5.125.h),
+                SizedBox(height: 4.5.h),
                 SizedBox(
                   child: RichText(
                     textAlign: TextAlign.center,
@@ -299,7 +303,9 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 1.h),
+                SizedBox(
+                  height: 1.h,
+                ),
                 SizedBox(
                   width: 77.78.w,
                   child: SizedBox(
@@ -318,7 +324,8 @@ class RegisterView extends GetView<RegisterController> {
                                     .textTheme
                                     .button!
                                     .copyWith(
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w400,
                                         color: Colors.white,
                                         fontStyle: FontStyle.normal),
                               )
@@ -338,45 +345,57 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 1.25.h),
-                SizedBox(
-                  width: 77.78.w,
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text:
-                          'Dengan masuk atau melakukan pendaftaran, kamu menyetujui ',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                            fontSize: 9.sp,
-                            color: const Color(0xFF919191),
-                            fontWeight: FontWeight.w400,
-                          ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Ketentuan Layanan ',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                                fontSize: 9.sp,
-                                color: buttonColor1,
-                                fontWeight: FontWeight.w700,
+                SizedBox(height: 1.h),
+                Container(
+                  width: widthDevice,
+                  padding: EdgeInsets.only(right: 11.1.w, left: 11.1.w),
+                  child: SizedBox(
+                    width: 77.78.w,
+                    height: 5.5.h,
+                    child: Obx(
+                      () => OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            foregroundColor: buttonColor1,
+                            backgroundColor: backgroundColor1,
+                            side:
+                                const BorderSide(color: buttonColor1, width: 1),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: controller.isLoadingG.isFalse
+                            ? Wrap(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/images/google-sign-in-logo.png',
+                                    height: 2.5.h,
+                                    width: 2.5.h,
+                                  ),
+                                  SizedBox(width: 5.56.w),
+                                  Text(
+                                    "Daftar dengan Google",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 11.sp,
+                                            color: buttonColor1,
+                                            fontStyle: FontStyle.normal),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(
+                                height: 1.5.h,
+                                width: 1.5.h,
+                                child: const CircularProgressIndicator(
+                                  color: buttonColor1,
+                                ),
                               ),
-                        ),
-                        TextSpan(
-                          text: 'dan ',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                                fontSize: 9.sp,
-                                color: const Color(0xFF919191),
-                                fontWeight: FontWeight.w400,
-                              ),
-                        ),
-                        TextSpan(
-                          text: 'Kebijakan Privasi',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                                fontSize: 9.sp,
-                                color: buttonColor1,
-                                fontWeight: FontWeight.w700,
-                              ),
-                        ),
-                      ],
+                        onPressed: () {
+                          if (controller.isLoadingG.isFalse) {
+                            controller.registerWithGoogle();
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
