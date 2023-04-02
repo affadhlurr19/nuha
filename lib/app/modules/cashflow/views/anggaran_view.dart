@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
@@ -20,6 +22,21 @@ class AnggaranView extends GetView<CashflowController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: backgroundColor2,
+        floatingActionButton: SizedBox(
+          // width: 35.sp,
+          // height: 35.sp,
+          width: 12.96389.w, height: 5.83375.h,
+          child: FloatingActionButton(
+            backgroundColor: buttonColor1,
+            foregroundColor: backgroundColor2,
+            elevation: 0,
+            onPressed: () => Get.to(FormAnggaranView()),
+            child: Icon(
+              Icons.add,
+              size: 23.sp,
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Stack(children: <Widget>[
             Container(
@@ -155,100 +172,227 @@ class AnggaranView extends GetView<CashflowController> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(
-                        width: 37.5.w,
-                        height: 3.5.h,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor: buttonColor1,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20))),
-                          child: Text(
-                            "Semua Transaksi",
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: backgroundColor1),
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                      SizedBox(
-                        width: 37.5.w,
-                        height: 3.5.h,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor: grey50,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20))),
-                          child: Text(
-                            "Kategori Transaksi",
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: grey400),
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
-                  ),
                   SizedBox(
-                    height: 2.h,
-                  ),
-                  SizedBox(
-                    height: 51.25.h,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 12.1875.h,
-                        ),
-                        Image.asset(
-                          'assets/images/no_records_1.png',
-                          width: 40.w,
-                          height: 14.125.h,
-                        ),
-                        Text(
-                          "Kamu belum mengatur anggaran keuangan kamu, nih. Yuk, catat anggaran keuanganmu dengan mudah~",
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption!
-                              .copyWith(color: grey400),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(
-                          height: 2.5.h,
-                        ),
-                        SizedBox(
-                          width: 50.27778.w,
-                          height: 4.25.h,
-                          child: ElevatedButton(
+                    height: 3.5.h,
+                    child: ListView.builder(
+                      itemCount: 4,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => Row(
+                        children: [
+                          ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 elevation: 0,
-                                backgroundColor: buttonColor2,
+                                backgroundColor: buttonColor1,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20))),
                             child: Text(
-                              "Tambah anggaran sekarang",
+                              "Semua",
                               style: Theme.of(context)
                                   .textTheme
                                   .caption!
-                                  .copyWith(color: backgroundColor1),
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: backgroundColor1),
                             ),
-                            onPressed: () => Get.to(FormAnggaranView()),
+                            onPressed: () {},
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: 2.777778.w,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60.75.h,
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: controller.streamAnggaran(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snapshot.data!.docs.isEmpty) {
+                          return SizedBox(
+                            height: 51.25.h,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 12.1875.h,
+                                ),
+                                Image.asset(
+                                  'assets/images/no_records_1.png',
+                                  width: 40.w,
+                                  height: 14.125.h,
+                                ),
+                                Text(
+                                  "Kamu belum mengatur anggaran keuangan kamu, nih. Yuk, catat anggaran keuanganmu dengan mudah~",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption!
+                                      .copyWith(color: grey400),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 2.5.h,
+                                ),
+                                SizedBox(
+                                  width: 50.27778.w,
+                                  height: 4.25.h,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        elevation: 0,
+                                        backgroundColor: buttonColor2,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20))),
+                                    child: Text(
+                                      "Atur Anggaran Sekarang",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .caption!
+                                          .copyWith(color: backgroundColor1),
+                                    ),
+                                    onPressed: () => Get.to(FormAnggaranView()),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              var docAnggaran = snapshot.data!.docs[index];
+                              Map<String, dynamic> anggaran =
+                                  docAnggaran.data();
+                              return Container(
+                                margin:
+                                    EdgeInsets.symmetric(horizontal: 4.44444.w),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image(
+                                                  image: AssetImage(
+                                                      'assets/images/${anggaran["kategori"]}.png'),
+                                                ),
+                                                SizedBox(
+                                                  width: 4.44444.w,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "${anggaran["kategori"]}",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: dark,
+                                                          ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 0.5.h,
+                                                    ),
+                                                    Text(
+                                                      "Tersisa Rp. xxxx",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .copyWith(
+                                                            color: grey400,
+                                                          ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Iconify(
+                                            MaterialSymbols.edit,
+                                            size: 12.sp,
+                                            color: grey400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
+                                    LinearPercentIndicator(
+                                      barRadius: const Radius.circular(40),
+                                      width: 75.55556.w,
+                                      lineHeight: 2.5.h,
+                                      percent: 0.10,
+                                      backgroundColor: backBar,
+                                      progressColor: buttonColor1,
+                                    ),
+                                    SizedBox(
+                                      height: 1.h,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          NumberFormat.currency(
+                                                  locale: 'id',
+                                                  symbol: "Limit Rp. ",
+                                                  decimalDigits: 0)
+                                              .format(anggaran["nominal"]),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(
+                                                color: grey400,
+                                              ),
+                                        ),
+                                        Text(
+                                          "0%",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(
+                                                color: grey400,
+                                              ),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
+                                    const Divider(
+                                      thickness: 1,
+                                      height: 0,
+                                      color: grey100,
+                                    ),
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
                     ),
                   )
                 ],

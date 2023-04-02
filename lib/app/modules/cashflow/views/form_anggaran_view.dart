@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +13,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 
 class FormAnggaranView extends GetView<CashflowController> {
   const FormAnggaranView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,45 +50,43 @@ class FormAnggaranView extends GetView<CashflowController> {
           vertical: 2.5.h,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Kategori*",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: grey900,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    SizedBox(
-                      height: 0.75.h,
-                    ),
-                    Container(
-                      height: 5.5.h,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1.sp, color: grey100),
-                          borderRadius: BorderRadius.circular(20),
-                          color: backgroundColor1),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.bottomSheet(const BottomSheetPengeluaran());
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 4.53333.w,
-                            vertical: 1.h,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Obx(
-                                () => Text(controller.kategoriC.toString(),
-                                    style: controller.kategoriStat.value ==
-                                            "choosen"
+                Text(
+                  "Kategori*",
+                  style: Theme.of(context).textTheme.caption!.copyWith(
+                        color: grey900,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                SizedBox(
+                  height: 0.75.h,
+                ),
+                Container(
+                  height: 5.5.h,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1.sp, color: grey100),
+                      borderRadius: BorderRadius.circular(20),
+                      color: backgroundColor1),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.bottomSheet(const BottomSheetPengeluaran());
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 4.53333.w,
+                        vertical: 1.h,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Obx(
+                            () => Text(controller.kategoriC.toString(),
+                                style:
+                                    controller.kategoriStat.value == "choosen"
                                         ? Theme.of(context)
                                             .textTheme
                                             .bodyText2!
@@ -97,125 +97,308 @@ class FormAnggaranView extends GetView<CashflowController> {
                                             .textTheme
                                             .bodyText2!
                                             .copyWith(color: grey400)),
-                              ),
-                              Iconify(
-                                Gridicons.dropdown,
-                                size: 18.sp,
-                                color:
-                                    controller.kategoriStat.value == "choosen"
-                                        ? grey900
-                                        : grey400,
-                              )
-                            ],
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Nominal Anggaran*",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: grey900,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    SizedBox(
-                      height: 0.75.h,
-                    ),
-                    SizedBox(
-                      height: 5.5.h,
-                      child: TextField(
-                        controller: controller.nomAnggaranC,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          CurrencyTextInputFormatter(
-                            locale: 'id',
-                            decimalDigits: 0,
-                            symbol: '',
-                          ),
+                          Iconify(
+                            Gridicons.dropdown,
+                            size: 18.sp,
+                            color: controller.kategoriStat.value == "choosen"
+                                ? grey900
+                                : grey400,
+                          )
                         ],
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                              color: grey900,
-                            ),
-                        decoration: InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 4.5833.w, vertical: 1.h),
-                            child: Text(
-                              "Rp. ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .copyWith(color: grey400),
-                            ),
-                          ),
-                          prefixIconConstraints:
-                              const BoxConstraints(minWidth: 0, minHeight: 0),
-                          hintText: "0",
-                          hintStyle:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
-                                    color: grey400,
-                                  ),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 1.w, vertical: 1.h),
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .caption!
-                              .copyWith(
-                                  color: grey400, fontWeight: FontWeight.bold),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            borderSide: BorderSide(color: grey100, width: 1.sp),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            borderSide:
-                                BorderSide(color: buttonColor1, width: 1.sp),
-                          ),
-                        ),
                       ),
                     ),
-                  ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Nominal Anggaran*",
+                  style: Theme.of(context).textTheme.caption!.copyWith(
+                        color: grey900,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
                 SizedBox(
-                  height: 41.125.h,
+                  height: 0.75.h,
                 ),
                 SizedBox(
-                  width: 75.55556.w,
                   height: 5.5.h,
-                  child: ElevatedButton(
+                  child: TextField(
+                    controller: controller.nomAnggaranC,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      CurrencyTextInputFormatter(
+                        locale: 'id',
+                        decimalDigits: 0,
+                        symbol: '',
+                      ),
+                    ],
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: grey900,
+                        ),
+                    decoration: InputDecoration(
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 4.5833.w, vertical: 1.h),
+                        child: Text(
+                          "Rp. ",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: grey400),
+                        ),
+                      ),
+                      prefixIconConstraints:
+                          const BoxConstraints(minWidth: 0, minHeight: 0),
+                      hintText: "0",
+                      hintStyle:
+                          Theme.of(context).textTheme.bodyText2!.copyWith(
+                                color: grey400,
+                              ),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+                      labelStyle: Theme.of(context).textTheme.caption!.copyWith(
+                          color: grey400, fontWeight: FontWeight.bold),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        borderSide: BorderSide(color: grey100, width: 1.sp),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        borderSide:
+                            BorderSide(color: buttonColor1, width: 1.sp),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 41.125.h,
+            ),
+            SizedBox(
+              width: 75.55556.w,
+              height: 5.5.h,
+              child: Obx(() => ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor: buttonColor2,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
                     child: Text(
-                      "Simpan",
+                      controller.isLoading.isFalse ? "Simpan" : "Loading...",
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2!
                           .copyWith(color: backgroundColor1),
                     ),
-                    onPressed: () {},
-                  ),
-                ),
-              ],
+                    onPressed: () {
+                      if (controller.isLoading.isFalse) {
+                        controller.addAnggaran();
+                      }
+                    },
+                  )),
             ),
           ],
         ),
       )),
+    );
+  }
+}
+
+class BottomSheetPengeluaran extends StatelessWidget {
+  const BottomSheetPengeluaran({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 3.125.h, horizontal: 7.77778.w),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+          color: backgroundColor1,
+        ),
+        child: ListView(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                "Pilih Kategori Pengeluaran",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(color: grey900, fontWeight: FontWeight.w600),
+              ),
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            Divider(
+              color: grey50,
+              thickness: 1,
+              indent: 4.w,
+              endIndent: 4.w,
+            ),
+            SizedBox(
+              height: 2.5.h,
+            ),
+            Text(
+              "Kategori Umum",
+              style: Theme.of(context)
+                  .textTheme
+                  .caption!
+                  .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 1.25.h,
+            ),
+            Wrap(
+              spacing: 4.166667.w,
+              runSpacing: 2.5.h,
+              children: [
+                CategoryAnggaranWidget(
+                  image: AssetImage('assets/images/Asuransi.png'),
+                  text: "Asuransi",
+                ),
+                CategoryAnggaranWidget(
+                    image: AssetImage('assets/images/Pendidikan.png'),
+                    text: "Pendidikan"),
+                CategoryAnggaranWidget(
+                    image: AssetImage('assets/images/Transportasi.png'),
+                    text: "Transportasi"),
+                CategoryAnggaranWidget(
+                    image: AssetImage('assets/images/Sosial.png'),
+                    text: "Sosial")
+              ],
+            ),
+            SizedBox(
+              height: 2.5.h,
+            ),
+            Text(
+              "Kategori Biaya Hidup",
+              style: Theme.of(context)
+                  .textTheme
+                  .caption!
+                  .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 1.25.h,
+            ),
+            Wrap(
+              spacing: 4.166667.w,
+              runSpacing: 2.5.h,
+              children: [
+                CategoryAnggaranWidget(
+                  image: AssetImage('assets/images/Makan.png'),
+                  text: "Makan",
+                ),
+                CategoryWidget(
+                    image: AssetImage('assets/images/Belanja.png'),
+                    text: "Belanja"),
+                CategoryAnggaranWidget(
+                    image: AssetImage('assets/images/Hiburan.png'),
+                    text: "Hiburan"),
+                CategoryAnggaranWidget(
+                    image: AssetImage('assets/images/Tagihan.png'),
+                    text: "Tagihan"),
+                CategoryAnggaranWidget(
+                    image: AssetImage('assets/images/Kesehatan.png'),
+                    text: "Kesehatan")
+              ],
+            ),
+            SizedBox(
+              height: 2.5.h,
+            ),
+            Text(
+              "Kategori Lainnya",
+              style: Theme.of(context)
+                  .textTheme
+                  .caption!
+                  .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 1.25.h,
+            ),
+            Wrap(
+              spacing: 4.166667.w,
+              runSpacing: 2.5.h,
+              children: [
+                CategoryAnggaranWidget(
+                  image: AssetImage('assets/images/Lainnya.png'),
+                  text: "Lainnya",
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryAnggaranWidget extends StatelessWidget {
+  final ImageProvider image;
+  final String text;
+
+  CategoryAnggaranWidget({Key? key, required this.image, required this.text})
+      : super(key: key);
+
+  final CashflowController controller = Get.put(CashflowController());
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 25.27778.w,
+      child: GestureDetector(
+        onTap: () {
+//           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+//             stream: controller.streamAnggaran(),
+//             builder: (context, snapshot) {
+//               if (snapshot.data!.docs.isNotEmpty) {
+// //
+//                 return Container();
+//               } else {
+//                 return Container();
+//               }
+//             },
+//           );
+          Get.find<CashflowController>().updateKategori(text);
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image(
+              image: image,
+              width: 36.sp,
+              height: 36.sp,
+              // fit: BoxFit.cover,
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            Text(
+              text,
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    color: grey500,
+                  ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

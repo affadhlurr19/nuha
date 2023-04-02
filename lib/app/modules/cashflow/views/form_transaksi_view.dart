@@ -636,7 +636,7 @@ class BottomSheetPengeluaran extends StatelessWidget {
               height: 2.5.h,
             ),
             Text(
-              "Kategori Biaya Umum",
+              "Kategori Biaya Hidup",
               style: Theme.of(context)
                   .textTheme
                   .caption!
@@ -729,7 +729,7 @@ class CategoryWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     color: grey500,
                   ),
-            )
+            ),
           ],
         ),
       ),
