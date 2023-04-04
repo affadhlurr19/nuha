@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
@@ -8,7 +9,10 @@ class CashflowController extends GetxController {
   TextEditingController nominalC = TextEditingController();
   TextEditingController deskripsiC = TextEditingController();
   TextEditingController nomAnggaranC = TextEditingController();
+  TextEditingController searchAnggaranC = TextEditingController();
   RxBool isLoading = false.obs;
+
+  late TabController tabController;
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -17,8 +21,17 @@ class CashflowController extends GetxController {
   var kategoriC = "Pilih Kategori".obs;
   var kategoriStat = "".obs;
   var selectDate = DateTime.now().obs;
+  var currentTab = 0.obs;
+  var queryAwal = [].obs;
+  var tempSearch = [].obs;
 
   String jenisKategori = "";
+
+  void changeTabIndex(int index) {
+    currentTab.value = index;
+    // print(currentTab);
+    update();
+  }
 
   void updateToPendapatan() {
     jenisC.value = "Pendapatan";
@@ -122,12 +135,74 @@ class CashflowController extends GetxController {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamAnggaran() async* {
+  // void searchAnggaran(String data) async {
+  //   print("SEARCH: $data");
+
+  //   if (data.isEmpty) {
+  //     queryAwal.value = [];
+  //     tempSearch.value = [];
+  //   } else {
+  //     var capitalize = data.capitalizeFirst;
+  //     print(capitalize);
+  //     if (queryAwal.isEmpty) {
+  //       CollectionReference anggaran = await firestore.collection("anggaran");
+  //       final katergoriResult = await anggaran
+  //           .where("kategori", isEqualTo: data.capitalizeFirst)
+  //           .get();
+
+  //       print("TOTAL DATA: ${katergoriResult.docs.length}");
+  //       if (katergoriResult.docs.length > 0) {
+  //         for (int i = 0; i < katergoriResult.docs.length; i++) {
+  //           queryAwal
+  //               .add(katergoriResult.docs[i].data() as Map<String, dynamic>);
+  //         }
+  //         print("Query Result: ");
+  //         print(queryAwal);
+  //       }
+  //     }
+  //   }
+  // }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamSemuaAnggaran() async* {
     String uid = auth.currentUser!.uid;
-    yield* await firestore
-        .collection("users")
-        .doc(uid)
-        .collection("anggaran")
-        .snapshots();
+    if (currentTab.value == 0) {
+      yield* await firestore
+          .collection("users")
+          .doc(uid)
+          .collection("anggaran")
+          .snapshots();
+    } else if (currentTab.value == 1) {
+      yield* await firestore
+          .collection("users")
+          .doc(uid)
+          .collection("anggaran")
+          .where("jenisAnggaran", isEqualTo: "Umum")
+          .snapshots();
+    } else if (currentTab.value == 2) {
+      yield* await firestore
+          .collection("users")
+          .doc(uid)
+          .collection("anggaran")
+          .where("jenisAnggaran", isEqualTo: "Biaya Hidup")
+          .snapshots();
+    } else {
+      yield* await firestore
+          .collection("users")
+          .doc(uid)
+          .collection("anggaran")
+          .where("jenisAnggaran", isEqualTo: "Lainnya")
+          .snapshots();
+    }
   }
+
+  // Stream<QuerySnapshot<Map<String, dynamic>>> streamAnggaranUmum() async* {
+  //   String uid = auth.currentUser!.uid;
+  //   yield* await firestore
+  //       .collection("users")
+  //       .doc(uid)
+  //       .collection("anggaran")
+  //       .where("jenisAnggaran", isEqualTo: "Umum")
+  //       .snapshots();
+  // }
+
 }
