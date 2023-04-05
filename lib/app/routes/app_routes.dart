@@ -16,6 +16,9 @@ abstract class Routes {
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
   static const PENGATURAN_KEAMANAN = _Paths.PENGATURAN_KEAMANAN;
   static const GANTI_KATA_SANDI = _Paths.GANTI_KATA_SANDI;
+  static const ADD_NOTE = _Paths.ADD_NOTE;
+  static const EDIT_NOTE = _Paths.EDIT_NOTE;
+  static const GANTI_FOTO_PROFIL = _Paths.GANTI_FOTO_PROFIL;
 }
 
 abstract class _Paths {
@@ -31,4 +34,7 @@ abstract class _Paths {
   static const EDIT_PROFILE = '/edit-profile';
   static const PENGATURAN_KEAMANAN = '/pengaturan-keamanan';
   static const GANTI_KATA_SANDI = '/ganti-kata-santi';
+  static const ADD_NOTE = '/add-note';
+  static const EDIT_NOTE = '/edit-note';
+  static const GANTI_FOTO_PROFIL = '/ganti-foto-profil';
 }

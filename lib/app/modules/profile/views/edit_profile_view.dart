@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -375,7 +377,7 @@ class EditProfileView extends GetView {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15.5.h),
+                    SizedBox(height: 16.h),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.056.w),
                       child: Row(

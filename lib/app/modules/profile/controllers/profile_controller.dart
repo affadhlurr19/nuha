@@ -1,17 +1,22 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  final storage = FirebaseStorage.instance;
 
   //update profile
   TextEditingController emailC = TextEditingController();
@@ -28,6 +33,10 @@ class ProfileController extends GetxController {
   RxBool oldpassHidden = true.obs;
   RxBool newpassHidden = true.obs;
   RxBool connewpassHidden = true.obs;
+
+  //update profile
+  XFile? image;
+  RxBool profile = false.obs;
 
   RxBool isLoading = false.obs;
 
@@ -57,12 +66,22 @@ class ProfileController extends GetxController {
     );
   }
 
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamProfile() async* {
+    try {
+      String uid = auth.currentUser!.uid;
+      yield* await firestore.collection("users").doc(uid).snapshots();
+    } catch (e) {
+      errMsg('Tidak dapat get data user');
+    }
+  }
+
   Future<Map<String, dynamic>?> getProfile() async {
     try {
       String uid = auth.currentUser!.uid;
       DocumentSnapshot<Map<String, dynamic>> docUser =
           await firestore.collection("users").doc(uid).get();
 
+      profile.value = true;
       return docUser.data();
     } catch (e) {
       errMsg('Tidak dapat get data user');
@@ -115,6 +134,28 @@ class ProfileController extends GetxController {
     }
   }
 
+  void updateFotoProfile() async {
+    try {
+      isLoading.value = true;
+      String uid = auth.currentUser!.uid;
+      if (image != null) {
+        String ext = image!.name.split(".").last;
+        await storage.ref(uid).child("profile.$ext").putFile(File(image!.path));
+        String profileUrl =
+            await storage.ref(uid).child("profile.$ext").getDownloadURL();
+        await firestore.collection("users").doc(uid).update({
+          "profile": profileUrl,
+        });
+      }
+      isLoading.value = false;
+      Get.back();
+      successMsg('Berhasil memperbarui foto profil');
+    } catch (e) {
+      isLoading.value = false;
+      errMsg('Gagal memperbarui foto profil');
+    }
+  }
+
   void updateProfile() async {
     if (emailC.text.isNotEmpty && nameC.text.isNotEmpty) {
       try {
@@ -126,6 +167,7 @@ class ProfileController extends GetxController {
           "tgl_lahir": bdayC.text,
           "pekerjaan": workC.text,
         });
+
         successMsg('Berhasil memperbarui data');
         isLoading.value = false;
       } catch (e) {
@@ -192,6 +234,34 @@ class ProfileController extends GetxController {
       Get.offAllNamed(Routes.LANDING);
     } catch (e) {
       print(e);
+    }
+  }
+
+  void pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      update();
+    }
+  }
+
+  void resetImage() {
+    image = null;
+    update();
+  }
+
+  void clearProfile() async {
+    try {
+      String uid = auth.currentUser!.uid;
+      await firestore.collection("users").doc(uid).update({
+        "profile": FieldValue.delete(),
+      });
+      Get.back();
+      profile.value = false;
+      update();
+    } catch (e) {
+      print(e);
+      Get.snackbar("Terjadi Kesalahan", "Tidak dapat menghapus profile");
     }
   }
 }

@@ -16,5 +16,9 @@ class ProfileBinding extends Bindings {
       () => ProfileController(),
       tag: 'ganti-kata-sandi',      
     );
+    Get.lazyPut<ProfileController>(
+      () => ProfileController(),
+      tag: 'ganti-foto-profil',      
+    );
   }
 }
