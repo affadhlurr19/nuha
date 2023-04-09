@@ -115,12 +115,19 @@ class AnggaranView extends GetView<CashflowController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            "Rp. 0",
-                            style: Theme.of(context).textTheme.button!.copyWith(
-                                color: buttonColor1,
-                                fontWeight: FontWeight.w600),
-                          ),
+                          Obx(() => Text(
+                                NumberFormat.currency(
+                                        locale: 'id',
+                                        symbol: "Rp. ",
+                                        decimalDigits: 0)
+                                    .format(controller.totalNominal.value),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button!
+                                    .copyWith(
+                                        color: buttonColor1,
+                                        fontWeight: FontWeight.w600),
+                              )),
                           Text(
                             "Terisa dari Rp. 0",
                             style:

@@ -365,18 +365,7 @@ class CategoryAnggaranWidget extends StatelessWidget {
       width: 25.27778.w,
       child: GestureDetector(
         onTap: () {
-//           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-//             stream: controller.streamAnggaran(),
-//             builder: (context, snapshot) {
-//               if (snapshot.data!.docs.isNotEmpty) {
-// //
-//                 return Container();
-//               } else {
-//                 return Container();
-//               }
-//             },
-//           );
-          Get.find<CashflowController>().updateKategori(text);
+          Get.find<CashflowController>().checkAnggaranKategori(text);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
@@ -24,13 +23,21 @@ class CashflowController extends GetxController {
   var currentTab = 0.obs;
   var queryAwal = [].obs;
   var tempSearch = [].obs;
+  var totalNominal = 0.obs;
 
   String jenisKategori = "";
+  // var anggaranActive = true.obs;
 
   void changeTabIndex(int index) {
     currentTab.value = index;
     // print(currentTab);
     update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    totalNominalKategori();
   }
 
   void updateToPendapatan() {
@@ -124,6 +131,7 @@ class CashflowController extends GetxController {
           "createdAt": DateTime.now().toIso8601String(),
         });
         isLoading.value = false;
+        totalNominal += int.parse(nomAnggaranC.text.replaceAll('.', ''));
         Get.back();
       } catch (e) {
         isLoading.value = false;
@@ -133,6 +141,44 @@ class CashflowController extends GetxController {
     } else {
       Get.snackbar("TERJADI KESALAHAN", "Kategori dan nominal wajib diisi");
     }
+  }
+
+  void updateAnggaran() async {}
+
+  void checkAnggaranKategori(String text) async {
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .where("kategori", isEqualTo: text)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        // var anggaranActive = false;
+        Get.back();
+        Get.snackbar("Terjadi Kesalahan",
+            "Anda sudah pernah membuat anggaran dengan kategori ini!");
+      } else {
+        updateKategori(text);
+      }
+    });
+  }
+
+  void totalNominalKategori() async {
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        int nominal = doc.data()['nominal'];
+        totalNominal += nominal;
+      });
+      print('Total nominal: $totalNominal');
+    });
   }
 
   // void searchAnggaran(String data) async {
