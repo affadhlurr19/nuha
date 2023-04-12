@@ -6,9 +6,11 @@ import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/uil.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
-import 'package:nuha/app/modules/cashflow/views/form_anggaran_view.dart';
+import 'package:nuha/app/modules/cashflow/views/anggaran_create_view.dart';
+import 'package:nuha/app/modules/cashflow/views/anggaran_detail_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
@@ -110,10 +112,10 @@ class AnggaranView extends GetView<CashflowController> {
                         color: backgroundColor1),
                     child: Container(
                       margin: EdgeInsets.symmetric(
-                        horizontal: 4.4444.w,
-                      ),
+                          horizontal: 4.4444.w, vertical: 1.375.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Obx(() => Text(
                                 NumberFormat.currency(
@@ -134,9 +136,6 @@ class AnggaranView extends GetView<CashflowController> {
                                 Theme.of(context).textTheme.caption!.copyWith(
                                       color: grey400,
                                     ),
-                          ),
-                          SizedBox(
-                            height: 1.h,
                           ),
                           LinearPercentIndicator(
                             barRadius: const Radius.circular(40),
@@ -318,116 +317,127 @@ class SemuaWidget extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var docAnggaran = snapshot.data!.docs[index];
                   Map<String, dynamic> anggaran = docAnggaran.data();
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Image(
-                                      image: AssetImage(
-                                          'assets/images/${anggaran["kategori"]}.png'),
-                                    ),
-                                    SizedBox(
-                                      width: 4.44444.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${anggaran["kategori"]}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .caption!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                color: dark,
-                                              ),
-                                        ),
-                                        SizedBox(
-                                          height: 0.5.h,
-                                        ),
-                                        Text(
-                                          "Tersisa Rp. xxxx",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .caption!
-                                              .copyWith(
-                                                color: grey400,
-                                              ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Iconify(
-                                MaterialSymbols.edit,
-                                size: 12.sp,
-                                color: grey400,
+                  return GestureDetector(
+                    onTap: () => Get.to(const AnggaranDetailView(),
+                        arguments: docAnggaran.id),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            'assets/images/${anggaran["kategori"]}.png'),
+                                      ),
+                                      SizedBox(
+                                        width: 4.44444.w,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${anggaran["kategori"]}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .caption!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: dark,
+                                                ),
+                                          ),
+                                          SizedBox(
+                                            height: 0.5.h,
+                                          ),
+                                          Text(
+                                            "Tersisa Rp. xxxx",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .caption!
+                                                .copyWith(
+                                                  color: grey400,
+                                                ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                        LinearPercentIndicator(
-                          barRadius: const Radius.circular(40),
-                          width: 75.55556.w,
-                          lineHeight: 2.5.h,
-                          percent: 0.10,
-                          backgroundColor: backBar,
-                          progressColor: buttonColor1,
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              NumberFormat.currency(
-                                      locale: 'id',
-                                      symbol: "Limit Rp. ",
-                                      decimalDigits: 0)
-                                  .format(anggaran["nominal"]),
-                              style:
-                                  Theme.of(context).textTheme.caption!.copyWith(
-                                        color: grey400,
-                                      ),
-                            ),
-                            Text(
-                              "0%",
-                              style:
-                                  Theme.of(context).textTheme.caption!.copyWith(
-                                        color: grey400,
-                                      ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                        const Divider(
-                          thickness: 1,
-                          height: 0,
-                          color: grey100,
-                        ),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                      ],
+                              IconButton(
+                                onPressed: () => Get.to(
+                                  showDeleteAnggaranDialog(
+                                      context, docAnggaran.id),
+                                ),
+                                icon: Iconify(
+                                  Ic.baseline_delete,
+                                  size: 12.sp,
+                                  color: grey400,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                          LinearPercentIndicator(
+                            barRadius: const Radius.circular(40),
+                            width: 75.55556.w,
+                            lineHeight: 2.5.h,
+                            percent: 0.10,
+                            backgroundColor: backBar,
+                            progressColor: buttonColor1,
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                NumberFormat.currency(
+                                        locale: 'id',
+                                        symbol: "Limit Rp. ",
+                                        decimalDigits: 0)
+                                    .format(anggaran["nominal"]),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(
+                                      color: grey400,
+                                    ),
+                              ),
+                              Text(
+                                "0%",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(
+                                      color: grey400,
+                                    ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                          const Divider(
+                            thickness: 1,
+                            height: 0,
+                            color: grey100,
+                          ),
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -438,4 +448,73 @@ class SemuaWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+showDeleteAnggaranDialog(BuildContext context, docId) {
+  final controller = Get.find<CashflowController>();
+  // set up the buttons
+  Widget batalButton = ElevatedButton(
+    style: ElevatedButton.styleFrom(
+        elevation: 0,
+        side: const BorderSide(width: 1, color: buttonColor2),
+        backgroundColor: backgroundColor1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+    child: Text(
+      "Batal",
+      style:
+          Theme.of(context).textTheme.bodyText2!.copyWith(color: buttonColor2),
+    ),
+    onPressed: () => Get.back(),
+  );
+  Widget yaButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: buttonColor2,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+      child: Text(
+        "Ya",
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2!
+            .copyWith(color: backgroundColor1),
+      ),
+      onPressed: () {
+        // print(docId);
+        if (controller.isLoading.isFalse) {
+          controller.deleteAnggaranById(docId);
+        }
+      });
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(
+      "Apakah kamu yakin ingin menghapus anggaran ini?",
+      style: Theme.of(context)
+          .textTheme
+          .headline4!
+          .copyWith(color: grey900, fontWeight: FontWeight.w600),
+    ),
+    titlePadding: EdgeInsets.fromLTRB(7.777778.w, 3.5.h, 7.777778.w, 0.25.h),
+    content: Text(
+      "Dengan menyetujui ini, maka anggaran ini akan terhapus secara permanen. Apakah kamu yakin?",
+      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+            color: grey400,
+          ),
+    ),
+    contentPadding: EdgeInsets.symmetric(
+      horizontal: 7.777778.w,
+    ),
+    actions: [
+      batalButton,
+      yaButton,
+    ],
+  );
+  // show the dialog
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

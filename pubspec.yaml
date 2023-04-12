@@ -23,6 +23,8 @@ dependencies:
   get_storage: 2.1.1
   carousel_slider: 4.2.1
   percent_indicator: 4.2.3
+  image_picker: 0.8.7+2
+  full_screen_image: 2.0.0
   flutter: 
     sdk: flutter
 

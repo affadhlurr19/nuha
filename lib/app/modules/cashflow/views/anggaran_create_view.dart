@@ -7,7 +7,7 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/gridicons.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
-import 'package:nuha/app/modules/cashflow/views/form_transaksi_view.dart';
+import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 

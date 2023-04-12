@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,8 +6,10 @@ import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/uil.dart';
+import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/modules/cashflow/views/form_transaksi_view.dart';
+import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
+import 'package:nuha/app/modules/cashflow/views/transaksi_edit_view.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/cashflow_controller.dart';
 
@@ -20,6 +23,21 @@ class TransaksiView extends GetView<CashflowController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor2,
+      floatingActionButton: SizedBox(
+        // width: 35.sp,
+        // height: 35.sp,
+        width: 12.96389.w, height: 5.83375.h,
+        child: FloatingActionButton(
+          backgroundColor: buttonColor1,
+          foregroundColor: backgroundColor2,
+          elevation: 0,
+          onPressed: () => Get.to(FormTransaksiView()),
+          child: Icon(
+            Icons.add,
+            size: 23.sp,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
@@ -110,15 +128,20 @@ class TransaksiView extends GetView<CashflowController> {
                                     )
                                   ],
                                 ),
-                                Text(
-                                  "Rp. 0",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .copyWith(
-                                          color: const Color(0XFF0096C7),
-                                          fontWeight: FontWeight.w600),
-                                )
+                                Obx(() => Text(
+                                      NumberFormat.currency(
+                                              locale: 'id',
+                                              symbol: "Rp. ",
+                                              decimalDigits: 0)
+                                          .format(
+                                              controller.totalPendapatan.value),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .caption!
+                                          .copyWith(
+                                              color: const Color(0XFF0096C7),
+                                              fontWeight: FontWeight.w600),
+                                    ))
                               ],
                             ),
                           ),
@@ -153,15 +176,20 @@ class TransaksiView extends GetView<CashflowController> {
                                     )
                                   ],
                                 ),
-                                Text(
-                                  "Rp. 0",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .copyWith(
-                                          color: const Color(0XFFCC444B),
-                                          fontWeight: FontWeight.w600),
-                                )
+                                Obx(() => Text(
+                                      NumberFormat.currency(
+                                              locale: 'id',
+                                              symbol: "Rp. ",
+                                              decimalDigits: 0)
+                                          .format(controller
+                                              .totalPengeluaran.value),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .caption!
+                                          .copyWith(
+                                              color: const Color(0XFFCC444B),
+                                              fontWeight: FontWeight.w600),
+                                    ))
                               ],
                             ),
                           ),
@@ -260,50 +288,177 @@ class TransaksiView extends GetView<CashflowController> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  SizedBox(
-                    height: 51.25.h,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 12.1875.h,
-                        ),
-                        Image.asset(
-                          'assets/images/no_records_1.png',
-                          width: 40.w,
-                          height: 14.125.h,
-                        ),
-                        Text(
-                          "Kamu belum melakukan pencatatan transaksi, nih. Yuk, catat transaksi dan pantau alur keuanganmu dengan mudah~",
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption!
-                              .copyWith(color: grey400),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(
-                          height: 2.5.h,
-                        ),
-                        SizedBox(
-                          width: 50.27778.w,
-                          height: 4.25.h,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                backgroundColor: buttonColor2,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20))),
-                            child: Text(
-                              "Tambah transaksi sekarang",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(color: backgroundColor1),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
+                    height: 60.75.h,
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: controller.streamSemuaTransaksi(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snapshot.data!.docs.isEmpty) {
+                          return SizedBox(
+                            height: 51.25.h,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 12.1875.h,
+                                ),
+                                Image.asset(
+                                  'assets/images/no_records_1.png',
+                                  width: 40.w,
+                                  height: 14.125.h,
+                                ),
+                                Text(
+                                  "Kamu belum melakukan pencatatan transaksi, nih. Yuk, catat transaksi dan pantau alur keuanganmu dengan mudah~",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption!
+                                      .copyWith(color: grey400),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 2.5.h,
+                                ),
+                                SizedBox(
+                                  width: 50.27778.w,
+                                  height: 4.25.h,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        elevation: 0,
+                                        backgroundColor: buttonColor2,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20))),
+                                    child: Text(
+                                      "Tambah transaksi sekarang",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .caption!
+                                          .copyWith(color: backgroundColor1),
+                                    ),
+                                    onPressed: () =>
+                                        Get.to(FormTransaksiView()),
+                                  ),
+                                ),
+                              ],
                             ),
-                            onPressed: () => Get.to(FormTransaksiView()),
-                          ),
-                        ),
-                      ],
+                          );
+                        } else {
+                          return MediaQuery.removePadding(
+                              context: context,
+                              removeTop: true,
+                              child: ListView.builder(
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (context, index) {
+                                  var docTransaksi = snapshot.data!.docs[index];
+                                  Map<String, dynamic> transaksi =
+                                      docTransaksi.data();
+                                  // print(transaksi);
+                                  return Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Image(
+                                                width: 10.55556.w,
+                                                image: AssetImage(
+                                                    'assets/images/${transaksi["kategori"]}.png'),
+                                              ),
+                                              SizedBox(
+                                                width: 4.44444.w,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${transaksi["namaTransaksi"]}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .caption!
+                                                        .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: dark,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    transaksi["jenisTransaksi"] ==
+                                                            "Pengeluaran"
+                                                        ? NumberFormat.currency(
+                                                                locale: 'id',
+                                                                symbol: "- ",
+                                                                decimalDigits:
+                                                                    0)
+                                                            .format(transaksi[
+                                                                "nominal"])
+                                                        : NumberFormat.currency(
+                                                                locale: 'id',
+                                                                symbol: "+ ",
+                                                                decimalDigits:
+                                                                    0)
+                                                            .format(transaksi[
+                                                                "nominal"]),
+                                                    style: transaksi[
+                                                                "jenisTransaksi"] ==
+                                                            "Pengeluaran"
+                                                        ? Theme.of(context)
+                                                            .textTheme
+                                                            .caption!
+                                                            .copyWith(
+                                                              color: const Color(
+                                                                  0XFFCC444B),
+                                                            )
+                                                        : Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText2!
+                                                            .copyWith(
+                                                              color: const Color(
+                                                                  0XFF0096C7),
+                                                            ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          IconButton(
+                                            onPressed: () => Get.to(
+                                                const TransaksiEditView(),
+                                                arguments: docTransaksi.id),
+                                            icon: Iconify(
+                                              MaterialSymbols.edit,
+                                              size: 12.sp,
+                                              color: grey400,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 1.5.h,
+                                      ),
+                                      const Divider(
+                                        thickness: 1,
+                                        height: 0,
+                                        color: grey100,
+                                      ),
+                                      SizedBox(
+                                        height: 1.5.h,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ));
+                        }
+                      },
                     ),
                   )
                 ],

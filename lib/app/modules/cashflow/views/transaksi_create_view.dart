@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +11,7 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:intl/intl.dart';
 
 class FormTransaksiView extends GetView<CashflowController> {
@@ -119,6 +122,58 @@ class FormTransaksiView extends GetView<CashflowController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "Nama Transaksi*",
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                            color: grey900,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    SizedBox(
+                      height: 0.75.h,
+                    ),
+                    SizedBox(
+                      height: 5.5.h,
+                      child: TextField(
+                        controller: controller.namaTransaksiC,
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: grey900,
+                            ),
+                        decoration: InputDecoration(
+                          hintText: "Masukan Nama Transaksi",
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    color: grey400,
+                                  ),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 4.53333.w,
+                            vertical: 1.h,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                            borderSide: BorderSide(width: 1.sp, color: grey100),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                            borderSide:
+                                BorderSide(color: buttonColor1, width: 1.sp),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       "Nominal Transaksi*",
                       style: Theme.of(context).textTheme.caption!.copyWith(
                             color: grey900,
@@ -131,7 +186,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                     SizedBox(
                       height: 5.5.h,
                       child: TextField(
-                        controller: controller.nominalC,
+                        controller: controller.nominalTransaksiC,
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           CurrencyTextInputFormatter(
@@ -333,7 +388,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                       height: 14.875.h,
                       child: TextField(
                         controller: controller.deskripsiC,
-                        minLines: 8,
+                        minLines: 5,
                         maxLines: null,
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
@@ -383,40 +438,72 @@ class FormTransaksiView extends GetView<CashflowController> {
                     SizedBox(
                       height: 0.75.h,
                     ),
-                    SizedBox(
-                      height: 14.875.h,
-                      child: TextField(
-                        minLines: 8,
-                        maxLines: null,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                              color: grey900,
-                            ),
-                        decoration: InputDecoration(
-                          hintText: "Tulis deskripsi...",
-                          hintStyle:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
-                                    color: grey400,
+                    GetBuilder<CashflowController>(
+                      builder: (c) {
+                        return c.image != null
+                            ? Stack(
+                                children: <Widget>[
+                                  Container(
+                                    width: 75.55556.w,
+                                    height: 14.875.h,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1.sp, color: grey100),
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: backgroundColor1),
+                                    child: FullScreenWidget(
+                                      disposeLevel: DisposeLevel.Medium,
+                                      child: Image(
+                                        fit: BoxFit.fitWidth,
+                                        image: FileImage(
+                                          File(c.image!.path),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 4.53333.w,
-                            vertical: 1.h,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            borderSide: BorderSide(width: 1.sp, color: grey100),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            borderSide:
-                                BorderSide(color: buttonColor1, width: 1.sp),
-                          ),
-                        ),
-                      ),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: IconButton(
+                                      onPressed: () => c.resetImageTransaksi(),
+                                      icon: Iconify(
+                                        MaterialSymbols.cancel_outline_rounded,
+                                        size: 20.sp,
+                                        color: backgroundColor2,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            : GestureDetector(
+                                onTap: () => Get.defaultDialog(
+                                  radius: 25,
+                                  title: "Unggah Foto",
+                                  titleStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(
+                                          color: grey900,
+                                          fontWeight: FontWeight.w600),
+                                  content: DialogCamera(),
+                                ),
+                                child: Container(
+                                  height: 11.375.h,
+                                  width: 75.55556.w,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1.sp, color: grey100),
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: backgroundColor1),
+                                  child: Center(
+                                    child: Iconify(
+                                      MaterialSymbols.photo_sharp,
+                                      size: 18.sp,
+                                      color: grey400,
+                                    ),
+                                  ),
+                                ),
+                              );
+                      },
                     ),
                     SizedBox(
                       height: 4.h,
@@ -439,7 +526,11 @@ class FormTransaksiView extends GetView<CashflowController> {
                           .bodyText2!
                           .copyWith(color: backgroundColor1),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (controller.isLoading.isFalse) {
+                        controller.addTransaksi();
+                      }
+                    },
                   ),
                 ),
               ],
@@ -482,6 +573,48 @@ class DialogContent extends StatelessWidget {
             },
             child: Text(
               "Pendapatan",
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    color: grey900,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DialogCamera extends StatelessWidget {
+  DialogCamera({super.key});
+
+  final CashflowController controller = Get.put(CashflowController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Divider(
+            color: grey400,
+            thickness: 1,
+            indent: 4.w,
+            endIndent: 4.w,
+          ),
+          TextButton(
+            onPressed: () => Get.to(controller.pickImageTransaksi("kamera")),
+            child: Text(
+              "Kamera",
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    color: grey900,
+                  ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Get.to(controller.pickImageTransaksi("galeri")),
+            child: Text(
+              "Galeri",
               style: Theme.of(context).textTheme.bodyText2!.copyWith(
                     color: grey900,
                   ),
