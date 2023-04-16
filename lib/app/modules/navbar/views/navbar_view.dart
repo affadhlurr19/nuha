@@ -15,10 +15,8 @@ import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../controllers/navbar_controller.dart';
 
-class NavbarView extends StatelessWidget {
+class NavbarView extends GetView<NavbarController> {
   NavbarView({Key? key}) : super(key: key);
-
-  final NavbarController controller = Get.put(NavbarController());
 
   @override
   Widget build(BuildContext context) {

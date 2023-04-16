@@ -14,6 +14,8 @@ class CashflowController extends GetxController {
   TextEditingController deskripsiC = TextEditingController();
   TextEditingController nomAnggaranC = TextEditingController();
   TextEditingController searchAnggaranC = TextEditingController();
+  TextEditingController searchTransaksiC = TextEditingController();
+  TextEditingController searchTransInAnggaranC = TextEditingController();
   TextEditingController namaTransaksiC = TextEditingController();
   RxBool isLoading = false.obs;
 
@@ -28,14 +30,17 @@ class CashflowController extends GetxController {
   var kategoriStat = "".obs;
   var selectDate = DateTime.now().obs;
   var currentTab = 0.obs;
-  var queryAwal = [].obs;
-  var tempSearch = [].obs;
   var totalNominal = 0.obs;
   var totalPendapatan = 0.obs;
   var totalPengeluaran = 0.obs;
-  // var showdate = "".obs;
+  var angTerpakai = 0.obs;
+
+  var queryAwal = [].obs; //list hasil search anggaran
+  var tempSearch = [].obs; //list hasil search transaksi
+  var querySearch = [].obs; //list hasil search transaksi pada anggaran tertentu
 
   String jenisKategori = "";
+  String transaksiUrl = "";
   // var anggaranActive = true.obs;
 
   XFile? image;
@@ -133,11 +138,14 @@ class CashflowController extends GetxController {
       try {
         String uid = auth.currentUser!.uid;
         kategoriCheck();
+        String id = firestore.collection("users").doc().id;
         await firestore
             .collection("users")
             .doc(uid)
             .collection("anggaran")
-            .add({
+            .doc(id)
+            .set({
+          "id": id,
           "kategori": kategoriC.value,
           "nominal": int.parse(nomAnggaranC.text.replaceAll('.', '')),
           "jenisAnggaran": jenisKategori,
@@ -192,6 +200,7 @@ class CashflowController extends GetxController {
       });
       isLoading.value = false;
       totalNominalKategori();
+
       Get.back();
     } catch (e) {
       // print(e);
@@ -315,6 +324,16 @@ class CashflowController extends GetxController {
     update();
   }
 
+  void resetTransaksi() async {
+    kategoriC.value = "Pilih Kategori";
+    kategoriStat.value = "";
+    nominalTransaksiC.text = "0";
+    namaTransaksiC.text = "";
+    selectDate.value = DateTime.now();
+    deskripsiC.text = "";
+    resetImageTransaksi();
+  }
+
   void addTransaksi() async {
     if (jenisC.isNotEmpty &&
         nominalTransaksiC.text.isNotEmpty &&
@@ -324,8 +343,8 @@ class CashflowController extends GetxController {
         selectDate.toString().isNotEmpty) {
       isLoading.value = true;
       String uid = auth.currentUser!.uid;
-      String transaksiUrl = "";
       String random = DateTime.now().toIso8601String();
+      String id = firestore.collection("users").doc().id;
 
       if (image != null) {
         String ext = image!.name.split(".").last;
@@ -346,7 +365,9 @@ class CashflowController extends GetxController {
             .collection("users")
             .doc(uid)
             .collection("transaksi")
-            .add({
+            .doc(id)
+            .set({
+          "id": id,
           "jenisTransaksi": jenisC.value,
           "namaTransaksi": namaTransaksiC.text,
           "kategori": kategoriC.value,
@@ -360,13 +381,7 @@ class CashflowController extends GetxController {
 
         isLoading.value = false;
 
-        kategoriC.value = "Pilih Kategori";
-        kategoriStat.value = "";
-        nominalTransaksiC.text = "0";
-        namaTransaksiC.text = "";
-        selectDate.value = DateTime.now();
-        deskripsiC.text = "";
-
+        resetTransaksi();
         totalTransPendapatan();
         totalTransPengeluaran();
 
@@ -452,7 +467,6 @@ class CashflowController extends GetxController {
         kategoriC.value != "Pilih Kategori" &&
         namaTransaksiC.text.isNotEmpty &&
         selectDate.toString().isNotEmpty) {
-      String transaksiUrl = "";
       String uid = auth.currentUser!.uid;
 
       if (image != null) {
@@ -483,8 +497,11 @@ class CashflowController extends GetxController {
           "updatedAt": DateTime.now().toIso8601String(),
         });
         isLoading.value = false;
+
+        resetTransaksi();
         totalTransPendapatan();
         totalTransPengeluaran();
+
         Get.back();
       } catch (e) {
         // print(e);
@@ -503,7 +520,127 @@ class CashflowController extends GetxController {
         .collection("transaksi")
         .where("kategori", isEqualTo: katTransaksi)
         .snapshots();
+  }
 
-    print(katTransaksi);
+  void limitAnggaran(String kategori) async {
+    angTerpakai.value = 0;
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("transaksi")
+        .where("kategori", isEqualTo: kategori)
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        int nominalTrans = doc.data()['nominal'];
+        angTerpakai.value += nominalTrans;
+      });
+      print(angTerpakai);
+    });
+  }
+
+  void searchAnggaran(String data) async {
+    print(data);
+    String uid = auth.currentUser!.uid;
+
+    if (data.isEmpty) {
+      queryAwal.value = [];
+      tempSearch.value = [];
+    } else {
+      var capitalize = data.capitalizeFirst;
+      print(capitalize);
+      if (queryAwal.isEmpty && data.isNotEmpty) {
+        CollectionReference anggaran =
+            await firestore.collection("users").doc(uid).collection("anggaran");
+        final keyNameResult = await anggaran
+            .where("kategori", isGreaterThanOrEqualTo: capitalize)
+            .where("kategori", isLessThan: '${capitalize}z')
+            .get();
+
+        print("Total data: ${keyNameResult.docs.length}");
+        if (keyNameResult.docs.length > 0) {
+          queryAwal.value = [];
+          for (int i = 0; i < keyNameResult.docs.length; i++) {
+            queryAwal.add(keyNameResult.docs[i].data() as Map<String, dynamic>);
+          }
+          print(queryAwal);
+        }
+      }
+    }
+
+    queryAwal.refresh();
+    update();
+  }
+
+  void searchTransaksi(String data) async {
+    // print(data);
+    String uid = auth.currentUser!.uid;
+
+    if (data.isEmpty) {
+      tempSearch.value = [];
+    } else {
+      var capitalize = data.capitalizeFirst;
+      // print(capitalize);
+      if (tempSearch.isEmpty && data.isNotEmpty) {
+        CollectionReference transaksi = await firestore
+            .collection("users")
+            .doc(uid)
+            .collection("transaksi");
+        final keyNameResult = await transaksi
+            .where("namaTransaksi", isGreaterThanOrEqualTo: capitalize)
+            .where("namaTransaksi", isLessThan: '${capitalize}z')
+            .get();
+
+        // print("Total data: ${keyNameResult.docs.length}");
+        if (keyNameResult.docs.length > 0) {
+          tempSearch.value = [];
+          for (int i = 0; i < keyNameResult.docs.length; i++) {
+            tempSearch
+                .add(keyNameResult.docs[i].data() as Map<String, dynamic>);
+          }
+          // print(tempSearch);
+        }
+      }
+    }
+
+    tempSearch.refresh();
+    update();
+  }
+
+  void searchTransInAnggaran(String data, String katTransaksi) async {
+    print(data);
+    String uid = auth.currentUser!.uid;
+
+    if (data.isEmpty) {
+      querySearch.value = [];
+    } else {
+      var capitalize = data.capitalizeFirst;
+      print(capitalize);
+      if (querySearch.isEmpty && data.isNotEmpty) {
+        CollectionReference transInAnggaran = await firestore
+            .collection("users")
+            .doc(uid)
+            .collection("transaksi");
+        final keyNameResult = await transInAnggaran
+            .where("kategori", isEqualTo: katTransaksi)
+            .where("namaTransaksi", isGreaterThanOrEqualTo: capitalize)
+            .where("namaTransaksi", isLessThan: '${capitalize}z')
+            .get();
+
+        print("Total data: ${keyNameResult.docs.length}");
+        if (keyNameResult.docs.length > 0) {
+          querySearch.value = [];
+          for (int i = 0; i < keyNameResult.docs.length; i++) {
+            querySearch
+                .add(keyNameResult.docs[i].data() as Map<String, dynamic>);
+          }
+          print(querySearch);
+        }
+      }
+    }
+
+    querySearch.refresh();
+    update();
   }
 }

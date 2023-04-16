@@ -61,10 +61,22 @@ class HomeView extends GetView<HomeController> {
                 SizedBox(
                   width: 3.3333.w,
                 ),
-                Text(
-                  'YUTA!',
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                      color: buttonColor1, fontWeight: FontWeight.w600),
+                RichText(
+                  maxLines: 1,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "SALAAM, ",
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: grey400, fontWeight: FontWeight.w400),
+                      ),
+                      TextSpan(
+                        text: "YUTA",
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: buttonColor2, fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

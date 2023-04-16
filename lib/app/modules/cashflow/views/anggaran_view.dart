@@ -90,9 +90,7 @@ class AnggaranView extends GetView<CashflowController> {
                       MaterialSymbols.download,
                       color: backgroundColor1,
                     ),
-                    onPressed: () {
-                      // action when search icon is pressed
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -153,9 +151,10 @@ class AnggaranView extends GetView<CashflowController> {
                     margin: EdgeInsets.only(top: 2.h),
                     height: 4.5.h,
                     child: TextField(
-                      controller: controller.searchAnggaranC,
-                      // onChanged: (value) => controller.searchAnggaran(value),
                       textAlign: TextAlign.left,
+                      controller: controller.searchAnggaranC,
+                      onChanged: (value) => controller.searchAnggaran(value),
+                      // onChanged: (value) => controller.searchFunction(value),
                       // textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.text,
                       style: Theme.of(context).textTheme.caption!.copyWith(
@@ -175,7 +174,7 @@ class AnggaranView extends GetView<CashflowController> {
                           iconSize: 12.sp,
                         ),
                         suffixIconColor: grey400,
-                        hintText: "Cari transaksi kamu disini",
+                        hintText: "Cari anggaran kamu disini",
                         hintStyle:
                             Theme.of(context).textTheme.caption!.copyWith(
                                   color: grey400,
@@ -232,10 +231,189 @@ class AnggaranView extends GetView<CashflowController> {
                   SizedBox(
                     height: 2.5.h,
                   ),
-                  Obx(() => SizedBox(
-                        height: 60.75.h,
-                        child: tabOpen[controller.currentTab.value],
-                      )),
+                  GetBuilder<CashflowController>(
+                      init: CashflowController(),
+                      initState: (_) {},
+                      builder: (_) {
+                        return SizedBox(
+                          height: 60.75.h,
+                          child: _.searchAnggaranC.text.isEmpty
+                              ? tabOpen[controller.currentTab.value]
+                              : Obx(
+                                  () => SizedBox(
+                                    child: controller.queryAwal.isEmpty
+                                        ? Center(
+                                            child: Text("data tidak ada"),
+                                          )
+                                        : MediaQuery.removePadding(
+                                            context: context,
+                                            removeTop: true,
+                                            child: ListView.builder(
+                                              itemCount:
+                                                  controller.queryAwal.length,
+                                              itemBuilder: (context, index) {
+                                                return GestureDetector(
+                                                  onTap: () => Get.to(
+                                                      const AnggaranDetailView(),
+                                                      arguments: controller
+                                                              .queryAwal[index]
+                                                          ["id"]),
+                                                  child: Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                4.44444.w),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Column(
+                                                              children: [
+                                                                Row(
+                                                                  children: [
+                                                                    Image(
+                                                                      image: AssetImage(
+                                                                          'assets/images/${controller.queryAwal[index]["kategori"]}.png'),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width:
+                                                                          4.44444
+                                                                              .w,
+                                                                    ),
+                                                                    Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Text(
+                                                                          "${controller.queryAwal[index]["kategori"]}",
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .caption!
+                                                                              .copyWith(
+                                                                                fontWeight: FontWeight.w600,
+                                                                                color: dark,
+                                                                              ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              0.5.h,
+                                                                        ),
+                                                                        Text(
+                                                                          "Tersisa Rp. xxxx",
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .caption!
+                                                                              .copyWith(
+                                                                                color: grey400,
+                                                                              ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            IconButton(
+                                                              onPressed: () =>
+                                                                  Get.to(
+                                                                showDeleteAnggaranDialog(
+                                                                    context,
+                                                                    controller.queryAwal[
+                                                                            index]
+                                                                        ["id"]),
+                                                              ),
+                                                              icon: Iconify(
+                                                                Ic.baseline_delete,
+                                                                size: 12.sp,
+                                                                color: grey400,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 1.5.h,
+                                                        ),
+                                                        LinearPercentIndicator(
+                                                          barRadius:
+                                                              const Radius
+                                                                  .circular(40),
+                                                          width: 75.55556.w,
+                                                          lineHeight: 2.5.h,
+                                                          percent: 0.10,
+                                                          backgroundColor:
+                                                              backBar,
+                                                          progressColor:
+                                                              buttonColor1,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 1.h,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              NumberFormat.currency(
+                                                                      locale:
+                                                                          'id',
+                                                                      symbol:
+                                                                          "Limit Rp. ",
+                                                                      decimalDigits:
+                                                                          0)
+                                                                  .format(int.parse(
+                                                                      "${controller.queryAwal[index]["nominal"]}")),
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .caption!
+                                                                  .copyWith(
+                                                                    color:
+                                                                        grey400,
+                                                                  ),
+                                                            ),
+                                                            Text(
+                                                              "0%",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .caption!
+                                                                  .copyWith(
+                                                                    color:
+                                                                        grey400,
+                                                                  ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 1.5.h,
+                                                        ),
+                                                        const Divider(
+                                                          thickness: 1,
+                                                          height: 0,
+                                                          color: grey100,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 1.5.h,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                        );
+                      })
                 ],
               ),
             )

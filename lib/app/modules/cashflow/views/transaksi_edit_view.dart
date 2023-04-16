@@ -24,7 +24,7 @@ class TransaksiEditView extends GetView<CashflowController> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            "Tambah Transaksi",
+            "Edit Transaksi",
             style: Theme.of(context).textTheme.button!.copyWith(
                   color: dark,
                 ),
@@ -37,6 +37,15 @@ class TransaksiEditView extends GetView<CashflowController> {
             ),
             onPressed: () => Get.back(),
           ),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.delete,
+                  size: 18.sp,
+                  color: titleColor,
+                ))
+          ],
           backgroundColor: backgroundColor1,
           elevation: 0,
         ),

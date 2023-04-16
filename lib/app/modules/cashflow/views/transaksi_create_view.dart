@@ -513,24 +513,26 @@ class FormTransaksiView extends GetView<CashflowController> {
                 SizedBox(
                   width: 75.55556.w,
                   height: 5.5.h,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: buttonColor2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    child: Text(
-                      "Simpan",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(color: backgroundColor1),
+                  child: Obx(
+                    () => ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: buttonColor2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      child: Text(
+                        controller.isLoading.isFalse ? "Simpan" : "Loading...",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(color: backgroundColor1),
+                      ),
+                      onPressed: () {
+                        if (controller.isLoading.isFalse) {
+                          controller.addTransaksi();
+                        }
+                      },
                     ),
-                    onPressed: () {
-                      if (controller.isLoading.isFalse) {
-                        controller.addTransaksi();
-                      }
-                    },
                   ),
                 ),
               ],

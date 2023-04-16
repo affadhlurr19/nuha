@@ -202,6 +202,8 @@ class TransaksiView extends GetView<CashflowController> {
                     height: 4.5.h,
                     child: TextField(
                       textAlign: TextAlign.left,
+                      controller: controller.searchTransaksiC,
+                      onChanged: (value) => controller.searchTransaksi(value),
                       // textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.text,
                       style: Theme.of(context).textTheme.caption!.copyWith(
@@ -288,184 +290,318 @@ class TransaksiView extends GetView<CashflowController> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
-                    height: 60.75.h,
-                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: controller.streamSemuaTransaksi(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (snapshot.data!.docs.isEmpty) {
-                          return SizedBox(
-                            height: 51.25.h,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 12.1875.h,
-                                ),
-                                Image.asset(
-                                  'assets/images/no_records_1.png',
-                                  width: 40.w,
-                                  height: 14.125.h,
-                                ),
-                                Text(
-                                  "Kamu belum melakukan pencatatan transaksi, nih. Yuk, catat transaksi dan pantau alur keuanganmu dengan mudah~",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .copyWith(color: grey400),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 2.5.h,
-                                ),
-                                SizedBox(
-                                  width: 50.27778.w,
-                                  height: 4.25.h,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 0,
-                                        backgroundColor: buttonColor2,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20))),
-                                    child: Text(
-                                      "Tambah transaksi sekarang",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption!
-                                          .copyWith(color: backgroundColor1),
-                                    ),
-                                    onPressed: () =>
-                                        Get.to(FormTransaksiView()),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          return MediaQuery.removePadding(
-                              context: context,
-                              removeTop: true,
-                              child: ListView.builder(
-                                itemCount: snapshot.data!.docs.length,
-                                itemBuilder: (context, index) {
-                                  var docTransaksi = snapshot.data!.docs[index];
-                                  Map<String, dynamic> transaksi =
-                                      docTransaksi.data();
-                                  // print(transaksi);
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Image(
-                                                width: 10.55556.w,
-                                                image: AssetImage(
-                                                    'assets/images/${transaksi["kategori"]}.png'),
-                                              ),
-                                              SizedBox(
-                                                width: 4.44444.w,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                  GetBuilder<CashflowController>(
+                    init: CashflowController(),
+                    initState: (_) {},
+                    builder: (_) {
+                      return SizedBox(
+                        height: 60.75.h,
+                        child: _.searchTransaksiC.text.isEmpty
+                            ? DataViewWidget()
+                            : Obx(() => SizedBox(
+                                  child: controller.tempSearch.isEmpty
+                                      ? Center(
+                                          child: Text("data tidak ada"),
+                                        )
+                                      : MediaQuery.removePadding(
+                                          context: context,
+                                          removeTop: true,
+                                          child: ListView.builder(
+                                            itemCount:
+                                                controller.tempSearch.length,
+                                            itemBuilder: (context, index) {
+                                              return Column(
                                                 children: [
-                                                  Text(
-                                                    "${transaksi["namaTransaksi"]}",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .caption!
-                                                        .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: dark,
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Image(
+                                                            width: 10.55556.w,
+                                                            image: AssetImage(
+                                                                'assets/images/${controller.tempSearch[index]["kategori"]}.png'),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 4.44444.w,
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "${controller.tempSearch[index]["namaTransaksi"]}",
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .caption!
+                                                                    .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color:
+                                                                          dark,
+                                                                    ),
+                                                              ),
+                                                              Text(
+                                                                controller.tempSearch[index]
+                                                                            [
+                                                                            "jenisTransaksi"] ==
+                                                                        "Pengeluaran"
+                                                                    ? NumberFormat.currency(
+                                                                            locale:
+                                                                                'id',
+                                                                            symbol:
+                                                                                "- ",
+                                                                            decimalDigits:
+                                                                                0)
+                                                                        .format(controller.tempSearch[index]
+                                                                            [
+                                                                            "nominal"])
+                                                                    : NumberFormat.currency(
+                                                                            locale:
+                                                                                'id',
+                                                                            symbol:
+                                                                                "+ ",
+                                                                            decimalDigits:
+                                                                                0)
+                                                                        .format(
+                                                                            controller.tempSearch[index]["nominal"]),
+                                                                style: controller.tempSearch[index]
+                                                                            [
+                                                                            "jenisTransaksi"] ==
+                                                                        "Pengeluaran"
+                                                                    ? Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .caption!
+                                                                        .copyWith(
+                                                                          color:
+                                                                              const Color(0XFFCC444B),
+                                                                        )
+                                                                    : Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .bodyText2!
+                                                                        .copyWith(
+                                                                          color:
+                                                                              const Color(0XFF0096C7),
+                                                                        ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      IconButton(
+                                                        onPressed: () => Get.to(
+                                                            const TransaksiEditView(),
+                                                            arguments: controller
+                                                                    .tempSearch[
+                                                                index]["id"]),
+                                                        icon: Iconify(
+                                                          MaterialSymbols.edit,
+                                                          size: 12.sp,
+                                                          color: grey400,
                                                         ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  Text(
-                                                    transaksi["jenisTransaksi"] ==
-                                                            "Pengeluaran"
-                                                        ? NumberFormat.currency(
-                                                                locale: 'id',
-                                                                symbol: "- ",
-                                                                decimalDigits:
-                                                                    0)
-                                                            .format(transaksi[
-                                                                "nominal"])
-                                                        : NumberFormat.currency(
-                                                                locale: 'id',
-                                                                symbol: "+ ",
-                                                                decimalDigits:
-                                                                    0)
-                                                            .format(transaksi[
-                                                                "nominal"]),
-                                                    style: transaksi[
-                                                                "jenisTransaksi"] ==
-                                                            "Pengeluaran"
-                                                        ? Theme.of(context)
-                                                            .textTheme
-                                                            .caption!
-                                                            .copyWith(
-                                                              color: const Color(
-                                                                  0XFFCC444B),
-                                                            )
-                                                        : Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText2!
-                                                            .copyWith(
-                                                              color: const Color(
-                                                                  0XFF0096C7),
-                                                            ),
+                                                  SizedBox(
+                                                    height: 1.5.h,
+                                                  ),
+                                                  const Divider(
+                                                    thickness: 1,
+                                                    height: 0,
+                                                    color: grey100,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 1.5.h,
                                                   ),
                                                 ],
-                                              ),
-                                            ],
+                                              );
+                                            },
                                           ),
-                                          IconButton(
-                                            onPressed: () => Get.to(
-                                                const TransaksiEditView(),
-                                                arguments: docTransaksi.id),
-                                            icon: Iconify(
-                                              MaterialSymbols.edit,
-                                              size: 12.sp,
-                                              color: grey400,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 1.5.h,
-                                      ),
-                                      const Divider(
-                                        thickness: 1,
-                                        height: 0,
-                                        color: grey100,
-                                      ),
-                                      SizedBox(
-                                        height: 1.5.h,
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ));
-                        }
-                      },
-                    ),
-                  )
+                                        ),
+                                )),
+                      );
+                    },
+                  ),
                 ],
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class DataViewWidget extends StatelessWidget {
+  DataViewWidget({super.key});
+
+  final CashflowController controller = Get.put(CashflowController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
+      height: 60.75.h,
+      child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: controller.streamSemuaTransaksi(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.data!.docs.isEmpty) {
+            return SizedBox(
+              height: 51.25.h,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 12.1875.h,
+                  ),
+                  Image.asset(
+                    'assets/images/no_records_1.png',
+                    width: 40.w,
+                    height: 14.125.h,
+                  ),
+                  Text(
+                    "Kamu belum melakukan pencatatan transaksi, nih. Yuk, catat transaksi dan pantau alur keuanganmu dengan mudah~",
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption!
+                        .copyWith(color: grey400),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 2.5.h,
+                  ),
+                  SizedBox(
+                    width: 50.27778.w,
+                    height: 4.25.h,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: buttonColor2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      child: Text(
+                        "Tambah transaksi sekarang",
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption!
+                            .copyWith(color: backgroundColor1),
+                      ),
+                      onPressed: () => Get.to(FormTransaksiView()),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var docTransaksi = snapshot.data!.docs[index];
+                    Map<String, dynamic> transaksi = docTransaksi.data();
+                    // print(transaksi);
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Image(
+                                  width: 10.55556.w,
+                                  image: AssetImage(
+                                      'assets/images/${transaksi["kategori"]}.png'),
+                                ),
+                                SizedBox(
+                                  width: 4.44444.w,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${transaksi["namaTransaksi"]}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .caption!
+                                          .copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            color: dark,
+                                          ),
+                                    ),
+                                    Text(
+                                      transaksi["jenisTransaksi"] ==
+                                              "Pengeluaran"
+                                          ? NumberFormat.currency(
+                                                  locale: 'id',
+                                                  symbol: "- ",
+                                                  decimalDigits: 0)
+                                              .format(transaksi["nominal"])
+                                          : NumberFormat.currency(
+                                                  locale: 'id',
+                                                  symbol: "+ ",
+                                                  decimalDigits: 0)
+                                              .format(transaksi["nominal"]),
+                                      style: transaksi["jenisTransaksi"] ==
+                                              "Pengeluaran"
+                                          ? Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(
+                                                color: const Color(0XFFCC444B),
+                                              )
+                                          : Theme.of(context)
+                                              .textTheme
+                                              .bodyText2!
+                                              .copyWith(
+                                                color: const Color(0XFF0096C7),
+                                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              onPressed: () => Get.to(const TransaksiEditView(),
+                                  arguments: docTransaksi.id),
+                              icon: Iconify(
+                                MaterialSymbols.edit,
+                                size: 12.sp,
+                                color: grey400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 1.5.h,
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          height: 0,
+                          color: grey100,
+                        ),
+                        SizedBox(
+                          height: 1.5.h,
+                        ),
+                      ],
+                    );
+                  },
+                ));
+          }
+        },
       ),
     );
   }
