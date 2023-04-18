@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
-import 'package:nuha/app/modules/profile/views/ganti_foto_profil_view.dart';
+import 'package:nuha/app/modules/literasi/views/cari_artikel_view.dart';
+import 'package:nuha/app/modules/literasi/views/detail_artikel_view.dart';
+import 'package:nuha/app/modules/literasi/views/list_artikel_view.dart';
+import 'package:nuha/app/modules/literasi/views/list_video_view.dart';
 
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
@@ -11,12 +14,15 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/landing/bindings/landing_binding.dart';
 import '../modules/landing/views/landing_view.dart';
+import '../modules/literasi/bindings/literasi_binding.dart';
+import '../modules/literasi/views/literasi_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/memulai/bindings/memulai_binding.dart';
 import '../modules/memulai/views/memulai_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/edit_profile_view.dart';
+import '../modules/profile/views/ganti_foto_profil_view.dart';
 import '../modules/profile/views/ganti_kata_sandi_view.dart';
 import '../modules/profile/views/pengaturan_keamanan_view.dart';
 import '../modules/profile/views/profile_view.dart';
@@ -104,6 +110,31 @@ class AppPages {
       name: _Paths.GANTI_FOTO_PROFIL,
       page: () => GantiFotoProfilView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.LITERASI,
+      page: () => const LiterasiView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.LITERASI_LIST_ARTIKEL,
+      page: () => ListArtikelView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.LITERASI_LIST_VIDEO,
+      page: () => ListVideoView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.CARI_ARTIKEL,
+      page: () => CariArtikelView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_ARTIKEL,
+      page: () => DetailArtikelView(),
+      binding: LiterasiBinding(),
     ),
   ];
 }

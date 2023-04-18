@@ -19,6 +19,11 @@ abstract class Routes {
   static const ADD_NOTE = _Paths.ADD_NOTE;
   static const EDIT_NOTE = _Paths.EDIT_NOTE;
   static const GANTI_FOTO_PROFIL = _Paths.GANTI_FOTO_PROFIL;
+  static const LITERASI = _Paths.LITERASI;
+  static const LITERASI_LIST_ARTIKEL = _Paths.LITERASI_LIST_ARTIKEL;
+  static const LITERASI_LIST_VIDEO = _Paths.LITERASI_LIST_VIDEO;
+  static const CARI_ARTIKEL = _Paths.CARI_ARTIKEL;
+  static const DETAIL_ARTIKEL = _Paths.DETAIL_ARTIKEL;
 }
 
 abstract class _Paths {
@@ -37,4 +42,9 @@ abstract class _Paths {
   static const ADD_NOTE = '/add-note';
   static const EDIT_NOTE = '/edit-note';
   static const GANTI_FOTO_PROFIL = '/ganti-foto-profil';
+  static const LITERASI = '/literasi';
+  static const LITERASI_LIST_ARTIKEL = '/literasi-list-artikel';
+  static const LITERASI_LIST_VIDEO = '/literasi-list-video';
+  static const CARI_ARTIKEL = '/cari-artikel';
+  static const DETAIL_ARTIKEL = '/detail-artikel';
 }
