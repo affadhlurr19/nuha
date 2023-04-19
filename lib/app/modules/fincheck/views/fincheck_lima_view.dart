@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/controllers/fincheck_controller.dart';
-import 'package:nuha/app/widgets/field_fincheck.dart';
+import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 
@@ -74,12 +74,12 @@ class FincheckLimaView extends GetView<FincheckController> {
                 SizedBox(
                   height: 3.125.h,
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Total Aset",
                   contr: controller.aset!,
                   infoText: "Total aset yang kamu miliki.",
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Total Hutang",
                   contr: controller.hutang!,
                   infoText: "Total hutang yang kamu miliki.",

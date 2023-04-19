@@ -7,12 +7,12 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:sizer/sizer.dart';
 import 'package:nuha/app/constant/styles.dart';
 
-class FieldFincheck extends StatelessWidget {
+class FieldCurrency extends StatelessWidget {
   final String labelText;
   final TextEditingController contr;
   final String infoText;
 
-  const FieldFincheck(
+  const FieldCurrency(
       {Key? key,
       required this.labelText,
       required this.contr,
@@ -94,6 +94,12 @@ class FieldFincheck extends StatelessWidget {
                   .caption!
                   .copyWith(color: grey400, fontWeight: FontWeight.bold),
               border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+                borderSide: BorderSide(color: grey100, width: 1),
+              ),
+              enabledBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),

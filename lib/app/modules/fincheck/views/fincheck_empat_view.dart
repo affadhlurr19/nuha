@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/controllers/fincheck_controller.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_lima_view.dart';
-import 'package:nuha/app/widgets/field_fincheck.dart';
+import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 
@@ -63,40 +63,40 @@ class FincheckEmpatView extends GetView<FincheckController> {
           SizedBox(
             height: 3.125.h,
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Belanja Kebutuhan",
             contr: controller.belanja!,
             infoText:
                 "Dana yang kamu keluarkan untuk memenuhi kebutuhan selama satu bulan.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Transportasi",
             contr: controller.transportasi!,
             infoText:
                 "Dana untuk membeli bahan bakar kendaraan, perbaikan kendaraan, atau transportasi umum.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Sedekah/Donasi",
             contr: controller.sedekah!,
             infoText: "Dana yang kamu sisihkan untuk sesama.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Pendidikan",
             contr: controller.pendidikan!,
             infoText: "Dana kebutuhan pendidikan, seperti sekolah dan kursus.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Pajak",
             contr: controller.pajak!,
             infoText: "Iuran yang diwajibkan oleh negara.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Premi Asuransi Bulanan",
             contr: controller.premiAsuransi!,
             infoText:
                 "Dana untuk asuransi kesehatan, kendaraan, pendidikan, dan lainnya.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Lainnya",
             contr: controller.lainnyaP!,
             infoText: "Jumlah dana pengeluaran lainnya.",

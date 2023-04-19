@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ph.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/widgets/carousel_home.dart';
 import 'package:sizer/sizer.dart';
 
 import '../controllers/home_controller.dart';
@@ -99,81 +98,160 @@ class HomeView extends GetView<HomeController> {
         ),
         backgroundColor: backgroundColor2,
         body: ListView(
-          padding: EdgeInsets.symmetric(
-            vertical: 2.5.h,
-          ),
+          padding: EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 7.7778.w),
           children: [
-            const CarouselHome(),
-            SizedBox(
-              height: 1.5.h,
+            // const CarouselHome(),
+            Text(
+              "#NUHA",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: dark, fontWeight: FontWeight.w600),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 7.7778.w),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 25.83333.w,
-                    height: 11.625.h,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: backgroundColor1,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25))),
-                      child: Text(
-                        "Fincheck",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(color: buttonColor1),
-                      ),
-                      onPressed: () => Get.toNamed('/fincheck'),
+            SizedBox(
+              height: 1.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () => Get.toNamed("/perencanaan-keuangan"),
+                  child: Container(
+                    width: 25.8333.w,
+                    height: 11.5.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: backgroundColor1),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 2.196667.w,
+                      vertical: 1.5.h,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image(
+                          image: const AssetImage('assets/images/home_pk.png'),
+                          height: 23.sp,
+                        ),
+                        Center(
+                          child: Text(
+                            "Perencanaan Keuangan",
+                            style:
+                                Theme.of(context).textTheme.overline!.copyWith(
+                                      color: grey500,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 0,
+                                      height: 0,
+                                    ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    width: 3.333.w,
-                  ),
-                  SizedBox(
-                    width: 25.83333.w,
-                    height: 11.625.h,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: backgroundColor1,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25))),
-                      child: Text(
-                        "Log Out",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(color: buttonColor1),
-                      ),
-                      onPressed: () => controller.logout(),
+                ),
+                GestureDetector(
+                  onTap: () => Get.toNamed('/fincheck'),
+                  child: Container(
+                    width: 25.8333.w,
+                    height: 11.5.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: backgroundColor1),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 2.196667.w,
+                      vertical: 1.5.h,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image(
+                          image: const AssetImage('assets/images/home_cku.png'),
+                          height: 23.sp,
+                        ),
+                        Text(
+                          "Cek Kesehatan Keuangan",
+                          style: Theme.of(context).textTheme.overline!.copyWith(
+                                color: grey500,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0,
+                                height: 0,
+                              ),
+                        )
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    width: 3.333.w,
-                  ),
-                  SizedBox(
+                ),
+                GestureDetector(
+                  onTap: () => Get.toNamed('/cashflow'),
+                  child: Container(
                     width: 25.83333.w,
-                    height: 11.625.h,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: backgroundColor1,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25))),
-                      child: Text(
-                        "Cashflow",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(color: buttonColor1),
-                      ),
-                      onPressed: () => Get.toNamed('/cashflow'),
+                    height: 11.5.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: backgroundColor1),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 2.196667.w,
+                      vertical: 1.5.h,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image(
+                          image: const AssetImage('assets/images/home_dlt.png'),
+                          height: 23.sp,
+                        ),
+                        Text(
+                          "Daftar Lembaga Terpercaya",
+                          style: Theme.of(context).textTheme.overline!.copyWith(
+                                color: grey500,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0,
+                                height: 0,
+                              ),
+                        )
+                      ],
                     ),
                   ),
-                ],
+                )
+              ],
+            ),
+            SizedBox(
+              height: 3.h,
+            ),
+            Text(
+              "Bingung mau mulai dari mana?",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: dark, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            InkWell(
+              onTap: () {
+                Get.toNamed('/perencanaan-keuangan');
+              },
+              child: Image(
+                image: AssetImage('assets/images/banner_mulaisekarang.png'),
+                width: 83.44444.w,
               ),
-            )
+            ),
+            SizedBox(
+              height: 3.h,
+            ),
+            Text(
+              "Anggaran Kamu",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: dark, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
           ],
         ));
   }

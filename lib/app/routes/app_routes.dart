@@ -13,6 +13,7 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const NAVBAR = _Paths.NAVBAR;
   static const CASHFLOW = _Paths.CASHFLOW;
+  static const PERENCANAAN_KEUANGAN = _Paths.PERENCANAAN_KEUANGAN;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const NAVBAR = '/navbar';
   static const CASHFLOW = '/cashflow';
+  static const PERENCANAAN_KEUANGAN = '/perencanaan-keuangan';
 }

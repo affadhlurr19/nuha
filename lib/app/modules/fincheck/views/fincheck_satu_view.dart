@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/controllers/fincheck_controller.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_dua_view.dart';
-import 'package:nuha/app/widgets/field_fincheck.dart';
+import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 
@@ -72,31 +72,31 @@ class FincheckSatuView extends GetView<FincheckController> {
                 SizedBox(
                   height: 3.125.h,
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Pendapatan Aktif",
                   contr: controller.pendapatanAktif!,
                   infoText:
                       "Penghasilan yang kamu peroleh setelah bekerja setiap bulan.",
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Pendapatan Pasif",
                   contr: controller.pendapatanPasif!,
                   infoText:
                       "Penghasilan yang kamu dapatkan setiap bulan tanpa terlibat aktif dalam sebuah kegiatan bisnis.",
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Bisnis Usaha",
                   contr: controller.bisnisUsaha!,
                   infoText:
                       "Penghasilan yang kamu dapatkan dari hasil penjualan barang atau jasa.",
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Hasil Investasi",
                   contr: controller.hasilInvestasi!,
                   infoText:
                       "Penghasilan yang kamu dapatkan dari pembayaran dividen atau bunga ketika kamu menanamkan modal atau menjual aset.",
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Lainnya",
                   contr: controller.lainnya!,
                   infoText: "Penghasilan tambahan, seperti bonus.",

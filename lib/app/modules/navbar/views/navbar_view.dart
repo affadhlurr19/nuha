@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:nuha/app/modules/cashflow/views/cashflow_view.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_view.dart';
 import 'package:nuha/app/modules/home/views/home_view.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+import 'package:sizer/sizer.dart';
 
 import '../controllers/navbar_controller.dart';
 
@@ -27,7 +29,7 @@ class NavbarView extends GetView<NavbarController> {
           HomeView(),
           CashflowView(),
           HomeView(),
-          FincheckView(),
+          HomeView(),
           HomeView()
         ],
       ),
@@ -87,19 +89,20 @@ class NavbarView extends GetView<NavbarController> {
           children: [
             Iconify(
               icon,
+              size: 15.sp,
               color:
                   controller.currentPage.value == page ? buttonColor1 : grey400,
             ),
             Text(
               label,
-              style: TextStyle(
-                color: controller.currentPage.value == page
-                    ? buttonColor1
-                    : grey400,
-                fontWeight: controller.currentPage.value == page
-                    ? FontWeight.w600
-                    : null,
-              ),
+              style: Theme.of(context).textTheme.overline!.copyWith(
+                    color: controller.currentPage.value == page
+                        ? buttonColor1
+                        : grey400,
+                    fontWeight: controller.currentPage.value == page
+                        ? FontWeight.w600
+                        : null,
+                  ),
             ),
           ],
         ),

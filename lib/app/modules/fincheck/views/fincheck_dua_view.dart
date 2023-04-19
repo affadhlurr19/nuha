@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/controllers/fincheck_controller.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_tiga_view.dart';
-import 'package:nuha/app/widgets/field_fincheck.dart';
+import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 
@@ -72,13 +72,13 @@ class FincheckDuaView extends GetView<FincheckController> {
                 SizedBox(
                   height: 3.125.h,
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Menabung dan Investasi",
                   contr: controller.nabungInvestasi!,
                   infoText:
                       "Total dana yang disisihkan perbulan untuk menabung dan berinvestasi setiap bulannya.",
                 ),
-                FieldFincheck(
+                FieldCurrency(
                   labelText: "Total tabungan",
                   contr: controller.totalTabungan!,
                   infoText: "Total tabungan yang kamu miliki hingga saat ini.",

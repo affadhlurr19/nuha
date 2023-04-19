@@ -75,5 +75,4 @@ final myTextTheme = TextTheme(
     //Small 10px
     overline: GoogleFonts.jost(
       fontSize: 8.sp,
-      letterSpacing: 1.5,
     ));

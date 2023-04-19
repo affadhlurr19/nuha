@@ -14,6 +14,8 @@ import '../modules/memulai/bindings/memulai_binding.dart';
 import '../modules/memulai/views/memulai_view.dart';
 import '../modules/navbar/bindings/navbar_binding.dart';
 import '../modules/navbar/views/navbar_view.dart';
+import '../modules/perencanaan_keuangan/bindings/perencanaan_keuangan_binding.dart';
+import '../modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 
@@ -66,6 +68,11 @@ class AppPages {
       name: _Paths.CASHFLOW,
       page: () => CashflowView(),
       binding: CashflowBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERENCANAAN_KEUANGAN,
+      page: () => const PerencanaanKeuanganView(),
+      binding: PerencanaanKeuanganBinding(),
     ),
   ];
 }

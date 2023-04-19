@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/controllers/fincheck_controller.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_empat_view.dart';
-import 'package:nuha/app/widgets/field_fincheck.dart';
+import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 
@@ -64,43 +64,43 @@ class FincheckTigaView extends GetView<FincheckController> {
           SizedBox(
             height: 3.125.h,
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Reksadana",
             contr: controller.reksadana!,
             infoText: "Investasi reksadana pasar uang.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Saham",
             contr: controller.saham!,
             infoText: "Investasi kepemilikan modal pada perusahaan.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Obligasi/P2P Landing",
             contr: controller.obligasi!,
             infoText: "Investasi surat hutang yang bisa diperjualbelikan.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Unit Link",
             contr: controller.unitLink!,
             infoText: "Investasi gabungan dari produk layanan asuransi.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Deposito",
             contr: controller.deposito!,
             infoText:
                 "Simpanan di bank dengan jumlah suka bunga dan dalam jangka waktu tertentu.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Crowd Funding",
             contr: controller.crowdFunding!,
             infoText: "Investasi dalam suatu proyek.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "EBA Ritel",
             contr: controller.ebaRitel!,
             infoText: "Investasi pada sektor ritel.",
           ),
-          FieldFincheck(
+          FieldCurrency(
             labelText: "Logam Mulia",
             contr: controller.logamMulia!,
             infoText:

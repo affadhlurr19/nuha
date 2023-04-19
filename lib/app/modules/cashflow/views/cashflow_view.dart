@@ -10,6 +10,7 @@ import 'package:nuha/app/modules/cashflow/views/anggaran_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_detail_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_view.dart';
+import 'package:nuha/app/modules/navbar/views/navbar_view.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
@@ -25,6 +26,7 @@ class CashflowView extends GetView<CashflowController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: backgroundColor2,
+        // bottomNavigationBar: NavbarView(),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(5.875.h),
           child: AppBar(
@@ -43,11 +45,13 @@ class CashflowView extends GetView<CashflowController> {
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: 3.h,
             horizontal: 7.777778.w,
           ),
           child: ListView(
             children: [
+              SizedBox(
+                height: 3.h,
+              ),
               Image(
                 image: const AssetImage('assets/images/banner_alurkas.png'),
                 width: 228.sp,
@@ -409,7 +413,10 @@ class CashflowView extends GetView<CashflowController> {
                     }
                   },
                 ),
-              )
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
             ],
           ),
         ));
