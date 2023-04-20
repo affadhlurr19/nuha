@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,8 +11,10 @@ import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_edit_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/cashflow_controller.dart';
+import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 class TransaksiView extends GetView<CashflowController> {
   TransaksiView({Key? key}) : super(key: key);
@@ -31,7 +34,10 @@ class TransaksiView extends GetView<CashflowController> {
           backgroundColor: buttonColor1,
           foregroundColor: backgroundColor2,
           elevation: 0,
-          onPressed: () => Get.to(FormTransaksiView()),
+          onPressed: () => PersistentNavBarNavigator.pushNewScreen(
+            context,
+            screen: FormTransaksiView(),
+          ),
           child: Icon(
             Icons.add,
             size: 23.sp,
@@ -396,11 +402,15 @@ class TransaksiView extends GetView<CashflowController> {
                                                         ],
                                                       ),
                                                       IconButton(
-                                                        onPressed: () => Get.to(
-                                                            const TransaksiEditView(),
-                                                            arguments: controller
-                                                                    .tempSearch[
-                                                                index]["id"]),
+                                                        onPressed: () =>
+                                                            PersistentNavBarNavigator
+                                                                .pushNewScreen(
+                                                          context,
+                                                          screen: TransaksiEditView(
+                                                              id: controller
+                                                                      .tempSearch[
+                                                                  index]["id"]),
+                                                        ),
                                                         icon: Iconify(
                                                           MaterialSymbols.edit,
                                                           size: 12.sp,
@@ -498,23 +508,27 @@ class DataViewWidget extends StatelessWidget {
                             .caption!
                             .copyWith(color: backgroundColor1),
                       ),
-                      onPressed: () => Get.to(FormTransaksiView()),
+                      onPressed: () => PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: FormTransaksiView(),
+                      ),
                     ),
                   ),
                 ],
               ),
             );
           } else {
-            return MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    var docTransaksi = snapshot.data!.docs[index];
-                    Map<String, dynamic> transaksi = docTransaksi.data();
-                    // print(transaksi);
-                    return Column(
+            final data = snapshot.data!.docs.map((e) => e.data()).toList();
+            return StickyGroupedListView<dynamic, String>(
+                elements: data,
+                groupBy: (dynamic element) => element['tanggalTransaksi'],
+                groupSeparatorBuilder: (dynamic element) => Text(
+                      element['tanggalTransaksi'],
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: grey500, fontWeight: FontWeight.w600),
+                    ),
+                order: StickyGroupedListOrder.DESC,
+                itemBuilder: (context, dynamic element) => Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -524,7 +538,7 @@ class DataViewWidget extends StatelessWidget {
                                 Image(
                                   width: 10.55556.w,
                                   image: AssetImage(
-                                      'assets/images/${transaksi["kategori"]}.png'),
+                                      'assets/images/${element["kategori"]}.png'),
                                 ),
                                 SizedBox(
                                   width: 4.44444.w,
@@ -533,7 +547,7 @@ class DataViewWidget extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${transaksi["namaTransaksi"]}",
+                                      "${element["namaTransaksi"]}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .caption!
@@ -543,19 +557,18 @@ class DataViewWidget extends StatelessWidget {
                                           ),
                                     ),
                                     Text(
-                                      transaksi["jenisTransaksi"] ==
-                                              "Pengeluaran"
+                                      element["jenisTransaksi"] == "Pengeluaran"
                                           ? NumberFormat.currency(
                                                   locale: 'id',
                                                   symbol: "- ",
                                                   decimalDigits: 0)
-                                              .format(transaksi["nominal"])
+                                              .format(element["nominal"])
                                           : NumberFormat.currency(
                                                   locale: 'id',
                                                   symbol: "+ ",
                                                   decimalDigits: 0)
-                                              .format(transaksi["nominal"]),
-                                      style: transaksi["jenisTransaksi"] ==
+                                              .format(element["nominal"]),
+                                      style: element["jenisTransaksi"] ==
                                               "Pengeluaran"
                                           ? Theme.of(context)
                                               .textTheme
@@ -575,8 +588,11 @@ class DataViewWidget extends StatelessWidget {
                               ],
                             ),
                             IconButton(
-                              onPressed: () => Get.to(const TransaksiEditView(),
-                                  arguments: docTransaksi.id),
+                              onPressed: () =>
+                                  PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: TransaksiEditView(id: element["id"]),
+                              ),
                               icon: Iconify(
                                 MaterialSymbols.edit,
                                 size: 12.sp,
@@ -597,9 +613,26 @@ class DataViewWidget extends StatelessWidget {
                           height: 1.5.h,
                         ),
                       ],
-                    );
-                  },
-                ));
+                    ));
+            // List<QueryDocumentSnapshot<Map<String, dynamic>>> transaksiList =
+            //     snapshot.data!.docs.toList();
+
+            // print(transaksiList.length);
+            // return Container();
+            // return StickyGroupedListView<dynamic, String>(
+            //   elements: controller.transaksiList,
+            //   groupBy: (dynamic element) => element["createdAt"],
+            //   groupSeparatorBuilder: (dynamic element) =>
+            //       Text(element['createdAt']),
+            //   itemBuilder: (context, dynamic element) =>
+            //       Text(element['namaTransaksi']),
+            //   // itemComparator: (e1, e2) =>
+            //   //     e1['name'].compareTo(e2['name']), // optional
+            //   // elementIdentifier: (element) =>
+            //   //     element.name, // optional - see below for usage
+            //   // itemScrollController: controller.itemScrollController, // optional
+            //   // order: StickyGroupedListOrder.ASC, // optional
+            // );
           }
         },
       ),

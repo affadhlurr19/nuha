@@ -1,112 +1,93 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/material_symbols.dart';
-import 'package:iconify_flutter/icons/icons8.dart';
-import 'package:iconify_flutter/icons/ph.dart';
-import 'package:iconify_flutter/icons/tabler.dart';
-import 'package:iconify_flutter/icons/iconoir.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/views/cashflow_view.dart';
-import 'package:nuha/app/modules/fincheck/views/fincheck_view.dart';
 import 'package:nuha/app/modules/home/views/home_view.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
 
-import '../controllers/navbar_controller.dart';
+class NavbarView extends StatefulWidget {
+  const NavbarView({super.key});
 
-class NavbarView extends GetView<NavbarController> {
-  NavbarView({Key? key}) : super(key: key);
+  @override
+  State<NavbarView> createState() => _NavbarView();
+}
+
+class _NavbarView extends State<NavbarView> {
+  PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
+
+  List<Widget> _buildScreen() {
+    return [
+      HomeView(),
+      CashflowView(),
+      HomeView(),
+      HomeView(),
+      HomeView(),
+    ];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarItem() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.home),
+        iconSize: 15.sp,
+        title: "Beranda",
+        textStyle:
+            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+        activeColorPrimary: buttonColor1,
+        inactiveColorPrimary: grey400,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.creditcard),
+        iconSize: 15.sp,
+        title: "Alur Kas",
+        textStyle:
+            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+        inactiveColorPrimary: grey500,
+        activeColorPrimary: buttonColor1,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.book),
+        iconSize: 15.sp,
+        title: "Literasi",
+        textStyle:
+            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+        inactiveColorPrimary: grey500,
+        activeColorPrimary: buttonColor1,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.person_2),
+        iconSize: 15.sp,
+        title: "Konsultasi",
+        textStyle:
+            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+        inactiveColorPrimary: grey500,
+        activeColorPrimary: buttonColor1,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.heart_circle),
+        iconSize: 15.sp,
+        title: "ZIS",
+        textStyle:
+            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+        inactiveColorPrimary: grey500,
+        activeColorPrimary: buttonColor1,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: controller.pageController,
-        children: [
-          HomeView(),
-          CashflowView(),
-          HomeView(),
-          HomeView(),
-          HomeView()
-        ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        notchMargin: 0,
-        elevation: 2,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: Obx(() => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _bottomAppBarItem(
-                    context,
-                    icon: MaterialSymbols.home_outline_rounded,
-                    page: 0,
-                    label: "Beranda",
-                  ),
-                  _bottomAppBarItem(
-                    context,
-                    icon: Icons8.bank_card,
-                    page: 1,
-                    label: "Budgeting",
-                  ),
-                  _bottomAppBarItem(
-                    context,
-                    icon: Ph.book_open,
-                    page: 2,
-                    label: "Literasi",
-                  ),
-                  _bottomAppBarItem(
-                    context,
-                    icon: Tabler.users,
-                    page: 3,
-                    label: "Konsultasi",
-                  ),
-                  _bottomAppBarItem(
-                    context,
-                    icon: Iconoir.donate,
-                    page: 4,
-                    label: "ZIS",
-                  )
-                ],
-              )),
-        ),
-      ),
-    );
-  }
-
-  Widget _bottomAppBarItem(BuildContext context,
-      {required icon, required page, required label}) {
-    return ZoomTapAnimation(
-      onTap: () => controller.goToTab(page),
-      child: Container(
-        color: Colors.transparent,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Iconify(
-              icon,
-              size: 15.sp,
-              color:
-                  controller.currentPage.value == page ? buttonColor1 : grey400,
-            ),
-            Text(
-              label,
-              style: Theme.of(context).textTheme.overline!.copyWith(
-                    color: controller.currentPage.value == page
-                        ? buttonColor1
-                        : grey400,
-                    fontWeight: controller.currentPage.value == page
-                        ? FontWeight.w600
-                        : null,
-                  ),
-            ),
-          ],
-        ),
-      ),
+    return PersistentTabView(
+      context,
+      screens: _buildScreen(),
+      items: _navBarItem(),
+      backgroundColor: backgroundColor1,
+      navBarHeight: 8.h,
+      navBarStyle: NavBarStyle.style6,
+      padding: NavBarPadding.fromLTRB(1.75.h, 1.25.h, 6.388889.w, 6.388889.w),
     );
   }
 }

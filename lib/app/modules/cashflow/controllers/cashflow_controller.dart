@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
+import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 class CashflowController extends GetxController {
   TextEditingController nominalTransaksiC = TextEditingController();
@@ -34,16 +35,23 @@ class CashflowController extends GetxController {
   var totalPendapatan = 0.obs;
   var totalPengeluaran = 0.obs;
   var angTerpakai = 0.obs;
+  var sisaAnggaran = 0.obs;
+  var persenLimit = 0.0.obs;
+  var totalAngTerpakai = 0.0.obs;
 
   var queryAwal = [].obs; //list hasil search anggaran
   var tempSearch = [].obs; //list hasil search transaksi
   var querySearch = [].obs; //list hasil search transaksi pada anggaran tertentu
+  var transaksiList = [].obs;
 
   String jenisKategori = "";
   String transaksiUrl = "";
   // var anggaranActive = true.obs;
 
   XFile? image;
+
+  final GroupedItemScrollController itemScrollController =
+      GroupedItemScrollController();
 
   @override
   void onInit() {
@@ -110,6 +118,7 @@ class CashflowController extends GetxController {
         );
       },
     );
+
     if (pickedDate != null && pickedDate != selectDate.value) {
       selectDate.value = pickedDate;
     }
@@ -132,7 +141,7 @@ class CashflowController extends GetxController {
     }
   }
 
-  void addAnggaran() async {
+  void addAnggaran(context) async {
     if (nomAnggaranC.text.isNotEmpty && kategoriC.isNotEmpty) {
       isLoading.value = true;
       try {
@@ -149,6 +158,8 @@ class CashflowController extends GetxController {
           "kategori": kategoriC.value,
           "nominal": int.parse(nomAnggaranC.text.replaceAll('.', '')),
           "jenisAnggaran": jenisKategori,
+          "persentase": 0,
+          "sisaLimit": 0,
           "createdAt": DateTime.now().toIso8601String(),
           "updatedAt": DateTime.now().toIso8601String(),
         });
@@ -158,7 +169,8 @@ class CashflowController extends GetxController {
         nomAnggaranC.text = "0";
 
         totalNominalKategori();
-        Get.back();
+        // Get.back();
+        Navigator.pop(context);
       } catch (e) {
         isLoading.value = false;
         // print(e);
@@ -178,6 +190,7 @@ class CashflowController extends GetxController {
           .collection("anggaran")
           .doc(docId)
           .get();
+      sisaTransAnggaran(doc.data()?["kategori"], doc.data()?["nominal"], docId);
       return doc.data();
     } catch (e) {
       print(e);
@@ -185,7 +198,7 @@ class CashflowController extends GetxController {
     }
   }
 
-  void updateAnggaranById(String docId) async {
+  void updateAnggaranById(context, String docId) async {
     isLoading.value = true;
     try {
       String uid = auth.currentUser!.uid;
@@ -201,7 +214,7 @@ class CashflowController extends GetxController {
       isLoading.value = false;
       totalNominalKategori();
 
-      Get.back();
+      Navigator.pop(context);
     } catch (e) {
       // print(e);
       isLoading.value = false;
@@ -209,7 +222,7 @@ class CashflowController extends GetxController {
     }
   }
 
-  void deleteAnggaranById(String docId) async {
+  void deleteAnggaranById(context, String docId) async {
     isLoading.value = true;
     try {
       String uid = auth.currentUser!.uid;
@@ -221,7 +234,10 @@ class CashflowController extends GetxController {
           .delete();
       isLoading.value = false;
       totalNominalKategori();
+
       Get.back();
+      Navigator.pop(context);
+
       Get.snackbar("DELETE DATA BERHASIL",
           "Data Anda telah kami hapus dari database kami");
     } catch (e) {
@@ -264,8 +280,65 @@ class CashflowController extends GetxController {
         int nominal = doc.data()['nominal'];
         totalNominal += nominal;
       });
-      // print('Total nominal: $totalNominal');
+
+      print('Total nominal: $totalNominal');
     });
+  }
+
+  void totalAnggaranTerpakai() async {
+    totalAngTerpakai.value = 0;
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        int nominal = doc.data()['nominalTerpakai'];
+        totalAngTerpakai.value += nominal;
+      });
+
+      print('Total terpakai: $totalAngTerpakai');
+    });
+  }
+
+  void sisaTransAnggaran(String kategori, int limit, String docId) async {
+    sisaAnggaran.value = 0;
+    persenLimit.value = 0;
+
+    int nomTotal = 0;
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("transaksi")
+        .where("kategori", isEqualTo: kategori)
+        .get()
+        .then((value) {
+      value.docs.forEach((doc) {
+        int nominal = doc.data()['nominal'];
+        nomTotal += nominal;
+      });
+
+      sisaAnggaran.value = limit - nomTotal;
+      // print(sisaAnggaran);
+
+      persenLimit.value = (nomTotal / limit);
+
+      firestore
+          .collection("users")
+          .doc(uid)
+          .collection("anggaran")
+          .doc(docId)
+          .update({
+        "persentase": persenLimit.toStringAsFixed(2),
+        "sisaLimit": sisaAnggaran.value,
+        "nominalTerpakai": nomTotal,
+      });
+    });
+
+    update();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamSemuaAnggaran() async* {
@@ -334,7 +407,7 @@ class CashflowController extends GetxController {
     resetImageTransaksi();
   }
 
-  void addTransaksi() async {
+  void addTransaksi(context) async {
     if (jenisC.isNotEmpty &&
         nominalTransaksiC.text.isNotEmpty &&
         kategoriC.isNotEmpty &&
@@ -359,6 +432,11 @@ class CashflowController extends GetxController {
         transaksiUrl = urlTransaksi;
       }
 
+      String formattedDate =
+          DateFormat('dd MMMM yyyy').format(selectDate.value);
+
+      // print(formattedDate);
+
       try {
         kategoriCheck();
         await firestore
@@ -372,7 +450,7 @@ class CashflowController extends GetxController {
           "namaTransaksi": namaTransaksiC.text,
           "kategori": kategoriC.value,
           "nominal": int.parse(nominalTransaksiC.text.replaceAll('.', '')),
-          "tanggalTransaksi": selectDate.toString(),
+          "tanggalTransaksi": formattedDate.toString(),
           "deskripsi": deskripsiC.text,
           "foto": transaksiUrl,
           "createdAt": DateTime.now().toIso8601String(),
@@ -384,8 +462,9 @@ class CashflowController extends GetxController {
         resetTransaksi();
         totalTransPendapatan();
         totalTransPengeluaran();
+        totalAngTerpakai();
 
-        Get.back();
+        Navigator.pop(context);
       } catch (e) {
         isLoading.value = false;
         // print(e);
@@ -459,7 +538,7 @@ class CashflowController extends GetxController {
     }
   }
 
-  void updateTransaksiById(String docId) async {
+  void updateTransaksiById(context, String docId) async {
     isLoading.value = true;
     if (jenisC.isNotEmpty &&
         nominalTransaksiC.text.isNotEmpty &&
@@ -501,8 +580,10 @@ class CashflowController extends GetxController {
         resetTransaksi();
         totalTransPendapatan();
         totalTransPengeluaran();
+        totalAngTerpakai();
 
-        Get.back();
+        // Get.back();
+        Navigator.pop(context);
       } catch (e) {
         // print(e);
         isLoading.value = false;
@@ -606,6 +687,35 @@ class CashflowController extends GetxController {
 
     tempSearch.refresh();
     update();
+  }
+
+  void deleteTransaksiById(context, String docId) async {
+    isLoading.value = true;
+    try {
+      String uid = auth.currentUser!.uid;
+      await firestore
+          .collection("users")
+          .doc(uid)
+          .collection("transaksi")
+          .doc(docId)
+          .delete();
+      isLoading.value = false;
+
+      resetTransaksi();
+      totalTransPendapatan();
+      totalTransPengeluaran();
+      totalAngTerpakai();
+
+      Get.back();
+      Navigator.pop(context);
+
+      Get.snackbar("DELETE DATA BERHASIL",
+          "Data Anda telah kami hapus dari database kami");
+    } catch (e) {
+      // print(e);
+      isLoading.value = false;
+      Get.snackbar("TERJADI KESALAHAN", "Tidak mengubah data");
+    }
   }
 
   void searchTransInAnggaran(String data, String katTransaksi) async {

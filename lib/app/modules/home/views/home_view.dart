@@ -143,6 +143,7 @@ class HomeView extends GetView<HomeController> {
                                       letterSpacing: 0,
                                       height: 0,
                                     ),
+                            textAlign: TextAlign.center,
                           ),
                         )
                       ],
@@ -177,6 +178,7 @@ class HomeView extends GetView<HomeController> {
                                 letterSpacing: 0,
                                 height: 0,
                               ),
+                          textAlign: TextAlign.center,
                         )
                       ],
                     ),
@@ -210,6 +212,7 @@ class HomeView extends GetView<HomeController> {
                                 letterSpacing: 0,
                                 height: 0,
                               ),
+                          textAlign: TextAlign.center,
                         )
                       ],
                     ),

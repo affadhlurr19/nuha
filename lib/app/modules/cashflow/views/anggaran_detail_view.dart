@@ -9,12 +9,16 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/uil.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_edit_view.dart';
+import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
 
 class AnggaranDetailView extends GetView<CashflowController> {
-  const AnggaranDetailView({Key? key}) : super(key: key);
+  final String id;
+
+  const AnggaranDetailView({Key? key, required this.id}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +37,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
               color: titleColor,
               size: 18.sp,
             ),
-            onPressed: () => Get.back(),
+            onPressed: () => Navigator.pop(context),
           ),
           backgroundColor: backgroundColor1,
           elevation: 0,
@@ -43,7 +47,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
           child: ListView(
             children: [
               FutureBuilder<Map<String, dynamic>?>(
-                  future: controller.getAnggaranById(Get.arguments.toString()),
+                  future: controller.getAnggaranById(id.toString()),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -90,7 +94,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                   iconSize: 12.sp,
                                 ),
                                 suffixIconColor: grey400,
-                                hintText: "Cari anggaran kamu disini",
+                                hintText: "Cari transaksi kamu disini",
                                 hintStyle: Theme.of(context)
                                     .textTheme
                                     .caption!
@@ -151,15 +155,22 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                 SizedBox(
                                                   height: 0.5.h,
                                                 ),
-                                                Text(
-                                                  "Tersisa Rp. xxxx",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .caption!
-                                                      .copyWith(
-                                                        color: grey400,
-                                                      ),
-                                                )
+                                                Obx(() => Text(
+                                                      NumberFormat.currency(
+                                                              locale: 'id',
+                                                              symbol:
+                                                                  "Tersisa Rp. ",
+                                                              decimalDigits: 0)
+                                                          .format(controller
+                                                              .sisaAnggaran
+                                                              .value),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .copyWith(
+                                                            color: grey400,
+                                                          ),
+                                                    ))
                                               ],
                                             ),
                                           ],
@@ -167,9 +178,11 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                       ],
                                     ),
                                     IconButton(
-                                      onPressed: () => Get.to(
-                                          const UpdateAnggaranView(),
-                                          arguments: Get.arguments.toString()),
+                                      onPressed: () => PersistentNavBarNavigator
+                                          .pushNewScreen(context,
+                                              screen: UpdateAnggaranView(
+                                                id: id.toString(),
+                                              )),
                                       icon: Iconify(
                                         MaterialSymbols.edit,
                                         size: 12.sp,
@@ -181,14 +194,14 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                 SizedBox(
                                   height: 1.h,
                                 ),
-                                LinearPercentIndicator(
-                                  barRadius: const Radius.circular(40),
-                                  // width: 75.55556.w,
-                                  lineHeight: 2.5.h,
-                                  percent: 0.10,
-                                  backgroundColor: backBar,
-                                  progressColor: buttonColor1,
-                                ),
+                                Obx(() => LinearPercentIndicator(
+                                      barRadius: const Radius.circular(40),
+                                      // width: 75.55556.w,
+                                      lineHeight: 2.5.h,
+                                      percent: controller.persenLimit.value,
+                                      backgroundColor: backBar,
+                                      progressColor: buttonColor1,
+                                    )),
                                 SizedBox(
                                   height: 1.h,
                                 ),
@@ -244,7 +257,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                       ? Container(
                                           margin: EdgeInsets.symmetric(
                                               horizontal: 4.44444.w),
-                                          height: 60.75.h,
+                                          height: 51.25.h,
                                           child: StreamBuilder<
                                               QuerySnapshot<
                                                   Map<String, dynamic>>>(
@@ -312,7 +325,12 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                     color:
                                                                         backgroundColor1),
                                                           ),
-                                                          onPressed: () => {},
+                                                          onPressed: () =>
+                                                              PersistentNavBarNavigator
+                                                                  .pushNewScreen(
+                                                                      context,
+                                                                      screen:
+                                                                          FormTransaksiView()),
                                                         ),
                                                       ),
                                                     ],
@@ -407,11 +425,8 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                       ],
                                                                     ),
                                                                     Text(
-                                                                      DateFormat(
-                                                                              "dd MMMM yyyy")
-                                                                          .format(
-                                                                              DateTime.parse(transaksi["tanggalTransaksi"]))
-                                                                          .toString(),
+                                                                      transaksi[
+                                                                          "tanggalTransaksi"],
                                                                       style: Theme.of(
                                                                               context)
                                                                           .textTheme

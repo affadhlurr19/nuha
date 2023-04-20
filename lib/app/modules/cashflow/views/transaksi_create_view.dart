@@ -30,13 +30,12 @@ class FormTransaksiView extends GetView<CashflowController> {
                 ),
           ),
           leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: titleColor,
-              size: 18.sp,
-            ),
-            onPressed: () => Get.back(),
-          ),
+              icon: Icon(
+                Icons.arrow_back,
+                color: titleColor,
+                size: 18.sp,
+              ),
+              onPressed: () => Navigator.pop(context)),
           backgroundColor: backgroundColor1,
           elevation: 0,
         ),
@@ -529,7 +528,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                       ),
                       onPressed: () {
                         if (controller.isLoading.isFalse) {
-                          controller.addTransaksi();
+                          controller.addTransaksi(context);
                         }
                       },
                     ),

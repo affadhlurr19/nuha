@@ -10,7 +10,7 @@ import 'package:nuha/app/modules/cashflow/views/anggaran_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_detail_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_view.dart';
-import 'package:nuha/app/modules/navbar/views/navbar_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
@@ -30,8 +30,7 @@ class CashflowView extends GetView<CashflowController> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(5.875.h),
           child: AppBar(
-            leadingWidth: 7.777778.w,
-            titleSpacing: 0,
+            titleSpacing: 8.055556.w,
             title: Text(
               "Alur Kas",
               style: Theme.of(context)
@@ -65,7 +64,18 @@ class CashflowView extends GetView<CashflowController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => Get.to(AnggaranView()),
+                    // onTap: () => Get.to(AnggaranView()),
+                    onTap: () => PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: AnggaranView()),
+                    // onTap: () {
+                    //   Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => AnggaranView(),
+                    //       ));
+                    // },
+
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         // top: 1.h,
@@ -110,7 +120,10 @@ class CashflowView extends GetView<CashflowController> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Get.to(TransaksiView()),
+                    // onTap: () => Get.to(TransaksiView()),
+                    onTap: () => PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: TransaksiView()),
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         // top: 1.h,
@@ -276,10 +289,14 @@ class CashflowView extends GetView<CashflowController> {
                               Map<String, dynamic> anggaran =
                                   docAnggaran.data();
                               return GestureDetector(
-                                onTap: () => Get.to(const AnggaranDetailView(),
-                                    arguments: docAnggaran.id),
-                                // onTap: () => Get.to(UpdateAnggaranView(),
+                                // onTap: () => Get.to(const AnggaranDetailView(),
                                 //     arguments: docAnggaran.id),
+                                onTap: () =>
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen:
+                                      AnggaranDetailView(id: docAnggaran.id),
+                                ),
                                 child: Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: 4.44444.w),
@@ -322,7 +339,14 @@ class CashflowView extends GetView<CashflowController> {
                                                         height: 0.5.h,
                                                       ),
                                                       Text(
-                                                        "Tersisa Rp. xxxx",
+                                                        NumberFormat.currency(
+                                                                locale: 'id',
+                                                                symbol:
+                                                                    "Tersisa Rp. ",
+                                                                decimalDigits:
+                                                                    0)
+                                                            .format(anggaran[
+                                                                "sisaLimit"]),
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .caption!
@@ -337,10 +361,7 @@ class CashflowView extends GetView<CashflowController> {
                                             ],
                                           ),
                                           IconButton(
-                                            onPressed: () => Get.to(
-                                              showDeleteAnggaranDialog(
-                                                  context, docAnggaran.id),
-                                            ),
+                                            onPressed: () => {},
                                             icon: Iconify(
                                               Ic.baseline_delete,
                                               size: 12.sp,
@@ -356,7 +377,8 @@ class CashflowView extends GetView<CashflowController> {
                                         barRadius: const Radius.circular(40),
                                         // width: 75.55556.w,
                                         lineHeight: 2.5.h,
-                                        percent: 0.10,
+                                        percent: double.parse(
+                                            anggaran["persentase"].toString()),
                                         backgroundColor: backBar,
                                         progressColor: buttonColor1,
                                       ),
@@ -381,7 +403,7 @@ class CashflowView extends GetView<CashflowController> {
                                                 ),
                                           ),
                                           Text(
-                                            "0%",
+                                            "${anggaran["persentase"]}%",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .caption!

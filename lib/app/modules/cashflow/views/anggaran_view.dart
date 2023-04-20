@@ -11,6 +11,8 @@ import 'package:iconify_flutter/icons/uil.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_detail_view.dart';
+import 'package:nuha/app/modules/cashflow/views/anggaran_edit_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
@@ -44,7 +46,8 @@ class AnggaranView extends GetView<CashflowController> {
             backgroundColor: buttonColor1,
             foregroundColor: backgroundColor2,
             elevation: 0,
-            onPressed: () => Get.to(FormAnggaranView()),
+            onPressed: () => PersistentNavBarNavigator.pushNewScreen(context,
+                screen: FormAnggaranView()),
             child: Icon(
               Icons.add,
               size: 23.sp,
@@ -120,7 +123,7 @@ class AnggaranView extends GetView<CashflowController> {
                                         locale: 'id',
                                         symbol: "Rp. ",
                                         decimalDigits: 0)
-                                    .format(controller.totalNominal.value),
+                                    .format(controller.totalAngTerpakai.value),
                                 style: Theme.of(context)
                                     .textTheme
                                     .button!
@@ -128,13 +131,19 @@ class AnggaranView extends GetView<CashflowController> {
                                         color: buttonColor1,
                                         fontWeight: FontWeight.w600),
                               )),
-                          Text(
-                            "Terisa dari Rp. 0",
-                            style:
-                                Theme.of(context).textTheme.caption!.copyWith(
+                          Obx(() => Text(
+                                NumberFormat.currency(
+                                        locale: 'id',
+                                        symbol: "Tersisa dari Rp. ",
+                                        decimalDigits: 0)
+                                    .format(controller.totalNominal.value),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(
                                       color: grey400,
                                     ),
-                          ),
+                              )),
                           LinearPercentIndicator(
                             barRadius: const Radius.circular(40),
                             width: 75.55556.w,
@@ -236,7 +245,7 @@ class AnggaranView extends GetView<CashflowController> {
                       initState: (_) {},
                       builder: (_) {
                         return SizedBox(
-                          height: 60.75.h,
+                          height: 53.875.h,
                           child: _.searchAnggaranC.text.isEmpty
                               ? tabOpen[controller.currentTab.value]
                               : Obx(
@@ -253,11 +262,15 @@ class AnggaranView extends GetView<CashflowController> {
                                                   controller.queryAwal.length,
                                               itemBuilder: (context, index) {
                                                 return GestureDetector(
-                                                  onTap: () => Get.to(
-                                                      const AnggaranDetailView(),
-                                                      arguments: controller
-                                                              .queryAwal[index]
-                                                          ["id"]),
+                                                  onTap: () =>
+                                                      PersistentNavBarNavigator
+                                                          .pushNewScreen(
+                                                    context,
+                                                    screen: AnggaranDetailView(
+                                                        id: controller
+                                                                .queryAwal[
+                                                            index]["id"]),
+                                                  ),
                                                   child: Container(
                                                     margin:
                                                         EdgeInsets.symmetric(
@@ -322,15 +335,19 @@ class AnggaranView extends GetView<CashflowController> {
                                                             ),
                                                             IconButton(
                                                               onPressed: () =>
-                                                                  Get.to(
-                                                                showDeleteAnggaranDialog(
-                                                                    context,
-                                                                    controller.queryAwal[
-                                                                            index]
-                                                                        ["id"]),
+                                                                  PersistentNavBarNavigator
+                                                                      .pushNewScreen(
+                                                                context,
+                                                                screen:
+                                                                    UpdateAnggaranView(
+                                                                  id: controller
+                                                                          .queryAwal[
+                                                                      index]["id"],
+                                                                ),
                                                               ),
                                                               icon: Iconify(
-                                                                Ic.baseline_delete,
+                                                                MaterialSymbols
+                                                                    .edit,
                                                                 size: 12.sp,
                                                                 color: grey400,
                                                               ),
@@ -496,8 +513,10 @@ class SemuaWidget extends StatelessWidget {
                   var docAnggaran = snapshot.data!.docs[index];
                   Map<String, dynamic> anggaran = docAnggaran.data();
                   return GestureDetector(
-                    onTap: () => Get.to(const AnggaranDetailView(),
-                        arguments: docAnggaran.id),
+                    onTap: () => PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: AnggaranDetailView(id: docAnggaran.id),
+                    ),
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
                       child: Column(
@@ -535,7 +554,11 @@ class SemuaWidget extends StatelessWidget {
                                             height: 0.5.h,
                                           ),
                                           Text(
-                                            "Tersisa Rp. xxxx",
+                                            NumberFormat.currency(
+                                                    locale: 'id',
+                                                    symbol: "Tersisa Rp. ",
+                                                    decimalDigits: 0)
+                                                .format(anggaran["sisaLimit"]),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .caption!
@@ -550,12 +573,15 @@ class SemuaWidget extends StatelessWidget {
                                 ],
                               ),
                               IconButton(
-                                onPressed: () => Get.to(
-                                  showDeleteAnggaranDialog(
-                                      context, docAnggaran.id),
+                                onPressed: () =>
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: UpdateAnggaranView(
+                                    id: docAnggaran.id,
+                                  ),
                                 ),
                                 icon: Iconify(
-                                  Ic.baseline_delete,
+                                  MaterialSymbols.edit,
                                   size: 12.sp,
                                   color: grey400,
                                 ),
@@ -569,7 +595,8 @@ class SemuaWidget extends StatelessWidget {
                             barRadius: const Radius.circular(40),
                             width: 75.55556.w,
                             lineHeight: 2.5.h,
-                            percent: 0.10,
+                            percent:
+                                double.parse(anggaran["persentase"].toString()),
                             backgroundColor: backBar,
                             progressColor: buttonColor1,
                           ),
@@ -593,7 +620,7 @@ class SemuaWidget extends StatelessWidget {
                                     ),
                               ),
                               Text(
-                                "0%",
+                                "${anggaran["persentase"]}%",
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption!
@@ -626,73 +653,4 @@ class SemuaWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-showDeleteAnggaranDialog(BuildContext context, docId) {
-  final controller = Get.find<CashflowController>();
-  // set up the buttons
-  Widget batalButton = ElevatedButton(
-    style: ElevatedButton.styleFrom(
-        elevation: 0,
-        side: const BorderSide(width: 1, color: buttonColor2),
-        backgroundColor: backgroundColor1,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-    child: Text(
-      "Batal",
-      style:
-          Theme.of(context).textTheme.bodyText2!.copyWith(color: buttonColor2),
-    ),
-    onPressed: () => Get.back(),
-  );
-  Widget yaButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColor2,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-      child: Text(
-        "Ya",
-        style: Theme.of(context)
-            .textTheme
-            .bodyText2!
-            .copyWith(color: backgroundColor1),
-      ),
-      onPressed: () {
-        // print(docId);
-        if (controller.isLoading.isFalse) {
-          controller.deleteAnggaranById(docId);
-        }
-      });
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text(
-      "Apakah kamu yakin ingin menghapus anggaran ini?",
-      style: Theme.of(context)
-          .textTheme
-          .headline4!
-          .copyWith(color: grey900, fontWeight: FontWeight.w600),
-    ),
-    titlePadding: EdgeInsets.fromLTRB(7.777778.w, 3.5.h, 7.777778.w, 0.25.h),
-    content: Text(
-      "Dengan menyetujui ini, maka anggaran ini akan terhapus secara permanen. Apakah kamu yakin?",
-      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-            color: grey400,
-          ),
-    ),
-    contentPadding: EdgeInsets.symmetric(
-      horizontal: 7.777778.w,
-    ),
-    actions: [
-      batalButton,
-      yaButton,
-    ],
-  );
-  // show the dialog
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
 }

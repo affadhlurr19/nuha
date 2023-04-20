@@ -23,7 +23,7 @@ class LoginController extends GetxController {
         );
 
         isLoading.value = false;
-        Get.offAllNamed(Routes.HOME);
+        Get.offAllNamed(Routes.NAVBAR);
       } on FirebaseAuthException catch (e) {
         isLoading.value = false;
         if (e.code == 'user-not-found') {

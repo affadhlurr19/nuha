@@ -4,12 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
 class UpdateAnggaranView extends GetView<CashflowController> {
-  const UpdateAnggaranView({Key? key}) : super(key: key);
+  final String id;
+  const UpdateAnggaranView({Key? key, required this.id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +30,24 @@ class UpdateAnggaranView extends GetView<CashflowController> {
             color: titleColor,
             size: 18.sp,
           ),
-          onPressed: () => Get.back(),
+          onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          IconButton(
+              onPressed: () => PersistentNavBarNavigator.pushDynamicScreen(
+                  context,
+                  screen: showDeleteAnggaranDialog(context, id)),
+              icon: Icon(
+                Icons.delete,
+                size: 18.sp,
+                color: titleColor,
+              ))
+        ],
         backgroundColor: backgroundColor1,
         elevation: 0,
       ),
       body: FutureBuilder<Map<String, dynamic>?>(
-          future: controller.getAnggaranById(Get.arguments.toString()),
+          future: controller.getAnggaranById(id.toString()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -211,7 +224,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                             onPressed: () {
                               if (controller.isLoading.isFalse) {
                                 controller.updateAnggaranById(
-                                    Get.arguments.toString());
+                                    context, id.toString());
                               }
                             },
                           )),
@@ -223,4 +236,73 @@ class UpdateAnggaranView extends GetView<CashflowController> {
           }),
     );
   }
+}
+
+showDeleteAnggaranDialog(BuildContext context, docId) {
+  final controller = Get.find<CashflowController>();
+  // set up the buttons
+  Widget batalButton = ElevatedButton(
+    style: ElevatedButton.styleFrom(
+        elevation: 0,
+        side: const BorderSide(width: 1, color: buttonColor2),
+        backgroundColor: backgroundColor1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+    child: Text(
+      "Batal",
+      style:
+          Theme.of(context).textTheme.bodyText2!.copyWith(color: buttonColor2),
+    ),
+    onPressed: () => Navigator.pop(context),
+  );
+  Widget yaButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: buttonColor2,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+      child: Text(
+        "Ya",
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2!
+            .copyWith(color: backgroundColor1),
+      ),
+      onPressed: () {
+        // print(docId);
+        if (controller.isLoading.isFalse) {
+          controller.deleteAnggaranById(context, docId);
+        }
+      });
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(
+      "Apakah kamu yakin ingin menghapus anggaran ini?",
+      style: Theme.of(context)
+          .textTheme
+          .headline4!
+          .copyWith(color: grey900, fontWeight: FontWeight.w600),
+    ),
+    titlePadding: EdgeInsets.fromLTRB(7.777778.w, 3.5.h, 7.777778.w, 0.25.h),
+    content: Text(
+      "Dengan menyetujui ini, maka anggaran ini akan terhapus secara permanen. Apakah kamu yakin?",
+      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+            color: grey400,
+          ),
+    ),
+    contentPadding: EdgeInsets.symmetric(
+      horizontal: 7.777778.w,
+    ),
+    actions: [
+      batalButton,
+      yaButton,
+    ],
+  );
+  // show the dialog
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

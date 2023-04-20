@@ -32,7 +32,7 @@ class FormAnggaranView extends GetView<CashflowController> {
             color: titleColor,
             size: 18.sp,
           ),
-          onPressed: () => Get.back(),
+          onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: backgroundColor1,
         elevation: 0,
@@ -206,7 +206,7 @@ class FormAnggaranView extends GetView<CashflowController> {
                     ),
                     onPressed: () {
                       if (controller.isLoading.isFalse) {
-                        controller.addAnggaran();
+                        controller.addAnggaran(context);
                       }
                     },
                   )),
@@ -306,12 +306,14 @@ class BottomSheetPengeluaran extends StatelessWidget {
                   image: AssetImage('assets/images/Makan.png'),
                   text: "Makan",
                 ),
-                CategoryWidget(
-                    image: AssetImage('assets/images/Belanja.png'),
-                    text: "Belanja"),
                 CategoryAnggaranWidget(
-                    image: AssetImage('assets/images/Hiburan.png'),
-                    text: "Hiburan"),
+                  image: AssetImage('assets/images/Belanja.png'),
+                  text: "Belanja",
+                ),
+                CategoryAnggaranWidget(
+                  image: AssetImage('assets/images/Hiburan.png'),
+                  text: "Hiburan",
+                ),
                 CategoryAnggaranWidget(
                     image: AssetImage('assets/images/Tagihan.png'),
                     text: "Tagihan"),

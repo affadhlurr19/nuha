@@ -13,10 +13,13 @@ import 'package:iconify_flutter/icons/gridicons.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
 
 class TransaksiEditView extends GetView<CashflowController> {
-  const TransaksiEditView({Key? key}) : super(key: key);
+  final String id;
+
+  const TransaksiEditView({Key? key, required this.id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +38,13 @@ class TransaksiEditView extends GetView<CashflowController> {
               color: titleColor,
               size: 18.sp,
             ),
-            onPressed: () => Get.back(),
+            onPressed: () => Navigator.pop(context),
           ),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () => PersistentNavBarNavigator.pushDynamicScreen(
+                    context,
+                    screen: showDeleteTransaksiById(context, id)),
                 icon: Icon(
                   Icons.delete,
                   size: 18.sp,
@@ -51,7 +56,7 @@ class TransaksiEditView extends GetView<CashflowController> {
         ),
         body: SingleChildScrollView(
             child: FutureBuilder<Map<String, dynamic>?>(
-          future: controller.getTransaksiById(Get.arguments.toString()),
+          future: controller.getTransaksiById(id.toString()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -620,7 +625,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                             onPressed: () {
                               if (controller.isLoading.isFalse) {
                                 controller.updateTransaksiById(
-                                    Get.arguments.toString());
+                                    context, id.toString());
                               }
                             },
                           )),
@@ -632,4 +637,73 @@ class TransaksiEditView extends GetView<CashflowController> {
           },
         )));
   }
+}
+
+showDeleteTransaksiById(BuildContext context, docId) {
+  final controller = Get.find<CashflowController>();
+  // set up the buttons
+  Widget batalButton = ElevatedButton(
+    style: ElevatedButton.styleFrom(
+        elevation: 0,
+        side: const BorderSide(width: 1, color: buttonColor2),
+        backgroundColor: backgroundColor1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+    child: Text(
+      "Batal",
+      style:
+          Theme.of(context).textTheme.bodyText2!.copyWith(color: buttonColor2),
+    ),
+    onPressed: () => Navigator.pop(context),
+  );
+  Widget yaButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: buttonColor2,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+      child: Text(
+        "Ya",
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2!
+            .copyWith(color: backgroundColor1),
+      ),
+      onPressed: () {
+        // print(docId);
+        if (controller.isLoading.isFalse) {
+          controller.deleteTransaksiById(context, docId);
+        }
+      });
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(
+      "Apakah kamu yakin ingin menghapus transaksi ini?",
+      style: Theme.of(context)
+          .textTheme
+          .headline4!
+          .copyWith(color: grey900, fontWeight: FontWeight.w600),
+    ),
+    titlePadding: EdgeInsets.fromLTRB(7.777778.w, 3.5.h, 7.777778.w, 0.25.h),
+    content: Text(
+      "Dengan menyetujui ini, maka transaksi ini akan terhapus secara permanen. Apakah kamu yakin?",
+      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+            color: grey400,
+          ),
+    ),
+    contentPadding: EdgeInsets.symmetric(
+      horizontal: 7.777778.w,
+    ),
+    actions: [
+      batalButton,
+      yaButton,
+    ],
+  );
+  // show the dialog
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
