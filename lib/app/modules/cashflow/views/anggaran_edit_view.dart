@@ -252,7 +252,7 @@ showDeleteAnggaranDialog(BuildContext context, docId) {
       style:
           Theme.of(context).textTheme.bodyText2!.copyWith(color: buttonColor2),
     ),
-    onPressed: () => Navigator.pop(context),
+    onPressed: () => Get.back(),
   );
   Widget yaButton = ElevatedButton(
       style: ElevatedButton.styleFrom(

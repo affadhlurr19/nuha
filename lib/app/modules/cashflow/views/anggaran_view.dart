@@ -123,7 +123,7 @@ class AnggaranView extends GetView<CashflowController> {
                                         locale: 'id',
                                         symbol: "Rp. ",
                                         decimalDigits: 0)
-                                    .format(controller.angTerpakai.value),
+                                    .format(controller.sisaAnggaran.value),
                                 style: Theme.of(context)
                                     .textTheme
                                     .button!
@@ -144,14 +144,17 @@ class AnggaranView extends GetView<CashflowController> {
                                       color: grey400,
                                     ),
                               )),
-                          LinearPercentIndicator(
-                            barRadius: const Radius.circular(40),
-                            width: 75.55556.w,
-                            lineHeight: 2.5.h,
-                            percent: 0.10,
-                            backgroundColor: backBar,
-                            progressColor: buttonColor1,
-                          )
+                          Obx(() => LinearPercentIndicator(
+                                barRadius: const Radius.circular(40),
+                                // width: 75.55556.w,
+                                lineHeight: 2.5.h,
+                                percent: double.parse(
+                                    controller.persenAnggaran.value),
+                                backgroundColor: backBar,
+                                progressColor: controller.getProgressColor(
+                                    double.parse(
+                                        controller.persenAnggaran.value)),
+                              )),
                         ],
                       ),
                     ),
@@ -293,6 +296,9 @@ class AnggaranView extends GetView<CashflowController> {
                                                                     Image(
                                                                       image: AssetImage(
                                                                           'assets/images/${controller.queryAwal[index]["kategori"]}.png'),
+                                                                      width:
+                                                                          10.55556
+                                                                              .w,
                                                                     ),
                                                                     SizedBox(
                                                                       width:
@@ -319,7 +325,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                               0.5.h,
                                                                         ),
                                                                         Text(
-                                                                          NumberFormat.currency(locale: 'id', symbol: "Tersisa dari Rp. ", decimalDigits: 0).format(controller.queryAwal[index]
+                                                                          NumberFormat.currency(locale: 'id', symbol: "Tersisa Rp. ", decimalDigits: 0).format(controller.queryAwal[index]
                                                                               [
                                                                               "sisaLimit"]),
                                                                           style: Theme.of(context)
@@ -540,6 +546,7 @@ class SemuaWidget extends StatelessWidget {
                                   Row(
                                     children: [
                                       Image(
+                                        width: 10.55556.w,
                                         image: AssetImage(
                                             'assets/images/${anggaran["kategori"]}.png'),
                                       ),

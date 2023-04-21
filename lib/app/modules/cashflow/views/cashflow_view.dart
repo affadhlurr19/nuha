@@ -320,6 +320,7 @@ class CashflowView extends GetView<CashflowController> {
                                                   Image(
                                                     image: AssetImage(
                                                         'assets/images/${anggaran["kategori"]}.png'),
+                                                    width: 10.55556.w,
                                                   ),
                                                   SizedBox(
                                                     width: 4.44444.w,

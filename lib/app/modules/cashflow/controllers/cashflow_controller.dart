@@ -58,6 +58,7 @@ class CashflowController extends GetxController {
     totalNominalKategori();
     totalTransPendapatan();
     totalTransPengeluaran();
+    countAnggaranTerpakai();
   }
 
   void changeTabIndex(int index) {
@@ -169,8 +170,9 @@ class CashflowController extends GetxController {
           "kategori": kategoriC.value,
           "nominal": int.parse(nomAnggaranC.text.replaceAll('.', '')),
           "jenisAnggaran": jenisKategori,
-          "persentase": 0,
-          "sisaLimit": 0,
+          "nominalTerpakai": 0,
+          "persentase": "0.0",
+          "sisaLimit": int.parse(nomAnggaranC.text.replaceAll('.', '')),
           "createdAt": DateTime.now().toIso8601String(),
           "updatedAt": DateTime.now().toIso8601String(),
         });
@@ -180,6 +182,7 @@ class CashflowController extends GetxController {
         nomAnggaranC.text = "0";
 
         totalNominalKategori();
+        countAnggaranDetail(kategoriC.value);
 
         Navigator.pop(context);
       } catch (e) {
@@ -202,6 +205,8 @@ class CashflowController extends GetxController {
           .doc(docId)
           .get();
       // sisaTransAnggaran(doc.data()?["kategori"], doc.data()?["nominal"], docId);
+      countAnggaranDetail(doc.data()?["kategori"]);
+
       return doc.data();
     } catch (e) {
       print(e);
@@ -213,6 +218,15 @@ class CashflowController extends GetxController {
     isLoading.value = true;
     try {
       String uid = auth.currentUser!.uid;
+      DocumentSnapshot<Map<String, dynamic>> doc = await firestore
+          .collection("users")
+          .doc(uid)
+          .collection("anggaran")
+          .doc(docId)
+          .get();
+
+      countAnggaranDetail(doc.data()?["kategori"]);
+
       await firestore
           .collection("users")
           .doc(uid)
@@ -245,6 +259,7 @@ class CashflowController extends GetxController {
           .delete();
       isLoading.value = false;
       totalNominalKategori();
+      countAnggaranTerpakai();
 
       Get.back();
       Navigator.pop(context);
@@ -642,7 +657,7 @@ class CashflowController extends GetxController {
   }
 
   void searchAnggaran(String data) async {
-    print(data);
+    // print(data);
     String uid = auth.currentUser!.uid;
 
     if (data.isEmpty) {
@@ -650,7 +665,7 @@ class CashflowController extends GetxController {
       tempSearch.value = [];
     } else {
       var capitalize = data.capitalizeFirst;
-      print(capitalize);
+      // print(capitalize);
       if (queryAwal.isEmpty && data.isNotEmpty) {
         CollectionReference anggaran =
             await firestore.collection("users").doc(uid).collection("anggaran");
@@ -665,7 +680,7 @@ class CashflowController extends GetxController {
           for (int i = 0; i < keyNameResult.docs.length; i++) {
             queryAwal.add(keyNameResult.docs[i].data() as Map<String, dynamic>);
           }
-          print(queryAwal);
+          // print(queryAwal);
         }
       }
     }
