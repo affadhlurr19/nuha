@@ -74,6 +74,11 @@ class TransaksiEditView extends GetView<CashflowController> {
               controller.nominalTransaksiC.text =
                   snapshot.data!["nominal"].toString();
               controller.deskripsiC.text = snapshot.data?["deskripsi"];
+
+              DateTime dateTime = DateFormat('dd MMMM yyyy')
+                  .parse(snapshot.data?["tanggalTransaksi"]);
+
+              controller.selectDate.value = dateTime;
               // controller.image.name = snapshot.data?["foto"];
               // print(controller.image);
 
@@ -384,9 +389,8 @@ class TransaksiEditView extends GetView<CashflowController> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Obx(() => Text(
-                                        DateFormat("dd-MM-yyyy")
-                                            .format(controller.selectDate.value)
-                                            .toString(),
+                                        DateFormat("dd-MM-yyyy").format(
+                                            controller.selectDate.value),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2!

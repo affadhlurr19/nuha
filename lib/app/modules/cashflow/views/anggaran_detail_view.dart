@@ -60,6 +60,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                       );
                     } else {
                       // print(snapshot.data);
+
                       controller.kategoriC.value = snapshot.data!["kategori"];
                       controller.nomAnggaranC.text =
                           snapshot.data!["nominal"].toString();
@@ -155,22 +156,21 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                 SizedBox(
                                                   height: 0.5.h,
                                                 ),
-                                                Obx(() => Text(
-                                                      NumberFormat.currency(
-                                                              locale: 'id',
-                                                              symbol:
-                                                                  "Tersisa Rp. ",
-                                                              decimalDigits: 0)
-                                                          .format(controller
-                                                              .sisaAnggaran
-                                                              .value),
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .caption!
-                                                          .copyWith(
-                                                            color: grey400,
-                                                          ),
-                                                    ))
+                                                Text(
+                                                  NumberFormat.currency(
+                                                          locale: 'id',
+                                                          symbol:
+                                                              "Tersisa Rp. ",
+                                                          decimalDigits: 0)
+                                                      .format(snapshot
+                                                          .data!["sisaLimit"]),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .caption!
+                                                      .copyWith(
+                                                        color: grey400,
+                                                      ),
+                                                )
                                               ],
                                             ),
                                           ],
@@ -194,14 +194,17 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                 SizedBox(
                                   height: 1.h,
                                 ),
-                                Obx(() => LinearPercentIndicator(
-                                      barRadius: const Radius.circular(40),
-                                      // width: 75.55556.w,
-                                      lineHeight: 2.5.h,
-                                      percent: controller.persenLimit.value,
-                                      backgroundColor: backBar,
-                                      progressColor: buttonColor1,
-                                    )),
+                                LinearPercentIndicator(
+                                  barRadius: const Radius.circular(40),
+                                  // width: 75.55556.w,
+                                  lineHeight: 2.5.h,
+                                  percent: double.parse(
+                                      snapshot.data!["persentase"]),
+                                  backgroundColor: backBar,
+                                  progressColor: controller.getProgressColor(
+                                      double.parse(
+                                          snapshot.data!["persentase"])),
+                                ),
                                 SizedBox(
                                   height: 1.h,
                                 ),

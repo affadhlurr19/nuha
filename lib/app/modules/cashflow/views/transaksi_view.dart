@@ -578,7 +578,7 @@ class DataViewWidget extends StatelessWidget {
                                               )
                                           : Theme.of(context)
                                               .textTheme
-                                              .bodyText2!
+                                              .caption!
                                               .copyWith(
                                                 color: const Color(0XFF0096C7),
                                               ),
@@ -614,25 +614,6 @@ class DataViewWidget extends StatelessWidget {
                         ),
                       ],
                     ));
-            // List<QueryDocumentSnapshot<Map<String, dynamic>>> transaksiList =
-            //     snapshot.data!.docs.toList();
-
-            // print(transaksiList.length);
-            // return Container();
-            // return StickyGroupedListView<dynamic, String>(
-            //   elements: controller.transaksiList,
-            //   groupBy: (dynamic element) => element["createdAt"],
-            //   groupSeparatorBuilder: (dynamic element) =>
-            //       Text(element['createdAt']),
-            //   itemBuilder: (context, dynamic element) =>
-            //       Text(element['namaTransaksi']),
-            //   // itemComparator: (e1, e2) =>
-            //   //     e1['name'].compareTo(e2['name']), // optional
-            //   // elementIdentifier: (element) =>
-            //   //     element.name, // optional - see below for usage
-            //   // itemScrollController: controller.itemScrollController, // optional
-            //   // order: StickyGroupedListOrder.ASC, // optional
-            // );
           }
         },
       ),

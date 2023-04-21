@@ -36,8 +36,7 @@ class CashflowController extends GetxController {
   var totalPengeluaran = 0.obs;
   var angTerpakai = 0.obs;
   var sisaAnggaran = 0.obs;
-  var persenLimit = 0.0.obs;
-  var totalAngTerpakai = 0.0.obs;
+  var persenAnggaran = "".obs;
 
   var queryAwal = [].obs; //list hasil search anggaran
   var tempSearch = [].obs; //list hasil search transaksi
@@ -141,6 +140,18 @@ class CashflowController extends GetxController {
     }
   }
 
+  Color getProgressColor(double percent) {
+    if (percent >= 0.95) {
+      return Colors.red;
+    } else if (percent >= 0.9) {
+      return Colors.orange;
+    } else if (percent >= 0.8) {
+      return buttonColor2;
+    } else {
+      return buttonColor1;
+    }
+  }
+
   void addAnggaran(context) async {
     if (nomAnggaranC.text.isNotEmpty && kategoriC.isNotEmpty) {
       isLoading.value = true;
@@ -169,7 +180,7 @@ class CashflowController extends GetxController {
         nomAnggaranC.text = "0";
 
         totalNominalKategori();
-        // Get.back();
+
         Navigator.pop(context);
       } catch (e) {
         isLoading.value = false;
@@ -190,7 +201,7 @@ class CashflowController extends GetxController {
           .collection("anggaran")
           .doc(docId)
           .get();
-      sisaTransAnggaran(doc.data()?["kategori"], doc.data()?["nominal"], docId);
+      // sisaTransAnggaran(doc.data()?["kategori"], doc.data()?["nominal"], docId);
       return doc.data();
     } catch (e) {
       print(e);
@@ -265,80 +276,6 @@ class CashflowController extends GetxController {
         updateKategori(text);
       }
     });
-  }
-
-  void totalNominalKategori() async {
-    totalNominal.value = 0;
-    String uid = auth.currentUser!.uid;
-    firestore
-        .collection("users")
-        .doc(uid)
-        .collection("anggaran")
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        int nominal = doc.data()['nominal'];
-        totalNominal += nominal;
-      });
-
-      print('Total nominal: $totalNominal');
-    });
-  }
-
-  void totalAnggaranTerpakai() async {
-    totalAngTerpakai.value = 0;
-    String uid = auth.currentUser!.uid;
-    firestore
-        .collection("users")
-        .doc(uid)
-        .collection("anggaran")
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        int nominal = doc.data()['nominalTerpakai'];
-        totalAngTerpakai.value += nominal;
-      });
-
-      print('Total terpakai: $totalAngTerpakai');
-    });
-  }
-
-  void sisaTransAnggaran(String kategori, int limit, String docId) async {
-    sisaAnggaran.value = 0;
-    persenLimit.value = 0;
-
-    int nomTotal = 0;
-    String uid = auth.currentUser!.uid;
-    firestore
-        .collection("users")
-        .doc(uid)
-        .collection("transaksi")
-        .where("kategori", isEqualTo: kategori)
-        .get()
-        .then((value) {
-      value.docs.forEach((doc) {
-        int nominal = doc.data()['nominal'];
-        nomTotal += nominal;
-      });
-
-      sisaAnggaran.value = limit - nomTotal;
-      // print(sisaAnggaran);
-
-      persenLimit.value = (nomTotal / limit);
-
-      firestore
-          .collection("users")
-          .doc(uid)
-          .collection("anggaran")
-          .doc(docId)
-          .update({
-        "persentase": persenLimit.toStringAsFixed(2),
-        "sisaLimit": sisaAnggaran.value,
-        "nominalTerpakai": nomTotal,
-      });
-    });
-
-    update();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamSemuaAnggaran() async* {
@@ -439,6 +376,7 @@ class CashflowController extends GetxController {
 
       try {
         kategoriCheck();
+        countAnggaranDetail(kategoriC.value);
         await firestore
             .collection("users")
             .doc(uid)
@@ -462,7 +400,6 @@ class CashflowController extends GetxController {
         resetTransaksi();
         totalTransPendapatan();
         totalTransPengeluaran();
-        totalAngTerpakai();
 
         Navigator.pop(context);
       } catch (e) {
@@ -474,6 +411,101 @@ class CashflowController extends GetxController {
       Get.snackbar(
           "TERJADI KESALAHAN", "Kolom bertanda bintang(*) wajib diisi");
     }
+  }
+
+  void countAnggaranDetail(String kategori) async {
+    String uid = auth.currentUser!.uid;
+    int nomTotal = 0;
+    String idData = "";
+    int nominal = 0;
+    int sisaLimit = 0;
+    String persentaseLimit = "";
+
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("transaksi")
+        .where("kategori", isEqualTo: kategori)
+        .get()
+        .then((value) {
+      value.docs.forEach((doc) {
+        int nominal = doc.data()['nominal'];
+        nomTotal += nominal;
+      });
+
+      if (nomTotal > 0) {
+        firestore
+            .collection("users")
+            .doc(uid)
+            .collection("anggaran")
+            .where("kategori", isEqualTo: kategori)
+            .get()
+            .then((value) {
+          if (value.docs.isNotEmpty) {
+            idData = value.docs[0].data()["id"];
+            nominal = value.docs[0].data()["nominal"];
+
+            sisaLimit = nominal - nomTotal;
+            persentaseLimit = (nomTotal / nominal).toStringAsFixed(2);
+
+            firestore
+                .collection("users")
+                .doc(uid)
+                .collection("anggaran")
+                .doc(idData)
+                .update({
+              "nominalTerpakai": nomTotal,
+              "sisaLimit": sisaLimit,
+              "persentase": persentaseLimit,
+            });
+          }
+        });
+      }
+    });
+
+    countAnggaranTerpakai();
+  }
+
+  void totalNominalKategori() async {
+    totalNominal.value = 0;
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        int nominal = doc.data()['nominal'];
+        totalNominal += nominal;
+      });
+
+      countAnggaranSisa();
+    });
+  }
+
+  void countAnggaranTerpakai() async {
+    angTerpakai.value = 0;
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        int nominalTerpakai = doc.data()['nominalTerpakai'];
+        angTerpakai += nominalTerpakai;
+      });
+
+      countAnggaranSisa();
+    });
+  }
+
+  void countAnggaranSisa() async {
+    sisaAnggaran.value = totalNominal.value - angTerpakai.value;
+    persenAnggaran.value =
+        (angTerpakai.value / totalNominal.value).toStringAsFixed(2);
   }
 
   void totalTransPendapatan() async {
@@ -558,7 +590,14 @@ class CashflowController extends GetxController {
         transaksiUrl = urlTransaksi;
       }
 
+      String formattedDate =
+          DateFormat('dd MMMM yyyy').format(selectDate.value);
+
       try {
+        // print(kategoriC.value);
+
+        countAnggaranDetail(kategoriC.value);
+
         await firestore
             .collection("users")
             .doc(uid)
@@ -569,7 +608,7 @@ class CashflowController extends GetxController {
           "namaTransaksi": namaTransaksiC.text,
           "kategori": kategoriC.value,
           "nominal": int.parse(nominalTransaksiC.text.replaceAll('.', '')),
-          "tanggalTransaksi": selectDate.toString(),
+          "tanggalTransaksi": formattedDate.toString(),
           "deskripsi": deskripsiC.text,
           "foto": transaksiUrl,
           "createdAt": DateTime.now().toIso8601String(),
@@ -580,7 +619,6 @@ class CashflowController extends GetxController {
         resetTransaksi();
         totalTransPendapatan();
         totalTransPengeluaran();
-        totalAngTerpakai();
 
         // Get.back();
         Navigator.pop(context);
@@ -601,24 +639,6 @@ class CashflowController extends GetxController {
         .collection("transaksi")
         .where("kategori", isEqualTo: katTransaksi)
         .snapshots();
-  }
-
-  void limitAnggaran(String kategori) async {
-    angTerpakai.value = 0;
-    String uid = auth.currentUser!.uid;
-    firestore
-        .collection("users")
-        .doc(uid)
-        .collection("transaksi")
-        .where("kategori", isEqualTo: kategori)
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        int nominalTrans = doc.data()['nominal'];
-        angTerpakai.value += nominalTrans;
-      });
-      print(angTerpakai);
-    });
   }
 
   void searchAnggaran(String data) async {
@@ -691,8 +711,20 @@ class CashflowController extends GetxController {
 
   void deleteTransaksiById(context, String docId) async {
     isLoading.value = true;
+    String kategoriValue = "";
     try {
       String uid = auth.currentUser!.uid;
+
+      DocumentSnapshot<Map<String, dynamic>> doc = await firestore
+          .collection("users")
+          .doc(uid)
+          .collection("transaksi")
+          .doc(docId)
+          .get();
+      kategoriValue = doc.data()?["kategori"];
+
+      countAnggaranDetail(kategoriValue);
+
       await firestore
           .collection("users")
           .doc(uid)
@@ -704,7 +736,6 @@ class CashflowController extends GetxController {
       resetTransaksi();
       totalTransPendapatan();
       totalTransPengeluaran();
-      totalAngTerpakai();
 
       Get.back();
       Navigator.pop(context);

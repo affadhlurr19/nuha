@@ -123,7 +123,7 @@ class AnggaranView extends GetView<CashflowController> {
                                         locale: 'id',
                                         symbol: "Rp. ",
                                         decimalDigits: 0)
-                                    .format(controller.totalAngTerpakai.value),
+                                    .format(controller.angTerpakai.value),
                                 style: Theme.of(context)
                                     .textTheme
                                     .button!
@@ -319,7 +319,9 @@ class AnggaranView extends GetView<CashflowController> {
                                                                               0.5.h,
                                                                         ),
                                                                         Text(
-                                                                          "Tersisa Rp. xxxx",
+                                                                          NumberFormat.currency(locale: 'id', symbol: "Tersisa dari Rp. ", decimalDigits: 0).format(controller.queryAwal[index]
+                                                                              [
+                                                                              "sisaLimit"]),
                                                                           style: Theme.of(context)
                                                                               .textTheme
                                                                               .caption!
@@ -363,11 +365,19 @@ class AnggaranView extends GetView<CashflowController> {
                                                                   .circular(40),
                                                           width: 75.55556.w,
                                                           lineHeight: 2.5.h,
-                                                          percent: 0.10,
+                                                          percent: double.parse(
+                                                              controller.queryAwal[
+                                                                      index][
+                                                                  "persentase"]),
                                                           backgroundColor:
                                                               backBar,
-                                                          progressColor:
-                                                              buttonColor1,
+                                                          progressColor: controller
+                                                              .getProgressColor(
+                                                                  double.parse(controller
+                                                                              .queryAwal[
+                                                                          index]
+                                                                      [
+                                                                      "persentase"])),
                                                         ),
                                                         SizedBox(
                                                           height: 1.h,
@@ -397,7 +407,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                   ),
                                                             ),
                                                             Text(
-                                                              "0%",
+                                                              "${controller.queryAwal[index]["persentase"]}%",
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
@@ -598,7 +608,9 @@ class SemuaWidget extends StatelessWidget {
                             percent:
                                 double.parse(anggaran["persentase"].toString()),
                             backgroundColor: backBar,
-                            progressColor: buttonColor1,
+                            progressColor: controller.getProgressColor(
+                                double.parse(
+                                    anggaran["persentase"].toString())),
                           ),
                           SizedBox(
                             height: 1.h,

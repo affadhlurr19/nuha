@@ -188,24 +188,30 @@ class CashflowView extends GetView<CashflowController> {
                             fontWeight: FontWeight.w600,
                             height: 1.25),
                       ),
-                      Text(
-                        "Sisa anggaran kamu Rp 0",
-                        style: Theme.of(context)
-                            .textTheme
-                            .caption!
-                            .copyWith(color: grey400, height: 1.3),
-                      ),
+                      Obx(() => Text(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: "Sisa anggaran kamu Rp. ",
+                                    decimalDigits: 0)
+                                .format(controller.sisaAnggaran.value),
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(color: grey400, height: 1.3),
+                          )),
                       SizedBox(
                         height: 1.5.h,
                       ),
-                      LinearPercentIndicator(
-                        barRadius: const Radius.circular(40),
-                        width: 75.55556.w,
-                        lineHeight: 2.5.h,
-                        percent: 0.10,
-                        backgroundColor: backBar,
-                        progressColor: buttonColor1,
-                      ),
+                      Obx(() => LinearPercentIndicator(
+                            barRadius: const Radius.circular(40),
+                            // width: 75.55556.w,
+                            lineHeight: 2.5.h,
+                            percent:
+                                double.parse(controller.persenAnggaran.value),
+                            backgroundColor: backBar,
+                            progressColor: controller.getProgressColor(
+                                double.parse(controller.persenAnggaran.value)),
+                          )),
                     ],
                   ),
                 ),
@@ -380,7 +386,10 @@ class CashflowView extends GetView<CashflowController> {
                                         percent: double.parse(
                                             anggaran["persentase"].toString()),
                                         backgroundColor: backBar,
-                                        progressColor: buttonColor1,
+                                        progressColor: controller
+                                            .getProgressColor(double.parse(
+                                                anggaran["persentase"]
+                                                    .toString())),
                                       ),
                                       SizedBox(
                                         height: 1.h,
