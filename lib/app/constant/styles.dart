@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 const Color backgroundColor1 = Color(0XFFFFFFFF);
 const Color backgroundColor2 = Color(0XFFF8F8F8);
@@ -11,6 +12,11 @@ const Color grey100 = Color(0XFFE1E1E1);
 const Color grey400 = Color(0XFF919191);
 const Color grey500 = Color(0XFF717171);
 const Color grey900 = Color(0XFF1F1F1F);
+const Color errColor = Colors.red;
+const Color succColor = Colors.green;
+double heightDevice = Get.height;
+double widthDevice = Get.width;
+
 
 final myTextTheme = TextTheme(
     headline1: GoogleFonts.jost(
