@@ -11,8 +11,8 @@ import 'package:sizer/sizer.dart';
 
 class DetailArtikelView extends GetView<DetailArtikelController> {
   DetailArtikelView({Key? key}) : super(key: key);
-  final c = Get.find<DetailArtikelController>();
-
+  final c = Get.find<DetailArtikelController>();    
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,12 +45,20 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
         actions: [
           Container(
             padding: EdgeInsets.only(right: 2.98.w),
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.bookmark_border,
-                size: 3.h,
-                color: titleColor,
+            child: Obx(
+              () => IconButton(
+                onPressed: () {
+                  if (c.isLoading.isFalse) {
+                    c.toogleBookmark(Get.arguments);
+                  }
+                },
+                icon: Icon(
+                  c.isBookmarked.isTrue
+                      ? Icons.bookmark_border_outlined
+                      : Icons.bookmark_border,
+                  size: 3.h,
+                  color: titleColor,
+                ),
               ),
             ),
           ),
@@ -65,7 +73,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
       ),
       body: FutureBuilder<dynamic>(
         future: c.fetchDetailArtikel(Get.arguments),
-        builder: (context, snapshot) {          
+        builder: (context, snapshot) {
           return Obx(
             () {
               switch (c.resultState.value.status) {
@@ -80,6 +88,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                   return ListView(
                     physics: const BouncingScrollPhysics(),
                     children: [
+                      Text(c.isBookmarked.value.toString()),
                       SizedBox(height: 1.875.h),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 12.2.w),
