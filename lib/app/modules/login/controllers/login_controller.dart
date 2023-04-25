@@ -71,7 +71,7 @@ class LoginController extends GetxController {
             });
           }
 
-          Get.offAllNamed(Routes.HOME);
+          Get.offAllNamed(Routes.NAVBAR);
         } else {
           print('User belum terverifikasi');
           Get.defaultDialog(
@@ -142,7 +142,7 @@ class LoginController extends GetxController {
           "created_at": DateTime.now().toIso8601String(),
         });
       }
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.NAVBAR);
     } on FirebaseAuthException catch (e) {
       isLoadingG.value = false;
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {

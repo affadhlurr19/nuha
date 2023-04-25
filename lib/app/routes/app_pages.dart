@@ -4,15 +4,12 @@ import 'package:nuha/app/modules/literasi/views/detail_artikel_view.dart';
 import 'package:nuha/app/modules/literasi/views/list_artikel_view.dart';
 import 'package:nuha/app/modules/literasi/views/list_video_view.dart';
 
-<<<<<<< HEAD
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
 import '../modules/edit_note/bindings/edit_note_binding.dart';
 import '../modules/edit_note/views/edit_note_view.dart';
-=======
 import '../modules/cashflow/bindings/cashflow_binding.dart';
 import '../modules/cashflow/views/cashflow_view.dart';
->>>>>>> origin/Tiara
 import '../modules/fincheck/bindings/fincheck_binding.dart';
 import '../modules/fincheck/views/fincheck_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -27,17 +24,14 @@ import '../modules/memulai/bindings/memulai_binding.dart';
 import '../modules/memulai/views/memulai_view.dart';
 import '../modules/navbar/bindings/navbar_binding.dart';
 import '../modules/navbar/views/navbar_view.dart';
-<<<<<<< HEAD
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/edit_profile_view.dart';
 import '../modules/profile/views/ganti_foto_profil_view.dart';
 import '../modules/profile/views/ganti_kata_sandi_view.dart';
 import '../modules/profile/views/pengaturan_keamanan_view.dart';
 import '../modules/profile/views/profile_view.dart';
-=======
 import '../modules/perencanaan_keuangan/bindings/perencanaan_keuangan_binding.dart';
 import '../modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
->>>>>>> origin/Tiara
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';

@@ -261,6 +261,8 @@ class HomeView extends GetView<HomeController> {
             SizedBox(
               height: 1.h,
             ),
+            
+            ElevatedButton(onPressed: () => Get.toNamed(Routes.PROFILE), child: Text('Profile')),
           ],
         ));
   }

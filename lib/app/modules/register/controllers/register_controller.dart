@@ -127,7 +127,7 @@ class RegisterController extends GetxController {
           "created_at": DateTime.now().toIso8601String(),
         });
       }
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.NAVBAR);
     } on FirebaseAuthException catch (e) {
       isLoadingG.value = false;
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
