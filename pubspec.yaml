@@ -17,6 +17,16 @@ dependencies:
   firebase_core: ^2.7.1
   zoom_tap_animation: 1.1.0
   iconify_flutter: 0.0.5
+  intl: 0.17.0
+  currency_text_input_formatter: 2.1.8
+  sizer: 2.0.15
+  get_storage: 2.1.1
+  carousel_slider: 4.2.1
+  percent_indicator: 4.2.3
+  image_picker: 0.8.7+2
+  full_screen_image: 2.0.0
+  persistent_bottom_nav_bar: 5.0.2
+  sticky_grouped_list: 3.1.0
   flutter: 
     sdk: flutter
   get_storage: ^2.1.1
@@ -39,6 +49,5 @@ dev_dependencies:
 flutter: 
   assets: 
     - assets/images/
-    - assets/icons/
   uses-material-design: true
 

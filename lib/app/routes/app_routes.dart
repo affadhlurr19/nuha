@@ -25,6 +25,8 @@ abstract class Routes {
   static const LITERASI_LIST_VIDEO = _Paths.LITERASI_LIST_VIDEO;
   static const CARI_ARTIKEL = _Paths.CARI_ARTIKEL;
   static const DETAIL_ARTIKEL = _Paths.DETAIL_ARTIKEL;
+  static const CASHFLOW = _Paths.CASHFLOW;
+  static const PERENCANAAN_KEUANGAN = _Paths.PERENCANAAN_KEUANGAN;
 }
 
 abstract class _Paths {
@@ -49,4 +51,6 @@ abstract class _Paths {
   static const LITERASI_LIST_VIDEO = '/literasi-list-video';
   static const CARI_ARTIKEL = '/cari-artikel';
   static const DETAIL_ARTIKEL = '/detail-artikel';
+  static const CASHFLOW = '/cashflow';
+  static const PERENCANAAN_KEUANGAN = '/perencanaan-keuangan';
 }

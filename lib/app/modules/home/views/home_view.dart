@@ -6,132 +6,262 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/routes/app_pages.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/ph.dart';
+import 'package:nuha/app/constant/styles.dart';
 import 'package:sizer/sizer.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.book),
-          onPressed: () => Get.toNamed(Routes.LITERASI),
-        ),
-        actions: [
-          StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-            stream: controller.streamProfile(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircleAvatar(
-                  backgroundColor: Colors.grey[400],
-                );
-              }
-              Map<String, dynamic>? data = snapshot.data!.data();
-
-              return GestureDetector(
-                onTap: () => Get.toNamed(Routes.PROFILE),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[400],
-                  backgroundImage: NetworkImage(data?["profile"] != null
-                      ? data!["profile"].toString()
-                      : "https://ui-avatars.com/api/?name=${data!["name"]}"),
-                ),
-              );
-            },
-          ),
-          const SizedBox(width: 15),
-        ],
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light,
-          statusBarBrightness: Brightness.dark,
-        ),
-        elevation: 0.5,
-        toolbarHeight: 7.375.h,
-      ),
-      // body: Column(
-      //   children: [
-      //     Text(auth.currentUser!.providerData.toString()),
-      //     const SizedBox(height: 10),
-      //     Text(auth.currentUser!.providerData[0].providerId),
-      //     Text(auth.currentUser!.uid),
-      //     const SizedBox(height: 10),
-      //     auth.currentUser!.providerData[0].providerId == 'google.com'
-      //         ? ElevatedButton(
-      //             onPressed: () => controller.logoutGoogle(),
-      //             child: const Text('Logout Google Account'),
-      //           )
-      //         : ElevatedButton(
-      //             onPressed: () => controller.logout(),
-      //             child: const Text('Logout'),
-      //           ),
-
-      //     // auth.currentUser.providerData.fo
-      //   ],
-      // ),
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: controller.streamNotes(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.data?.docs.length == 0 || snapshot.data == null) {
-            return const Center(
-              child: Text('Belum ada data notes'),
-            );
-          }
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              var docNote = snapshot.data!.docs[index];
-              Map<String, dynamic> note = docNote.data();
-              return ListTile(
-                onTap: () => Get.toNamed(
-                  Routes.EDIT_NOTE,
-                  arguments: docNote.id,
-                ),
-                leading: CircleAvatar(
-                  child: Text("${index + 1}"),
-                ),
-                title: Text(
-                  '${note['title']}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                  '${note['desc']}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                trailing: IconButton(
-                  onPressed: () {
-                    controller.deleteNote(docNote.id);
+        appBar: AppBar(
+          backgroundColor: backgroundColor1,
+          elevation: 0,
+          title: Padding(
+            padding: EdgeInsets.only(left: 3.333.w),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // Your code here
                   },
-                  icon: const Icon(Icons.delete),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/images/jade_lemon.png',
+                            width: 23.sp,
+                            height: 23.sp,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        child: Center(
+                          child: Text(
+                            "Y",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(
+                                    color: backgroundColor1,
+                                    fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              );
-            },
-          );
-        },
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.ADD_NOTE),
-        child: const Icon(Icons.add),
-      ),
-    );
+                SizedBox(
+                  width: 3.3333.w,
+                ),
+                RichText(
+                  maxLines: 1,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "SALAAM, ",
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: grey400, fontWeight: FontWeight.w400),
+                      ),
+                      TextSpan(
+                        text: "YUTA",
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: buttonColor2, fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            Container(
+              margin: EdgeInsets.only(right: 3.333.w),
+              child: IconButton(
+                icon: Iconify(
+                  Ph.bell,
+                  size: 20.sp,
+                  color: grey400,
+                ),
+                onPressed: () {
+                  // Your code here
+                },
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: backgroundColor2,
+        body: ListView(
+          padding: EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 7.7778.w),
+          children: [
+            // const CarouselHome(),
+            Text(
+              "#NUHA",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: dark, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () => Get.toNamed("/perencanaan-keuangan"),
+                  child: Container(
+                    width: 25.8333.w,
+                    height: 11.5.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: backgroundColor1),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 2.196667.w,
+                      vertical: 1.5.h,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image(
+                          image: const AssetImage('assets/images/home_pk.png'),
+                          height: 23.sp,
+                        ),
+                        Center(
+                          child: Text(
+                            "Perencanaan Keuangan",
+                            style:
+                                Theme.of(context).textTheme.overline!.copyWith(
+                                      color: grey500,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 0,
+                                      height: 0,
+                                    ),
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => Get.toNamed('/fincheck'),
+                  child: Container(
+                    width: 25.8333.w,
+                    height: 11.5.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: backgroundColor1),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 2.196667.w,
+                      vertical: 1.5.h,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image(
+                          image: const AssetImage('assets/images/home_cku.png'),
+                          height: 23.sp,
+                        ),
+                        Text(
+                          "Cek Kesehatan Keuangan",
+                          style: Theme.of(context).textTheme.overline!.copyWith(
+                                color: grey500,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0,
+                                height: 0,
+                              ),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => Get.toNamed('/cashflow'),
+                  child: Container(
+                    width: 25.83333.w,
+                    height: 11.5.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: backgroundColor1),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 2.196667.w,
+                      vertical: 1.5.h,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image(
+                          image: const AssetImage('assets/images/home_dlt.png'),
+                          height: 23.sp,
+                        ),
+                        Text(
+                          "Daftar Lembaga Terpercaya",
+                          style: Theme.of(context).textTheme.overline!.copyWith(
+                                color: grey500,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0,
+                                height: 0,
+                              ),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 3.h,
+            ),
+            Text(
+              "Bingung mau mulai dari mana?",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: dark, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            InkWell(
+              onTap: () {
+                Get.toNamed('/perencanaan-keuangan');
+              },
+              child: Image(
+                image: AssetImage('assets/images/banner_mulaisekarang.png'),
+                width: 83.44444.w,
+              ),
+            ),
+            SizedBox(
+              height: 3.h,
+            ),
+            Text(
+              "Anggaran Kamu",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(color: dark, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+          ],
+        ));
   }
 }

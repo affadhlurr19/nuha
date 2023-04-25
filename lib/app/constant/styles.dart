@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 const Color backgroundColor1 = Color(0XFFFFFFFF);
 const Color backgroundColor2 = Color(0XFFF8F8F8);
@@ -17,20 +18,67 @@ const Color succColor = Colors.green;
 double heightDevice = Get.height;
 double widthDevice = Get.width;
 
+const Color dark = Color(0XFF1E3833);
+const Color backBar = Color(0XFFDDDDDD);
 
 final myTextTheme = TextTheme(
-    headline1: GoogleFonts.jost(
-        fontSize: 30, fontWeight: FontWeight.bold, letterSpacing: -1.5),
-    headline2: GoogleFonts.jost(fontSize: 28, fontWeight: FontWeight.w600),
-    headline3: GoogleFonts.jost(fontSize: 22, fontWeight: FontWeight.w600),
-    headline4: GoogleFonts.jost(fontSize: 17, fontWeight: FontWeight.normal),
+    //Large Title 34px
     subtitle1: GoogleFonts.jost(
-        fontSize: 34,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 0.15), //titleLarge//
-    bodyText1: GoogleFonts.jost(fontSize: 20, letterSpacing: 0.5),
-    bodyText2: GoogleFonts.jost(fontSize: 15),
-    button: GoogleFonts.jost(fontSize: 17, fontWeight: FontWeight.w600),
-    caption: GoogleFonts.jost(fontSize: 12, letterSpacing: 0.4),
-    overline: GoogleFonts.jost(fontSize: 10, letterSpacing: 1.5) //bodySmall//
-    );
+      fontSize: 26.sp,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 0.15,
+    ),
+
+    // Heading 1 30px
+    headline1: GoogleFonts.jost(
+      fontSize: 23.sp,
+      fontWeight: FontWeight.bold,
+      letterSpacing: -1.5,
+    ),
+
+    //Heading 2 28px
+    headline2: GoogleFonts.jost(
+      fontSize: 21.sp,
+      fontWeight: FontWeight.w600,
+    ),
+
+    //Heading 3 22px
+    headline3: GoogleFonts.jost(
+      fontSize: 17.sp,
+      fontWeight: FontWeight.w600,
+    ),
+
+    //Body 17px reguler
+    headline4: GoogleFonts.jost(
+      fontSize: 13.sp,
+      fontWeight: FontWeight.normal,
+    ),
+
+    //Body 20px reguler
+    bodyText1: GoogleFonts.jost(
+      fontSize: 15.sp,
+      letterSpacing: 0.5,
+    ),
+
+    //Body 15px reguler
+    bodyText2: GoogleFonts.jost(
+      fontSize: 11.sp,
+      fontWeight: FontWeight.w400,
+    ),
+
+    //Body 17px semibold
+    button: GoogleFonts.jost(
+      fontSize: 13.sp,
+      fontWeight: FontWeight.w600,
+    ),
+
+    //Caption 12px reguler
+    caption: GoogleFonts.jost(
+      fontSize: 9.sp,
+      letterSpacing: 0.4,
+    ),
+
+    //Small 10px
+    overline: GoogleFonts.jost(
+      fontSize: 8.sp,
+    ));
