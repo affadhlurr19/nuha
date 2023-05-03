@@ -15,7 +15,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
-  final FirebaseAuth auth = FirebaseAuth.instance;  
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -261,8 +261,17 @@ class HomeView extends GetView<HomeController> {
             SizedBox(
               height: 1.h,
             ),
-            
-            ElevatedButton(onPressed: () => Get.toNamed(Routes.PROFILE), child: Text('Profile')),
+            ElevatedButton(
+              onPressed: () => Get.toNamed(Routes.PROFILE),
+              child: Text('Profile'),
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            ElevatedButton(
+              onPressed: () => Get.toNamed(Routes.LITERASI),
+              child: Text('Literasi'),
+            ),
           ],
         ));
   }

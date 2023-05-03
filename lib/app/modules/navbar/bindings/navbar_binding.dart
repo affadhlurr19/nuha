@@ -13,6 +13,6 @@ class NavbarBinding extends Bindings {
 
     Get.lazyPut<FincheckController>(
       () => FincheckController(),
-    );
+    );    
   }
 }

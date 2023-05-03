@@ -12,6 +12,6 @@ class HomeBinding extends Bindings {
     );
     Get.lazyPut<CashflowController>(
       () => CashflowController(),
-    );
+    );    
   }
 }

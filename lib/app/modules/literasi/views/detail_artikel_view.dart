@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/literasi/controllers/bookmark_artikel_controller.dart';
 import 'package:nuha/app/modules/literasi/controllers/detail_artikel_controller.dart';
 import 'package:nuha/app/utility/result_state.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -11,8 +12,9 @@ import 'package:sizer/sizer.dart';
 
 class DetailArtikelView extends GetView<DetailArtikelController> {
   DetailArtikelView({Key? key}) : super(key: key);
-  final c = Get.find<DetailArtikelController>();    
-  
+  final c = Get.find<DetailArtikelController>();
+  final bookmarkC = Get.find<BookmarkArtikelController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,18 +46,17 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
         ),
         actions: [
           Container(
-            padding: EdgeInsets.only(right: 2.98.w),
+            padding: EdgeInsets.only(right: 2.98.w),            
             child: Obx(
               () => IconButton(
-                onPressed: () {
-                  if (c.isLoading.isFalse) {
-                    c.toogleBookmark(Get.arguments);
-                  }
-                },
+                onPressed: () => bookmarkC.toggleBookmark(
+                  c.resultDetailArtikel.article.id.toString(),
+                  c.resultDetailArtikel.article.id.toString(),
+                ),
                 icon: Icon(
-                  c.isBookmarked.isTrue
-                      ? Icons.bookmark_border_outlined
-                      : Icons.bookmark_border,
+                  bookmarkC.isBookmarked.value
+                      ? Icons.bookmark
+                      : Icons.bookmark_border_outlined,
                   size: 3.h,
                   color: titleColor,
                 ),
@@ -87,8 +88,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                   var detail = c.resultDetailArtikel.article;
                   return ListView(
                     physics: const BouncingScrollPhysics(),
-                    children: [
-                      Text(c.isBookmarked.value.toString()),
+                    children: [                      
                       SizedBox(height: 1.875.h),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 12.2.w),

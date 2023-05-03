@@ -1,14 +1,20 @@
 import 'package:get/get.dart';
+
+import 'package:nuha/app/modules/literasi/controllers/bookmark_artikel_controller.dart';
 import 'package:nuha/app/modules/literasi/controllers/cari_artikel_controller.dart';
 import 'package:nuha/app/modules/literasi/controllers/detail_artikel_controller.dart';
 import 'package:nuha/app/modules/literasi/controllers/list_artikel_controller.dart';
 import 'package:nuha/app/modules/literasi/controllers/video_controller.dart';
 import 'package:nuha/app/modules/literasi/providers/list_artikel_provider.dart';
+
 import '../controllers/literasi_controller.dart';
 
 class LiterasiBinding extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut<BookmarkArtikelController>(
+      () => BookmarkArtikelController(),
+    );
     Get.lazyPut<LiterasiController>(
       () => LiterasiController(),
     );
@@ -22,7 +28,8 @@ class LiterasiBinding extends Bindings {
       () => CariArtikelController(listArtikelProvider: ListArtikelProvider()),
     );
     Get.lazyPut<DetailArtikelController>(
-      () => DetailArtikelController(listArtikelProvider: ListArtikelProvider(), idArtikel: Get.arguments),
+      () => DetailArtikelController(
+          listArtikelProvider: ListArtikelProvider(), idArtikel: Get.arguments),
     );
   }
 }
