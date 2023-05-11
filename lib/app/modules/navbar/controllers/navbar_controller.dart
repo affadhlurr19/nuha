@@ -26,7 +26,7 @@ class NavbarController extends GetxController {
 
   final persistentController = PersistentTabController(initialIndex: 0);
 
-  var _currentIndex = 0.obs;
+  final _currentIndex = 0.obs;
   int get currentIndex => _currentIndex.value;
 
   void updateIndex(int index) {

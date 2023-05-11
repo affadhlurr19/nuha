@@ -1,6 +1,4 @@
-import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
@@ -52,7 +50,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                 ),
                 GradientText(
                   "Dana Darurat",
-                  style: Theme.of(context).textTheme.headline3!,
+                  style: Theme.of(context).textTheme.displaySmall!,
                   colors: const [
                     buttonColor1,
                     buttonColor2,
@@ -63,7 +61,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                 ),
                 Text(
                   "(Jika tidak ada, ketika 0)",
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: grey400,
                       ),
                 ),
@@ -83,7 +81,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                   children: [
                     Text(
                       "Status Pernikahan",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -104,7 +102,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                               "Pilih Status Pernikahan",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                     color: grey400,
                                   ),
@@ -112,7 +110,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                           ),
                           value: null,
                           isDense: true,
-                          underline: SizedBox(),
+                          underline: const SizedBox(),
                           icon: const Icon(
                             Icons.arrow_drop_down,
                             color: grey400,
@@ -121,8 +119,8 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                           items: ["Belum Menikah", "Sudah Menikah"]
                               .map((String valueItem) {
                             return DropdownMenuItem(
-                              child: Text(valueItem),
                               value: valueItem,
+                              child: Text(valueItem),
                             );
                           }).toList()),
                     ),
@@ -157,7 +155,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                     "Hitung Dana",
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2!
+                        .bodyMedium!
                         .copyWith(color: Colors.white),
                   ),
                   onPressed: () {},

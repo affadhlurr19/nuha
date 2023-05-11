@@ -13,7 +13,7 @@ class ListVideoView extends GetView<LiterasiController> {
     return Center(
       child: Text(
         c.count.toString(),
-        style: TextStyle(fontSize: 20),
+        style: const TextStyle(fontSize: 20),
       ),
     );
   }

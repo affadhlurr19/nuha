@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bi.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
@@ -47,7 +49,7 @@ class PengaturanKeamananView extends GetView {
                 width: 84.4.w,
                 child: Column(
                   children: [
-                    SizedBox(height: 2.5.h),                    
+                    SizedBox(height: 2.5.h),
                     Container(
                       decoration: const BoxDecoration(
                         border: Border(
@@ -59,17 +61,19 @@ class PengaturanKeamananView extends GetView {
                       ),
                       width: widthDevice,
                       child: ListTile(
-                        trailing: Icon(
-                          Icons.arrow_forward_ios_sharp,
-                          size: 18.sp,
+                        trailing: const Iconify(
+                          Bi.chevron_right,
+                          size: 24,
+                          color: titleColor,
                         ),
                         title: Text(
                           'Ganti Kata Sandi',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 9.sp,
-                                color: const Color(0XFF1F1F1F),
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 9.sp,
+                                    color: titleColor,
+                                  ),
                         ),
                         onTap: () => Get.toNamed(Routes.GANTI_KATA_SANDI),
                       ),
@@ -86,17 +90,19 @@ class PengaturanKeamananView extends GetView {
                       ),
                       width: widthDevice,
                       child: ListTile(
-                        trailing: Icon(
-                          Icons.arrow_forward_ios_sharp,
-                          size: 18.sp,
+                        trailing: const Iconify(
+                          Bi.chevron_right,
+                          size: 24,
+                          color: titleColor,
                         ),
                         title: Text(
                           'Ganti PIN',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 9.sp,
-                                color: const Color(0XFF1F1F1F),
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 9.sp,
+                                    color: titleColor,
+                                  ),
                         ),
                         onTap: () {},
                       ),

@@ -110,7 +110,7 @@ class CashflowController extends GetxController {
                   foregroundColor: grey900,
                   textStyle: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(fontWeight: FontWeight.w600)),
             ),
           ),
@@ -296,27 +296,27 @@ class CashflowController extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>> streamSemuaAnggaran() async* {
     String uid = auth.currentUser!.uid;
     if (currentTab.value == 0) {
-      yield* await firestore
+      yield* firestore
           .collection("users")
           .doc(uid)
           .collection("anggaran")
           .snapshots();
     } else if (currentTab.value == 1) {
-      yield* await firestore
+      yield* firestore
           .collection("users")
           .doc(uid)
           .collection("anggaran")
           .where("jenisAnggaran", isEqualTo: "Umum")
           .snapshots();
     } else if (currentTab.value == 2) {
-      yield* await firestore
+      yield* firestore
           .collection("users")
           .doc(uid)
           .collection("anggaran")
           .where("jenisAnggaran", isEqualTo: "Biaya Hidup")
           .snapshots();
     } else {
-      yield* await firestore
+      yield* firestore
           .collection("users")
           .doc(uid)
           .collection("anggaran")
@@ -326,11 +326,11 @@ class CashflowController extends GetxController {
   }
 
   pickImageTransaksi(String pickCam) async {
-    final ImagePicker _picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
     if (pickCam == "kamera") {
-      image = await _picker.pickImage(source: ImageSource.camera);
+      image = await picker.pickImage(source: ImageSource.camera);
     } else {
-      image = await _picker.pickImage(source: ImageSource.gallery);
+      image = await picker.pickImage(source: ImageSource.gallery);
     }
 
     if (image != null) {
@@ -443,10 +443,10 @@ class CashflowController extends GetxController {
         .where("kategori", isEqualTo: kategori)
         .get()
         .then((value) {
-      value.docs.forEach((doc) {
+      for (var doc in value.docs) {
         int nominal = doc.data()['nominal'];
         nomTotal += nominal;
-      });
+      }
 
       if (nomTotal > 0) {
         firestore
@@ -490,10 +490,10 @@ class CashflowController extends GetxController {
         .collection("anggaran")
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         int nominal = doc.data()['nominal'];
         totalNominal += nominal;
-      });
+      }
 
       countAnggaranSisa();
     });
@@ -508,10 +508,10 @@ class CashflowController extends GetxController {
         .collection("anggaran")
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         int nominalTerpakai = doc.data()['nominalTerpakai'];
         angTerpakai += nominalTerpakai;
-      });
+      }
 
       countAnggaranSisa();
     });
@@ -533,10 +533,10 @@ class CashflowController extends GetxController {
         .where("jenisTransaksi", isEqualTo: "Pendapatan")
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         int nominalTrans = doc.data()['nominal'];
         totalPendapatan += nominalTrans;
-      });
+      }
       // print('Total nominal: $totalNominal');
     });
   }
@@ -551,17 +551,17 @@ class CashflowController extends GetxController {
         .where("jenisTransaksi", isEqualTo: "Pengeluaran")
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         int nominalTrans = doc.data()['nominal'];
         totalPengeluaran += nominalTrans;
-      });
+      }
       // print('Total nominal: $totalNominal');
     });
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamSemuaTransaksi() async* {
     String uid = auth.currentUser!.uid;
-    yield* await firestore
+    yield* firestore
         .collection("users")
         .doc(uid)
         .collection("transaksi")
@@ -648,7 +648,7 @@ class CashflowController extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>> streamTransaksiKategori(
       String katTransaksi) async* {
     String uid = auth.currentUser!.uid;
-    yield* await firestore
+    yield* firestore
         .collection("users")
         .doc(uid)
         .collection("transaksi")
@@ -668,14 +668,14 @@ class CashflowController extends GetxController {
       // print(capitalize);
       if (queryAwal.isEmpty && data.isNotEmpty) {
         CollectionReference anggaran =
-            await firestore.collection("users").doc(uid).collection("anggaran");
+            firestore.collection("users").doc(uid).collection("anggaran");
         final keyNameResult = await anggaran
             .where("kategori", isGreaterThanOrEqualTo: capitalize)
             .where("kategori", isLessThan: '${capitalize}z')
             .get();
 
         print("Total data: ${keyNameResult.docs.length}");
-        if (keyNameResult.docs.length > 0) {
+        if (keyNameResult.docs.isNotEmpty) {
           queryAwal.value = [];
           for (int i = 0; i < keyNameResult.docs.length; i++) {
             queryAwal.add(keyNameResult.docs[i].data() as Map<String, dynamic>);
@@ -699,7 +699,7 @@ class CashflowController extends GetxController {
       var capitalize = data.capitalizeFirst;
       // print(capitalize);
       if (tempSearch.isEmpty && data.isNotEmpty) {
-        CollectionReference transaksi = await firestore
+        CollectionReference transaksi = firestore
             .collection("users")
             .doc(uid)
             .collection("transaksi");
@@ -709,7 +709,7 @@ class CashflowController extends GetxController {
             .get();
 
         // print("Total data: ${keyNameResult.docs.length}");
-        if (keyNameResult.docs.length > 0) {
+        if (keyNameResult.docs.isNotEmpty) {
           tempSearch.value = [];
           for (int i = 0; i < keyNameResult.docs.length; i++) {
             tempSearch
@@ -774,7 +774,7 @@ class CashflowController extends GetxController {
       var capitalize = data.capitalizeFirst;
       print(capitalize);
       if (querySearch.isEmpty && data.isNotEmpty) {
-        CollectionReference transInAnggaran = await firestore
+        CollectionReference transInAnggaran = firestore
             .collection("users")
             .doc(uid)
             .collection("transaksi");
@@ -785,7 +785,7 @@ class CashflowController extends GetxController {
             .get();
 
         print("Total data: ${keyNameResult.docs.length}");
-        if (keyNameResult.docs.length > 0) {
+        if (keyNameResult.docs.isNotEmpty) {
           querySearch.value = [];
           for (int i = 0; i < keyNameResult.docs.length; i++) {
             querySearch

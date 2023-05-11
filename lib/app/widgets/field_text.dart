@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:sizer/sizer.dart';
 import 'package:nuha/app/constant/styles.dart';
 
@@ -25,7 +22,7 @@ class FieldText extends StatelessWidget {
       children: [
         Text(
           labelText,
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: grey900,
                 fontWeight: FontWeight.w600,
               ),
@@ -39,19 +36,19 @@ class FieldText extends StatelessWidget {
             controller: contr,
             keyboardType: TextInputType.text,
             textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: grey900,
                 ),
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+              hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: grey400,
                   ),
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 4.583333.w, vertical: 1.h),
               labelStyle: Theme.of(context)
                   .textTheme
-                  .caption!
+                  .bodySmall!
                   .copyWith(color: grey400, fontWeight: FontWeight.bold),
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(

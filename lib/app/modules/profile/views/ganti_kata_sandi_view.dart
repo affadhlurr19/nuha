@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/mdi_light.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/profile/controllers/profile_controller.dart';
 import 'package:sizer/sizer.dart';
@@ -59,7 +61,7 @@ class GantiKataSandiView extends GetView {
                             'Kata Sandi Saat Ini',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 11.sp,
@@ -79,7 +81,7 @@ class GantiKataSandiView extends GetView {
                               textInputAction: TextInputAction.next,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 11.sp),
@@ -87,7 +89,7 @@ class GantiKataSandiView extends GetView {
                                 hintText: 'min. 8 karakter',
                                 hintStyle: Theme.of(context)
                                     .textTheme
-                                    .bodyText2!
+                                    .bodyMedium!
                                     .copyWith(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 11.sp,
@@ -104,9 +106,12 @@ class GantiKataSandiView extends GetView {
                                     borderRadius: BorderRadius.circular(20)),
                                 suffixIcon: IconButton(
                                   onPressed: () => c.oldpassHidden.toggle(),
-                                  icon: Icon(c.oldpassHidden.isTrue
-                                      ? Icons.remove_red_eye
-                                      : Icons.remove_red_eye_outlined),
+                                  icon: Iconify(
+                                    c.oldpassHidden.isTrue
+                                        ? MdiLight.eye_off
+                                        : MdiLight.eye,
+                                    color: grey400,
+                                  ),
                                 ),
                               ),
                             ),
@@ -120,7 +125,7 @@ class GantiKataSandiView extends GetView {
                             'Kata Sandi Baru',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 11.sp,
@@ -140,7 +145,7 @@ class GantiKataSandiView extends GetView {
                               textInputAction: TextInputAction.next,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 11.sp),
@@ -148,7 +153,7 @@ class GantiKataSandiView extends GetView {
                                 hintText: 'min. 8 karakter',
                                 hintStyle: Theme.of(context)
                                     .textTheme
-                                    .bodyText2!
+                                    .bodyMedium!
                                     .copyWith(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 11.sp,
@@ -165,9 +170,12 @@ class GantiKataSandiView extends GetView {
                                     borderRadius: BorderRadius.circular(20)),
                                 suffixIcon: IconButton(
                                   onPressed: () => c.newpassHidden.toggle(),
-                                  icon: Icon(c.newpassHidden.isTrue
-                                      ? Icons.remove_red_eye
-                                      : Icons.remove_red_eye_outlined),
+                                  icon: Iconify(
+                                    c.newpassHidden.isTrue
+                                        ? MdiLight.eye_off
+                                        : MdiLight.eye,
+                                    color: grey400,
+                                  ),
                                 ),
                               ),
                             ),
@@ -181,7 +189,7 @@ class GantiKataSandiView extends GetView {
                             'Konfirmasi Kata Sandi Baru',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 11.sp,
@@ -196,12 +204,12 @@ class GantiKataSandiView extends GetView {
                             () => TextField(
                               autocorrect: false,
                               obscureText: c.connewpassHidden.value,
-                              controller: c.connewpassC,                              
+                              controller: c.connewpassC,
                               cursorColor: buttonColor1,
                               textInputAction: TextInputAction.done,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 11.sp),
@@ -209,7 +217,7 @@ class GantiKataSandiView extends GetView {
                                 hintText: 'min. 8 karakter',
                                 hintStyle: Theme.of(context)
                                     .textTheme
-                                    .bodyText2!
+                                    .bodyMedium!
                                     .copyWith(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 11.sp,
@@ -226,9 +234,12 @@ class GantiKataSandiView extends GetView {
                                     borderRadius: BorderRadius.circular(20)),
                                 suffixIcon: IconButton(
                                   onPressed: () => c.connewpassHidden.toggle(),
-                                  icon: Icon(c.connewpassHidden.isTrue
-                                      ? Icons.remove_red_eye
-                                      : Icons.remove_red_eye_outlined),
+                                  icon: Iconify(
+                                    c.connewpassHidden.isTrue
+                                        ? MdiLight.eye_off
+                                        : MdiLight.eye,
+                                    color: grey400,
+                                  ),
                                 ),
                               ),
                             ),
@@ -260,10 +271,13 @@ class GantiKataSandiView extends GetView {
                     child: c.isLoading.isFalse
                         ? Text(
                             'Simpan',
-                            style: Theme.of(context).textTheme.button!.copyWith(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11.sp,
-                                color: backgroundColor1),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 11.sp,
+                                    color: backgroundColor1),
                           )
                         : SizedBox(
                             height: 1.25.h,

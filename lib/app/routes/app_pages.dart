@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:nuha/app/modules/literasi/views/bookmarked_artikel_view.dart';
 import 'package:nuha/app/modules/literasi/views/cari_artikel_view.dart';
 import 'package:nuha/app/modules/literasi/views/detail_artikel_view.dart';
 import 'package:nuha/app/modules/literasi/views/list_artikel_view.dart';
@@ -79,10 +80,10 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.NAVBAR,
-      page: () => NavbarView(),
+      page: () => const NavbarView(),
       binding: NavbarBinding(),
     ),
-    GetPage(      
+    GetPage(
       name: _Paths.RESET_PASSWORD,
       page: () => const ResetPasswordView(),
       binding: ResetPasswordBinding(),
@@ -156,6 +157,11 @@ class AppPages {
       name: _Paths.PERENCANAAN_KEUANGAN,
       page: () => const PerencanaanKeuanganView(),
       binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOKMARKED_ARTIKEL,
+      page: () => BookmarkedArtikelView(),
+      binding: LiterasiBinding(),
     ),
   ];
 }

@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/routes/app_pages.dart';
@@ -53,7 +50,7 @@ class HomeView extends GetView<HomeController> {
                             "Y",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2!
+                                .bodyMedium!
                                 .copyWith(
                                     color: backgroundColor1,
                                     fontWeight: FontWeight.w600),
@@ -72,12 +69,12 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       TextSpan(
                         text: "SALAAM, ",
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: grey400, fontWeight: FontWeight.w400),
                       ),
                       TextSpan(
                         text: "YUTA",
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: buttonColor2, fontWeight: FontWeight.w600),
                       )
                     ],
@@ -111,7 +108,7 @@ class HomeView extends GetView<HomeController> {
               "#NUHA",
               style: Theme.of(context)
                   .textTheme
-                  .bodyText2!
+                  .bodyMedium!
                   .copyWith(color: dark, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -142,13 +139,15 @@ class HomeView extends GetView<HomeController> {
                         Center(
                           child: Text(
                             "Perencanaan Keuangan",
-                            style:
-                                Theme.of(context).textTheme.overline!.copyWith(
-                                      color: grey500,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 0,
-                                      height: 0,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: grey500,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0,
+                                  height: 0,
+                                ),
                             textAlign: TextAlign.center,
                           ),
                         )
@@ -178,12 +177,13 @@ class HomeView extends GetView<HomeController> {
                         ),
                         Text(
                           "Cek Kesehatan Keuangan",
-                          style: Theme.of(context).textTheme.overline!.copyWith(
-                                color: grey500,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0,
-                                height: 0,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelSmall!.copyWith(
+                                    color: grey500,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 0,
+                                    height: 0,
+                                  ),
                           textAlign: TextAlign.center,
                         )
                       ],
@@ -212,12 +212,13 @@ class HomeView extends GetView<HomeController> {
                         ),
                         Text(
                           "Daftar Lembaga Terpercaya",
-                          style: Theme.of(context).textTheme.overline!.copyWith(
-                                color: grey500,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0,
-                                height: 0,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelSmall!.copyWith(
+                                    color: grey500,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 0,
+                                    height: 0,
+                                  ),
                           textAlign: TextAlign.center,
                         )
                       ],
@@ -233,7 +234,7 @@ class HomeView extends GetView<HomeController> {
               "Bingung mau mulai dari mana?",
               style: Theme.of(context)
                   .textTheme
-                  .bodyText2!
+                  .bodyMedium!
                   .copyWith(color: dark, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -244,7 +245,8 @@ class HomeView extends GetView<HomeController> {
                 Get.toNamed('/perencanaan-keuangan');
               },
               child: Image(
-                image: AssetImage('assets/images/banner_mulaisekarang.png'),
+                image:
+                    const AssetImage('assets/images/banner_mulaisekarang.png'),
                 width: 83.44444.w,
               ),
             ),
@@ -255,7 +257,7 @@ class HomeView extends GetView<HomeController> {
               "Anggaran Kamu",
               style: Theme.of(context)
                   .textTheme
-                  .bodyText2!
+                  .bodyMedium!
                   .copyWith(color: dark, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -263,14 +265,14 @@ class HomeView extends GetView<HomeController> {
             ),
             ElevatedButton(
               onPressed: () => Get.toNamed(Routes.PROFILE),
-              child: Text('Profile'),
+              child: const Text('Profile'),
             ),
             SizedBox(
               height: 1.h,
             ),
             ElevatedButton(
               onPressed: () => Get.toNamed(Routes.LITERASI),
-              child: Text('Literasi'),
+              child: const Text('Literasi'),
             ),
           ],
         ));

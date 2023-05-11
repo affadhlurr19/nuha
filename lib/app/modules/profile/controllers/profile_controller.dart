@@ -69,7 +69,7 @@ class ProfileController extends GetxController {
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamProfile() async* {
     try {
       String uid = auth.currentUser!.uid;
-      yield* await firestore.collection("users").doc(uid).snapshots();
+      yield* firestore.collection("users").doc(uid).snapshots();
     } catch (e) {
       errMsg('Tidak dapat get data user');
     }
@@ -112,15 +112,15 @@ class ProfileController extends GetxController {
                   onPrimary: Colors.white,
                 ),
             textTheme: TextTheme(
-              headline5: GoogleFonts.jost(),
-              headline6: GoogleFonts.jost(),
-              overline: GoogleFonts.jost(),
-              bodyText1: GoogleFonts.jost(),
-              subtitle1: GoogleFonts.jost(color: Colors.black),
-              subtitle2: GoogleFonts.jost(),
-              headline3: GoogleFonts.jost(),
-              headline4: GoogleFonts.jost(),
-              caption: GoogleFonts.jost(),
+              headlineSmall: GoogleFonts.jost(),
+              titleLarge: GoogleFonts.jost(),
+              labelSmall: GoogleFonts.jost(),
+              bodyLarge: GoogleFonts.jost(),
+              titleMedium: GoogleFonts.jost(color: Colors.black),
+              titleSmall: GoogleFonts.jost(),
+              displaySmall: GoogleFonts.jost(),
+              headlineMedium: GoogleFonts.jost(),
+              bodySmall: GoogleFonts.jost(),
             ),
             inputDecorationTheme:
                 InputDecorationTheme(labelStyle: GoogleFonts.jost()),

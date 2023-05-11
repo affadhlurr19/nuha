@@ -36,7 +36,7 @@ class FincheckEmpatView extends GetView<FincheckController> {
         children: [
           Text(
             "Langkah 4",
-            style: Theme.of(context).textTheme.caption!.copyWith(
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: grey400,
                 ),
           ),
@@ -45,7 +45,7 @@ class FincheckEmpatView extends GetView<FincheckController> {
           ),
           GradientText(
             "Berapa pengeluaranmu dalam sebulan?",
-            style: Theme.of(context).textTheme.headline3!,
+            style: Theme.of(context).textTheme.displaySmall!,
             colors: const [
               buttonColor1,
               buttonColor2,
@@ -56,7 +56,7 @@ class FincheckEmpatView extends GetView<FincheckController> {
           ),
           Text(
             "(Jika tidak ada, ketika 0)",
-            style: Theme.of(context).textTheme.caption!.copyWith(
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: grey400,
                 ),
           ),
@@ -176,7 +176,7 @@ class FincheckEmpatView extends GetView<FincheckController> {
                     "Kembali",
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2!
+                        .bodyMedium!
                         .copyWith(color: buttonColor2),
                   ),
                   onPressed: () => Get.back(),
@@ -194,10 +194,10 @@ class FincheckEmpatView extends GetView<FincheckController> {
                     "Selanjutnya",
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2!
+                        .bodyMedium!
                         .copyWith(color: Colors.white),
                   ),
-                  onPressed: () => Get.to(FincheckLimaView()),
+                  onPressed: () => Get.to(const FincheckLimaView()),
                 ),
               ),
             ],

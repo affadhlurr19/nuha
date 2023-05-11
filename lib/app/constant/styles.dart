@@ -23,62 +23,62 @@ const Color backBar = Color(0XFFDDDDDD);
 
 final myTextTheme = TextTheme(
     //Large Title 34px
-    subtitle1: GoogleFonts.jost(
+    titleMedium: GoogleFonts.jost(
       fontSize: 26.sp,
       fontWeight: FontWeight.bold,
       letterSpacing: 0.15,
     ),
 
     // Heading 1 30px
-    headline1: GoogleFonts.jost(
+    displayLarge: GoogleFonts.jost(
       fontSize: 23.sp,
       fontWeight: FontWeight.bold,
       letterSpacing: -1.5,
     ),
 
     //Heading 2 28px
-    headline2: GoogleFonts.jost(
+    displayMedium: GoogleFonts.jost(
       fontSize: 21.sp,
       fontWeight: FontWeight.w600,
     ),
 
     //Heading 3 22px
-    headline3: GoogleFonts.jost(
+    displaySmall: GoogleFonts.jost(
       fontSize: 17.sp,
       fontWeight: FontWeight.w600,
     ),
 
     //Body 17px reguler
-    headline4: GoogleFonts.jost(
+    headlineMedium: GoogleFonts.jost(
       fontSize: 13.sp,
       fontWeight: FontWeight.normal,
     ),
 
     //Body 20px reguler
-    bodyText1: GoogleFonts.jost(
+    bodyLarge: GoogleFonts.jost(
       fontSize: 15.sp,
       letterSpacing: 0.5,
     ),
 
     //Body 15px reguler
-    bodyText2: GoogleFonts.jost(
+    bodyMedium: GoogleFonts.jost(
       fontSize: 11.sp,
       fontWeight: FontWeight.w400,
     ),
 
     //Body 17px semibold
-    button: GoogleFonts.jost(
+    labelLarge: GoogleFonts.jost(
       fontSize: 13.sp,
       fontWeight: FontWeight.w600,
     ),
 
     //Caption 12px reguler
-    caption: GoogleFonts.jost(
+    bodySmall: GoogleFonts.jost(
       fontSize: 9.sp,
       letterSpacing: 0.4,
     ),
 
     //Small 10px
-    overline: GoogleFonts.jost(
+    labelSmall: GoogleFonts.jost(
       fontSize: 8.sp,
     ));

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/mdi_light.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -56,7 +58,7 @@ class LoginView extends GetView<LoginController> {
                 width: widthDevice,
                 child: Text(
                   'Selamat datang kembali!',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       fontWeight: FontWeight.w600,
                       fontSize: 17.sp,
                       color: const Color(0XFF1F1F1F)),
@@ -68,7 +70,7 @@ class LoginView extends GetView<LoginController> {
                 width: widthDevice,
                 child: Text(
                   'Untuk masuk, silahkan lengkapi dengan detail akunmu yang sudah terdaftar, ya!',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 11.sp,
                       color: grey500),
@@ -80,7 +82,7 @@ class LoginView extends GetView<LoginController> {
                 width: widthDevice,
                 child: Text(
                   'Email',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w600,
                       fontSize: 11.sp,
                       color: grey500),
@@ -98,11 +100,11 @@ class LoginView extends GetView<LoginController> {
                   textInputAction: TextInputAction.next,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                   decoration: InputDecoration(
                     hintText: 'Nuha@gmail.com',
-                    hintStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: 11.sp,
                         color: grey400),
@@ -124,7 +126,7 @@ class LoginView extends GetView<LoginController> {
                 width: widthDevice,
                 child: Text(
                   'Kata Sandi',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w600,
                       fontSize: 11.sp,
                       color: grey500),
@@ -143,13 +145,13 @@ class LoginView extends GetView<LoginController> {
                     textInputAction: TextInputAction.done,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2!
+                        .bodyMedium!
                         .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                     decoration: InputDecoration(
                       hintText: 'min. 8 karakter',
                       hintStyle: Theme.of(context)
                           .textTheme
-                          .bodyText2!
+                          .bodyMedium!
                           .copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 11.sp,
@@ -166,11 +168,11 @@ class LoginView extends GetView<LoginController> {
                           borderRadius: BorderRadius.circular(20)),
                       suffixIcon: IconButton(
                         onPressed: () => controller.isHidden.toggle(),
-                        icon: Icon(
+                        icon: Iconify(
                           controller.isHidden.isTrue
-                              ? Icons.remove_red_eye
-                              : Icons.remove_red_eye_outlined,
-                          color: buttonColor1,
+                              ? MdiLight.eye_off
+                              : MdiLight.eye,
+                          color: grey400,
                         ),
                       ),
                     ),
@@ -224,7 +226,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                       child: Text(
                         'Lupa Kata Sandi?',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 9.sp,
                             color: buttonColor1),
@@ -241,7 +243,7 @@ class LoginView extends GetView<LoginController> {
                   textAlign: TextAlign.center,
                   text: TextSpan(
                     text: 'Belum punya akun? ',
-                    style: Theme.of(context).textTheme.caption!.copyWith(
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           fontSize: 9.sp,
                           color: const Color(0xFF919191),
                           fontWeight: FontWeight.w400,
@@ -251,7 +253,7 @@ class LoginView extends GetView<LoginController> {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () => Get.toNamed(Routes.REGISTER),
                         text: 'Daftar',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               fontSize: 9.sp,
                               color: buttonColor1,
                               fontWeight: FontWeight.w600,
@@ -279,7 +281,7 @@ class LoginView extends GetView<LoginController> {
                               "Masuk",
                               style: Theme.of(context)
                                   .textTheme
-                                  .button!
+                                  .labelLarge!
                                   .copyWith(
                                       fontSize: 11.sp,
                                       fontWeight: FontWeight.w600,
@@ -330,7 +332,7 @@ class LoginView extends GetView<LoginController> {
                                   "Masuk dengan Google",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 11.sp,

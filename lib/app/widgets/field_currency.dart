@@ -26,7 +26,7 @@ class FieldCurrency extends StatelessWidget {
       children: [
         Text(
           labelText,
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: grey900,
                 fontWeight: FontWeight.w600,
               ),
@@ -47,7 +47,7 @@ class FieldCurrency extends StatelessWidget {
             controller: contr,
             keyboardType: TextInputType.number,
             textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: grey900,
                 ),
             decoration: InputDecoration(
@@ -58,7 +58,7 @@ class FieldCurrency extends StatelessWidget {
                   "Rp. ",
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(color: grey400, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -74,7 +74,7 @@ class FieldCurrency extends StatelessWidget {
                   PopupMenuItem(
                     child: Text(
                       infoText,
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                           ),
                     ),
@@ -84,14 +84,14 @@ class FieldCurrency extends StatelessWidget {
                 shape: const TooltipShape(),
               ),
               hintText: "0",
-              hintStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+              hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: grey400,
                   ),
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 2.222.w, vertical: 1.h),
               labelStyle: Theme.of(context)
                   .textTheme
-                  .caption!
+                  .bodySmall!
                   .copyWith(color: grey400, fontWeight: FontWeight.bold),
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(

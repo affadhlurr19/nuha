@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -80,7 +78,7 @@ class EditProfileView extends GetView {
                                   'Nama Lengkap',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 11.sp,
@@ -99,7 +97,7 @@ class EditProfileView extends GetView {
                                   textInputAction: TextInputAction.next,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .bodyMedium!
                                       .copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 11.sp),
@@ -107,7 +105,7 @@ class EditProfileView extends GetView {
                                     hintText: 'Masukkan Nama Lengkap Anda',
                                     hintStyle: Theme.of(context)
                                         .textTheme
-                                        .bodyText2!
+                                        .bodyMedium!
                                         .copyWith(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 11.sp,
@@ -136,7 +134,7 @@ class EditProfileView extends GetView {
                                   'Email',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 11.sp,
@@ -158,7 +156,7 @@ class EditProfileView extends GetView {
                                   textInputAction: TextInputAction.next,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .bodyMedium!
                                       .copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 11.sp),
@@ -166,7 +164,7 @@ class EditProfileView extends GetView {
                                     hintText: 'Masukkan Alamat Email Anda',
                                     hintStyle: Theme.of(context)
                                         .textTheme
-                                        .bodyText2!
+                                        .bodyMedium!
                                         .copyWith(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 11.sp,
@@ -200,7 +198,7 @@ class EditProfileView extends GetView {
                                   'Nomor Telepon',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 11.sp,
@@ -220,7 +218,7 @@ class EditProfileView extends GetView {
                                   textInputAction: TextInputAction.next,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .bodyMedium!
                                       .copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 11.sp),
@@ -228,7 +226,7 @@ class EditProfileView extends GetView {
                                     hintText: 'Masukkan Nomor Telepon Anda',
                                     hintStyle: Theme.of(context)
                                         .textTheme
-                                        .bodyText2!
+                                        .bodyMedium!
                                         .copyWith(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 11.sp,
@@ -257,7 +255,7 @@ class EditProfileView extends GetView {
                                   'Tanggal Lahir',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 11.sp,
@@ -280,7 +278,7 @@ class EditProfileView extends GetView {
                                         textInputAction: TextInputAction.next,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText2!
+                                            .bodyMedium!
                                             .copyWith(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 11.sp),
@@ -289,7 +287,7 @@ class EditProfileView extends GetView {
                                               'Masukkan tanggal lahir anda',
                                           hintStyle: Theme.of(context)
                                               .textTheme
-                                              .bodyText2!
+                                              .bodyMedium!
                                               .copyWith(
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 11.sp,
@@ -325,7 +323,7 @@ class EditProfileView extends GetView {
                                   'Pekerjaan',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 11.sp,
@@ -344,7 +342,7 @@ class EditProfileView extends GetView {
                                   textInputAction: TextInputAction.done,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .bodyMedium!
                                       .copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 11.sp),
@@ -352,7 +350,7 @@ class EditProfileView extends GetView {
                                     hintText: 'Masukkan Nama Pekerjaan Anda',
                                     hintStyle: Theme.of(context)
                                         .textTheme
-                                        .bodyText2!
+                                        .bodyMedium!
                                         .copyWith(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 11.sp,
@@ -399,7 +397,7 @@ class EditProfileView extends GetView {
                                 'Batalkan',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .button!
+                                    .labelLarge!
                                     .copyWith(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 11.sp,
@@ -428,7 +426,7 @@ class EditProfileView extends GetView {
                                         'Simpan',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .button!
+                                            .labelLarge!
                                             .copyWith(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 11.sp,

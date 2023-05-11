@@ -25,7 +25,7 @@ class FormTransaksiView extends GetView<CashflowController> {
           centerTitle: true,
           title: Text(
             "Tambah Transaksi",
-            style: Theme.of(context).textTheme.button!.copyWith(
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   color: dark,
                 ),
           ),
@@ -59,7 +59,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                   children: [
                     Text(
                       "Jenis Transaksi*",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -74,10 +74,10 @@ class FormTransaksiView extends GetView<CashflowController> {
                           title: "Pilih Jenis Transaksi",
                           titleStyle: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .copyWith(
                                   color: grey900, fontWeight: FontWeight.w600),
-                          content: DialogContent(),
+                          content: const DialogContent(),
                         );
                       },
                       child: Container(
@@ -98,7 +98,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                                     controller.jenisC.value,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText2!
+                                        .bodyMedium!
                                         .copyWith(
                                           color: grey900,
                                         ),
@@ -122,7 +122,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                   children: [
                     Text(
                       "Nama Transaksi*",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -135,13 +135,13 @@ class FormTransaksiView extends GetView<CashflowController> {
                       child: TextField(
                         controller: controller.namaTransaksiC,
                         textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: grey900,
                             ),
                         decoration: InputDecoration(
                           hintText: "Masukan Nama Transaksi",
                           hintStyle:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: grey400,
                                   ),
                           contentPadding: EdgeInsets.symmetric(
@@ -174,7 +174,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                   children: [
                     Text(
                       "Nominal Transaksi*",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -195,7 +195,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                           ),
                         ],
                         textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: grey900,
                             ),
                         decoration: InputDecoration(
@@ -206,7 +206,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                               "Rp. ",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(color: grey400),
                             ),
                           ),
@@ -214,14 +214,14 @@ class FormTransaksiView extends GetView<CashflowController> {
                               const BoxConstraints(minWidth: 0, minHeight: 0),
                           hintText: "0",
                           hintStyle:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: grey400,
                                   ),
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 1.w, vertical: 1.h),
                           labelStyle: Theme.of(context)
                               .textTheme
-                              .caption!
+                              .bodySmall!
                               .copyWith(
                                   color: grey400, fontWeight: FontWeight.bold),
                           enabledBorder: OutlineInputBorder(
@@ -250,7 +250,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                   children: [
                     Text(
                       "Kategori*",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -286,13 +286,13 @@ class FormTransaksiView extends GetView<CashflowController> {
                                             "choosen"
                                         ? Theme.of(context)
                                             .textTheme
-                                            .bodyText2!
+                                            .bodyMedium!
                                             .copyWith(
                                               color: grey900,
                                             )
                                         : Theme.of(context)
                                             .textTheme
-                                            .bodyText2!
+                                            .bodyMedium!
                                             .copyWith(color: grey400)),
                               ),
                               Iconify(
@@ -318,7 +318,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                   children: [
                     Text(
                       "Tanggal*",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -350,7 +350,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                                         .toString(),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText2!
+                                        .bodyMedium!
                                         .copyWith(
                                           color: grey900,
                                         ),
@@ -375,7 +375,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                   children: [
                     Text(
                       "Deskripsi",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -390,13 +390,13 @@ class FormTransaksiView extends GetView<CashflowController> {
                         minLines: 5,
                         maxLines: null,
                         textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: grey900,
                             ),
                         decoration: InputDecoration(
                           hintText: "Tulis deskripsi...",
                           hintStyle:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: grey400,
                                   ),
                           contentPadding: EdgeInsets.symmetric(
@@ -429,7 +429,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                   children: [
                     Text(
                       "Unggah Foto",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -479,7 +479,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                                   title: "Unggah Foto",
                                   titleStyle: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .bodyMedium!
                                       .copyWith(
                                           color: grey900,
                                           fontWeight: FontWeight.w600),
@@ -523,7 +523,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                         controller.isLoading.isFalse ? "Simpan" : "Loading...",
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2!
+                            .bodyMedium!
                             .copyWith(color: backgroundColor1),
                       ),
                       onPressed: () {
@@ -563,7 +563,7 @@ class DialogContent extends StatelessWidget {
             },
             child: Text(
               "Pengeluaran",
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: grey900,
                   ),
             ),
@@ -574,7 +574,7 @@ class DialogContent extends StatelessWidget {
             },
             child: Text(
               "Pendapatan",
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: grey900,
                   ),
             ),
@@ -607,7 +607,7 @@ class DialogCamera extends StatelessWidget {
             onPressed: () => Get.to(controller.pickImageTransaksi("kamera")),
             child: Text(
               "Kamera",
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: grey900,
                   ),
             ),
@@ -616,7 +616,7 @@ class DialogCamera extends StatelessWidget {
             onPressed: () => Get.to(controller.pickImageTransaksi("galeri")),
             child: Text(
               "Galeri",
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: grey900,
                   ),
             ),
@@ -649,7 +649,7 @@ class BottomSheetPendapatan extends StatelessWidget {
                 "Pilih Kategori Pendapatan",
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2!
+                    .bodyMedium!
                     .copyWith(color: grey900, fontWeight: FontWeight.w600),
               ),
             ),
@@ -669,7 +669,7 @@ class BottomSheetPendapatan extends StatelessWidget {
               "Kategori Pendapatan",
               style: Theme.of(context)
                   .textTheme
-                  .caption!
+                  .bodySmall!
                   .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -721,7 +721,7 @@ class BottomSheetPengeluaran extends StatelessWidget {
                 "Pilih Kategori Pengeluaran",
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2!
+                    .bodyMedium!
                     .copyWith(color: grey900, fontWeight: FontWeight.w600),
               ),
             ),
@@ -741,7 +741,7 @@ class BottomSheetPengeluaran extends StatelessWidget {
               "Kategori Umum",
               style: Theme.of(context)
                   .textTheme
-                  .caption!
+                  .bodySmall!
                   .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -773,7 +773,7 @@ class BottomSheetPengeluaran extends StatelessWidget {
               "Kategori Biaya Hidup",
               style: Theme.of(context)
                   .textTheme
-                  .caption!
+                  .bodySmall!
                   .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -808,7 +808,7 @@ class BottomSheetPengeluaran extends StatelessWidget {
               "Kategori Lainnya",
               style: Theme.of(context)
                   .textTheme
-                  .caption!
+                  .bodySmall!
                   .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -860,7 +860,7 @@ class CategoryWidget extends StatelessWidget {
             ),
             Text(
               text,
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: grey500,
                   ),
             ),

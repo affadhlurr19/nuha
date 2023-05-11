@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/literasi/controllers/bookmark_artikel_controller.dart';
 import 'package:nuha/app/modules/literasi/controllers/detail_artikel_controller.dart';
+import 'package:nuha/app/modules/literasi/controllers/komentar_artikel_controller.dart';
 import 'package:nuha/app/utility/result_state.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
@@ -14,6 +18,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
   DetailArtikelView({Key? key}) : super(key: key);
   final c = Get.find<DetailArtikelController>();
   final bookmarkC = Get.find<BookmarkArtikelController>();
+  final komentarC = Get.find<KomentarArtikelController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +31,8 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
           padding: EdgeInsets.only(left: 4.58.w),
           child: IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(
-              Icons.arrow_back,
+            icon: Iconify(
+              Mdi.arrow_left,
               size: 3.h,
               color: titleColor,
             ),
@@ -41,22 +46,23 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
           'Artikel',
           style: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(fontWeight: FontWeight.w600, fontSize: 13.sp),
         ),
         actions: [
           Container(
-            padding: EdgeInsets.only(right: 2.98.w),            
+            padding: EdgeInsets.only(right: 2.98.w),
             child: Obx(
               () => IconButton(
                 onPressed: () => bookmarkC.toggleBookmark(
                   c.resultDetailArtikel.article.id.toString(),
-                  c.resultDetailArtikel.article.id.toString(),
+                  c.resultDetailArtikel.article.title.toString(),
+                  c.resultDetailArtikel.article.imageUrl.toString(),
                 ),
-                icon: Icon(
+                icon: Iconify(
                   bookmarkC.isBookmarked.value
-                      ? Icons.bookmark
-                      : Icons.bookmark_border_outlined,
+                      ? MaterialSymbols.bookmark
+                      : MaterialSymbols.bookmark_outline,
                   size: 3.h,
                   color: titleColor,
                 ),
@@ -88,7 +94,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                   var detail = c.resultDetailArtikel.article;
                   return ListView(
                     physics: const BouncingScrollPhysics(),
-                    children: [                      
+                    children: [
                       SizedBox(height: 1.875.h),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 12.2.w),
@@ -96,7 +102,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                           detail.title,
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
+                              .displayMedium!
                               .copyWith(
                                   fontWeight: FontWeight.w600, fontSize: 21.sp),
                           colors: const [buttonColor1, buttonColor2],
@@ -110,7 +116,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                               .format(detail.createdAt),
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 9.sp,
@@ -134,7 +140,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                   detail.author,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .copyWith(
                                           fontSize: 9.sp,
                                           fontWeight: FontWeight.w600,
@@ -144,7 +150,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                   detail.category,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .copyWith(
                                           fontSize: 9.sp,
                                           fontWeight: FontWeight.w600,
@@ -176,21 +182,49 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                           textAlign: TextAlign.justify,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(
                                   fontSize: 11.sp,
                                   fontWeight: FontWeight.w400,
                                   color: grey500),
                         ),
                       ),
+                      SizedBox(height: 2.5.h),
+                      Obx(
+                        () => ListView.builder(
+                          shrinkWrap: true,
+                          physics: const ScrollPhysics(),
+                          itemCount: komentarC.comments.length,
+                          itemBuilder: (context, index) {
+                            final comment = komentarC.comments[index];
+                            return ListTile(
+                              title: Text(comment.descKomentar),
+                              subtitle: Text(comment.idUser),
+                              trailing: Text(comment.createdAt.toString()),
+                            );
+                          },
+                        ),
+                      ),
+                      TextField(
+                        controller: komentarC.descC,
+                        style: Theme.of(context).textTheme.bodySmall,
+                        decoration:
+                            const InputDecoration(border: OutlineInputBorder()),
+                      ),
+                      ElevatedButton(
+                        onPressed: () =>
+                            komentarC.addComment(komentarC.descC.text),
+                        child: Text('Kirim',
+                            style: Theme.of(context).textTheme.titleSmall),
+                      ),
                     ],
                   );
                 case ResultStatus.noData:
-                  return Text('Data Kosong');
+                  return const Text('Data Kosong');
                 case ResultStatus.error:
                   return Text(c.message);
                 default:
-                  return SizedBox();
+                  return const SizedBox();
               }
             },
           );

@@ -35,7 +35,7 @@ class CashflowView extends GetView<CashflowController> {
               "Alur Kas",
               style: Theme.of(context)
                   .textTheme
-                  .button!
+                  .labelLarge!
                   .copyWith(color: titleColor),
             ),
             backgroundColor: backgroundColor1,
@@ -100,7 +100,7 @@ class CashflowView extends GetView<CashflowController> {
                             "Anggaran",
                             style: Theme.of(context)
                                 .textTheme
-                                .button!
+                                .labelLarge!
                                 .copyWith(height: 1),
                             colors: const [buttonColor1, buttonColor2],
                           ),
@@ -108,7 +108,7 @@ class CashflowView extends GetView<CashflowController> {
                             "Siap untuk mengambil kendali atas keuangan Kamu? Gunakan fitur anggaran",
                             style: Theme.of(context)
                                 .textTheme
-                                .caption!
+                                .bodySmall!
                                 .copyWith(
                                     height: 1.3,
                                     color: grey400,
@@ -146,14 +146,14 @@ class CashflowView extends GetView<CashflowController> {
                           ),
                           GradientText(
                             "Transaksi",
-                            style: Theme.of(context).textTheme.button!,
+                            style: Theme.of(context).textTheme.labelLarge!,
                             colors: const [buttonColor1, buttonColor2],
                           ),
                           Text(
                             "Catat aliran uang masuk dan keluar Anda dengan fitur transaksi",
                             style: Theme.of(context)
                                 .textTheme
-                                .caption!
+                                .bodySmall!
                                 .copyWith(
                                     color: grey400,
                                     fontWeight: FontWeight.w400,
@@ -183,7 +183,7 @@ class CashflowView extends GetView<CashflowController> {
                     children: [
                       Text(
                         "Anggaran",
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                             height: 1.25),
@@ -196,7 +196,7 @@ class CashflowView extends GetView<CashflowController> {
                                 .format(controller.sisaAnggaran.value),
                             style: Theme.of(context)
                                 .textTheme
-                                .caption!
+                                .bodySmall!
                                 .copyWith(color: grey400, height: 1.3),
                           )),
                       SizedBox(
@@ -251,7 +251,7 @@ class CashflowView extends GetView<CashflowController> {
                               "Kamu belum mengatur anggaran keuangan kamu, nih. Yuk, catat anggaran keuanganmu dengan mudah~",
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption!
+                                  .bodySmall!
                                   .copyWith(color: grey400),
                               textAlign: TextAlign.center,
                             ),
@@ -272,7 +272,7 @@ class CashflowView extends GetView<CashflowController> {
                                   "Atur Anggaran Sekarang",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .copyWith(color: backgroundColor1),
                                 ),
                                 onPressed: () =>
@@ -334,7 +334,7 @@ class CashflowView extends GetView<CashflowController> {
                                                         "${anggaran["kategori"]}",
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .caption!
+                                                            .bodySmall!
                                                             .copyWith(
                                                               fontWeight:
                                                                   FontWeight
@@ -356,7 +356,7 @@ class CashflowView extends GetView<CashflowController> {
                                                                 "sisaLimit"]),
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .caption!
+                                                            .bodySmall!
                                                             .copyWith(
                                                               color: grey400,
                                                             ),
@@ -407,7 +407,7 @@ class CashflowView extends GetView<CashflowController> {
                                                 .format(anggaran["nominal"]),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .caption!
+                                                .bodySmall!
                                                 .copyWith(
                                                   color: grey400,
                                                 ),
@@ -416,7 +416,7 @@ class CashflowView extends GetView<CashflowController> {
                                             "${anggaran["persentase"]}%",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .caption!
+                                                .bodySmall!
                                                 .copyWith(
                                                   color: grey400,
                                                 ),

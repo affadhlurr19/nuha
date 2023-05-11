@@ -47,7 +47,7 @@ class FincheckLimaView extends GetView<FincheckController> {
               children: [
                 Text(
                   "Langkah 5",
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: grey400,
                       ),
                 ),
@@ -56,7 +56,7 @@ class FincheckLimaView extends GetView<FincheckController> {
                 ),
                 GradientText(
                   "Berapa total aset dan hutang yang kamu punya?",
-                  style: Theme.of(context).textTheme.headline3!,
+                  style: Theme.of(context).textTheme.displaySmall!,
                   colors: const [
                     buttonColor1,
                     buttonColor2,
@@ -67,7 +67,7 @@ class FincheckLimaView extends GetView<FincheckController> {
                 ),
                 Text(
                   "(Jika tidak ada, ketika 0)",
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: grey400,
                       ),
                 ),
@@ -164,7 +164,7 @@ class FincheckLimaView extends GetView<FincheckController> {
                           "Kembali",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .copyWith(color: buttonColor2),
                         ),
                         onPressed: () => Get.back(),
@@ -182,7 +182,7 @@ class FincheckLimaView extends GetView<FincheckController> {
                           "Lihat Hasil Tes",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .copyWith(color: Colors.white),
                         ),
                         onPressed: () => controller.result(),

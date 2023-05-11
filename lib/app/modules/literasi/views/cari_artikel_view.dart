@@ -25,11 +25,11 @@ class CariArtikelView extends GetView<CariArtikelController> {
           cursorColor: buttonColor1,
           autocorrect: false,
           autofocus: true,
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
               fontWeight: FontWeight.w400, fontSize: 9.sp, color: grey400),
           decoration: InputDecoration(
             hintText: 'Cari artikel disini',
-            hintStyle: Theme.of(context).textTheme.caption!.copyWith(
+            hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                 fontWeight: FontWeight.w400, fontSize: 9.sp, color: grey400),
             filled: true,
             fillColor: grey50,
@@ -112,7 +112,7 @@ class CariArtikelView extends GetView<CariArtikelController> {
                                           overflow: TextOverflow.ellipsis,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .caption!
+                                              .bodySmall!
                                               .copyWith(
                                                   fontWeight: FontWeight.w600,
                                                   color:
@@ -148,13 +148,13 @@ class CariArtikelView extends GetView<CariArtikelController> {
                         },
                       );
                     case ResultStatus.noData:
-                      return Container(
+                      return SizedBox(
                         height: 85.h,
                         width: widthDevice,
                         child: Center(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(
                               Icons.not_interested,
                               size: 80,
@@ -166,7 +166,7 @@ class CariArtikelView extends GetView<CariArtikelController> {
                     case ResultStatus.error:
                       return Text(c.resultState.value.toString());
                     default:
-                      return SizedBox();
+                      return const SizedBox();
                   }
                 },
               ),

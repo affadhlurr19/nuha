@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,7 +35,7 @@ class TransaksiView extends GetView<CashflowController> {
           elevation: 0,
           onPressed: () => PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: FormTransaksiView(),
+            screen: const FormTransaksiView(),
           ),
           child: Icon(
             Icons.add,
@@ -73,7 +72,7 @@ class TransaksiView extends GetView<CashflowController> {
                 centerTitle: true,
                 title: Text(
                   "Transaksi",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                         color: backgroundColor1,
                       ),
@@ -129,7 +128,7 @@ class TransaksiView extends GetView<CashflowController> {
                                       "Pendapatan",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(color: grey400),
                                     )
                                   ],
@@ -143,7 +142,7 @@ class TransaksiView extends GetView<CashflowController> {
                                               controller.totalPendapatan.value),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(
                                               color: const Color(0XFF0096C7),
                                               fontWeight: FontWeight.w600),
@@ -177,7 +176,7 @@ class TransaksiView extends GetView<CashflowController> {
                                       "Pengeluaran",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(color: grey400),
                                     )
                                   ],
@@ -191,7 +190,7 @@ class TransaksiView extends GetView<CashflowController> {
                                               .totalPengeluaran.value),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(
                                               color: const Color(0XFFCC444B),
                                               fontWeight: FontWeight.w600),
@@ -212,7 +211,7 @@ class TransaksiView extends GetView<CashflowController> {
                       onChanged: (value) => controller.searchTransaksi(value),
                       // textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.text,
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                           ),
                       decoration: InputDecoration(
@@ -231,7 +230,7 @@ class TransaksiView extends GetView<CashflowController> {
                         suffixIconColor: grey400,
                         hintText: "Cari transaksi kamu disini",
                         hintStyle:
-                            Theme.of(context).textTheme.caption!.copyWith(
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
                                   color: grey400,
                                 ),
                         border: const OutlineInputBorder(
@@ -262,7 +261,7 @@ class TransaksiView extends GetView<CashflowController> {
                             "Semua Transaksi",
                             style: Theme.of(context)
                                 .textTheme
-                                .caption!
+                                .bodySmall!
                                 .copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: backgroundColor1),
@@ -283,7 +282,7 @@ class TransaksiView extends GetView<CashflowController> {
                             "Kategori Transaksi",
                             style: Theme.of(context)
                                 .textTheme
-                                .caption!
+                                .bodySmall!
                                 .copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: grey400),
@@ -306,7 +305,7 @@ class TransaksiView extends GetView<CashflowController> {
                             ? DataViewWidget()
                             : Obx(() => SizedBox(
                                   child: controller.tempSearch.isEmpty
-                                      ? Center(
+                                      ? const Center(
                                           child: Text("data tidak ada"),
                                         )
                                       : MediaQuery.removePadding(
@@ -343,7 +342,7 @@ class TransaksiView extends GetView<CashflowController> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .caption!
+                                                                    .bodySmall!
                                                                     .copyWith(
                                                                       fontWeight:
                                                                           FontWeight
@@ -383,7 +382,7 @@ class TransaksiView extends GetView<CashflowController> {
                                                                     ? Theme.of(
                                                                             context)
                                                                         .textTheme
-                                                                        .caption!
+                                                                        .bodySmall!
                                                                         .copyWith(
                                                                           color:
                                                                               const Color(0XFFCC444B),
@@ -391,7 +390,7 @@ class TransaksiView extends GetView<CashflowController> {
                                                                     : Theme.of(
                                                                             context)
                                                                         .textTheme
-                                                                        .bodyText2!
+                                                                        .bodyMedium!
                                                                         .copyWith(
                                                                           color:
                                                                               const Color(0XFF0096C7),
@@ -485,7 +484,7 @@ class DataViewWidget extends StatelessWidget {
                     "Kamu belum melakukan pencatatan transaksi, nih. Yuk, catat transaksi dan pantau alur keuanganmu dengan mudah~",
                     style: Theme.of(context)
                         .textTheme
-                        .caption!
+                        .bodySmall!
                         .copyWith(color: grey400),
                     textAlign: TextAlign.center,
                   ),
@@ -505,12 +504,12 @@ class DataViewWidget extends StatelessWidget {
                         "Tambah transaksi sekarang",
                         style: Theme.of(context)
                             .textTheme
-                            .caption!
+                            .bodySmall!
                             .copyWith(color: backgroundColor1),
                       ),
                       onPressed: () => PersistentNavBarNavigator.pushNewScreen(
                         context,
-                        screen: FormTransaksiView(),
+                        screen: const FormTransaksiView(),
                       ),
                     ),
                   ),
@@ -524,7 +523,7 @@ class DataViewWidget extends StatelessWidget {
                 groupBy: (dynamic element) => element['tanggalTransaksi'],
                 groupSeparatorBuilder: (dynamic element) => Text(
                       element['tanggalTransaksi'],
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: grey500, fontWeight: FontWeight.w600),
                     ),
                 order: StickyGroupedListOrder.DESC,
@@ -550,7 +549,7 @@ class DataViewWidget extends StatelessWidget {
                                       "${element["namaTransaksi"]}",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(
                                             fontWeight: FontWeight.w600,
                                             color: dark,
@@ -572,13 +571,13 @@ class DataViewWidget extends StatelessWidget {
                                               "Pengeluaran"
                                           ? Theme.of(context)
                                               .textTheme
-                                              .caption!
+                                              .bodySmall!
                                               .copyWith(
                                                 color: const Color(0XFFCC444B),
                                               )
                                           : Theme.of(context)
                                               .textTheme
-                                              .caption!
+                                              .bodySmall!
                                               .copyWith(
                                                 color: const Color(0XFF0096C7),
                                               ),

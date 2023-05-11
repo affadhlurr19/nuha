@@ -39,7 +39,7 @@ class PkPendidikanView extends GetView<PerencanaanKeuanganController> {
           children: [
             GradientText(
               "Dana Pendidikan",
-              style: Theme.of(context).textTheme.headline3!,
+              style: Theme.of(context).textTheme.displaySmall!,
               colors: const [
                 buttonColor1,
                 buttonColor2,
@@ -50,7 +50,7 @@ class PkPendidikanView extends GetView<PerencanaanKeuanganController> {
             ),
             Text(
               "(Jika tidak ada, ketika 0)",
-              style: Theme.of(context).textTheme.caption!.copyWith(
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: grey400,
                   ),
             ),

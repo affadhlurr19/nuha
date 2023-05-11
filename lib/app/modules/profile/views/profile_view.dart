@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bi.dart';
+import 'package:iconify_flutter/icons/gg.dart';
+import 'package:iconify_flutter/icons/iconoir.dart';
+import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:iconify_flutter/icons/mdi_light.dart';
+import 'package:iconify_flutter/icons/ph.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
@@ -86,10 +92,10 @@ class ProfileView extends GetView<ProfileController> {
                                     child: SizedBox(
                                       child: IconButton(
                                         padding: EdgeInsets.zero,
-                                        onPressed: () =>
-                                            Get.toNamed(Routes.GANTI_FOTO_PROFIL),
-                                        color: buttonColor1,        
-                                        iconSize: 18,                                
+                                        onPressed: () => Get.toNamed(
+                                            Routes.GANTI_FOTO_PROFIL),
+                                        color: buttonColor1,
+                                        iconSize: 18,
                                         icon: const Icon(Icons.add_a_photo,
                                             color: buttonColor1),
                                       ),
@@ -104,7 +110,7 @@ class ProfileView extends GetView<ProfileController> {
                     Center(
                       child: Text(
                         data!["name"],
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 15.sp,
                               color: backgroundColor1,
@@ -114,7 +120,7 @@ class ProfileView extends GetView<ProfileController> {
                     Center(
                       child: Text(
                         data["email"],
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 11.sp,
                               color: backgroundColor1,
@@ -129,7 +135,7 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                       color: backgroundColor1,
                       child: SizedBox(
-                        height: 32.975.h,
+                        height: 41.975.h,
                         width: 84.4.w,
                         child: Column(
                           children: [
@@ -141,10 +147,10 @@ class ProfileView extends GetView<ProfileController> {
                                 'Pengaturan Akun',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .copyWith(
                                       fontWeight: FontWeight.w600,
-                                      color: const Color(0XFF1F1F1F),
+                                      color: titleColor,
                                       fontSize: 11.sp,
                                     ),
                               ),
@@ -161,20 +167,25 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               width: widthDevice,
                               child: ListTile(
-                                leading: FlutterLogo(size: 18.sp),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  size: 18.sp,
+                                leading: const Iconify(
+                                  Gg.profile,
+                                  size: 24,
+                                  color: titleColor,
+                                ),
+                                trailing: const Iconify(
+                                  Bi.chevron_right,
+                                  size: 24,
+                                  color: titleColor,
                                 ),
                                 title: Text(
                                   'Edit Akun',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .labelMedium!
                                       .copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 9.sp,
-                                        color: const Color(0XFF1F1F1F),
+                                        color: titleColor,
                                       ),
                                 ),
                                 onTap: () => Get.toNamed(Routes.EDIT_PROFILE),
@@ -192,20 +203,25 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               width: widthDevice,
                               child: ListTile(
-                                leading: FlutterLogo(size: 18.sp),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  size: 18.sp,
+                                leading: const Iconify(
+                                  Mdi.diamond_stone,
+                                  size: 24,
+                                  color: titleColor,
+                                ),
+                                trailing: const Iconify(
+                                  Bi.chevron_right,
+                                  size: 24,
+                                  color: titleColor,
                                 ),
                                 title: Text(
                                   'Upgrade Akun',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .labelMedium!
                                       .copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 9.sp,
-                                        color: const Color(0XFF1F1F1F),
+                                        color: titleColor,
                                       ),
                                 ),
                                 onTap: () {},
@@ -223,20 +239,62 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               width: widthDevice,
                               child: ListTile(
-                                leading: FlutterLogo(size: 18.sp),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  size: 18.sp,
+                                leading: const Iconify(
+                                  Ph.lock,
+                                  size: 20,
+                                  color: titleColor,
+                                ),
+                                trailing: const Iconify(
+                                  Bi.chevron_right,
+                                  size: 24,
+                                  color: titleColor,
                                 ),
                                 title: Text(
                                   'Pengaturan Keamanan',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .labelMedium!
                                       .copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 9.sp,
-                                        color: const Color(0XFF1F1F1F),
+                                        color: titleColor,
+                                      ),
+                                ),
+                                onTap: () =>
+                                    Get.toNamed(Routes.PENGATURAN_KEAMANAN),
+                              ),
+                            ),
+                            SizedBox(height: 1.h),
+                            Container(
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    width: 1,
+                                    color: Color(0XFFF1F1F1),
+                                  ),
+                                ),
+                              ),
+                              width: widthDevice,
+                              child: ListTile(
+                                leading: const Iconify(
+                                  Ph.bell,
+                                  size: 20,
+                                  color: titleColor,
+                                ),
+                                trailing: const Iconify(
+                                  Bi.chevron_right,
+                                  size: 24,
+                                  color: titleColor,
+                                ),
+                                title: Text(
+                                  'Pengaturan Notifikasi',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 9.sp,
+                                        color: titleColor,
                                       ),
                                 ),
                                 onTap: () =>
@@ -255,7 +313,7 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                       color: backgroundColor1,
                       child: SizedBox(
-                        height: 40.925.h,
+                        height: 41.975.h,
                         width: 84.4.w,
                         child: Column(
                           children: [
@@ -267,10 +325,10 @@ class ProfileView extends GetView<ProfileController> {
                                 'Informasi',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .copyWith(
                                       fontWeight: FontWeight.w600,
-                                      color: const Color(0XFF1F1F1F),
+                                      color: titleColor,
                                       fontSize: 11.sp,
                                     ),
                               ),
@@ -287,20 +345,25 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               width: widthDevice,
                               child: ListTile(
-                                leading: FlutterLogo(size: 18.sp),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  size: 18.sp,
+                                leading: const Iconify(
+                                  MdiLight.help_circle,
+                                  size: 24,
+                                  color: titleColor,
+                                ),
+                                trailing: const Iconify(
+                                  Bi.chevron_right,
+                                  size: 24,
+                                  color: titleColor,
                                 ),
                                 title: Text(
                                   'Bantuan',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .labelMedium!
                                       .copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 9.sp,
-                                        color: const Color(0XFF1F1F1F),
+                                        color: titleColor,
                                       ),
                                 ),
                                 onTap: () {},
@@ -318,20 +381,25 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               width: widthDevice,
                               child: ListTile(
-                                leading: FlutterLogo(size: 18.sp),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  size: 18.sp,
+                                leading: const Iconify(
+                                  MdiLight.information,
+                                  size: 24,
+                                  color: titleColor,
+                                ),
+                                trailing: const Iconify(
+                                  Bi.chevron_right,
+                                  size: 24,
+                                  color: titleColor,
                                 ),
                                 title: Text(
                                   'Syarat & Ketentuan',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .labelMedium!
                                       .copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 9.sp,
-                                        color: const Color(0XFF1F1F1F),
+                                        color: titleColor,
                                       ),
                                 ),
                                 onTap: () {},
@@ -349,20 +417,25 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               width: widthDevice,
                               child: ListTile(
-                                leading: FlutterLogo(size: 18.sp),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  size: 18.sp,
+                                leading: const Iconify(
+                                  Ph.chat_circle_dots_light,
+                                  size: 24,
+                                  color: titleColor,
+                                ),
+                                trailing: const Iconify(
+                                  Bi.chevron_right,
+                                  size: 24,
+                                  color: titleColor,
                                 ),
                                 title: Text(
                                   'Hubungi Kami',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .labelMedium!
                                       .copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 9.sp,
-                                        color: const Color(0XFF1F1F1F),
+                                        color: titleColor,
                                       ),
                                 ),
                                 onTap: () {},
@@ -380,20 +453,25 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               width: widthDevice,
                               child: ListTile(
-                                leading: FlutterLogo(size: 18.sp),
-                                trailing: Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  size: 18.sp,
+                                leading: const Iconify(
+                                  Ph.x_circle_thin,
+                                  size: 24,
+                                  color: titleColor,
+                                ),
+                                trailing: const Iconify(
+                                  Bi.chevron_right,
+                                  size: 24,
+                                  color: titleColor,
                                 ),
                                 title: Text(
                                   'Hapus Akun',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .labelMedium!
                                       .copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 9.sp,
-                                        color: const Color(0XFF1F1F1F),
+                                        color: titleColor,
                                       ),
                                 ),
                                 onTap: () {},
@@ -403,31 +481,35 @@ class ProfileView extends GetView<ProfileController> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 3.53125.h),
+                    SizedBox(height: 3.5.h),
                     Container(
                       padding: EdgeInsets.only(right: 11.1.w, left: 11.1.w),
                       child: SizedBox(
-                        width: 38.89.w,
+                        width: widthDevice,
                         height: 5.5.h,
                         child: auth.currentUser!.providerData[0].providerId ==
                                 'google.com'
                             ? Obx(
-                                () => ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: buttonColor1,
+                                () => OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                      foregroundColor: const Color(0XFFCC444B),
+                                      backgroundColor: backgroundColor2,
+                                      side: const BorderSide(
+                                          color: Color(0XFFCC444B), width: 1),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20))),
                                   child: controller.isLoading.isFalse
                                       ? Text(
-                                          "Logout",
+                                          "Keluar",
                                           style: Theme.of(context)
                                               .textTheme
-                                              .button!
+                                              .bodyMedium!
                                               .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 13.sp,
-                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 11.sp,
+                                                  color:
+                                                      const Color(0XFFCC444B),
                                                   fontStyle: FontStyle.normal),
                                         )
                                       : SizedBox(
@@ -435,7 +517,7 @@ class ProfileView extends GetView<ProfileController> {
                                           width: 1.5.h,
                                           child:
                                               const CircularProgressIndicator(
-                                            color: Colors.white,
+                                            color: Color(0XFFCC444B),
                                           ),
                                         ),
                                   onPressed: () {
@@ -446,22 +528,26 @@ class ProfileView extends GetView<ProfileController> {
                                 ),
                               )
                             : Obx(
-                                () => ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: buttonColor1,
+                                () => OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                      foregroundColor: const Color(0XFFCC444B),
+                                      backgroundColor: backgroundColor2,
+                                      side: const BorderSide(
+                                          color: Color(0XFFCC444B), width: 1),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20))),
                                   child: controller.isLoading.isFalse
                                       ? Text(
-                                          "Logout",
+                                          "Keluar",
                                           style: Theme.of(context)
                                               .textTheme
-                                              .button!
+                                              .bodyMedium!
                                               .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 13.sp,
-                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 11.sp,
+                                                  color:
+                                                      const Color(0XFFCC444B),
                                                   fontStyle: FontStyle.normal),
                                         )
                                       : SizedBox(
@@ -469,7 +555,7 @@ class ProfileView extends GetView<ProfileController> {
                                           width: 1.5.h,
                                           child:
                                               const CircularProgressIndicator(
-                                            color: Colors.white,
+                                            color: Color(0XFFCC444B),
                                           ),
                                         ),
                                   onPressed: () {
@@ -501,7 +587,7 @@ class ProfileView extends GetView<ProfileController> {
               centerTitle: true,
               title: Text(
                 "Profil",
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w600,
                       color: backgroundColor1,

@@ -6,10 +6,10 @@ class LiterasiController extends GetxController
   late TabController tabs;
 
   final List<Tab> literasiTabs = <Tab>[
-    Tab(
+    const Tab(
       text: 'Artikel',
     ),
-    Tab(
+    const Tab(
       text: 'Video',
     )
   ];
