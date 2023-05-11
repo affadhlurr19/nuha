@@ -148,13 +148,13 @@ class CariArtikelView extends GetView<CariArtikelController> {
                         },
                       );
                     case ResultStatus.noData:
-                      return Container(
+                      return SizedBox(
                         height: 85.h,
                         width: widthDevice,
                         child: Center(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(
                               Icons.not_interested,
                               size: 80,
@@ -166,7 +166,7 @@ class CariArtikelView extends GetView<CariArtikelController> {
                     case ResultStatus.error:
                       return Text(c.resultState.value.toString());
                     default:
-                      return SizedBox();
+                      return const SizedBox();
                   }
                 },
               ),

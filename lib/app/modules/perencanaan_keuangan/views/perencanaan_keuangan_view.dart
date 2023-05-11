@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/views/pk_darurat_view.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/views/pk_kendaraan_view.dart';
@@ -83,33 +82,33 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
                 runSpacing: 2.5.h,
                 children: [
                   CategoryPerencanaanWidget(
-                    image: AssetImage('assets/images/pk_darurat.png'),
+                    image: const AssetImage('assets/images/pk_darurat.png'),
                     onTap: () => Get.to(PkDaruratView()),
                     text: "Dana Darurat",
                   ),
                   CategoryPerencanaanWidget(
-                      image: AssetImage('assets/images/pk_pendidikan.png'),
-                      onTap: () => Get.to(PkPendidikanView()),
+                      image: const AssetImage('assets/images/pk_pendidikan.png'),
+                      onTap: () => Get.to(const PkPendidikanView()),
                       text: "Dana Pendidikan"),
                   CategoryPerencanaanWidget(
-                      image: AssetImage('assets/images/pk_haji.png'),
-                      onTap: () => Get.to(PkUmrohView()),
+                      image: const AssetImage('assets/images/pk_haji.png'),
+                      onTap: () => Get.to(const PkUmrohView()),
                       text: "Dana Haji/Umroh"),
                   CategoryPerencanaanWidget(
-                      image: AssetImage('assets/images/pk_pernikahan.png'),
-                      onTap: () => Get.to(PkPernikahanView()),
+                      image: const AssetImage('assets/images/pk_pernikahan.png'),
+                      onTap: () => Get.to(const PkPernikahanView()),
                       text: "Dana Pernikahan"),
                   CategoryPerencanaanWidget(
-                      image: AssetImage('assets/images/pk_rumah.png'),
-                      onTap: () => Get.to(PkRumahView()),
+                      image: const AssetImage('assets/images/pk_rumah.png'),
+                      onTap: () => Get.to(const PkRumahView()),
                       text: "Dana Beli Rumah"),
                   CategoryPerencanaanWidget(
-                      image: AssetImage('assets/images/pk_kendaraan.png'),
-                      onTap: () => Get.to(PkKendaraanView()),
+                      image: const AssetImage('assets/images/pk_kendaraan.png'),
+                      onTap: () => Get.to(const PkKendaraanView()),
                       text: "Dana Beli Kendaraan"),
                   CategoryPerencanaanWidget(
-                      image: AssetImage('assets/images/pk_pensiun.png'),
-                      onTap: () => Get.to(PkPensiunView()),
+                      image: const AssetImage('assets/images/pk_pensiun.png'),
+                      onTap: () => Get.to(const PkPensiunView()),
                       text: "Dana Pensiun"),
                 ],
               ),

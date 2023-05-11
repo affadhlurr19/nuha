@@ -202,7 +202,7 @@ class FincheckTigaView extends GetView<FincheckController> {
                         .bodyText2!
                         .copyWith(color: Colors.white),
                   ),
-                  onPressed: () => Get.to(FincheckEmpatView()),
+                  onPressed: () => Get.to(const FincheckEmpatView()),
                 ),
               ),
             ],

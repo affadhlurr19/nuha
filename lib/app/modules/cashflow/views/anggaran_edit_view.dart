@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -11,7 +12,9 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 
 class UpdateAnggaranView extends GetView<CashflowController> {
   final String id;
+
   const UpdateAnggaranView({Key? key, required this.id}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +64,10 @@ class UpdateAnggaranView extends GetView<CashflowController> {
             } else {
               // print(snapshot.data);
               controller.kategoriC.value = snapshot.data!["kategori"];
-              controller.nomAnggaranC.text =
-                  snapshot.data!["nominal"].toString();
+              // c.nomAnggaranC.text = snapshot.data!["nominal"].toString();
+              controller.nomAnggaranC.text = NumberFormat.currency(
+                      locale: 'id', symbol: "", decimalDigits: 0)
+                  .format(snapshot.data!["nominal"]);
               return SingleChildScrollView(
                   child: Container(
                 decoration: BoxDecoration(
@@ -154,8 +159,8 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                                     ),
                             decoration: InputDecoration(
                               prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 4.5833.w, vertical: 1.h),
+                                padding:
+                                    EdgeInsets.fromLTRB(4.5833.w, 1.h, 0, 1.h),
                                 child: Text(
                                   "Rp. ",
                                   style: Theme.of(context)

@@ -40,7 +40,7 @@ class LiterasiView extends GetView<LiterasiController> {
             ),
           ),
         ],
-        bottom: TabBar(          
+        bottom: TabBar(
           indicatorWeight: 3,
           labelColor: buttonColor1,
           indicatorColor: buttonColor1,

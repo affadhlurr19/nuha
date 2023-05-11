@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/literasi/controllers/list_artikel_controller.dart';
-import 'package:nuha/app/modules/literasi/controllers/literasi_controller.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:nuha/app/utility/result_state.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -133,7 +132,8 @@ class ListArtikelView extends GetView<ListArtikelController> {
                       itemBuilder: (context, index) {
                         var artikel = c.result.article[index];
                         return GestureDetector(
-                          onTap: () => Get.toNamed(Routes.DETAIL_ARTIKEL, arguments: artikel.id.toString()),
+                          onTap: () => Get.toNamed(Routes.DETAIL_ARTIKEL,
+                              arguments: artikel.id.toString()),
                           child: Card(
                             color: backgroundColor2,
                             elevation: 0,
@@ -200,11 +200,11 @@ class ListArtikelView extends GetView<ListArtikelController> {
                       },
                     );
                   case ResultStatus.noData:
-                    return Text('Data Kosong');
+                    return const Text('Data Kosong');
                   case ResultStatus.error:
-                    return Text('Error');
+                    return const Text('Error');
                   default:
-                    return SizedBox();
+                    return const SizedBox();
                 }
               },
             ),

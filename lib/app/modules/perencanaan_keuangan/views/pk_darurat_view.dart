@@ -1,6 +1,4 @@
-import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
@@ -112,7 +110,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                           ),
                           value: null,
                           isDense: true,
-                          underline: SizedBox(),
+                          underline: const SizedBox(),
                           icon: const Icon(
                             Icons.arrow_drop_down,
                             color: grey400,
@@ -121,8 +119,8 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                           items: ["Belum Menikah", "Sudah Menikah"]
                               .map((String valueItem) {
                             return DropdownMenuItem(
-                              child: Text(valueItem),
                               value: valueItem,
+                              child: Text(valueItem),
                             );
                           }).toList()),
                     ),

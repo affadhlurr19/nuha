@@ -77,7 +77,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                               .bodyText2!
                               .copyWith(
                                   color: grey900, fontWeight: FontWeight.w600),
-                          content: DialogContent(),
+                          content: const DialogContent(),
                         );
                       },
                       child: Container(
@@ -200,8 +200,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                             ),
                         decoration: InputDecoration(
                           prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 4.5833.w, vertical: 1.h),
+                            padding: EdgeInsets.fromLTRB(4.5833.w, 1.h, 0, 1.h),
                             child: Text(
                               "Rp. ",
                               style: Theme.of(context)

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,7 +35,7 @@ class TransaksiView extends GetView<CashflowController> {
           elevation: 0,
           onPressed: () => PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: FormTransaksiView(),
+            screen: const FormTransaksiView(),
           ),
           child: Icon(
             Icons.add,
@@ -45,6 +44,7 @@ class TransaksiView extends GetView<CashflowController> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Stack(
           children: <Widget>[
             Container(
@@ -306,7 +306,7 @@ class TransaksiView extends GetView<CashflowController> {
                             ? DataViewWidget()
                             : Obx(() => SizedBox(
                                   child: controller.tempSearch.isEmpty
-                                      ? Center(
+                                      ? const Center(
                                           child: Text("data tidak ada"),
                                         )
                                       : MediaQuery.removePadding(
@@ -510,7 +510,7 @@ class DataViewWidget extends StatelessWidget {
                       ),
                       onPressed: () => PersistentNavBarNavigator.pushNewScreen(
                         context,
-                        screen: FormTransaksiView(),
+                        screen: const FormTransaksiView(),
                       ),
                     ),
                   ),
@@ -519,101 +519,109 @@ class DataViewWidget extends StatelessWidget {
             );
           } else {
             final data = snapshot.data!.docs.map((e) => e.data()).toList();
-            return StickyGroupedListView<dynamic, String>(
-                elements: data,
-                groupBy: (dynamic element) => element['tanggalTransaksi'],
-                groupSeparatorBuilder: (dynamic element) => Text(
-                      element['tanggalTransaksi'],
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: grey500, fontWeight: FontWeight.w600),
-                    ),
-                order: StickyGroupedListOrder.DESC,
-                itemBuilder: (context, dynamic element) => Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Image(
-                                  width: 10.55556.w,
-                                  image: AssetImage(
-                                      'assets/images/${element["kategori"]}.png'),
-                                ),
-                                SizedBox(
-                                  width: 4.44444.w,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${element["namaTransaksi"]}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption!
-                                          .copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: dark,
-                                          ),
-                                    ),
-                                    Text(
-                                      element["jenisTransaksi"] == "Pengeluaran"
-                                          ? NumberFormat.currency(
-                                                  locale: 'id',
-                                                  symbol: "- ",
-                                                  decimalDigits: 0)
-                                              .format(element["nominal"])
-                                          : NumberFormat.currency(
-                                                  locale: 'id',
-                                                  symbol: "+ ",
-                                                  decimalDigits: 0)
-                                              .format(element["nominal"]),
-                                      style: element["jenisTransaksi"] ==
-                                              "Pengeluaran"
-                                          ? Theme.of(context)
-                                              .textTheme
-                                              .caption!
-                                              .copyWith(
-                                                color: const Color(0XFFCC444B),
-                                              )
-                                          : Theme.of(context)
-                                              .textTheme
-                                              .caption!
-                                              .copyWith(
-                                                color: const Color(0XFF0096C7),
-                                              ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            IconButton(
-                              onPressed: () =>
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                context,
-                                screen: TransaksiEditView(id: element["id"]),
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: StickyGroupedListView<dynamic, String>(
+                  shrinkWrap: true,
+                  elements: data,
+                  groupBy: (dynamic element) => element['tanggalTransaksi'],
+                  groupSeparatorBuilder: (dynamic element) => Text(
+                        element['tanggalTransaksi'],
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                            color: grey500, fontWeight: FontWeight.w600),
+                      ),
+                  order: StickyGroupedListOrder.DESC,
+                  itemBuilder: (context, dynamic element) => Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Image(
+                                    width: 10.55556.w,
+                                    image: AssetImage(
+                                        'assets/images/${element["kategori"]}.png'),
+                                  ),
+                                  SizedBox(
+                                    width: 4.44444.w,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${element["namaTransaksi"]}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption!
+                                            .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              color: dark,
+                                            ),
+                                      ),
+                                      Text(
+                                        element["jenisTransaksi"] ==
+                                                "Pengeluaran"
+                                            ? NumberFormat.currency(
+                                                    locale: 'id',
+                                                    symbol: "- ",
+                                                    decimalDigits: 0)
+                                                .format(element["nominal"])
+                                            : NumberFormat.currency(
+                                                    locale: 'id',
+                                                    symbol: "+ ",
+                                                    decimalDigits: 0)
+                                                .format(element["nominal"]),
+                                        style: element["jenisTransaksi"] ==
+                                                "Pengeluaran"
+                                            ? Theme.of(context)
+                                                .textTheme
+                                                .caption!
+                                                .copyWith(
+                                                  color:
+                                                      const Color(0XFFCC444B),
+                                                )
+                                            : Theme.of(context)
+                                                .textTheme
+                                                .caption!
+                                                .copyWith(
+                                                  color:
+                                                      const Color(0XFF0096C7),
+                                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              icon: Iconify(
-                                MaterialSymbols.edit,
-                                size: 12.sp,
-                                color: grey400,
+                              IconButton(
+                                onPressed: () =>
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: TransaksiEditView(id: element["id"]),
+                                ),
+                                icon: Iconify(
+                                  MaterialSymbols.edit,
+                                  size: 12.sp,
+                                  color: grey400,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                        const Divider(
-                          thickness: 1,
-                          height: 0,
-                          color: grey100,
-                        ),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                      ],
-                    ));
+                            ],
+                          ),
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                          const Divider(
+                            thickness: 1,
+                            height: 0,
+                            color: grey100,
+                          ),
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                        ],
+                      )),
+            );
           }
         },
       ),

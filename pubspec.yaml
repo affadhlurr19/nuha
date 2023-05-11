@@ -27,15 +27,16 @@ dependencies:
   full_screen_image: 2.0.0
   persistent_bottom_nav_bar: 5.0.2
   sticky_grouped_list: 3.1.0
-  flutter: 
-    sdk: flutter    
-  google_sign_in: ^6.0.2    
-  badges: ^3.0.3  
+  google_sign_in: ^6.0.2
+  badges: ^3.0.3
   chips_choice: ^3.0.0
   http: ^0.13.5
   timeago: ^3.3.0
   intl_utils: ^2.8.2
   flutter_localization: ^0.1.10
+  grouped_list: 5.1.2
+  flutter: 
+    sdk: flutter
 
 dev_dependencies: 
   flutter_lints: ^2.0.0

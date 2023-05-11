@@ -9,6 +9,7 @@ class CashflowBinding extends Bindings {
     Get.lazyPut<CashflowController>(
       () => CashflowController(),
     );
+
     Get.lazyPut<NavbarController>(
       () => NavbarController(),
     );

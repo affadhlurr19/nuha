@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,7 +6,6 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/gridicons.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
-import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
@@ -146,8 +144,7 @@ class FormAnggaranView extends GetView<CashflowController> {
                         ),
                     decoration: InputDecoration(
                       prefixIcon: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 4.5833.w, vertical: 1.h),
+                        padding: EdgeInsets.fromLTRB(4.5833.w, 1.h, 0, 1.h),
                         child: Text(
                           "Rp. ",
                           style: Theme.of(context)
@@ -271,17 +268,17 @@ class BottomSheetPengeluaran extends StatelessWidget {
               runSpacing: 2.5.h,
               children: [
                 CategoryAnggaranWidget(
-                  image: AssetImage('assets/images/Asuransi.png'),
+                  image: const AssetImage('assets/images/Asuransi.png'),
                   text: "Asuransi",
                 ),
                 CategoryAnggaranWidget(
-                    image: AssetImage('assets/images/Pendidikan.png'),
+                    image: const AssetImage('assets/images/Pendidikan.png'),
                     text: "Pendidikan"),
                 CategoryAnggaranWidget(
-                    image: AssetImage('assets/images/Transportasi.png'),
+                    image: const AssetImage('assets/images/Transportasi.png'),
                     text: "Transportasi"),
                 CategoryAnggaranWidget(
-                    image: AssetImage('assets/images/Sosial.png'),
+                    image: const AssetImage('assets/images/Sosial.png'),
                     text: "Sosial")
               ],
             ),
@@ -303,22 +300,22 @@ class BottomSheetPengeluaran extends StatelessWidget {
               runSpacing: 2.5.h,
               children: [
                 CategoryAnggaranWidget(
-                  image: AssetImage('assets/images/Makan.png'),
+                  image: const AssetImage('assets/images/Makan.png'),
                   text: "Makan",
                 ),
                 CategoryAnggaranWidget(
-                  image: AssetImage('assets/images/Belanja.png'),
+                  image: const AssetImage('assets/images/Belanja.png'),
                   text: "Belanja",
                 ),
                 CategoryAnggaranWidget(
-                  image: AssetImage('assets/images/Hiburan.png'),
+                  image: const AssetImage('assets/images/Hiburan.png'),
                   text: "Hiburan",
                 ),
                 CategoryAnggaranWidget(
-                    image: AssetImage('assets/images/Tagihan.png'),
+                    image: const AssetImage('assets/images/Tagihan.png'),
                     text: "Tagihan"),
                 CategoryAnggaranWidget(
-                    image: AssetImage('assets/images/Kesehatan.png'),
+                    image: const AssetImage('assets/images/Kesehatan.png'),
                     text: "Kesehatan")
               ],
             ),
@@ -340,7 +337,7 @@ class BottomSheetPengeluaran extends StatelessWidget {
               runSpacing: 2.5.h,
               children: [
                 CategoryAnggaranWidget(
-                  image: AssetImage('assets/images/Lainnya.png'),
+                  image: const AssetImage('assets/images/Lainnya.png'),
                   text: "Lainnya",
                 ),
               ],

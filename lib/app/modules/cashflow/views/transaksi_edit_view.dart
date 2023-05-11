@@ -20,6 +20,7 @@ class TransaksiEditView extends GetView<CashflowController> {
   final String id;
 
   const TransaksiEditView({Key? key, required this.id}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,8 +72,11 @@ class TransaksiEditView extends GetView<CashflowController> {
               controller.jenisC.value = snapshot.data!["jenisTransaksi"];
               controller.namaTransaksiC.text = snapshot.data!["namaTransaksi"];
               controller.kategoriC.value = snapshot.data!["kategori"];
-              controller.nominalTransaksiC.text =
-                  snapshot.data!["nominal"].toString();
+              // controller.nominalTransaksiC.text =
+              //     snapshot.data!["nominal"].toString();
+              controller.nominalTransaksiC.text = NumberFormat.currency(
+                      locale: 'id', symbol: "", decimalDigits: 0)
+                  .format(snapshot.data!["nominal"]);
               controller.deskripsiC.text = snapshot.data?["deskripsi"];
 
               DateTime dateTime = DateFormat('dd MMMM yyyy')
@@ -120,7 +124,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                   .copyWith(
                                       color: grey900,
                                       fontWeight: FontWeight.w600),
-                              content: DialogContent(),
+                              content: const DialogContent(),
                             );
                           },
                           child: Container(
@@ -249,8 +253,8 @@ class TransaksiEditView extends GetView<CashflowController> {
                                     ),
                             decoration: InputDecoration(
                               prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 4.5833.w, vertical: 1.h),
+                                padding:
+                                    EdgeInsets.fromLTRB(4.5833.w, 1.h, 0, 1.h),
                                 child: Text(
                                   "Rp. ",
                                   style: Theme.of(context)

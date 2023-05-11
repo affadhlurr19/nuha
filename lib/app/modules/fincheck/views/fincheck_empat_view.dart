@@ -197,7 +197,7 @@ class FincheckEmpatView extends GetView<FincheckController> {
                         .bodyText2!
                         .copyWith(color: Colors.white),
                   ),
-                  onPressed: () => Get.to(FincheckLimaView()),
+                  onPressed: () => Get.to(const FincheckLimaView()),
                 ),
               ),
             ],

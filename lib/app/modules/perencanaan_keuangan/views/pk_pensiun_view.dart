@@ -5,7 +5,6 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
 import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:nuha/app/widgets/field_number.dart';
-import 'package:nuha/app/widgets/field_text.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 

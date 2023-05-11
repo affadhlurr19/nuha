@@ -69,7 +69,7 @@ class ProfileController extends GetxController {
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamProfile() async* {
     try {
       String uid = auth.currentUser!.uid;
-      yield* await firestore.collection("users").doc(uid).snapshots();
+      yield* firestore.collection("users").doc(uid).snapshots();
     } catch (e) {
       errMsg('Tidak dapat get data user');
     }

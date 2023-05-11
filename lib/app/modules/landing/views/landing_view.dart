@@ -74,14 +74,14 @@ class LandingView extends GetView<LandingController> {
                                 text: "Halo, Selamat datang di Nuha.",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(color: titleColor),
                               ),
                               TextSpan(
                                 text: " Solusi Keuanganmu",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(color: buttonColor1),
                               ),
                             ]),
@@ -91,7 +91,7 @@ class LandingView extends GetView<LandingController> {
                             "Nuha merupakan solusi keuangan yang mudah diakses kapan saja dan dimana saja. Dilengkapi dengan fitur yang pasti ngebantu banget.",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline4!
+                                .headlineMedium!
                                 .copyWith(color: grey500),
                           ),
                         ],
@@ -112,7 +112,7 @@ class LandingView extends GetView<LandingController> {
                         "Lewati",
                         style: Theme.of(context)
                             .textTheme
-                            .button!
+                            .labelLarge!
                             .copyWith(color: grey500),
                       ),
                       onPressed: () => Get.toNamed("/memulai"),
@@ -128,7 +128,7 @@ class LandingView extends GetView<LandingController> {
                               borderRadius: BorderRadius.circular(20))),
                       child: Text(
                         "Selanjutnya",
-                        style: Theme.of(context).textTheme.button!.copyWith(
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       onPressed: () => Get.to(() => const SecondLanding()),
@@ -211,14 +211,14 @@ class SecondLanding extends GetView<LandingController> {
                                 text: "Kami Hadir Untuk Membantu Kebutuhan ",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(color: titleColor),
                               ),
                               TextSpan(
                                 text: " Finansialmu",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(color: buttonColor1),
                               ),
                             ]),
@@ -228,7 +228,7 @@ class SecondLanding extends GetView<LandingController> {
                             "Ayo tingkatkan kemampuan finansial dan wujudkan kesehatan finansial dimulai dari diri sendiri menggunakan aplikasi Nuha.",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline4!
+                                .headlineMedium!
                                 .copyWith(color: grey500),
                           ),
                         ],
@@ -249,7 +249,7 @@ class SecondLanding extends GetView<LandingController> {
                         "Lewati",
                         style: Theme.of(context)
                             .textTheme
-                            .button!
+                            .labelLarge!
                             .copyWith(color: grey500),
                       ),
                       onPressed: () => Get.toNamed("/memulai"),
@@ -265,7 +265,7 @@ class SecondLanding extends GetView<LandingController> {
                               borderRadius: BorderRadius.circular(20))),
                       child: Text(
                         "Selanjutnya",
-                        style: Theme.of(context).textTheme.button!.copyWith(
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       onPressed: () => Get.to(() => const ThirdLanding()),
@@ -349,14 +349,14 @@ class ThirdLanding extends GetView<LandingController> {
                                     "Kini, kamu tidak perlu repot untuk membayar ",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(color: titleColor),
                               ),
                               TextSpan(
                                 text: " ZIS",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(color: buttonColor1),
                               ),
                             ]),
@@ -366,7 +366,7 @@ class ThirdLanding extends GetView<LandingController> {
                             "Aplikasi Nuha merupakan solusi keuangan untuk kamu yang ingin sekaligus menginginkan kemudahan dalam melakukan amalan.",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline4!
+                                .headlineMedium!
                                 .copyWith(color: grey500),
                           ),
                         ],
@@ -387,7 +387,7 @@ class ThirdLanding extends GetView<LandingController> {
                             borderRadius: BorderRadius.circular(20))),
                     child: Text(
                       "Memulai",
-                      style: Theme.of(context).textTheme.button!.copyWith(
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     onPressed: () => Get.toNamed(Routes.MEMULAI),

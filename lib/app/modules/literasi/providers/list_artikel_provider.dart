@@ -40,7 +40,7 @@ class ListArtikelProvider {
 
   Future<DetailArtikel> getDetailArtikel(String idArtikel) async {
     try {
-      final response = 
+      final response =
           await http.get(Uri.parse("${_baseUrl}article/$idArtikel"));
       if (response.statusCode == 200) {
         return DetailArtikel.fromJson(json.decode(response.body));

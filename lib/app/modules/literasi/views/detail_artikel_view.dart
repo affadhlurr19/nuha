@@ -186,11 +186,11 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                     ],
                   );
                 case ResultStatus.noData:
-                  return Text('Data Kosong');
+                  return const Text('Data Kosong');
                 case ResultStatus.error:
                   return Text(c.message);
                 default:
-                  return SizedBox();
+                  return const SizedBox();
               }
             },
           );

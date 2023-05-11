@@ -45,7 +45,7 @@ class FincheckSatuView extends GetView<FincheckController> {
               children: [
                 Text(
                   "Langkah 1",
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: grey400,
                       ),
                 ),
@@ -54,7 +54,7 @@ class FincheckSatuView extends GetView<FincheckController> {
                 ),
                 GradientText(
                   "Berapa penghasilan kamu setiap bulannya?",
-                  style: Theme.of(context).textTheme.headline3!,
+                  style: Theme.of(context).textTheme.displaySmall!,
                   colors: const [
                     buttonColor1,
                     buttonColor2,
@@ -65,7 +65,7 @@ class FincheckSatuView extends GetView<FincheckController> {
                 ),
                 Text(
                   "(Jika tidak ada, ketika 0)",
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: grey400,
                       ),
                 ),
@@ -184,7 +184,7 @@ class FincheckSatuView extends GetView<FincheckController> {
                           "Kembali",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .copyWith(color: buttonColor2),
                         ),
                         onPressed: () => Get.back(),
@@ -202,10 +202,10 @@ class FincheckSatuView extends GetView<FincheckController> {
                           "Selanjutnya",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .copyWith(color: Colors.white),
                         ),
-                        onPressed: () => Get.to(FincheckDuaView()),
+                        onPressed: () => Get.to(const FincheckDuaView()),
                       ),
                     )
                   ],

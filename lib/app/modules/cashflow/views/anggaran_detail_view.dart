@@ -333,7 +333,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                   .pushNewScreen(
                                                                       context,
                                                                       screen:
-                                                                          FormTransaksiView()),
+                                                                          const FormTransaksiView()),
                                                         ),
                                                       ),
                                                     ],
@@ -485,7 +485,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                 height: 1.125.h,
                                               ),
                                               controller.querySearch.isEmpty
-                                                  ? Center(
+                                                  ? const Center(
                                                       child:
                                                           Text("data gak ada"),
                                                     )
