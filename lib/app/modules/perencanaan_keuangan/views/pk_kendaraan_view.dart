@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
+import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_kendaraan_controller.dart';
 import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:nuha/app/widgets/field_number.dart';
 import 'package:nuha/app/widgets/field_text.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 
-class PkKendaraanView extends GetView<PerencanaanKeuanganController> {
-  const PkKendaraanView({Key? key}) : super(key: key);
+class PkKendaraanView extends GetView<PkKendaraanController> {
+  PkKendaraanView({Key? key}) : super(key: key);
+
+  final c = Get.find<PkKendaraanController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,42 +39,178 @@ class PkKendaraanView extends GetView<PerencanaanKeuanganController> {
             horizontal: 7.778.w,
           ),
           children: [
-            GradientText(
-              "Dana Beli Kendaraan",
-              style: Theme.of(context).textTheme.headline3!,
-              colors: const [
-                buttonColor1,
-                buttonColor2,
-              ],
-            ),
             SizedBox(
               height: 0.5.h,
             ),
-            Text(
-              "(Jika tidak ada, ketika 0)",
-              style: Theme.of(context).textTheme.caption!.copyWith(
-                    color: grey400,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GradientText(
+                  "Dana Beli Kendaraan",
+                  style: Theme.of(context).textTheme.displaySmall!,
+                  colors: const [
+                    buttonColor1,
+                    buttonColor2,
+                  ],
+                ),
+                SizedBox(
+                  height: 0.5.h,
+                ),
+                Text(
+                  "Dana beli kendaraan bertujuan untuk mempersiapkan dan mengatur sumber daya keuangan yang efektif guna membeli kendaraan yang diinginkan.",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: grey400,
+                      ),
+                ),
+                SizedBox(
+                  height: 3.125.h,
+                ),
+                FieldText(
+                    labelText: "Nama Kendaraan Impian",
+                    contr: c.namaKendaraan,
+                    hintText: "Masukkan Nama Kendaraan"),
+                FieldCurrency(
+                    labelText: "Harga Kendaraan Impian",
+                    contr: c.nomKendaraan,
+                    infoText:
+                        "Harga kendaraan impian adalah harga pasaran kendaraan yang kamu inginkan."),
+                Text(
+                  "Cara Pembayaran",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: grey900,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                SizedBox(
+                  height: 0.75.h,
+                ),
+                Container(
+                  height: 5.5.h,
+                  width: 84.44444.w,
+                  padding: EdgeInsets.only(top: 1.h, left: 4.583333.w),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: grey100),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Obx(
+                    () => DropdownButton(
+                      hint: Text(
+                        c.caraPembayaran.value,
+                        style: c.statusStat.value == "choosen"
+                            ? Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  color: grey900,
+                                )
+                            : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  color: grey400,
+                                ),
+                      ),
+                      value: null,
+                      isDense: true,
+                      underline: const SizedBox(),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: grey400,
+                      ),
+                      onChanged: (value) {
+                        c.updateStatus(value);
+                      },
+                      items: [
+                        "Cash",
+                        "BSI OTO",
+                      ].map((String valueItem) {
+                        return DropdownMenuItem(
+                          value: valueItem,
+                          child: Text(valueItem),
+                        );
+                      }).toList(),
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: dark,
+                          ),
+                      elevation: 0,
+                    ),
                   ),
+                ),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                Obx(() => SizedBox(
+                    child: c.caraPembayaran.value == "Cash"
+                        ? Column(
+                            children: [
+                              FieldNumber(
+                                labelText: "Kapan Kamu Ingin Mencapai Target",
+                                contr: c.tahunTercapai,
+                                hintText: "5 (tahun)",
+                              ),
+                              FieldNumber(
+                                labelText: "Margin/tahun (%)",
+                                contr: c.margin,
+                                hintText: "5%",
+                              ),
+                              FieldCurrency(
+                                  labelText: "Dana Yang Sudah Terkumpul",
+                                  contr: c.nomDanaTersedia,
+                                  infoText:
+                                      "Dana yang terkumpul adalah uang yang telah disimpan untuk membeli kendaraan impianmu."),
+                              FieldCurrency(
+                                  labelText: "Dana Yang Dapat Disisihkan",
+                                  contr: c.nomDanaDisisihkan,
+                                  infoText:
+                                      "Dana yang dapat disisihkan adalah uang yang dapat kamu sisihkan setiap bulannya untuk tabungan dana beli kendaraan."),
+                            ],
+                          )
+                        : c.caraPembayaran.value == "BSI OTO"
+                            ? Column(
+                                children: [
+                                  FieldNumber(
+                                      labelText: "Lama Tenor (bulan)",
+                                      contr: c.lamaTenor,
+                                      hintText: "64 (bulan)"),
+                                  FieldNumber(
+                                    labelText: "Persentase DP",
+                                    contr: c.persenDP,
+                                    hintText: "15%",
+                                  ),
+                                  FieldNumber(
+                                    labelText: "Margin/tahun (%)",
+                                    contr: c.margin,
+                                    hintText: "5%",
+                                  ),
+                                ],
+                              )
+                            : Container())),
+              ],
             ),
             SizedBox(
-              height: 3.125.h,
+              width: 100.w,
+              child: Center(
+                child: SizedBox(
+                  width: 84.1667.w,
+                  height: 5.5.h,
+                  child: Obx(() => ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: buttonColor2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Text(
+                          c.isLoading.isFalse ? "Hitung Dana" : "Loading...",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          if (c.isLoading.isFalse) {
+                            c.countDana(context);
+                          }
+                        },
+                      )),
+                ),
+              ),
             ),
-            FieldText(
-                labelText: "Nama Kendaraan Impian",
-                contr: controller.namaKendaraan,
-                hintText: "Masukkan Nama Kendaraan"),
-            FieldCurrency(
-                labelText: "Harga Kendaraan Impian",
-                contr: controller.nomKendaraan,
-                infoText: "infoText"),
-            FieldNumber(
-                labelText: "Kapan Kamu Ingin Mencapai Target?",
-                contr: controller.bulanTercapai,
-                hintText: "1"),
-            FieldCurrency(
-                labelText: "Dana Yang Sudah Ada",
-                contr: controller.nomDanaTersedia,
-                infoText: "infoText")
+            SizedBox(
+              height: 3.h,
+            )
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nuha/app/routes/app_pages.dart';
+import 'dart:async';
 
 class HomeController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;

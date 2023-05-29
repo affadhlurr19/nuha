@@ -5,12 +5,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
+import 'package:nuha/app/modules/cashflow/controllers/laporankeuangan_controller.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 class CashflowController extends GetxController {
+  LaporankeuanganController laporankeuanganController =
+      Get.find<LaporankeuanganController>();
+
   TextEditingController nominalTransaksiC = TextEditingController();
   TextEditingController deskripsiC = TextEditingController();
   TextEditingController nomAnggaranC = TextEditingController();
@@ -71,7 +74,6 @@ class CashflowController extends GetxController {
     jenisC.value = "Pendapatan";
     kategoriC.value = "Pilih Kategori";
     kategoriStat.value = "";
-
     Get.back();
   }
 
@@ -86,6 +88,7 @@ class CashflowController extends GetxController {
   void updateKategori(text) {
     kategoriC.value = text;
     kategoriStat.value = "choosen";
+
     Get.back();
   }
 
@@ -110,7 +113,7 @@ class CashflowController extends GetxController {
                   foregroundColor: grey900,
                   textStyle: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(fontWeight: FontWeight.w600)),
             ),
           ),
@@ -385,8 +388,8 @@ class CashflowController extends GetxController {
         transaksiUrl = urlTransaksi;
       }
 
-      String formattedDate =
-          DateFormat('dd MMMM yyyy').format(selectDate.value);
+      // String formattedDate =
+      //     DateFormat('dd MMMM yyyy').format(selectDate.value);
 
       // print(formattedDate);
 
@@ -404,7 +407,7 @@ class CashflowController extends GetxController {
           "namaTransaksi": namaTransaksiC.text,
           "kategori": kategoriC.value,
           "nominal": int.parse(nominalTransaksiC.text.replaceAll('.', '')),
-          "tanggalTransaksi": formattedDate.toString(),
+          "tanggalTransaksi": selectDate.value,
           "deskripsi": deskripsiC.text,
           "foto": transaksiUrl,
           "createdAt": DateTime.now().toIso8601String(),
@@ -511,7 +514,9 @@ class CashflowController extends GetxController {
         int nominalTerpakai = doc.data()['nominalTerpakai'];
         angTerpakai += nominalTerpakai;
       }
-
+      laporankeuanganController.getDataPengeluaran();
+      laporankeuanganController.getDataMasukKeluar();
+      laporankeuanganController.getDataPemasukan();
       countAnggaranSisa();
     });
   }
@@ -604,8 +609,8 @@ class CashflowController extends GetxController {
         transaksiUrl = urlTransaksi;
       }
 
-      String formattedDate =
-          DateFormat('dd MMMM yyyy').format(selectDate.value);
+      // String formattedDate =
+      //     DateFormat('dd MMMM yyyy').format(selectDate.value);
 
       try {
         // print(kategoriC.value);
@@ -622,7 +627,7 @@ class CashflowController extends GetxController {
           "namaTransaksi": namaTransaksiC.text,
           "kategori": kategoriC.value,
           "nominal": int.parse(nominalTransaksiC.text.replaceAll('.', '')),
-          "tanggalTransaksi": formattedDate.toString(),
+          "tanggalTransaksi": selectDate.value,
           "deskripsi": deskripsiC.text,
           "foto": transaksiUrl,
           "createdAt": DateTime.now().toIso8601String(),

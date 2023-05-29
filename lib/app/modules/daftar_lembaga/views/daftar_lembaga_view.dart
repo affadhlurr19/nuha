@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/modules/daftar_lembaga/controllers/daftar_pinjol_controller.dart';
-import 'package:nuha/app/modules/daftar_lembaga/daftar_ikd_model.dart';
 import 'package:nuha/app/modules/daftar_lembaga/providers/daftar_ikd_provider.dart';
 import 'package:nuha/app/modules/daftar_lembaga/providers/daftar_pinjol_provider.dart';
 import 'package:nuha/app/utility/result_state.dart';
@@ -50,12 +49,12 @@ class DaftarLembagaView extends GetView<DaftarLembagaController> {
           tabs: c.daftarLembagaTabs,
           labelStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(fontWeight: FontWeight.w600, fontSize: 11.sp),
           unselectedLabelColor: grey400,
           unselectedLabelStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(

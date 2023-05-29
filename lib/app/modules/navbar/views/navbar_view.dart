@@ -4,6 +4,7 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/views/cashflow_view.dart';
 import 'package:nuha/app/modules/home/views/home_view.dart';
 import 'package:nuha/app/modules/literasi/views/literasi_view.dart';
+import 'package:nuha/app/modules/zis/views/zis_view.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
@@ -16,8 +17,8 @@ class NavbarView extends StatefulWidget {
 }
 
 class _NavbarView extends State<NavbarView> {
-  final PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+  // final PersistentTabController _controller =
+  //     PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreen() {
     return [
@@ -25,7 +26,7 @@ class _NavbarView extends State<NavbarView> {
       CashflowView(),
       const LiterasiView(),
       HomeView(),
-      HomeView(),
+      ZisView(),
     ];
   }
 
@@ -36,7 +37,7 @@ class _NavbarView extends State<NavbarView> {
         iconSize: 15.sp,
         title: "Beranda",
         textStyle:
-            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+            Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
         activeColorPrimary: buttonColor1,
         inactiveColorPrimary: grey400,
       ),
@@ -45,7 +46,7 @@ class _NavbarView extends State<NavbarView> {
         iconSize: 15.sp,
         title: "Alur Kas",
         textStyle:
-            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+            Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
         inactiveColorPrimary: grey500,
         activeColorPrimary: buttonColor1,
       ),
@@ -54,7 +55,7 @@ class _NavbarView extends State<NavbarView> {
         iconSize: 15.sp,
         title: "Literasi",
         textStyle:
-            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+            Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
         inactiveColorPrimary: grey500,
         activeColorPrimary: buttonColor1,
       ),
@@ -63,7 +64,7 @@ class _NavbarView extends State<NavbarView> {
         iconSize: 15.sp,
         title: "Konsultasi",
         textStyle:
-            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+            Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
         inactiveColorPrimary: grey500,
         activeColorPrimary: buttonColor1,
       ),
@@ -72,7 +73,7 @@ class _NavbarView extends State<NavbarView> {
         iconSize: 15.sp,
         title: "ZIS",
         textStyle:
-            Theme.of(context).textTheme.overline!.copyWith(letterSpacing: 0),
+            Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
         inactiveColorPrimary: grey500,
         activeColorPrimary: buttonColor1,
       ),

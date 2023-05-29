@@ -8,7 +8,7 @@ environment:
 dependencies: 
   cupertino_icons: ^1.0.2
   get: 4.6.5
-  google_fonts: 4.0.3
+  google_fonts: ^4.0.4
   simple_gradient_text: 1.2.4
   font_awesome_flutter: 10.4.0
   firebase_auth: ^4.2.10
@@ -17,13 +17,13 @@ dependencies:
   firebase_core: ^2.7.1
   zoom_tap_animation: 1.1.0
   iconify_flutter: 0.0.5
-  intl: 0.17.0
-  currency_text_input_formatter: 2.1.8
+  intl: 0.18.0
+  currency_text_input_formatter: 2.1.9
   sizer: 2.0.15
   get_storage: 2.1.1
   carousel_slider: 4.2.1
   percent_indicator: 4.2.3
-  image_picker: 0.8.7+2
+  image_picker: ^0.8.7+5
   full_screen_image: 2.0.0
   persistent_bottom_nav_bar: 5.0.2
   sticky_grouped_list: 3.1.0
@@ -35,6 +35,14 @@ dependencies:
   intl_utils: ^2.8.2
   flutter_localization: ^0.1.10
   grouped_list: 5.1.2
+  path_provider: 2.0.15
+  open_file: 3.3.1
+  url_launcher: 6.1.11
+  webview_flutter: 4.2.1
+  flutter_inappwebview: 5.7.2+3
+  syncfusion_flutter_charts: 21.2.6
+  syncfusion_flutter_gauges: 21.2.6
+  syncfusion_flutter_pdf: 21.2.6
   flutter: 
     sdk: flutter
 
@@ -44,6 +52,10 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
+  fonts: 
+    - family: Montserrat
+      fonts: 
+        - asset: assets/fonts/OpenSans.ttf
   assets: 
     - assets/images/
   uses-material-design: true

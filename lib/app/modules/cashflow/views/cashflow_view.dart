@@ -16,6 +16,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
+import 'package:iconify_flutter/icons/ic.dart';
 
 class CashflowView extends GetView<CashflowController> {
   CashflowView({Key? key}) : super(key: key);
@@ -36,7 +38,7 @@ class CashflowView extends GetView<CashflowController> {
               "Alur Kas",
               style: Theme.of(context)
                   .textTheme
-                  .button!
+                  .labelLarge!
                   .copyWith(color: titleColor),
             ),
             backgroundColor: backgroundColor1,
@@ -103,7 +105,7 @@ class CashflowView extends GetView<CashflowController> {
                               "Anggaran",
                               style: Theme.of(context)
                                   .textTheme
-                                  .button!
+                                  .labelLarge!
                                   .copyWith(height: 1),
                               colors: const [buttonColor1, buttonColor2],
                             ),
@@ -111,7 +113,7 @@ class CashflowView extends GetView<CashflowController> {
                               "Siap untuk mengambil kendali atas keuangan Kamu? Gunakan fitur anggaran",
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption!
+                                  .bodySmall!
                                   .copyWith(
                                       height: 1.3,
                                       color: grey400,
@@ -149,14 +151,14 @@ class CashflowView extends GetView<CashflowController> {
                             ),
                             GradientText(
                               "Transaksi",
-                              style: Theme.of(context).textTheme.button!,
+                              style: Theme.of(context).textTheme.labelLarge!,
                               colors: const [buttonColor1, buttonColor2],
                             ),
                             Text(
                               "Catat aliran uang masuk dan keluar Anda dengan fitur transaksi",
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption!
+                                  .bodySmall!
                                   .copyWith(
                                       color: grey400,
                                       fontWeight: FontWeight.w400,
@@ -173,7 +175,7 @@ class CashflowView extends GetView<CashflowController> {
                 ),
                 Container(
                   width: 84.4444.w,
-                  height: 12.75.h,
+                  height: 20.75.h,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(25)),
                       color: backgroundColor1),
@@ -182,13 +184,48 @@ class CashflowView extends GetView<CashflowController> {
                         horizontal: 4.4444.w, vertical: 1.875.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        GestureDetector(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Laporan Keuangan",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: buttonColor1,
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.25),
+                                  ),
+                                  Text(
+                                    "Cek laporan keuanganmu disini!",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: grey400, height: 1.3),
+                                  ),
+                                ],
+                              ),
+                              Iconify(
+                                Ic.sharp_arrow_forward_ios,
+                                size: 15.sp,
+                                color: buttonColor1,
+                              ),
+                            ],
+                          ),
+                          onTap: () => Get.to(() => LaporankeuanganView()),
+                        ),
+                        const Divider(),
                         Text(
                           "Anggaran",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .copyWith(
                                   color: grey900,
                                   fontWeight: FontWeight.w600,
@@ -202,7 +239,7 @@ class CashflowView extends GetView<CashflowController> {
                                   .format(controller.sisaAnggaran.value),
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption!
+                                  .bodySmall!
                                   .copyWith(color: grey400, height: 1.3),
                             )),
                         SizedBox(
@@ -258,7 +295,7 @@ class CashflowView extends GetView<CashflowController> {
                                 "Kamu belum mengatur anggaran keuangan kamu, nih. Yuk, catat anggaran keuanganmu dengan mudah~",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .caption!
+                                    .bodySmall!
                                     .copyWith(color: grey400),
                                 textAlign: TextAlign.center,
                               ),
@@ -279,10 +316,11 @@ class CashflowView extends GetView<CashflowController> {
                                     "Atur Anggaran Sekarang",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .caption!
+                                        .bodySmall!
                                         .copyWith(color: backgroundColor1),
                                   ),
-                                  onPressed: () => Get.to(const FormAnggaranView()),
+                                  onPressed: () =>
+                                      Get.to(const FormAnggaranView()),
                                 ),
                               ),
                             ],
@@ -346,7 +384,7 @@ class CashflowView extends GetView<CashflowController> {
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .caption!
+                                                                .bodySmall!
                                                                 .copyWith(
                                                                   fontWeight:
                                                                       FontWeight
@@ -370,7 +408,7 @@ class CashflowView extends GetView<CashflowController> {
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .caption!
+                                                                .bodySmall!
                                                                 .copyWith(
                                                                   color:
                                                                       grey400,
@@ -432,7 +470,7 @@ class CashflowView extends GetView<CashflowController> {
                                                         anggaran["nominal"]),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .caption!
+                                                    .bodySmall!
                                                     .copyWith(
                                                       color: grey400,
                                                     ),
@@ -441,7 +479,7 @@ class CashflowView extends GetView<CashflowController> {
                                                 "${anggaran["persentase"]}%",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .caption!
+                                                    .bodySmall!
                                                     .copyWith(
                                                       color: grey400,
                                                     ),

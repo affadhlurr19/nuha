@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class PerencanaanKeuanganController extends GetxController {
   TextEditingController namaDana = TextEditingController();
-  TextEditingController nomPengeluaran = TextEditingController();
+  // TextEditingController nomPengeluaran = TextEditingController();
   TextEditingController bulanTercapai = TextEditingController();
   TextEditingController nomDanaTersedia = TextEditingController();
 
@@ -28,8 +28,6 @@ class PerencanaanKeuanganController extends GetxController {
   //TODO: Implement PerencanaanKeuanganController
 
   final count = 0.obs;
-
-
 
   void increment() => count.value++;
 }

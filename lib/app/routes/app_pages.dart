@@ -38,6 +38,8 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/reset_password/views/reset_password_view.dart';
+import '../modules/zis/bindings/zis_binding.dart';
+import '../modules/zis/views/zis_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -163,6 +165,11 @@ class AppPages {
       name: _Paths.DAFTAR_LEMBAGA,
       page: () => DaftarLembagaView(),
       binding: DaftarLembagaBinding(),
+    ),
+    GetPage(
+      name: _Paths.ZIS,
+      page: () => const ZisView(),
+      binding: ZisBinding(),
     ),
   ];
 }

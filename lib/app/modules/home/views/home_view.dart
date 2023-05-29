@@ -5,14 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
+import 'package:nuha/app/modules/literasi/views/literasi_view.dart';
 import 'package:nuha/app/modules/profile/controllers/profile_controller.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ph.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:iconify_flutter/icons/ic.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -75,7 +78,7 @@ class HomeView extends GetView<HomeController> {
                                       data!["name"][0],
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText2!
+                                          .bodyMedium!
                                           .copyWith(
                                               color: backgroundColor1,
                                               fontWeight: FontWeight.w600),
@@ -96,7 +99,7 @@ class HomeView extends GetView<HomeController> {
                             text: "SALAAM, ",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2!
+                                .bodyMedium!
                                 .copyWith(
                                     color: grey400,
                                     fontWeight: FontWeight.w400),
@@ -105,7 +108,7 @@ class HomeView extends GetView<HomeController> {
                             text: firstName.toUpperCase(),
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2!
+                                .bodyMedium!
                                 .copyWith(
                                     color: buttonColor2,
                                     fontWeight: FontWeight.w600),
@@ -137,7 +140,7 @@ class HomeView extends GetView<HomeController> {
         backgroundColor: backgroundColor2,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 7.7778.w),
+          padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 7.7778.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -146,7 +149,7 @@ class HomeView extends GetView<HomeController> {
                 "#NUHA",
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2!
+                    .bodyMedium!
                     .copyWith(color: dark, fontWeight: FontWeight.w600),
               ),
               SizedBox(
@@ -180,7 +183,7 @@ class HomeView extends GetView<HomeController> {
                               "Perencanaan Keuangan",
                               style: Theme.of(context)
                                   .textTheme
-                                  .overline!
+                                  .labelSmall!
                                   .copyWith(
                                     color: grey500,
                                     fontWeight: FontWeight.w600,
@@ -217,13 +220,15 @@ class HomeView extends GetView<HomeController> {
                           ),
                           Text(
                             "Cek Kesehatan Keuangan",
-                            style:
-                                Theme.of(context).textTheme.overline!.copyWith(
-                                      color: grey500,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 0,
-                                      height: 0,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: grey500,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0,
+                                  height: 0,
+                                ),
                             textAlign: TextAlign.center,
                           )
                         ],
@@ -253,13 +258,15 @@ class HomeView extends GetView<HomeController> {
                           ),
                           Text(
                             "Daftar Lembaga Terpercaya",
-                            style:
-                                Theme.of(context).textTheme.overline!.copyWith(
-                                      color: grey500,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 0,
-                                      height: 0,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                  color: grey500,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0,
+                                  height: 0,
+                                ),
                             textAlign: TextAlign.center,
                           )
                         ],
@@ -269,13 +276,13 @@ class HomeView extends GetView<HomeController> {
                 ],
               ),
               SizedBox(
-                height: 3.h,
+                height: 2.h,
               ),
               Text(
                 "Bingung mau mulai dari mana?",
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2!
+                    .bodyMedium!
                     .copyWith(color: dark, fontWeight: FontWeight.w600),
               ),
               SizedBox(
@@ -292,13 +299,13 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               SizedBox(
-                height: 3.h,
+                height: 2.h,
               ),
               Text(
-                "Anggaran Kamu",
+                "Atur Keuanganmu",
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2!
+                    .bodyMedium!
                     .copyWith(color: dark, fontWeight: FontWeight.w600),
               ),
               SizedBox(
@@ -306,7 +313,7 @@ class HomeView extends GetView<HomeController> {
               ),
               Container(
                 width: 84.4444.w,
-                height: 12.75.h,
+                height: 20.75.h,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     color: backgroundColor1),
@@ -317,9 +324,45 @@ class HomeView extends GetView<HomeController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      GestureDetector(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Laporan Keuangan",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          color: buttonColor1,
+                                          fontWeight: FontWeight.w600,
+                                          height: 1.25),
+                                ),
+                                Text(
+                                  "Cek laporan keuanganmu disini!",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(color: grey400, height: 1.3),
+                                ),
+                              ],
+                            ),
+                            Iconify(
+                              Ic.sharp_arrow_forward_ios,
+                              size: 15.sp,
+                              color: buttonColor1,
+                            ),
+                          ],
+                        ),
+                        onTap: () => Get.to(() => LaporankeuanganView()),
+                      ),
+                      const Divider(),
                       Text(
                         "Anggaran",
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                             height: 1.25),
@@ -332,7 +375,7 @@ class HomeView extends GetView<HomeController> {
                                 .format(con.sisaAnggaran.value),
                             style: Theme.of(context)
                                 .textTheme
-                                .caption!
+                                .bodySmall!
                                 .copyWith(color: grey400, height: 1.3),
                           )),
                       SizedBox(
@@ -352,7 +395,7 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               SizedBox(
-                height: 3.h,
+                height: 2.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -361,14 +404,16 @@ class HomeView extends GetView<HomeController> {
                     "Informasi",
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2!
+                        .bodyMedium!
                         .copyWith(color: dark, fontWeight: FontWeight.w600),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: const LiterasiView()),
                     child: Text(
                       "Lihat Semua",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: buttonColor1, fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -401,7 +446,7 @@ class HomeView extends GetView<HomeController> {
                               "Mari kita hindari Uang Habis di Awal Tahun dengan Kebiasaan Ini!",
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption!
+                                  .bodySmall!
                                   .copyWith(
                                       color: dark,
                                       fontWeight: FontWeight.w600,
@@ -411,7 +456,7 @@ class HomeView extends GetView<HomeController> {
                               "10 hari lagi",
                               style: Theme.of(context)
                                   .textTheme
-                                  .overline!
+                                  .labelSmall!
                                   .copyWith(color: grey500, letterSpacing: 0),
                             )
                           ],

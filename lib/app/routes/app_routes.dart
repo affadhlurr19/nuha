@@ -28,6 +28,7 @@ abstract class Routes {
   static const CASHFLOW = _Paths.CASHFLOW;
   static const PERENCANAAN_KEUANGAN = _Paths.PERENCANAAN_KEUANGAN;
   static const DAFTAR_LEMBAGA = _Paths.DAFTAR_LEMBAGA;
+  static const ZIS = _Paths.ZIS;
 }
 
 abstract class _Paths {
@@ -55,4 +56,5 @@ abstract class _Paths {
   static const CASHFLOW = '/cashflow';
   static const PERENCANAAN_KEUANGAN = '/perencanaan-keuangan';
   static const DAFTAR_LEMBAGA = '/daftar-lembaga';
+  static const ZIS = '/zis';
 }

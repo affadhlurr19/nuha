@@ -15,6 +15,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
+//ignore: must_be_immutable
 class AnggaranView extends GetView<CashflowController> {
   AnggaranView({Key? key}) : super(key: key);
 
@@ -82,7 +83,7 @@ class AnggaranView extends GetView<CashflowController> {
                 centerTitle: true,
                 title: Text(
                   "Anggaran",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                         color: backgroundColor1,
                       ),
@@ -126,7 +127,7 @@ class AnggaranView extends GetView<CashflowController> {
                                     .format(controller.sisaAnggaran.value),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .button!
+                                    .labelLarge!
                                     .copyWith(
                                         color: buttonColor1,
                                         fontWeight: FontWeight.w600),
@@ -139,7 +140,7 @@ class AnggaranView extends GetView<CashflowController> {
                                     .format(controller.totalNominal.value),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .caption!
+                                    .bodySmall!
                                     .copyWith(
                                       color: grey400,
                                     ),
@@ -169,7 +170,7 @@ class AnggaranView extends GetView<CashflowController> {
                       // onChanged: (value) => controller.searchFunction(value),
                       // textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.text,
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                           ),
                       decoration: InputDecoration(
@@ -188,7 +189,7 @@ class AnggaranView extends GetView<CashflowController> {
                         suffixIconColor: grey400,
                         hintText: "Cari anggaran kamu disini",
                         hintStyle:
-                            Theme.of(context).textTheme.caption!.copyWith(
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
                                   color: grey400,
                                 ),
                         border: const OutlineInputBorder(
@@ -225,7 +226,7 @@ class AnggaranView extends GetView<CashflowController> {
                                   tabBar[index],
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: backgroundColor1),
@@ -314,7 +315,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                           "${controller.queryAwal[index]["kategori"]}",
                                                                           style: Theme.of(context)
                                                                               .textTheme
-                                                                              .caption!
+                                                                              .bodySmall!
                                                                               .copyWith(
                                                                                 fontWeight: FontWeight.w600,
                                                                                 color: dark,
@@ -330,7 +331,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                               "sisaLimit"]),
                                                                           style: Theme.of(context)
                                                                               .textTheme
-                                                                              .caption!
+                                                                              .bodySmall!
                                                                               .copyWith(
                                                                                 color: grey400,
                                                                               ),
@@ -406,7 +407,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .caption!
+                                                                  .bodySmall!
                                                                   .copyWith(
                                                                     color:
                                                                         grey400,
@@ -417,7 +418,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .caption!
+                                                                  .bodySmall!
                                                                   .copyWith(
                                                                     color:
                                                                         grey400,
@@ -490,7 +491,7 @@ class SemuaWidget extends StatelessWidget {
                     "Kamu belum mengatur anggaran keuangan kamu, nih. Yuk, catat anggaran keuanganmu dengan mudah~",
                     style: Theme.of(context)
                         .textTheme
-                        .caption!
+                        .bodySmall!
                         .copyWith(color: grey400),
                     textAlign: TextAlign.center,
                   ),
@@ -510,7 +511,7 @@ class SemuaWidget extends StatelessWidget {
                         "Atur Anggaran Sekarang",
                         style: Theme.of(context)
                             .textTheme
-                            .caption!
+                            .bodySmall!
                             .copyWith(color: backgroundColor1),
                       ),
                       onPressed: () => Get.to(const FormAnggaranView()),
@@ -565,7 +566,7 @@ class SemuaWidget extends StatelessWidget {
                                               "${anggaran["kategori"]}",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .caption!
+                                                  .bodySmall!
                                                   .copyWith(
                                                     fontWeight: FontWeight.w600,
                                                     color: dark,
@@ -583,7 +584,7 @@ class SemuaWidget extends StatelessWidget {
                                                       anggaran["sisaLimit"]),
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .caption!
+                                                  .bodySmall!
                                                   .copyWith(
                                                     color: grey400,
                                                   ),
@@ -638,7 +639,7 @@ class SemuaWidget extends StatelessWidget {
                                       .format(anggaran["nominal"]),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .copyWith(
                                         color: grey400,
                                       ),
@@ -647,7 +648,7 @@ class SemuaWidget extends StatelessWidget {
                                   "${anggaran["persentase"]}%",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .copyWith(
                                         color: grey400,
                                       ),
