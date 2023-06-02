@@ -12,7 +12,7 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:iconify_flutter/icons/ph.dart';
 import 'dart:math' as math;
-import 'package:iconify_flutter/icons/bi.dart';
+import 'package:screenshot/screenshot.dart';
 
 class FincheckResultView extends GetView<FincheckController> {
   FincheckResultView({Key? key}) : super(key: key);
@@ -37,445 +37,427 @@ class FincheckResultView extends GetView<FincheckController> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.symmetric(
-            horizontal: 7.778.w,
-          ),
-          children: [
-            SizedBox(
-              height: 0.5.h,
+        child: Screenshot(
+          controller: controller.screenshotController,
+          child: ListView(
+            padding: EdgeInsets.symmetric(
+              horizontal: 7.778.w,
             ),
-            GradientText(
-              "Hasil Analisa",
-              style: Theme.of(context).textTheme.displaySmall!,
-              colors: const [
-                buttonColor1,
-                buttonColor2,
-              ],
-            ),
-            SizedBox(
-              height: 1.h,
-            ),
-            Stack(
-              children: [
-                SizedBox(
-                  height: 35.h,
-                  child: Center(
-                      child: SfRadialGauge(
-                    axes: <RadialAxis>[
-                      RadialAxis(
-                          axisLineStyle: AxisLineStyle(thickness: 30),
-                          showLabels: false,
-                          showAxisLine: false,
-                          showTicks: false,
-                          startAngle: 180,
-                          endAngle: 0,
-                          minimum: 0,
-                          maximum: 99,
-                          ranges: <GaugeRange>[
-                            GaugeRange(
-                                startValue: 0,
-                                endValue: 33,
-                                color: errColor.withOpacity(0.7),
-                                label: 'Buruk',
-                                sizeUnit: GaugeSizeUnit.factor,
+            children: [
+              SizedBox(
+                height: 0.5.h,
+              ),
+              GradientText(
+                "Hasil Analisa",
+                style: Theme.of(context).textTheme.displaySmall!,
+                colors: const [
+                  buttonColor1,
+                  buttonColor2,
+                ],
+              ),
+              SizedBox(
+                height: 1.h,
+              ),
+              Stack(
+                children: [
+                  SizedBox(
+                    height: 35.h,
+                    child: Center(
+                        child: SfRadialGauge(
+                      axes: <RadialAxis>[
+                        RadialAxis(
+                            axisLineStyle: AxisLineStyle(thickness: 30),
+                            showLabels: false,
+                            showAxisLine: false,
+                            showTicks: false,
+                            startAngle: 180,
+                            endAngle: 0,
+                            minimum: 0,
+                            maximum: 99,
+                            ranges: <GaugeRange>[
+                              GaugeRange(
+                                  startValue: 0,
+                                  endValue: 33,
+                                  color: errColor.withOpacity(0.7),
+                                  label: 'Buruk',
+                                  sizeUnit: GaugeSizeUnit.factor,
+                                  labelStyle: GaugeTextStyle(
+                                      fontFamily: 'Times',
+                                      fontSize: 12.sp,
+                                      color: Colors.white),
+                                  startWidth: 0.4,
+                                  endWidth: 0.4),
+                              GaugeRange(
+                                startValue: 33,
+                                endValue: 66,
+                                color: buttonColor2.withOpacity(0.7),
+                                label: 'Baik',
                                 labelStyle: GaugeTextStyle(
                                     fontFamily: 'Times',
                                     fontSize: 12.sp,
                                     color: Colors.white),
                                 startWidth: 0.4,
-                                endWidth: 0.4),
-                            GaugeRange(
-                              startValue: 33,
-                              endValue: 66,
-                              color: buttonColor2.withOpacity(0.7),
-                              label: 'Baik',
-                              labelStyle: GaugeTextStyle(
-                                  fontFamily: 'Times',
-                                  fontSize: 12.sp,
-                                  color: Colors.white),
-                              startWidth: 0.4,
-                              endWidth: 0.4,
-                              sizeUnit: GaugeSizeUnit.factor,
-                            ),
-                            GaugeRange(
-                              startValue: 66,
-                              endValue: 99,
-                              color: buttonColor1.withOpacity(0.7),
-                              label: 'Sangat Baik',
-                              labelStyle: GaugeTextStyle(
-                                  fontFamily: 'Times',
-                                  fontSize: 12.sp,
-                                  color: Colors.white),
-                              sizeUnit: GaugeSizeUnit.factor,
-                              startWidth: 0.4,
-                              endWidth: 0.4,
-                            ),
-                          ],
-                          pointers: <GaugePointer>[
-                            NeedlePointer(value: c.gaugePoint)
-                          ])
-                    ],
-                  )),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20.h),
-                  child: const Divider(),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 23.h),
-                  child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                    stream: c.streamData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot.data!.docs.isEmpty) {
-                        return const SizedBox();
-                      } else {
-                        final data =
-                            snapshot.data!.docs.map((e) => e.data()).toList();
-                        return SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: StickyGroupedListView<dynamic, String>(
-                            shrinkWrap: true,
-                            elements: data,
-                            groupBy: (dynamic element) =>
-                                (element['resultStatus']),
-                            groupSeparatorBuilder: (dynamic element) =>
-                                element['resultStatus'] == "Bad"
-                                    ? Container(
-                                        color: backgroundColor1,
-                                        child: Center(
-                                          child: Text(
-                                            "Perlu diperbaiki!",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(
-                                                  color: grey900,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                endWidth: 0.4,
+                                sizeUnit: GaugeSizeUnit.factor,
+                              ),
+                              GaugeRange(
+                                startValue: 66,
+                                endValue: 99,
+                                color: buttonColor1.withOpacity(0.7),
+                                label: 'Sangat Baik',
+                                labelStyle: GaugeTextStyle(
+                                    fontFamily: 'Times',
+                                    fontSize: 12.sp,
+                                    color: Colors.white),
+                                sizeUnit: GaugeSizeUnit.factor,
+                                startWidth: 0.4,
+                                endWidth: 0.4,
+                              ),
+                            ],
+                            pointers: <GaugePointer>[
+                              NeedlePointer(value: c.gaugePoint)
+                            ])
+                      ],
+                    )),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20.h),
+                    child: const Divider(),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 23.h),
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: c.streamData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snapshot.data!.docs.isEmpty) {
+                          return const SizedBox();
+                        } else {
+                          final data =
+                              snapshot.data!.docs.map((e) => e.data()).toList();
+                          return SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: StickyGroupedListView<dynamic, String>(
+                              shrinkWrap: true,
+                              elements: data,
+                              groupBy: (dynamic element) =>
+                                  (element['resultStatus']),
+                              groupSeparatorBuilder: (dynamic element) =>
+                                  element['resultStatus'] == "Bad"
+                                      ? Container(
+                                          color: backgroundColor1,
+                                          child: Center(
+                                            child: Text(
+                                              "Perlu diperbaiki!",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    color: grey900,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          margin: EdgeInsets.only(top: 1.h),
+                                          child: Center(
+                                            child: Text(
+                                              "Pertahankan ya!",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    color: grey900,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
                                           ),
                                         ),
-                                      )
-                                    : Container(
-                                        margin: EdgeInsets.only(top: 1.h),
-                                        child: Center(
-                                          child: Text(
-                                            "Pertahankan ya!",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(
-                                                  color: grey900,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                            itemBuilder: (context, dynamic element) =>
-                                Container(
-                              padding: EdgeInsets.fromLTRB(4.w, 2.h, 4.w, 2.h),
-                              margin: EdgeInsets.only(top: 1.h),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: element["resultStatus"] == "Bad"
-                                      ? buttonColor2.withOpacity(0.6)
-                                      : buttonColor1.withOpacity(0.6)),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "${element["title"]}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: grey900,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                      Text(
-                                        NumberFormat.currency(
-                                                locale: 'id',
-                                                symbol: "Rp",
-                                                decimalDigits: 0)
-                                            .format(element["nominal"]),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: grey900,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                        width: 68.w,
-                                        child: Center(
-                                          child: SfLinearGauge(
-                                            showTicks: false,
-                                            showLabels: false,
-                                            axisTrackStyle:
-                                                const LinearAxisTrackStyle(
-                                                    color: Colors.white60),
-                                            interval: 100,
-                                            markerPointers: [
-                                              LinearWidgetPointer(
-                                                value: element["idealPoint"],
-                                                child: Container(
-                                                    height: 1.75.h,
-                                                    width: 1.w,
-                                                    color: Colors.white),
+                              itemBuilder: (context, dynamic element) =>
+                                  Container(
+                                padding:
+                                    EdgeInsets.fromLTRB(4.w, 2.h, 4.w, 2.h),
+                                margin: EdgeInsets.only(top: 1.h),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: element["resultStatus"] == "Bad"
+                                        ? buttonColor2.withOpacity(0.6)
+                                        : buttonColor1.withOpacity(0.6)),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "${element["title"]}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                color: grey900,
+                                                fontWeight: FontWeight.w600,
                                               ),
-                                              LinearWidgetPointer(
-                                                  value: element["point"],
-                                                  child: element[
-                                                              "resultStatus"] ==
-                                                          "Bad"
-                                                      ? Iconify(
-                                                          Ph.warning_circle_fill,
-                                                          size: 15.sp,
-                                                          color: Colors.orange,
-                                                        )
-                                                      : Iconify(
-                                                          MaterialSymbols
-                                                              .check_circle_rounded,
-                                                          size: 15.sp,
-                                                          color: const Color
-                                                                  .fromARGB(
-                                                              255, 5, 92, 50),
-                                                        )),
-                                            ],
-                                            barPointers: [
-                                              LinearBarPointer(
-                                                  color:
-                                                      element["resultStatus"] ==
-                                                              "Bad"
-                                                          ? buttonColor2
-                                                          : buttonColor1,
-                                                  value: element["point"],
-                                                  position:
-                                                      LinearElementPosition
-                                                          .cross),
-                                            ],
+                                        ),
+                                        Text(
+                                          NumberFormat.currency(
+                                                  locale: 'id',
+                                                  symbol: "Rp",
+                                                  decimalDigits: 0)
+                                              .format(element["nominal"]),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                color: grey900,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 1.h,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizedBox(
+                                          width: 68.w,
+                                          child: Center(
+                                            child: SfLinearGauge(
+                                              showTicks: false,
+                                              showLabels: false,
+                                              axisTrackStyle:
+                                                  const LinearAxisTrackStyle(
+                                                      color: Colors.white60),
+                                              interval: 100,
+                                              markerPointers: [
+                                                LinearWidgetPointer(
+                                                  value: element["idealPoint"],
+                                                  child: Container(
+                                                      height: 1.75.h,
+                                                      width: 1.w,
+                                                      color: Colors.white),
+                                                ),
+                                                LinearWidgetPointer(
+                                                    value: element["point"],
+                                                    child:
+                                                        element["resultStatus"] ==
+                                                                "Bad"
+                                                            ? Iconify(
+                                                                Ph.warning_circle_fill,
+                                                                size: 15.sp,
+                                                                color: Colors
+                                                                    .orange,
+                                                              )
+                                                            : Iconify(
+                                                                MaterialSymbols
+                                                                    .check_circle_rounded,
+                                                                size: 15.sp,
+                                                                color: const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    5,
+                                                                    92,
+                                                                    50),
+                                                              )),
+                                              ],
+                                              barPointers: [
+                                                LinearBarPointer(
+                                                    color:
+                                                        element["resultStatus"] ==
+                                                                "Bad"
+                                                            ? buttonColor2
+                                                            : buttonColor1,
+                                                    value: element["point"],
+                                                    position:
+                                                        LinearElementPosition
+                                                            .cross),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 15.sp,
-                                        width: 15.sp,
-                                        child: Obx(() => IconButton(
-                                              padding: const EdgeInsets.all(0),
-                                              iconSize: 15.sp,
-                                              onPressed: () {
-                                                c.toggleDescriptionVisibility();
-                                              },
-                                              icon: c.isVisible.isFalse
-                                                  ? Transform(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      transform:
-                                                          Matrix4.rotationX(
-                                                              math.pi),
-                                                      child: Iconify(
+                                        SizedBox(
+                                          height: 15.sp,
+                                          width: 15.sp,
+                                          child: Obx(() => IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                iconSize: 15.sp,
+                                                onPressed: () {
+                                                  c.toggleDescriptionVisibility();
+                                                },
+                                                icon: c.isVisible.isFalse
+                                                    ? Transform(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        transform:
+                                                            Matrix4.rotationX(
+                                                                math.pi),
+                                                        child: Iconify(
+                                                          MaterialSymbols
+                                                              .arrow_drop_down_circle_outline_rounded,
+                                                          size: 15.sp,
+                                                          color: dark,
+                                                        ),
+                                                      )
+                                                    : Iconify(
                                                         MaterialSymbols
                                                             .arrow_drop_down_circle_outline_rounded,
                                                         size: 15.sp,
                                                         color: dark,
                                                       ),
-                                                    )
-                                                  : Iconify(
-                                                      MaterialSymbols
-                                                          .arrow_drop_down_circle_outline_rounded,
-                                                      size: 15.sp,
-                                                      color: dark,
+                                              )),
+                                        )
+                                      ],
+                                    ),
+                                    Obx(() => SizedBox(
+                                          child: c.isVisible.isFalse
+                                              ? Container()
+                                              : Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 1.h,
                                                     ),
-                                            )),
-                                      )
-                                    ],
-                                  ),
-                                  Obx(() => SizedBox(
-                                        child: c.isVisible.isFalse
-                                            ? Container()
-                                            : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    height: 1.h,
-                                                  ),
-                                                  Text("Deskripsi: ",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall!
-                                                          .copyWith(
+                                                    Text("Deskripsi: ",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: dark,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600)),
+                                                    Text(
+                                                        "${element["description"]}",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
                                                               color: dark,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600)),
-                                                  Text(
-                                                      "${element["description"]}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall!
-                                                          .copyWith(
-                                                            color: dark,
-                                                          )),
-                                                  element["resultStatus"] ==
-                                                          "Good"
-                                                      ? Container()
-                                                      : Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 1.h,
-                                                            ),
-                                                            Text(
-                                                                "Apa yang perlu dilakukan?",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodySmall!
-                                                                    .copyWith(
+                                                            )),
+                                                    element["resultStatus"] ==
+                                                            "Good"
+                                                        ? Container()
+                                                        : Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 1.h,
+                                                              ),
+                                                              Text(
+                                                                  "Apa yang perlu dilakukan?",
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodySmall!
+                                                                      .copyWith(
+                                                                          color:
+                                                                              dark,
+                                                                          fontWeight:
+                                                                              FontWeight.w600)),
+                                                              Text(
+                                                                  "${element["toDo"]} ${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(element["selisih"])}",
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodySmall!
+                                                                      .copyWith(
                                                                         color:
                                                                             dark,
-                                                                        fontWeight:
-                                                                            FontWeight.w600)),
-                                                            Text(
-                                                                "${element["toDo"]} ${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(element["selisih"])}",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodySmall!
-                                                                    .copyWith(
-                                                                      color:
-                                                                          dark,
-                                                                    )),
-                                                          ],
-                                                        ),
-                                                ],
-                                              ),
-                                      )),
-                                ],
+                                                                      )),
+                                                            ],
+                                                          ),
+                                                  ],
+                                                ),
+                                        )),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 1.5.h,
-            ),
-            const Divider(),
-            SizedBox(
-              height: 0.5.h,
-            ),
-            Text(
-              "Laporan Hasil Perhitungan",
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: grey900,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            Row(
-              children: [
-                Iconify(
-                  Bi.file_pdf_fill,
-                  color: errColor,
-                  size: 2.h,
-                ),
-                SizedBox(
-                  width: 1.w,
-                ),
-                TextButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all<Size>(
-                      Size(double.infinity, 1.h),
+                          );
+                        }
+                      },
                     ),
                   ),
-                  child: Text(
-                    "Unduh PDF Hasil Perhitungan",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.lightBlue,
-                        ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 39.7222.w,
-                  height: 5.5.h,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        side: const BorderSide(width: 1, color: buttonColor2),
-                        backgroundColor: backgroundColor1,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    child: Text(
-                      "Kembali",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: buttonColor2),
+                ],
+              ),
+              SizedBox(
+                height: 1.5.h,
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 39.7222.w,
+                    height: 5.5.h,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          side: const BorderSide(width: 1, color: buttonColor2),
+                          backgroundColor: backgroundColor1,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      child: Text(
+                        "Kembali",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: buttonColor2),
+                      ),
+                      onPressed: () => Get.back(),
                     ),
-                    onPressed: () => Get.back(),
                   ),
-                ),
-                SizedBox(
-                  width: 39.7222.w,
-                  height: 5.5.h,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonColor2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    child: Text(
-                      "Simpan",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: Colors.white),
+                  SizedBox(
+                    width: 39.7222.w,
+                    height: 5.5.h,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: buttonColor2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      child: Text(
+                        "Simpan",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        controller.screenshotController
+                            .capture(delay: const Duration(milliseconds: 10))
+                            .then((capturedImage) async {
+                          controller.getPdf(
+                              capturedImage!, "Dana Beli Kendaraan");
+                        }).catchError((onError) {
+                          print(onError);
+                        });
+                      },
                     ),
-                    onPressed: () {},
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 3.h,
-            ),
-          ],
+                ],
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
+            ],
+          ),
         ),
       ),
     );

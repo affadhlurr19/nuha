@@ -7,10 +7,12 @@ import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:nuha/app/widgets/field_number.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
+import '../controllers/perencanaan_keuangan_controller.dart';
 
 class PkPensiunView extends GetView<PkPensiunController> {
   PkPensiunView({Key? key}) : super(key: key);
   final c = Get.find<PkPensiunController>();
+  final con = Get.find<PerencanaanKeuanganController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,8 +115,16 @@ class PkPensiunView extends GetView<PkPensiunController> {
                             .copyWith(color: Colors.white),
                       ),
                       onPressed: () {
-                        if (c.isLoading.isFalse) {
-                          c.countDana(context);
+                        if (c.umurSaatIni.value.text.isNotEmpty &&
+                            c.umurPensiun.value.text.isNotEmpty &&
+                            c.nomDanaTersedia.value.text.isNotEmpty &&
+                            c.nomDanaDisisihkan.value.text.isNotEmpty &&
+                            c.biayaHidup.value.text.isNotEmpty) {
+                          if (c.isLoading.isFalse) {
+                            c.countDana(context);
+                          }
+                        } else {
+                          con.errMsg("Mohon isi seluruh kolom yang ada!");
                         }
                       },
                     ),

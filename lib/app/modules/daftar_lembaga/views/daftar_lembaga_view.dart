@@ -200,9 +200,59 @@ class DataIKD extends StatelessWidget {
                                     order: GroupedListOrder.ASC,
                                   );
                                 case ResultStatus.noData:
-                                  return const Text("Data Kosong");
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w, vertical: 14.h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'assets/images/Empty.png'),
+                                          height: 15.h,
+                                        ),
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          "Data yang dicari tidak ditemukan. Silahkan coba kata kunci lain!",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: grey500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 case ResultStatus.error:
-                                  return const Text("Error");
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w, vertical: 10.h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'assets/images/Error.png'),
+                                          height: 15.h,
+                                        ),
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          "Maaf, sepertinya terjadi kesalahan. Silahkan untuk mencoba kembali atau hubungi kami  jika masalah masih berlanjut!",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: grey500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 default:
                                   return const SizedBox();
                               }
@@ -261,9 +311,59 @@ class DataIKD extends StatelessWidget {
                                       order: GroupedListOrder.ASC,
                                     );
                                   case ResultStatus.noData:
-                                    return const Text("Data Tidak Ada");
+                                    return Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 10.w, vertical: 14.h),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image(
+                                            image: const AssetImage(
+                                                'assets/images/Empty.png'),
+                                            height: 15.h,
+                                          ),
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
+                                          Text(
+                                            "Data yang dicari tidak ditemukan. Silahkan coba kata kunci lain!",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
+                                                .copyWith(color: grey500),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
+                                    );
                                   case ResultStatus.error:
-                                    return const Text("Error");
+                                    return Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 10.w, vertical: 10.h),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image(
+                                            image: const AssetImage(
+                                                'assets/images/Error.png'),
+                                            height: 15.h,
+                                          ),
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
+                                          Text(
+                                            "Maaf, sepertinya terjadi kesalahan. Silahkan untuk mencoba kembali atau hubungi kami  jika masalah masih berlanjut!",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
+                                                .copyWith(color: grey500),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
+                                    );
                                   default:
                                     return const SizedBox();
                                 }
@@ -402,9 +502,59 @@ class DataPinjol extends StatelessWidget {
                                     order: GroupedListOrder.ASC,
                                   );
                                 case ResultStatus.noData:
-                                  return const Text("Data Kosong");
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w, vertical: 14.h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'assets/images/Empty.png'),
+                                          height: 15.h,
+                                        ),
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          "Data yang dicari tidak ditemukan. Silahkan coba kata kunci lain!",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: grey500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 case ResultStatus.error:
-                                  return const Text("Error");
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w, vertical: 10.h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'assets/images/Error.png'),
+                                          height: 15.h,
+                                        ),
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          "Maaf, sepertinya terjadi kesalahan. Silahkan untuk mencoba kembali atau hubungi kami  jika masalah masih berlanjut!",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: grey500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 default:
                                   return const SizedBox();
                               }
@@ -459,9 +609,59 @@ class DataPinjol extends StatelessWidget {
                                     order: GroupedListOrder.ASC,
                                   );
                                 case ResultStatus.noData:
-                                  return const Text("Data Kosong");
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w, vertical: 14.h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'assets/images/Empty.png'),
+                                          height: 15.h,
+                                        ),
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          "Data yang dicari tidak ditemukan. Silahkan coba kata kunci lain!",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: grey500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 case ResultStatus.error:
-                                  return const Text("Error");
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w, vertical: 10.h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'assets/images/Error.png'),
+                                          height: 15.h,
+                                        ),
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          "Maaf, sepertinya terjadi kesalahan. Silahkan untuk mencoba kembali atau hubungi kami  jika masalah masih berlanjut!",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: grey500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 default:
                                   return const SizedBox();
                               }

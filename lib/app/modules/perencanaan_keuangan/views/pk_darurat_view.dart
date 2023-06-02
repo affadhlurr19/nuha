@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_darurat_controller.dart';
-
+import '../controllers/perencanaan_keuangan_controller.dart';
 import 'package:nuha/app/widgets/field_currency.dart';
 import 'package:nuha/app/widgets/field_number.dart';
 import 'package:nuha/app/widgets/field_text.dart';
@@ -14,6 +14,8 @@ class PkDaruratView extends GetView<PkDaruratController> {
   PkDaruratView({Key? key}) : super(key: key);
 
   final c = Get.find<PkDaruratController>();
+
+  final con = Get.find<PerencanaanKeuanganController>();
 
   @override
   Widget build(BuildContext context) {
@@ -188,8 +190,16 @@ class PkDaruratView extends GetView<PkDaruratController> {
                             .copyWith(color: Colors.white),
                       ),
                       onPressed: () {
-                        if (c.isLoading.isFalse) {
-                          c.countDana(context);
+                        if (c.bulanTercapai.value.text.isNotEmpty &&
+                            c.namaDana.value.text.isNotEmpty &&
+                            c.nomPengeluaran.value.text.isNotEmpty &&
+                            c.nomDanaTersedia.value.text.isNotEmpty &&
+                            c.nomDanaDisisihkan.value.text.isNotEmpty) {
+                          if (c.isLoading.isFalse) {
+                            c.countDana(context);
+                          }
+                        } else {
+                          con.errMsg("Mohon isi seluruh kolom yang ada!");
                         }
                       },
                     )),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../controllers/perencanaan_keuangan_controller.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_rumah_controller.dart';
 import 'package:nuha/app/constant/styles.dart';
@@ -12,6 +12,8 @@ class PkRumahView extends GetView<PkRumahController> {
   PkRumahView({Key? key}) : super(key: key);
 
   final c = Get.find<PkRumahController>();
+  final con = Get.find<PerencanaanKeuanganController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,12 +199,25 @@ class PkRumahView extends GetView<PkRumahController> {
                               .copyWith(color: Colors.white),
                         ),
                         onPressed: () {
-                          if (c.isLoading.isFalse &&
-                              c.caraPembayaran.value == "KPR Akad Murabahah") {
-                            c.countKPRMurabahah(context);
-                          } else if (c.isLoading.isFalse &&
-                              c.caraPembayaran.value == "Cash") {
-                            c.countCash(context);
+                          if (c.nomRumah.value.text.isNotEmpty &&
+                              c.nomDanaTersedia.value.text.isNotEmpty &&
+                              c.tahunTercapai.value.text.isNotEmpty) {
+                            if (c.caraPembayaran.value == "Cash" &&
+                                c.nomDanaDisisihkan.value.text.isNotEmpty) {
+                              if (c.isLoading.isFalse) {
+                                c.countCash(context);
+                              }
+                            } else if (c.caraPembayaran.value ==
+                                    "KPR Akad Murabahah" &&
+                                c.margin.value.text.isNotEmpty) {
+                              if (c.isLoading.isFalse) {
+                                c.countKPRMurabahah(context);
+                              }
+                            } else {
+                              con.errMsg("Mohon isi seluruh kolom yang ada!");
+                            }
+                          } else {
+                            con.errMsg("Mohon isi seluruh kolom yang ada!");
                           }
                         },
                       )),

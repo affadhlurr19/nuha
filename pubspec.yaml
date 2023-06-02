@@ -43,6 +43,9 @@ dependencies:
   syncfusion_flutter_charts: 21.2.6
   syncfusion_flutter_gauges: 21.2.6
   syncfusion_flutter_pdf: 21.2.6
+  screenshot: 2.1.0
+  permission_handler: 10.2.0
+  pdf: 3.10.4
   flutter: 
     sdk: flutter
 

@@ -8,11 +8,16 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/widgets/progress_bar.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_pernikahan_controller.dart';
+import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
+import 'package:screenshot/screenshot.dart';
 
 class RsPernikahanView extends GetView<PkPernikahanController> {
   RsPernikahanView({Key? key}) : super(key: key);
 
   final c = Get.find<PkPernikahanController>();
+
+  final con = Get.find<PerencanaanKeuanganController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,95 +46,33 @@ class RsPernikahanView extends GetView<PkPernikahanController> {
           SizedBox(
             height: 0.5.h,
           ),
-          GradientText(
-            "Hasil Perhitungan ",
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(fontWeight: FontWeight.bold),
-            colors: const [
-              buttonColor1,
-              buttonColor2,
-            ],
-          ),
-          SizedBox(
-            height: 1.h,
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 1.5.h,
-              ),
-              Text(
-                "Total Dana Pernikahan",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: grey900,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              Text(
-                NumberFormat.currency(
-                        locale: 'id', symbol: "Rp", decimalDigits: 0)
-                    .format(c.danaPernikahan),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: grey900,
-                    ),
-              ),
-              Text(
-                "(Asumsi inflasi 10% pertahun)",
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: grey900,
-                    ),
-              ),
-              SizedBox(
-                height: 0.5.h,
-              ),
-              SizedBox(
-                width: 90.w,
-                height: 5.h,
-                child: ProgressBarView(
-                  value: c.persentage,
-                ),
-              ),
-              SizedBox(
-                height: 0.5.h,
-              ),
-            ],
-          ),
-          const Divider(),
-          SizedBox(
-            height: 1.5.h,
-          ),
-          IntrinsicHeight(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Screenshot(
+            controller: con.screenshotController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: [
-                    Text(
-                      "Dana Terkumpul",
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: grey900,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    Text(
-                      "Rp${c.nomDanaTersedia.text}",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: grey900,
-                          ),
-                    ),
+                GradientText(
+                  "Hasil Perhitungan ",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
+                  colors: const [
+                    buttonColor1,
+                    buttonColor2,
                   ],
                 ),
-                const VerticalDivider(
-                  thickness: 1,
-                  color: grey100,
+                SizedBox(
+                  height: 1.h,
                 ),
                 Column(
                   children: [
+                    SizedBox(
+                      height: 1.5.h,
+                    ),
                     Text(
-                      "Selisih Dana",
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      "Total Dana Pernikahan",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -137,97 +80,177 @@ class RsPernikahanView extends GetView<PkPernikahanController> {
                     Text(
                       NumberFormat.currency(
                               locale: 'id', symbol: "Rp", decimalDigits: 0)
-                          .format(c.nomSisa),
+                          .format(c.danaPernikahan),
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: grey900,
                           ),
                     ),
+                    Text(
+                      "(Asumsi inflasi 10% pertahun)",
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: grey900,
+                          ),
+                    ),
+                    SizedBox(
+                      height: 0.5.h,
+                    ),
+                    SizedBox(
+                      width: 90.w,
+                      height: 5.h,
+                      child: ProgressBarView(
+                        value: c.persentage,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 0.5.h,
+                    ),
                   ],
-                )
+                ),
+                const Divider(),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "Dana Terkumpul",
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: grey900,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          Text(
+                            "Rp${c.nomDanaTersedia.text}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: grey900,
+                                ),
+                          ),
+                        ],
+                      ),
+                      const VerticalDivider(
+                        thickness: 1,
+                        color: grey100,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Selisih Dana",
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: grey900,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          Text(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: "Rp",
+                                    decimalDigits: 0)
+                                .format(c.nomSisa),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: grey900,
+                                ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 2.5.h,
+                ),
+                GradientText(
+                  "Rekomendasi Tabungan",
+                  style: Theme.of(context).textTheme.displaySmall!,
+                  colors: const [
+                    buttonColor1,
+                    buttonColor2,
+                  ],
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Text(
+                  "Dengan dana yang dapat kamu sisihkan:",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: grey900,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                Text(
+                  "Rp${c.nomDanaDisisihkan.text}/bulan",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: grey900,
+                      ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: grey900,
+                        ),
+                    children: [
+                      const TextSpan(
+                        text: 'Perencanaan dana pernikahan ',
+                      ),
+                      TextSpan(
+                        text: c.danaStat,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: c.danaStat == "dapat tercapai"
+                              ? buttonColor1
+                              : errColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                Text(
+                  "Setidaknya, kamu perlu menabung sebesar:",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: grey900,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(c.nomPerbulan.round())}/bulan",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: grey900,
+                          ),
+                    ),
+                    Text(
+                      "selama ${c.bulanTercapai.text} bulan",
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: grey900,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ],
+                ),
+                Text(
+                  "Agar perencanaan dana pernikahan tercapai",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: grey900,
+                      ),
+                ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 2.5.h,
-          ),
-          GradientText(
-            "Rekomendasi Tabungan",
-            style: Theme.of(context).textTheme.displaySmall!,
-            colors: const [
-              buttonColor1,
-              buttonColor2,
-            ],
-          ),
-          SizedBox(
-            height: 1.h,
-          ),
-          Text(
-            "Dengan dana yang dapat kamu sisihkan:",
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: grey900,
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-          Text(
-            "Rp${c.nomDanaDisisihkan.text}/bulan",
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: grey900,
-                ),
-          ),
-          RichText(
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: grey900,
-                  ),
-              children: [
-                const TextSpan(
-                  text: 'Perencanaan dana pernikahan ',
-                ),
-                TextSpan(
-                  text: c.danaStat,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: c.danaStat == "dapat tercapai"
-                        ? buttonColor1
-                        : errColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 1.5.h,
-          ),
-          Text(
-            "Setidaknya, kamu perlu menabung sebesar:",
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: grey900,
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(c.nomPerbulan.round())}/bulan",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: grey900,
-                    ),
-              ),
-              Text(
-                "selama ${c.bulanTercapai.text} bulan",
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: grey900,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-            ],
-          ),
-          Text(
-            "Agar perencanaan dana pernikahan tercapai",
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: grey900,
-                ),
           ),
           SizedBox(
             height: 0.5.h,
@@ -254,7 +277,15 @@ class RsPernikahanView extends GetView<PkPernikahanController> {
                 width: 1.w,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  con.screenshotController
+                      .capture(delay: const Duration(milliseconds: 10))
+                      .then((capturedImage) async {
+                    con.getPdf(capturedImage!, "Dana Pernikahan");
+                  }).catchError((onError) {
+                    print(onError);
+                  });
+                },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(
                     Size(double.infinity, 1.h),
@@ -310,7 +341,11 @@ class RsPernikahanView extends GetView<PkPernikahanController> {
                         .bodyMedium!
                         .copyWith(color: Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (controller.isLoading.isFalse) {
+                      controller.saveData(context);
+                    }
+                  },
                 ),
               ),
             ],

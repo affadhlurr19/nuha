@@ -4,8 +4,17 @@ import 'package:nuha/app/modules/fincheck/views/fincheck_result_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:nuha/mobile.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
 class FincheckController extends GetxController {
+  ScreenshotController screenshotController = ScreenshotController();
+
   //fincheck page 1, data pemasukan per bulan
   TextEditingController? pendapatanAktif = TextEditingController();
   TextEditingController? pendapatanPasif = TextEditingController();
@@ -467,5 +476,57 @@ class FincheckController extends GetxController {
         .get();
 
     return snapshot.size; // Jumlah dokumen dengan kategori "a"
+  }
+
+  Future<void> getPdf(Uint8List capturedImage, String name) async {
+    PdfDocument document = PdfDocument();
+
+    final page = document.pages.add();
+
+    final Size pageSize = page.getClientSize();
+
+    final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
+    //Draw the image
+    page.graphics
+        .drawImage(PdfBitmap(capturedImage), const Rect.fromLTWH(20, 0, 0, 0));
+
+    page.graphics.drawImage(PdfBitmap(await readImageData('NUHA.png')),
+        const Rect.fromLTWH(20, 690, 200, 50));
+
+    drawFooter(page, pageSize);
+
+    //Save the document
+    List<int> bytes = await document.save();
+
+    saveAndLaunchFile(bytes, '${name}_$time.pdf');
+    document.dispose();
+  }
+
+  void drawFooter(PdfPage page, Size pageSize) async {
+    final time = DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now());
+
+    final PdfPen linePen =
+        PdfPen(PdfColor(27, 30, 35), dashStyle: PdfDashStyle.custom);
+    linePen.dashPattern = <double>[3, 3];
+    //Draw line
+    page.graphics.drawLine(linePen, Offset(0, pageSize.height - 100),
+        Offset(pageSize.width, pageSize.height - 100));
+
+    String footerContent =
+        // ignore: leading_newlines_in_multiline_strings
+        '''Dihitung, dibuat, dan disusun
+        oleh Nuha\r\n\r\n $time''';
+
+    //Added 30 as a margin for the layout
+    page.graphics.drawString(
+        footerContent, PdfStandardFont(PdfFontFamily.helvetica, 9),
+        format: PdfStringFormat(alignment: PdfTextAlignment.right),
+        bounds: Rect.fromLTWH(pageSize.width - 30, pageSize.height - 70, 0, 0));
+  }
+
+  Future<Uint8List> readImageData(String name) async {
+    final data = await rootBundle.load('assets/images/$name');
+    return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
   }
 }

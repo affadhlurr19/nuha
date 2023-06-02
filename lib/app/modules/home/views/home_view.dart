@@ -8,6 +8,7 @@ import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
 import 'package:nuha/app/modules/literasi/views/literasi_view.dart';
 import 'package:nuha/app/modules/profile/controllers/profile_controller.dart';
+import 'package:nuha/app/modules/zis/views/zis_view.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ph.dart';
@@ -130,9 +131,7 @@ class HomeView extends GetView<HomeController> {
                   size: 20.sp,
                   color: grey400,
                 ),
-                onPressed: () {
-                  // Your code here
-                },
+                onPressed: () => Get.to(const ZisView()),
               ),
             ),
           ],

@@ -8,6 +8,8 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/widgets/progress_bar.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_rumah_controller.dart';
+import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
+import 'package:screenshot/screenshot.dart';
 
 class RsRumahView extends GetView<PkRumahController> {
   RsRumahView({Key? key}) : super(key: key);
@@ -43,6 +45,8 @@ class CashWidget extends StatelessWidget {
   CashWidget({super.key});
 
   final c = Get.find<PkRumahController>();
+
+  final con = Get.find<PerencanaanKeuanganController>();
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -53,95 +57,33 @@ class CashWidget extends StatelessWidget {
         SizedBox(
           height: 0.5.h,
         ),
-        GradientText(
-          "Hasil Perhitungan ",
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(fontWeight: FontWeight.bold),
-          colors: const [
-            buttonColor1,
-            buttonColor2,
-          ],
-        ),
-        SizedBox(
-          height: 1.h,
-        ),
-        Column(
-          children: [
-            SizedBox(
-              height: 1.5.h,
-            ),
-            Text(
-              "Perkiraan Harga Rumah Impian",
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: grey900,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            Text(
-              NumberFormat.currency(
-                      locale: 'id', symbol: "Rp", decimalDigits: 0)
-                  .format(c.perkiraanHarga),
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: grey900,
-                  ),
-            ),
-            Text(
-              "(Asumsi kenaikan 5% pertahun)",
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: grey900,
-                  ),
-            ),
-            SizedBox(
-              height: 0.5.h,
-            ),
-            SizedBox(
-              width: 90.w,
-              height: 5.h,
-              child: ProgressBarView(
-                value: c.persentage,
-              ),
-            ),
-            SizedBox(
-              height: 0.5.h,
-            ),
-          ],
-        ),
-        const Divider(),
-        SizedBox(
-          height: 1.5.h,
-        ),
-        IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        Screenshot(
+          controller: con.screenshotController,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                children: [
-                  Text(
-                    "Dana Terkumpul",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: grey900,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  Text(
-                    "Rp${c.nomDanaTersedia.text}",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: grey900,
-                        ),
-                  ),
+              GradientText(
+                "Hasil Perhitungan ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+                colors: const [
+                  buttonColor1,
+                  buttonColor2,
                 ],
               ),
-              const VerticalDivider(
-                thickness: 1,
-                color: grey100,
+              SizedBox(
+                height: 1.h,
               ),
               Column(
                 children: [
+                  SizedBox(
+                    height: 1.5.h,
+                  ),
                   Text(
-                    "Selisih Dana",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    "Perkiraan Harga Rumah Impian",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: grey900,
                           fontWeight: FontWeight.w600,
                         ),
@@ -149,96 +91,171 @@ class CashWidget extends StatelessWidget {
                   Text(
                     NumberFormat.currency(
                             locale: 'id', symbol: "Rp", decimalDigits: 0)
-                        .format(c.nomSisa),
+                        .format(c.perkiraanHarga),
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: grey900,
                         ),
                   ),
+                  Text(
+                    "(Asumsi kenaikan 5% pertahun)",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: grey900,
+                        ),
+                  ),
+                  SizedBox(
+                    height: 0.5.h,
+                  ),
+                  SizedBox(
+                    width: 90.w,
+                    height: 5.h,
+                    child: ProgressBarView(
+                      value: c.persentage,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 0.5.h,
+                  ),
                 ],
-              )
+              ),
+              const Divider(),
+              SizedBox(
+                height: 1.5.h,
+              ),
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          "Dana Terkumpul",
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: grey900,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                        Text(
+                          "Rp${c.nomDanaTersedia.text}",
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: grey900,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    const VerticalDivider(
+                      thickness: 1,
+                      color: grey100,
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          "Selisih Dana",
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: grey900,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                        Text(
+                          NumberFormat.currency(
+                                  locale: 'id', symbol: "Rp", decimalDigits: 0)
+                              .format(c.nomSisa),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: grey900,
+                                  ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 2.5.h,
+              ),
+              GradientText(
+                "Rekomendasi Tabungan",
+                style: Theme.of(context).textTheme.displaySmall!,
+                colors: const [
+                  buttonColor1,
+                  buttonColor2,
+                ],
+              ),
+              SizedBox(
+                height: 1.h,
+              ),
+              Text(
+                "Dengan dana yang dapat kamu sisihkan:",
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: grey900,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              Text(
+                "Rp${c.nomDanaDisisihkan.text}/bulan",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: grey900,
+                    ),
+              ),
+              RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: grey900,
+                      ),
+                  children: [
+                    const TextSpan(
+                      text: 'Perencanaan dana beli rumah ',
+                    ),
+                    TextSpan(
+                      text: c.danaStat,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: c.danaStat == "dapat tercapai"
+                            ? buttonColor1
+                            : errColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 1.h,
+              ),
+              Text(
+                "Setidaknya, kamu perlu menabung sebesar:",
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: grey900,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(c.tabunganPerbulan.round())}/bulan",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: grey900,
+                        ),
+                  ),
+                  Text(
+                    "selama ${c.bulan.ceil()} bulan",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: grey900,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ],
+              ),
+              Text(
+                "Agar perencanaan dana beli rumah tercapai",
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: grey900,
+                    ),
+              ),
             ],
           ),
-        ),
-        SizedBox(
-          height: 2.5.h,
-        ),
-        GradientText(
-          "Rekomendasi Tabungan",
-          style: Theme.of(context).textTheme.displaySmall!,
-          colors: const [
-            buttonColor1,
-            buttonColor2,
-          ],
-        ),
-        SizedBox(
-          height: 1.h,
-        ),
-        Text(
-          "Dengan dana yang dapat kamu sisihkan:",
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: grey900,
-                fontWeight: FontWeight.w600,
-              ),
-        ),
-        Text(
-          "Rp${c.nomDanaDisisihkan.text}/bulan",
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: grey900,
-              ),
-        ),
-        RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: grey900,
-                ),
-            children: [
-              const TextSpan(
-                text: 'Perencanaan dana beli rumah ',
-              ),
-              TextSpan(
-                text: c.danaStat,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color:
-                      c.danaStat == "dapat tercapai" ? buttonColor1 : errColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 1.h,
-        ),
-        Text(
-          "Setidaknya, kamu perlu menabung sebesar:",
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: grey900,
-                fontWeight: FontWeight.w600,
-              ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(c.tabunganPerbulan.round())}/bulan",
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: grey900,
-                  ),
-            ),
-            Text(
-              "selama ${c.bulan.ceil()} bulan",
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: grey900,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-          ],
-        ),
-        Text(
-          "Agar perencanaan dana beli rumah tercapai",
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: grey900,
-              ),
         ),
         SizedBox(
           height: 0.5.h,
@@ -265,7 +282,15 @@ class CashWidget extends StatelessWidget {
               width: 1.w,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                con.screenshotController
+                    .capture(delay: const Duration(milliseconds: 10))
+                    .then((capturedImage) async {
+                  con.getPdf(capturedImage!, "Dana Beli Rumah");
+                }).catchError((onError) {
+                  print(onError);
+                });
+              },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all<Size>(
                   Size(double.infinity, 1.h),
@@ -321,7 +346,11 @@ class CashWidget extends StatelessWidget {
                       .bodyMedium!
                       .copyWith(color: Colors.white),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (c.isLoading.isFalse) {
+                    c.saveData(context);
+                  }
+                },
               ),
             ),
           ],
@@ -336,6 +365,8 @@ class MurabahahWidget extends StatelessWidget {
 
   final c = Get.find<PkRumahController>();
 
+  final con = Get.find<PerencanaanKeuanganController>();
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -346,230 +377,266 @@ class MurabahahWidget extends StatelessWidget {
         SizedBox(
           height: 0.5.h,
         ),
-        GradientText(
-          "Hasil Perhitungan",
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(fontWeight: FontWeight.bold),
-          colors: const [
-            buttonColor1,
-            buttonColor2,
-          ],
-        ),
-        Column(
-          children: [
-            SizedBox(
-              height: 1.5.h,
-            ),
-            Text(
-              "Harga Rumah Impian",
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: grey900,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            Text(
-              "Rp${c.nomRumah.text}",
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: grey900,
-                  ),
-            ),
-            SizedBox(
-              height: 0.5.h,
-            ),
-            SizedBox(
-              width: 90.w,
-              height: 5.h,
-              child: ProgressBarView(
-                value: c.persentage,
-              ),
-            ),
-            SizedBox(
-              height: 0.5.h,
-            ),
-          ],
-        ),
-        const Divider(),
-        SizedBox(
-          height: 1.5.h,
-        ),
-        IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    "Uang Muka",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: grey900,
-                          fontWeight: FontWeight.w600,
+        Screenshot(
+            controller: con.screenshotController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GradientText(
+                  "Hasil Perhitungan",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
+                  colors: const [
+                    buttonColor1,
+                    buttonColor2,
+                  ],
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 1.5.h,
+                      ),
+                      Text(
+                        "Harga Rumah Impian",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: grey900,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      Text(
+                        "Rp${c.nomRumah.text}",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: grey900,
+                            ),
+                      ),
+                      SizedBox(
+                        width: 90.w,
+                        height: 5.h,
+                        child: ProgressBarView(
+                          value: c.persentage,
                         ),
+                      ),
+                      SizedBox(
+                        height: 0.5.h,
+                      ),
+                    ],
                   ),
-                  Text(
-                    "Rp${c.nomDanaTersedia.text}",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: grey900,
-                        ),
+                ),
+                const Divider(),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "Uang Muka",
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: grey900,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          Text(
+                            "Rp${c.nomDanaTersedia.text}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: grey900,
+                                ),
+                          ),
+                          // Text(
+                          //   "(Dana terkumpul)",
+                          //   style:
+                          //       Theme.of(context).textTheme.bodySmall!.copyWith(
+                          //             color: grey900,
+                          //           ),
+                          // ),
+                        ],
+                      ),
+                      const VerticalDivider(
+                        thickness: 1,
+                        color: grey100,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Pokok Pinjaman",
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: grey900,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          Text(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: "Rp",
+                                    decimalDigits: 0)
+                                .format(c.nomSisa),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: grey900,
+                                ),
+                          ),
+                          // Text(
+                          //   "(Selisih dana)",
+                          //   style:
+                          //       Theme.of(context).textTheme.bodySmall!.copyWith(
+                          //             color: grey900,
+                          //           ),
+                          // ),
+                        ],
+                      )
+                    ],
                   ),
-                  Text(
-                    "(Dana terkumpul)",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: grey900,
-                        ),
-                  ),
-                ],
-              ),
-              const VerticalDivider(
-                thickness: 1,
-                color: grey100,
-              ),
-              Column(
-                children: [
-                  Text(
-                    "Pokok Pinjaman",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: grey900,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  Text(
-                    NumberFormat.currency(
-                            locale: 'id', symbol: "Rp", decimalDigits: 0)
-                        .format(c.nomSisa),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: grey900,
-                        ),
-                  ),
-                  Text(
-                    "(Selisih dana)",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: grey900,
-                        ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 2.h,
-        ),
-        GradientText(
-          "Akad Murabahah",
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(fontWeight: FontWeight.bold),
-          colors: const [
-            buttonColor1,
-            buttonColor2,
-          ],
-        ),
-        Text(
-          "Dalam KPR Akad Murabahah, lembaga keuangan akan membeli properti yang diinginkan oleh nasabah dan kemudian menjualnya kembali kepada nasabah dengan yang telah dimargin.",
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: grey900,
-              ),
-        ),
-        SizedBox(
-          height: 1.h,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: buttonColor2.withOpacity(0.2),
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 1.h,
-              ),
-              Text(
-                "Angsuran Perbulan",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: grey900,
-                      fontWeight: FontWeight.w600,
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                GradientText(
+                  "Akad Murabahah",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
+                  colors: const [
+                    buttonColor1,
+                    buttonColor2,
+                  ],
+                ),
+                Text(
+                  "Lembaga keuangan membeli properti yang diinginkan oleh nasabah dan kemudian menjualnya kepada nasabah dengan harga dimargin.",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: grey900,
+                      ),
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Center(
+                  child: Container(
+                    width: 60.w,
+                    height: 9.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: buttonColor2.withOpacity(0.2),
                     ),
-              ),
-              Text(
-                NumberFormat.currency(
-                        locale: 'id', symbol: "Rp", decimalDigits: 0)
-                    .format(c.angsuranBulanan),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: grey900,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Text(
+                          "Angsuran Perbulan",
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: grey900,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                        Text(
+                          NumberFormat.currency(
+                                  locale: 'id', symbol: "Rp", decimalDigits: 0)
+                              .format(c.angsuranBulanan),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: grey900,
+                                  ),
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                      ],
                     ),
-              ),
-              SizedBox(
-                height: 1.h,
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 2.h,
-        ),
-        GradientText(
-          "Minimal Penghasilan",
-          style: Theme.of(context).textTheme.displaySmall!,
-          colors: const [
-            buttonColor1,
-            buttonColor2,
-          ],
-        ),
-        SizedBox(
-          height: 1.h,
-        ),
-        IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    "30% dari Penghasilan",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: grey900,
-                          fontWeight: FontWeight.w600,
-                        ),
                   ),
-                  Text(
-                    NumberFormat.currency(
-                            locale: 'id', symbol: "Rp", decimalDigits: 0)
-                        .format(c.penghasilan30),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: grey900,
-                        ),
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                GradientText(
+                  "Minimal Penghasilan",
+                  style: Theme.of(context).textTheme.displaySmall!,
+                  colors: const [
+                    buttonColor1,
+                    buttonColor2,
+                  ],
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "30% dari Penghasilan",
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: grey900,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          Text(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: "Rp",
+                                    decimalDigits: 0)
+                                .format(c.penghasilan30),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: grey900,
+                                ),
+                          ),
+                        ],
+                      ),
+                      const VerticalDivider(
+                        thickness: 1,
+                        color: grey100,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "40% dari Penghasilan",
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: grey900,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                          Text(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: "Rp",
+                                    decimalDigits: 0)
+                                .format(c.penghasilan40),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: grey900,
+                                ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                ],
-              ),
-              const VerticalDivider(
-                thickness: 1,
-                color: grey100,
-              ),
-              Column(
-                children: [
-                  Text(
-                    "40% dari Penghasilan",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: grey900,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  Text(
-                    NumberFormat.currency(
-                            locale: 'id', symbol: "Rp", decimalDigits: 0)
-                        .format(c.penghasilan40),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: grey900,
-                        ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
+                ),
+              ],
+            )),
         const Divider(),
         SizedBox(
           height: 0.5.h,
@@ -592,7 +659,15 @@ class MurabahahWidget extends StatelessWidget {
               width: 1.w,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                con.screenshotController
+                    .capture(delay: const Duration(milliseconds: 10))
+                    .then((capturedImage) async {
+                  con.getPdf(capturedImage!, "Dana Beli Rumah");
+                }).catchError((onError) {
+                  print(onError);
+                });
+              },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all<Size>(
                   Size(double.infinity, 1.h),
@@ -648,7 +723,11 @@ class MurabahahWidget extends StatelessWidget {
                       .bodyMedium!
                       .copyWith(color: Colors.white),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (c.isLoading.isFalse) {
+                    c.saveData(context);
+                  }
+                },
               ),
             ),
           ],

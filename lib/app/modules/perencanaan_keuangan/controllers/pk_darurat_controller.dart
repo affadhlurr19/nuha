@@ -1,8 +1,11 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/views/rs_darurat_view.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-import 'package:nuha/mobile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as s;
+import '../controllers/perencanaan_keuangan_controller.dart';
 
 class PkDaruratController extends GetxController {
   TextEditingController namaDana = TextEditingController();
@@ -10,6 +13,14 @@ class PkDaruratController extends GetxController {
   TextEditingController bulanTercapai = TextEditingController();
   TextEditingController nomDanaTersedia = TextEditingController();
   TextEditingController nomDanaDisisihkan = TextEditingController();
+
+  final con = Get.find<PerencanaanKeuanganController>();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  s.FirebaseStorage storage = s.FirebaseStorage.instance;
+
+  final textValidation = TextEditingController();
   RxBool isLoading = false.obs;
 
   var statusPernikahan = "Pilih Status Pernikahan".obs;
@@ -20,6 +31,7 @@ class PkDaruratController extends GetxController {
   double nomPerbulan = 0.0;
   double totalDanaSisihkan = 0.0;
   double persentage = 0.0;
+  double realPersentage = 0.0;
 
   void updateStatus(value) {
     statusPernikahan.value = value;
@@ -49,6 +61,8 @@ class PkDaruratController extends GetxController {
     persentage =
         (int.parse(nomDanaTersedia.text.replaceAll(".", "")) / danaDarurat);
 
+    realPersentage = persentage;
+
     if (persentage > 1.0) {
       persentage = 1.0;
     } else if (persentage < 0.1) {
@@ -58,13 +72,41 @@ class PkDaruratController extends GetxController {
     Get.to(RsDaruratView());
   }
 
-  Future<void> getPdf() async {
-    PdfDocument documents = PdfDocument();
-    documents.pages.add();
+  void saveData(context) async {
+    if (nomDanaTersedia.text.isNotEmpty) {
+      isLoading.value = true;
+      try {
+        String uid = auth.currentUser!.uid;
+        String id = firestore.collection("users").doc().id;
 
-    List<int> bytes = await documents.save();
-    documents.dispose();
+        await firestore
+            .collection("users")
+            .doc(uid)
+            .collection("anggaran")
+            .doc(id)
+            .set({
+          "id": id,
+          "kategori": "Dana Darurat",
+          "nominal": danaDarurat,
+          "jenisAnggaran": "Lainnya",
+          "nominalTerpakai":
+              int.parse(nomDanaTersedia.text.replaceAll(".", "")),
+          "persentase":
+              double.parse(realPersentage.toStringAsFixed(2)).toString(),
+          "sisaLimit": nomSisa,
+          "createdAt": DateTime.now().toIso8601String(),
+          "updatedAt": DateTime.now().toIso8601String(),
+        });
+        isLoading.value = false;
 
-    saveAndLaunchFile(bytes, 'Output.pdf');
+        Get.to(const PerencanaanKeuanganView());
+      } catch (e) {
+        isLoading.value = false;
+        // print(e);
+        con.errMsg("Tidak dapat menambahkan data!");
+      }
+    } else {
+      con.errMsg("Seluruh data wajib diisi");
+    }
   }
 }

@@ -1,6 +1,11 @@
 import 'package:get/get.dart';
 import 'package:flutter/widgets.dart';
+import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/views/rs_rumah_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as s;
+import '../controllers/perencanaan_keuangan_controller.dart';
 
 class PkRumahController extends GetxController {
   TextEditingController nomRumah = TextEditingController();
@@ -8,12 +13,18 @@ class PkRumahController extends GetxController {
   TextEditingController nomDanaTersedia = TextEditingController();
   TextEditingController nomDanaDisisihkan = TextEditingController();
   TextEditingController margin = TextEditingController();
-  TextEditingController uangMuka = TextEditingController();
+
+  final con = Get.find<PerencanaanKeuanganController>();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  s.FirebaseStorage storage = s.FirebaseStorage.instance;
 
   var caraPembayaran = "Pilih Cara Pembayaran".obs;
   var statusStat = "".obs;
 
   double persentage = 0.0;
+  double realPersentage = 0.0;
   double perkiraanHarga = 0; //nomRumah*0.05
   int nomSisa = 0;
   double bulan = 0.0;
@@ -58,6 +69,7 @@ class PkRumahController extends GetxController {
     persentage =
         (int.parse(nomDanaTersedia.text.replaceAll(".", "")) / perkiraanHarga);
 
+    realPersentage = persentage;
     if (persentage < 0.1) {
       persentage = 0.1;
     }
@@ -86,5 +98,45 @@ class PkRumahController extends GetxController {
     penghasilan40 = angsuranBulanan * (100 ~/ 40).toInt();
 
     Get.to(RsRumahView());
+  }
+
+  void saveData(context) async {
+    if (nomDanaTersedia.text.isNotEmpty) {
+      isLoading.value = true;
+      try {
+        String uid = auth.currentUser!.uid;
+        String id = firestore.collection("users").doc().id;
+
+        await firestore
+            .collection("users")
+            .doc(uid)
+            .collection("anggaran")
+            .doc(id)
+            .set({
+          "id": id,
+          "kategori": "Dana Rumah Impian",
+          "nominal": perkiraanHarga != 0
+              ? perkiraanHarga
+              : int.parse(nomRumah.text.replaceAll(".", "")),
+          "jenisAnggaran": "Lainnya",
+          "nominalTerpakai":
+              int.parse(nomDanaTersedia.text.replaceAll(".", "")),
+          "persentase":
+              double.parse(realPersentage.toStringAsFixed(2)).toString(),
+          "sisaLimit": nomSisa,
+          "createdAt": DateTime.now().toIso8601String(),
+          "updatedAt": DateTime.now().toIso8601String(),
+        });
+        isLoading.value = false;
+
+        Get.to(const PerencanaanKeuanganView());
+      } catch (e) {
+        isLoading.value = false;
+        // print(e);
+        con.errMsg("Tidak dapat menambahkan data!");
+      }
+    } else {
+      con.errMsg("Seluruh data wajib diisi");
+    }
   }
 }

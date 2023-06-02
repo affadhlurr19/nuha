@@ -8,11 +8,13 @@ import 'package:nuha/app/widgets/field_number.dart';
 import 'package:nuha/app/widgets/field_text.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
+import '../controllers/perencanaan_keuangan_controller.dart';
 
 class PkKendaraanView extends GetView<PkKendaraanController> {
   PkKendaraanView({Key? key}) : super(key: key);
 
   final c = Get.find<PkKendaraanController>();
+  final con = Get.find<PerencanaanKeuanganController>();
 
   @override
   Widget build(BuildContext context) {
@@ -200,8 +202,27 @@ class PkKendaraanView extends GetView<PkKendaraanController> {
                               .copyWith(color: Colors.white),
                         ),
                         onPressed: () {
-                          if (c.isLoading.isFalse) {
-                            c.countDana(context);
+                          if (c.namaKendaraan.value.text.isNotEmpty &&
+                              c.nomKendaraan.value.text.isNotEmpty &&
+                              c.margin.value.text.isNotEmpty) {
+                            if (c.caraPembayaran.value == "Cash" &&
+                                c.tahunTercapai.value.text.isNotEmpty &&
+                                c.nomDanaTersedia.value.text.isNotEmpty &&
+                                c.nomDanaDisisihkan.value.text.isNotEmpty) {
+                              if (c.isLoading.isFalse) {
+                                c.countDana(context);
+                              }
+                            } else if (c.caraPembayaran.value == "BSI OTO" &&
+                                c.lamaTenor.value.text.isNotEmpty &&
+                                c.persenDP.value.text.isNotEmpty) {
+                              if (c.isLoading.isFalse) {
+                                c.countDana(context);
+                              }
+                            } else {
+                              con.errMsg("Mohon isi seluruh kolom yang ada!");
+                            }
+                          } else {
+                            con.errMsg("Mohon isi seluruh kolom yang ada!");
                           }
                         },
                       )),

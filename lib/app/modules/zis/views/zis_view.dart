@@ -30,10 +30,10 @@ class _ZisViewState extends State<ZisView> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(5.875.h),
         child: AppBar(
-          titleSpacing: 8.055556.w,
+          // titleSpacing: 8.055556.w,
           title: Center(
             child: Text(
-              "Nuha x Rumah Zakat",
+              "Nuha x RumahZakat",
               style: Theme.of(context)
                   .textTheme
                   .labelLarge!
@@ -42,11 +42,19 @@ class _ZisViewState extends State<ZisView> {
           ),
           backgroundColor: backgroundColor1,
           elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: dark,
+          ),
         ),
       ),
       body: InAppWebView(
         initialUrlRequest: URLRequest(
-          url: Uri.parse('https://flutter.dev/'),
+          url: Uri.parse(
+              'https://www.rumahzakat.org/donasi?source=1042020001001'),
         ),
         initialOptions: InAppWebViewGroupOptions(
           crossPlatform: InAppWebViewOptions(
@@ -58,7 +66,8 @@ class _ZisViewState extends State<ZisView> {
           _con = controller;
           _con?.loadUrl(
               urlRequest: URLRequest(
-            url: Uri.parse('https://flutter.dev/'),
+            url: Uri.parse(
+                'https://www.rumahzakat.org/donasi?source=1042020001001'),
             headers: {
               'Content-Security-Policy': 'zoom: 0.9', // Set zoom level to 90%
             },
@@ -68,38 +77,3 @@ class _ZisViewState extends State<ZisView> {
     );
   }
 }
-
-// class _ZisViewState extends State<ZisView> {
-//   WebViewController? _con;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _con = WebViewController()
-//       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-//       ..setBackgroundColor(const Color(0x00000000))
-//       ..setNavigationDelegate(
-//         NavigationDelegate(
-//           onProgress: (int progress) {
-//             // Update loading bar.
-//           },
-//           onPageStarted: (String url) {},
-//           onPageFinished: (String url) {},
-//           onWebResourceError: (WebResourceError error) {},
-//           onNavigationRequest: (NavigationRequest request) {
-//             if (request.url.startsWith('https://www.youtube.com/')) {
-//               return NavigationDecision.prevent;
-//             }
-//             return NavigationDecision.navigate;
-//           },
-//         ),
-//       )
-//       ..loadRequest(
-//           Uri.parse('https://www.rumahzakat.org/donasi?source=1042020001001'));
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return WebViewWidget(controller: _con!);
-//   }
-// }

@@ -4,7 +4,6 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/views/cashflow_view.dart';
 import 'package:nuha/app/modules/home/views/home_view.dart';
 import 'package:nuha/app/modules/literasi/views/literasi_view.dart';
-import 'package:nuha/app/modules/zis/views/zis_view.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
@@ -26,7 +25,6 @@ class _NavbarView extends State<NavbarView> {
       CashflowView(),
       const LiterasiView(),
       HomeView(),
-      ZisView(),
     ];
   }
 
@@ -63,15 +61,6 @@ class _NavbarView extends State<NavbarView> {
         icon: const Icon(CupertinoIcons.person_2),
         iconSize: 15.sp,
         title: "Konsultasi",
-        textStyle:
-            Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
-        inactiveColorPrimary: grey500,
-        activeColorPrimary: buttonColor1,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.heart_circle),
-        iconSize: 15.sp,
-        title: "ZIS",
         textStyle:
             Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
         inactiveColorPrimary: grey500,

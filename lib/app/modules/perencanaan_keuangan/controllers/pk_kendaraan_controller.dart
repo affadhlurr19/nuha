@@ -1,6 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/views/rs_kendaraan_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as s;
+import '../controllers/perencanaan_keuangan_controller.dart';
 
 class PkKendaraanController extends GetxController {
   TextEditingController namaKendaraan = TextEditingController();
@@ -12,6 +17,12 @@ class PkKendaraanController extends GetxController {
   TextEditingController nomDanaTersedia = TextEditingController();
   TextEditingController nomDanaDisisihkan = TextEditingController();
 
+  final con = Get.find<PerencanaanKeuanganController>();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  s.FirebaseStorage storage = s.FirebaseStorage.instance;
+
   RxBool isLoading = false.obs;
 
   var caraPembayaran = "Pilih Cara Pembayaran".obs;
@@ -22,6 +33,7 @@ class PkKendaraanController extends GetxController {
   int nomSisa = 0;
   int bulan = 0;
   double persentage = 0.0;
+  double realPersentage = 0.0;
   var danaStat = "";
   int tabunganPerbulan = 0;
 
@@ -52,6 +64,8 @@ class PkKendaraanController extends GetxController {
 
       persentage = int.parse(nomDanaTersedia.text.replaceAll(".", "")) /
           perkiraanHarga.toInt();
+
+      realPersentage = persentage;
 
       if (persentage < 0.1) {
         persentage = 0.1;
@@ -89,5 +103,44 @@ class PkKendaraanController extends GetxController {
     }
 
     Get.to(() => RsKendaraanView());
+  }
+
+  void saveData(context) async {
+    if (nomDanaTersedia.text.isNotEmpty) {
+      isLoading.value = true;
+      try {
+        String uid = auth.currentUser!.uid;
+        String id = firestore.collection("users").doc().id;
+
+        await firestore
+            .collection("users")
+            .doc(uid)
+            .collection("anggaran")
+            .doc(id)
+            .set({
+          "id": id,
+          "kategori": "Dana Darurat",
+          "nominal": int.parse(nomKendaraan.text.replaceAll(".", "")),
+          "jenisAnggaran": "Lainnya",
+          "nominalTerpakai": nomDanaTersedia.text.isNotEmpty
+              ? int.parse(nomDanaTersedia.text.replaceAll(".", ""))
+              : 0,
+          "persentase":
+              double.parse(realPersentage.toStringAsFixed(2)).toString(),
+          "sisaLimit": nomSisa,
+          "createdAt": DateTime.now().toIso8601String(),
+          "updatedAt": DateTime.now().toIso8601String(),
+        });
+        isLoading.value = false;
+
+        Get.to(const PerencanaanKeuanganView());
+      } catch (e) {
+        isLoading.value = false;
+        // print(e);
+        con.errMsg("Tidak dapat menambahkan data!");
+      }
+    } else {
+      con.errMsg("Seluruh data wajib diisi");
+    }
   }
 }
