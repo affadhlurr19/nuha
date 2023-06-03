@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_result_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,38 +17,38 @@ class FincheckController extends GetxController {
   ScreenshotController screenshotController = ScreenshotController();
 
   //fincheck page 1, data pemasukan per bulan
-  TextEditingController? pendapatanAktif = TextEditingController();
-  TextEditingController? pendapatanPasif = TextEditingController();
-  TextEditingController? bisnisUsaha = TextEditingController();
-  TextEditingController? hasilInvestasi = TextEditingController();
-  TextEditingController? lainnya = TextEditingController();
+  TextEditingController pendapatanAktif = TextEditingController();
+  TextEditingController pendapatanPasif = TextEditingController();
+  TextEditingController bisnisUsaha = TextEditingController();
+  TextEditingController hasilInvestasi = TextEditingController();
+  TextEditingController lainnya = TextEditingController();
 
   //fincheck page 2, data menabung per bulan
-  TextEditingController? nabungInvestasi = TextEditingController();
-  TextEditingController? totalTabungan = TextEditingController();
+  TextEditingController nabungInvestasi = TextEditingController();
+  TextEditingController totalTabungan = TextEditingController();
 
   //fincheck page 3, data investasi per bulan
-  TextEditingController? reksadana = TextEditingController();
-  TextEditingController? saham = TextEditingController();
-  TextEditingController? obligasi = TextEditingController();
-  TextEditingController? unitLink = TextEditingController();
-  TextEditingController? deposito = TextEditingController();
-  TextEditingController? crowdFunding = TextEditingController();
-  TextEditingController? ebaRitel = TextEditingController();
-  TextEditingController? logamMulia = TextEditingController();
+  TextEditingController reksadana = TextEditingController();
+  TextEditingController saham = TextEditingController();
+  TextEditingController obligasi = TextEditingController();
+  TextEditingController unitLink = TextEditingController();
+  TextEditingController deposito = TextEditingController();
+  TextEditingController crowdFunding = TextEditingController();
+  TextEditingController ebaRitel = TextEditingController();
+  TextEditingController logamMulia = TextEditingController();
 
   //fincheck page 4, data pengeluaran per bulan
-  TextEditingController? belanja = TextEditingController();
-  TextEditingController? transportasi = TextEditingController();
-  TextEditingController? sedekah = TextEditingController();
-  TextEditingController? pendidikan = TextEditingController();
-  TextEditingController? pajak = TextEditingController();
-  TextEditingController? premiAsuransi = TextEditingController();
-  TextEditingController? lainnyaP = TextEditingController();
+  TextEditingController belanja = TextEditingController();
+  TextEditingController transportasi = TextEditingController();
+  TextEditingController sedekah = TextEditingController();
+  TextEditingController pendidikan = TextEditingController();
+  TextEditingController pajak = TextEditingController();
+  TextEditingController premiAsuransi = TextEditingController();
+  TextEditingController lainnyaP = TextEditingController();
 
   //fincheck page 5, data hutang dan aset per bulan
-  TextEditingController? aset = TextEditingController();
-  TextEditingController? hutang = TextEditingController();
+  TextEditingController aset = TextEditingController();
+  TextEditingController hutang = TextEditingController();
 
   RxBool isLoading = false.obs;
   RxBool isVisible = false.obs;
@@ -69,9 +70,38 @@ class FincheckController extends GetxController {
   int totalPengeluaran = 0;
   int totalInvestasi = 0;
   double gaugePoint = 0.0;
+  int countG = 0;
+  int countB = 0;
+  var simpulan = "";
 
   void toggleDescriptionVisibility() {
     isVisible.toggle();
+  }
+
+  void successMsg(String msg) {
+    Get.snackbar(
+      forwardAnimationCurve: Curves.easeOutBack,
+      reverseAnimationCurve: Curves.easeInOutBack,
+      backgroundColor: buttonColor1,
+      colorText: backgroundColor1,
+      duration: const Duration(seconds: 3),
+      snackPosition: SnackPosition.BOTTOM,
+      "Berhasil",
+      msg,
+    );
+  }
+
+  void errMsg(String msg) {
+    Get.snackbar(
+      forwardAnimationCurve: Curves.easeOutBack,
+      reverseAnimationCurve: Curves.easeInOutBack,
+      backgroundColor: errColor,
+      colorText: backgroundColor1,
+      duration: const Duration(seconds: 3),
+      snackPosition: SnackPosition.BOTTOM,
+      "Terjadi Kesalahan",
+      msg,
+    );
   }
 
   void result() async {
@@ -79,7 +109,8 @@ class FincheckController extends GetxController {
     penghasilanBulanan();
     totInvestasi();
     await deleteData();
-    await countStatusData();
+    await countGoodData();
+    await countBadData();
 
     await Future.wait([
       cashflow(),
@@ -92,39 +123,51 @@ class FincheckController extends GetxController {
       sedekahOk(),
     ]);
 
-    final int count = await countStatusData();
-    gaugePoint = count.toDouble() / 8 * 100;
+    countG = await countGoodData();
+    countB = await countBadData();
+    gaugePoint = countG.toDouble() / 8 * 100;
+
+    if (gaugePoint <= 33) {
+      simpulan =
+          "Kesehatan keuanganmu buruk, terdapat $countB hal yang perlu kamu perbaiki dan $countG hal yang perlu kamu pertahankan!";
+    } else if (gaugePoint <= 66) {
+      simpulan =
+          "Kesehatan keuanganmu cukup baik, terdapat $countB hal yang perlu kamu perbaiki dan $countG hal yang perlu kamu pertahankan!";
+    } else {
+      simpulan =
+          "Kesehatan keuanganmu sangat baik, terdapat $countB hal yang perlu kamu perbaiki dan $countG hal yang perlu kamu pertahankan!";
+    }
 
     Get.to(() => FincheckResultView());
   }
 
   void penghasilanBulanan() async {
-    totalPenghasilan = int.parse(pendapatanAktif!.text.replaceAll('.', '')) +
-        int.parse(pendapatanPasif!.text.replaceAll('.', '')) +
-        int.parse(bisnisUsaha!.text.replaceAll('.', '')) +
-        int.parse(hasilInvestasi!.text.replaceAll('.', '')) +
-        int.parse(lainnya!.text.replaceAll('.', ''));
+    totalPenghasilan = int.parse(pendapatanAktif.text.replaceAll('.', '')) +
+        int.parse(pendapatanPasif.text.replaceAll('.', '')) +
+        int.parse(bisnisUsaha.text.replaceAll('.', '')) +
+        int.parse(hasilInvestasi.text.replaceAll('.', '')) +
+        int.parse(lainnya.text.replaceAll('.', ''));
   }
 
   void pengeluaranBulanan() async {
-    totalPengeluaran = int.parse(belanja!.text.replaceAll('.', '')) +
-        int.parse(transportasi!.text.replaceAll('.', '')) +
-        int.parse(sedekah!.text.replaceAll('.', '')) +
-        int.parse(pendidikan!.text.replaceAll('.', '')) +
-        int.parse(pajak!.text.replaceAll('.', '')) +
-        int.parse(premiAsuransi!.text.replaceAll('.', '')) +
-        int.parse(lainnyaP!.text.replaceAll('.', ''));
+    totalPengeluaran = int.parse(belanja.text.replaceAll('.', '')) +
+        int.parse(transportasi.text.replaceAll('.', '')) +
+        int.parse(sedekah.text.replaceAll('.', '')) +
+        int.parse(pendidikan.text.replaceAll('.', '')) +
+        int.parse(pajak.text.replaceAll('.', '')) +
+        int.parse(premiAsuransi.text.replaceAll('.', '')) +
+        int.parse(lainnyaP.text.replaceAll('.', ''));
   }
 
   void totInvestasi() async {
-    totalInvestasi = int.parse(reksadana!.text.replaceAll('.', '')) +
-        int.parse(saham!.text.replaceAll('.', '')) +
-        int.parse(obligasi!.text.replaceAll('.', '')) +
-        int.parse(unitLink!.text.replaceAll('.', '')) +
-        int.parse(deposito!.text.replaceAll('.', '')) +
-        int.parse(crowdFunding!.text.replaceAll('.', '')) +
-        int.parse(ebaRitel!.text.replaceAll('.', '')) +
-        int.parse(logamMulia!.text.replaceAll('.', ''));
+    totalInvestasi = int.parse(reksadana.text.replaceAll('.', '')) +
+        int.parse(saham.text.replaceAll('.', '')) +
+        int.parse(obligasi.text.replaceAll('.', '')) +
+        int.parse(unitLink.text.replaceAll('.', '')) +
+        int.parse(deposito.text.replaceAll('.', '')) +
+        int.parse(crowdFunding.text.replaceAll('.', '')) +
+        int.parse(ebaRitel.text.replaceAll('.', '')) +
+        int.parse(logamMulia.text.replaceAll('.', ''));
   }
 
   Future<void> cashflow() async {
@@ -169,7 +212,7 @@ class FincheckController extends GetxController {
   }
 
   Future<void> tabungan() async {
-    nominal = int.parse(nabungInvestasi!.text.replaceAll(".", ""));
+    nominal = int.parse(nabungInvestasi.text.replaceAll(".", ""));
     idealNum = (totalPenghasilan * 0.2).round();
 
     title = "Tabungan";
@@ -205,7 +248,7 @@ class FincheckController extends GetxController {
   }
 
   Future<void> pendapatPasif() async {
-    nominal = int.parse(pendapatanPasif!.text.replaceAll(".", ""));
+    nominal = int.parse(pendapatanPasif.text.replaceAll(".", ""));
     idealNum = (totalPenghasilan * 0.5).round();
 
     title = "Pendapatan Pasif";
@@ -242,7 +285,7 @@ class FincheckController extends GetxController {
 
   Future<void> danaDarurat() async {
     nominal =
-        totalInvestasi + int.parse(totalTabungan!.text.replaceAll(".", ""));
+        totalInvestasi + int.parse(totalTabungan.text.replaceAll(".", ""));
 
     idealNum = totalPengeluaran * 6;
 
@@ -281,7 +324,7 @@ class FincheckController extends GetxController {
   Future<void> investasi() async {
     nominal = totalInvestasi;
 
-    idealNum = (int.parse(aset!.text.replaceAll(".", "")) * 0.5).round();
+    idealNum = (int.parse(aset.text.replaceAll(".", "")) * 0.5).round();
 
     title = "Investasi";
 
@@ -316,12 +359,12 @@ class FincheckController extends GetxController {
   }
 
   Future<void> kekayaanBersih() async {
-    int utang = int.parse(hutang!.text.replaceAll(".", ""));
-    int set = int.parse(aset!.text.replaceAll(".", ""));
-    nominal = int.parse(aset!.text.replaceAll(".", "")) -
-        int.parse(hutang!.text.replaceAll(".", ""));
+    int utang = int.parse(hutang.text.replaceAll(".", ""));
+    int set = int.parse(aset.text.replaceAll(".", ""));
+    nominal = int.parse(aset.text.replaceAll(".", "")) -
+        int.parse(hutang.text.replaceAll(".", ""));
 
-    idealNum = (int.parse(aset!.text.replaceAll(".", "")) * 0.5).round();
+    idealNum = (int.parse(aset.text.replaceAll(".", "")) * 0.5).round();
 
     title = "Kekayaan Bersih";
 
@@ -356,11 +399,11 @@ class FincheckController extends GetxController {
 
   Future<void> asetLikuid() async {
     idealNum =
-        ((int.parse(totalTabungan!.text.replaceAll(".", "")) + totalInvestasi) *
+        ((int.parse(totalTabungan.text.replaceAll(".", "")) + totalInvestasi) *
                 0.15)
             .round();
 
-    nominal = int.parse(totalTabungan!.text.replaceAll(".", ""));
+    nominal = int.parse(totalTabungan.text.replaceAll(".", ""));
 
     if (idealNum >= nominal) {
       resultStatus = "Good";
@@ -395,7 +438,7 @@ class FincheckController extends GetxController {
   Future<void> sedekahOk() async {
     idealNum = (totalPenghasilan * 0.025).round();
 
-    nominal = int.parse(sedekah!.text.replaceAll(".", ""));
+    nominal = int.parse(sedekah.text.replaceAll(".", ""));
 
     if (nominal >= idealNum) {
       resultStatus = "Good";
@@ -465,68 +508,223 @@ class FincheckController extends GetxController {
         .snapshots();
   }
 
-  Future<int> countStatusData() async {
+  Stream<List<Data>> getDataStream() async* {
+    String uid = auth.currentUser!.uid;
+    Stream<QuerySnapshot<Map<String, dynamic>>> snapshotStream = firestore
+        .collection("users")
+        .doc(uid)
+        .collection("fincheck")
+        .snapshots();
+
+    await for (QuerySnapshot<Map<String, dynamic>> snapshot in snapshotStream) {
+      List<Data> dataList = [];
+      for (QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
+          in snapshot.docs) {
+        Map<String, dynamic> data = docSnapshot.data();
+        dataList.add(Data.fromMap(data));
+      }
+
+      yield dataList;
+    }
+  }
+
+  Future<int> countGoodData() async {
     String uid = auth.currentUser!.uid;
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
         .collection("fincheck")
-        .where('resultStatus',
-            isEqualTo: 'Good') // Ganti dengan nama field kategori
+        .where('resultStatus', isEqualTo: 'Good')
         .get();
 
-    return snapshot.size; // Jumlah dokumen dengan kategori "a"
+    return snapshot.size;
+  }
+
+  Future<int> countBadData() async {
+    String uid = auth.currentUser!.uid;
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("fincheck")
+        .where('resultStatus', isEqualTo: 'Bad')
+        .get();
+
+    return snapshot.size;
   }
 
   Future<void> getPdf(Uint8List capturedImage, String name) async {
+    showDialog(
+        barrierDismissible: false,
+        context: Get.context!,
+        builder: (_) {
+          return Dialog(
+            // The background color
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // The loading indicator
+                  const CircularProgressIndicator(),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  // Some text
+                  Text('File sedang dibuat...',
+                      style:
+                          Theme.of(Get.context!).textTheme.bodySmall!.copyWith(
+                                color: grey900,
+                              ))
+                ],
+              ),
+            ),
+          );
+        });
+
+    final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
     PdfDocument document = PdfDocument();
 
     final page = document.pages.add();
 
-    final Size pageSize = page.getClientSize();
+    document.pageSettings.size = PdfPageSize.a4;
 
-    final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
-
-    //Draw the image
-    page.graphics
-        .drawImage(PdfBitmap(capturedImage), const Rect.fromLTWH(20, 0, 0, 0));
+    const pageSize = PdfPageSize.a4;
 
     page.graphics.drawImage(PdfBitmap(await readImageData('NUHA.png')),
-        const Rect.fromLTWH(20, 690, 200, 50));
+        const Rect.fromLTWH(0, 0, 200, 50));
 
-    drawFooter(page, pageSize);
+    PdfTextElement textElement = PdfTextElement(
+        text: "Hasil Cek Kesehatan Keuangan",
+        font: PdfStandardFont(PdfFontFamily.helvetica, 18,
+            style: PdfFontStyle.bold));
 
-    //Save the document
+    PdfLayoutResult layoutResult = textElement.draw(
+        page: page,
+        bounds: Rect.fromLTWH(0, 60, pageSize.width, pageSize.height))!;
+
+    page.graphics.drawImage(PdfBitmap(capturedImage),
+        Rect.fromLTWH(50, 80, pageSize.width - 180, pageSize.height - 470));
+
+    textElement.text = simpulan;
+    textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
+        style: PdfFontStyle.regular);
+    layoutResult = textElement.draw(
+        page: page,
+        bounds: Rect.fromLTWH(60, layoutResult.bounds.bottom + 210,
+            pageSize.width - 180, pageSize.height))!;
+
+    textElement.text = "Beberapa hal perlu diperbaiki:";
+    textElement.font =
+        PdfStandardFont(PdfFontFamily.helvetica, 14, style: PdfFontStyle.bold);
+    layoutResult = textElement.draw(
+        page: page,
+        bounds: Rect.fromLTWH(0, layoutResult.bounds.bottom + 10,
+            pageSize.width - 200, pageSize.height))!;
+
+    List<Data> dataList = await getDataStream().first;
+
+    for (int i = 0; i < dataList.length; i++) {
+      Data data = dataList[i];
+      if (data.resultStatus == "Bad") {
+        textElement.text = data.title!;
+        textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
+            style: PdfFontStyle.bold);
+        textElement.brush = PdfSolidBrush(PdfColor(255, 203, 36));
+        layoutResult = textElement.draw(
+            page: page,
+            bounds: Rect.fromLTWH(0, layoutResult.bounds.bottom + 5,
+                pageSize.width - 350, pageSize.height))!;
+
+        //description
+        textElement.text =
+            "${data.toDo!} ${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(data.nominal!)}";
+        textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
+            style: PdfFontStyle.regular);
+        textElement.brush = PdfSolidBrush(PdfColor(31, 31, 31));
+        layoutResult = textElement.draw(
+            page: page,
+            bounds: Rect.fromLTWH(0, layoutResult.bounds.bottom + 2,
+                pageSize.width - 350, pageSize.height))!;
+      }
+    }
+
+    textElement.text = "Beberapa hal perlu dipertahankan:";
+    textElement.font =
+        PdfStandardFont(PdfFontFamily.helvetica, 14, style: PdfFontStyle.bold);
+    layoutResult = textElement.draw(
+        page: page,
+        bounds:
+            Rect.fromLTWH(280, 335, pageSize.width - 350, pageSize.height))!;
+
+    for (int i = 0; i < dataList.length; i++) {
+      Data data = dataList[i];
+      if (data.resultStatus == "Good") {
+        //title
+        textElement.text = data.title!;
+        textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
+            style: PdfFontStyle.bold);
+        textElement.brush = PdfSolidBrush(PdfColor(83, 153, 139));
+        layoutResult = textElement.draw(
+            page: page,
+            bounds: Rect.fromLTWH(280, layoutResult.bounds.bottom + 5,
+                pageSize.width - 350, pageSize.height))!;
+
+        //description
+        textElement.text = data.description!;
+        textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
+            style: PdfFontStyle.regular);
+        textElement.brush = PdfSolidBrush(PdfColor(31, 31, 31));
+        layoutResult = textElement.draw(
+            page: page,
+            bounds: Rect.fromLTWH(280, layoutResult.bounds.bottom + 2,
+                pageSize.width - 350, pageSize.height))!;
+      }
+    }
+
     List<int> bytes = await document.save();
 
+    await Future.delayed(const Duration(seconds: 5));
+
+    Get.back();
+
     saveAndLaunchFile(bytes, '${name}_$time.pdf');
+
     document.dispose();
-  }
-
-  void drawFooter(PdfPage page, Size pageSize) async {
-    final time = DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now());
-
-    final PdfPen linePen =
-        PdfPen(PdfColor(27, 30, 35), dashStyle: PdfDashStyle.custom);
-    linePen.dashPattern = <double>[3, 3];
-    //Draw line
-    page.graphics.drawLine(linePen, Offset(0, pageSize.height - 100),
-        Offset(pageSize.width, pageSize.height - 100));
-
-    String footerContent =
-        // ignore: leading_newlines_in_multiline_strings
-        '''Dihitung, dibuat, dan disusun
-        oleh Nuha\r\n\r\n $time''';
-
-    //Added 30 as a margin for the layout
-    page.graphics.drawString(
-        footerContent, PdfStandardFont(PdfFontFamily.helvetica, 9),
-        format: PdfStringFormat(alignment: PdfTextAlignment.right),
-        bounds: Rect.fromLTWH(pageSize.width - 30, pageSize.height - 70, 0, 0));
   }
 
   Future<Uint8List> readImageData(String name) async {
     final data = await rootBundle.load('assets/images/$name');
     return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  }
+}
+
+class Data {
+  String? title;
+  String? description;
+  String? resultStatus;
+  String? toDo;
+  int? nominal;
+  int? selisih;
+
+  Data({
+    this.title,
+    this.description,
+    this.resultStatus,
+    this.toDo,
+    this.nominal,
+    this.selisih,
+  });
+
+  factory Data.fromMap(Map data) {
+    return Data(
+      title: data['title'],
+      description: data['description'],
+      resultStatus: data['resultStatus'],
+      toDo: data['toDo'],
+      nominal: data['nominal'],
+      selisih: data['selisih'],
+    );
   }
 }

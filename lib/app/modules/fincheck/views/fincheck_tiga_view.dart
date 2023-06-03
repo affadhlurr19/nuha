@@ -66,43 +66,43 @@ class FincheckTigaView extends GetView<FincheckController> {
           ),
           FieldCurrency(
             labelText: "Reksadana",
-            contr: controller.reksadana!,
+            contr: controller.reksadana,
             infoText: "Investasi reksadana pasar uang.",
           ),
           FieldCurrency(
             labelText: "Saham",
-            contr: controller.saham!,
+            contr: controller.saham,
             infoText: "Investasi kepemilikan modal pada perusahaan.",
           ),
           FieldCurrency(
             labelText: "Obligasi/P2P Landing",
-            contr: controller.obligasi!,
+            contr: controller.obligasi,
             infoText: "Investasi surat hutang yang bisa diperjualbelikan.",
           ),
           FieldCurrency(
             labelText: "Unit Link",
-            contr: controller.unitLink!,
+            contr: controller.unitLink,
             infoText: "Investasi gabungan dari produk layanan asuransi.",
           ),
           FieldCurrency(
             labelText: "Deposito",
-            contr: controller.deposito!,
+            contr: controller.deposito,
             infoText:
                 "Simpanan di bank dengan jumlah suka bunga dan dalam jangka waktu tertentu.",
           ),
           FieldCurrency(
             labelText: "Crowd Funding",
-            contr: controller.crowdFunding!,
+            contr: controller.crowdFunding,
             infoText: "Investasi dalam suatu proyek.",
           ),
           FieldCurrency(
             labelText: "EBA Ritel",
-            contr: controller.ebaRitel!,
+            contr: controller.ebaRitel,
             infoText: "Investasi pada sektor ritel.",
           ),
           FieldCurrency(
             labelText: "Logam Mulia",
-            contr: controller.logamMulia!,
+            contr: controller.logamMulia,
             infoText:
                 "Investasi logam mulian, seperti emask, perak, dan platinum.",
           ),
@@ -202,7 +202,20 @@ class FincheckTigaView extends GetView<FincheckController> {
                         .bodyMedium!
                         .copyWith(color: Colors.white),
                   ),
-                  onPressed: () => Get.to(const FincheckEmpatView()),
+                  onPressed: () {
+                    if (controller.reksadana.value.text.isNotEmpty &&
+                        controller.saham.value.text.isNotEmpty &&
+                        controller.obligasi.value.text.isNotEmpty &&
+                        controller.unitLink.value.text.isNotEmpty &&
+                        controller.deposito.value.text.isNotEmpty &&
+                        controller.crowdFunding.value.text.isNotEmpty &&
+                        controller.ebaRitel.value.text.isNotEmpty &&
+                        controller.logamMulia.value.text.isNotEmpty) {
+                      Get.to(() => const FincheckEmpatView());
+                    } else {
+                      controller.errMsg("Mohon isi seluruh kolom yang ada!");
+                    }
+                  },
                 ),
               ),
             ],
