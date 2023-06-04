@@ -388,7 +388,7 @@ class HomeView extends GetView<HomeController> {
                             backgroundColor: backBar,
                             progressColor: con.getProgressColor(
                                 double.parse(con.persenAnggaran.value)),
-                          )),
+                          ))
                     ],
                   ),
                 ),

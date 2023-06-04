@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
 
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
@@ -170,6 +171,11 @@ class AppPages {
       name: _Paths.ZIS,
       page: () => const ZisView(),
       binding: ZisBinding(),
+    ),
+    GetPage(
+      name: _Paths.LAPORAN_KEUANGAN,
+      page: () => LaporankeuanganView(),
+      binding: CashflowBinding(),
     ),
   ];
 }

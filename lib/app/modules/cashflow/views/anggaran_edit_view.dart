@@ -4,16 +4,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_edit_controller.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
-class UpdateAnggaranView extends GetView<CashflowController> {
+class UpdateAnggaranView extends GetView<AnggaranEditController> {
   final String id;
 
-  const UpdateAnggaranView({Key? key, required this.id}) : super(key: key);
+  UpdateAnggaranView({Key? key, required this.id}) : super(key: key);
+  final c = Get.find<AnggaranEditController>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +64,11 @@ class UpdateAnggaranView extends GetView<CashflowController> {
               );
             } else {
               // print(snapshot.data);
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                controller.kategoriC.value = snapshot.data!["kategori"];
-                // c.nomAnggaranC.text = snapshot.data!["nominal"].toString();
-                controller.nomAnggaranC.text = NumberFormat.currency(
-                        locale: 'id', symbol: "", decimalDigits: 0)
-                    .format(snapshot.data!["nominal"]);
-                controller.update();
-              });
+              controller.kategoriC.value = snapshot.data!["kategori"];
+              // c.nomAnggaranC.text = snapshot.data!["nominal"].toString();
+              controller.nomAnggaranC.text = NumberFormat.currency(
+                      locale: 'id', symbol: "", decimalDigits: 0)
+                  .format(snapshot.data!["nominal"]);
 
               return SingleChildScrollView(
                   child: Container(
@@ -252,7 +250,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
 }
 
 showDeleteAnggaranDialog(BuildContext context, docId) {
-  final controller = Get.find<CashflowController>();
+  final controller = Get.find<AnggaranEditController>();
   // set up the buttons
   Widget batalButton = ElevatedButton(
     style: ElevatedButton.styleFrom(

@@ -5,12 +5,14 @@ import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/gridicons.dart';
-import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:sizer/sizer.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_create_controller.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
-class FormAnggaranView extends GetView<CashflowController> {
-  const FormAnggaranView({Key? key}) : super(key: key);
+class FormAnggaranView extends GetView<AnggaranCreateController> {
+  FormAnggaranView({Key? key}) : super(key: key);
+
+  final c = Get.find<AnggaranCreateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -359,7 +361,8 @@ class CategoryAnggaranWidget extends StatelessWidget {
   CategoryAnggaranWidget({Key? key, required this.image, required this.text})
       : super(key: key);
 
-  final CashflowController controller = Get.put(CashflowController());
+  final AnggaranCreateController controller =
+      Get.put(AnggaranCreateController());
 
   @override
   Widget build(BuildContext context) {
@@ -367,7 +370,7 @@ class CategoryAnggaranWidget extends StatelessWidget {
       width: 25.27778.w,
       child: GestureDetector(
         onTap: () {
-          Get.find<CashflowController>().checkAnggaranKategori(text);
+          Get.find<AnggaranCreateController>().checkAnggaranKategori(text);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

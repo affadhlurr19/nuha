@@ -2,24 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/uil.dart';
-import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_detail_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_create_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_edit_view.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
 
-class AnggaranDetailView extends GetView<CashflowController> {
+class AnggaranDetailView extends GetView<AnggaranDetailController> {
   final String id;
 
-  const AnggaranDetailView({Key? key, required this.id}) : super(key: key);
+  AnggaranDetailView({Key? key, required this.id}) : super(key: key);
+
+  final c = Get.find<AnggaranDetailController>();
+  final TransaksiCreateController co = Get.put(TransaksiCreateController());
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('id_ID');
     return Scaffold(
         backgroundColor: backgroundColor2,
         appBar: AppBar(
@@ -46,7 +52,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
           child: ListView(
             children: [
               FutureBuilder<Map<String, dynamic>?>(
-                  future: controller.getAnggaranById(id.toString()),
+                  future: c.getAnggaranById(id.toString()),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -58,18 +64,10 @@ class AnggaranDetailView extends GetView<CashflowController> {
                         child: Text("Tidak dapat mengambil informasi data"),
                       );
                     } else {
-                      // WidgetsBinding.instance.addPostFrameCallback((_) {
-                      //   controller.kategoriC.value = snapshot.data!["kategori"];
-                      //   controller.nomAnggaranC.text =
-                      //       snapshot.data!["nominal"].toString();
-                      //   controller.update();
-                      // });
-                      controller.kategoriC.value = snapshot.data!["kategori"];
-                      controller.nomAnggaranC.text =
+                      c.kategoriC.value = snapshot.data!["kategori"];
+                      c.nomAnggaranC.text =
                           snapshot.data!["nominal"].toString();
-
-                      // var docAnggaran = snapshot.data;
-                      return GetBuilder<CashflowController>(
+                      return GetBuilder<AnggaranDetailController>(
                         builder: (controller) => Column(
                           children: [
                             SizedBox(
@@ -259,8 +257,8 @@ class AnggaranDetailView extends GetView<CashflowController> {
                             SizedBox(
                               height: 1.5.h,
                             ),
-                            GetBuilder<CashflowController>(
-                                init: CashflowController(),
+                            GetBuilder<AnggaranDetailController>(
+                                init: AnggaranDetailController(),
                                 initState: (_) {},
                                 builder: (_) {
                                   return SizedBox(
@@ -343,7 +341,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                     .pushNewScreen(
                                                                         context,
                                                                         screen:
-                                                                            const FormTransaksiView()),
+                                                                            FormTransaksiView()),
                                                           ),
                                                         ),
                                                       ],
@@ -444,7 +442,8 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                         ],
                                                                       ),
                                                                       Text(
-                                                                        DateFormat('dd MMMM yyyy')
+                                                                        DateFormat('dd MMMM yyyy',
+                                                                                'id')
                                                                             .format(transaksi['tanggalTransaksi'].toDate()),
                                                                         style: Theme.of(context)
                                                                             .textTheme
@@ -502,9 +501,40 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                   height: 1.125.h,
                                                 ),
                                                 controller.querySearch.isEmpty
-                                                    ? const Center(
-                                                        child: Text(
-                                                            "data gak ada"),
+                                                    ? Container(
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    10.w,
+                                                                vertical: 10.h),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Image(
+                                                              image: const AssetImage(
+                                                                  'assets/images/Empty.png'),
+                                                              height: 15.h,
+                                                            ),
+                                                            SizedBox(
+                                                              height: 2.h,
+                                                            ),
+                                                            Text(
+                                                              "Data yang dicari tidak ditemukan. Silahkan coba kata kunci lain!",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .copyWith(
+                                                                      color:
+                                                                          grey500),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                          ],
+                                                        ),
                                                       )
                                                     : SizedBox(
                                                         height: 60.75.h,

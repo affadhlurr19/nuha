@@ -7,17 +7,26 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/uil.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_detail_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_detail_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_edit_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_create_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_edit_controller.dart';
 
 //ignore: must_be_immutable
 class AnggaranView extends GetView<CashflowController> {
   AnggaranView({Key? key}) : super(key: key);
+
+  final AnggaranCreateController c = Get.put(AnggaranCreateController());
+  final AnggaranDetailController co = Get.put(AnggaranDetailController());
+  final TransaksiController con = Get.put(TransaksiController());
+  final AnggaranEditController cont = Get.put(AnggaranEditController());
 
   List<String> tabBar = [
     "Semua",
@@ -47,7 +56,7 @@ class AnggaranView extends GetView<CashflowController> {
             foregroundColor: backgroundColor2,
             elevation: 0,
             onPressed: () => PersistentNavBarNavigator.pushNewScreen(context,
-                screen: const FormAnggaranView()),
+                screen: FormAnggaranView()),
             child: Icon(
               Icons.add,
               size: 23.sp,
@@ -88,15 +97,6 @@ class AnggaranView extends GetView<CashflowController> {
                         color: backgroundColor1,
                       ),
                 ),
-                actions: [
-                  IconButton(
-                    icon: const Iconify(
-                      MaterialSymbols.download,
-                      color: backgroundColor1,
-                    ),
-                    onPressed: () {},
-                  ),
-                ],
               ),
             ),
             Container(
@@ -255,8 +255,32 @@ class AnggaranView extends GetView<CashflowController> {
                               : Obx(
                                   () => SizedBox(
                                     child: controller.queryAwal.isEmpty
-                                        ? const Center(
-                                            child: Text("data tidak ada"),
+                                        ? Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10.w,
+                                                vertical: 10.h),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Image(
+                                                  image: const AssetImage(
+                                                      'assets/images/Empty.png'),
+                                                  height: 15.h,
+                                                ),
+                                                SizedBox(
+                                                  height: 2.h,
+                                                ),
+                                                Text(
+                                                  "Data yang dicari tidak ditemukan. Silahkan coba kata kunci lain!",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .copyWith(color: grey500),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            ),
                                           )
                                         : MediaQuery.removePadding(
                                             context: context,
@@ -514,7 +538,7 @@ class SemuaWidget extends StatelessWidget {
                             .bodySmall!
                             .copyWith(color: backgroundColor1),
                       ),
-                      onPressed: () => Get.to(const FormAnggaranView()),
+                      onPressed: () => Get.to(() => FormAnggaranView()),
                     ),
                   ),
                 ],

@@ -1,25 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/uil.dart';
-import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_edit_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
-import '../controllers/cashflow_controller.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
 
-class TransaksiView extends GetView<CashflowController> {
+class TransaksiView extends GetView<TransaksiController> {
   TransaksiView({Key? key}) : super(key: key);
 
   @override
-  final CashflowController controller = Get.put(CashflowController());
+  final TransaksiController controller = Get.put(TransaksiController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class TransaksiView extends GetView<CashflowController> {
           elevation: 0,
           onPressed: () => PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: const FormTransaksiView(),
+            screen: FormTransaksiView(),
           ),
           child: Icon(
             Icons.add,
@@ -78,17 +78,6 @@ class TransaksiView extends GetView<CashflowController> {
                         color: backgroundColor1,
                       ),
                 ),
-                actions: [
-                  IconButton(
-                    icon: const Iconify(
-                      MaterialSymbols.download,
-                      color: backgroundColor1,
-                    ),
-                    onPressed: () {
-                      // action when search icon is pressed
-                    },
-                  ),
-                ],
               ),
             ),
             Container(
@@ -246,8 +235,8 @@ class TransaksiView extends GetView<CashflowController> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  GetBuilder<CashflowController>(
-                    init: CashflowController(),
+                  GetBuilder<TransaksiController>(
+                    init: TransaksiController(),
                     initState: (_) {},
                     builder: (_) {
                       return SizedBox(
@@ -256,8 +245,31 @@ class TransaksiView extends GetView<CashflowController> {
                             ? DataViewWidget()
                             : Obx(() => SizedBox(
                                   child: controller.tempSearch.isEmpty
-                                      ? const Center(
-                                          child: Text("data tidak ada"),
+                                      ? Container(
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 10.w, vertical: 14.h),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Image(
+                                                image: const AssetImage(
+                                                    'assets/images/Empty.png'),
+                                                height: 15.h,
+                                              ),
+                                              SizedBox(
+                                                height: 2.h,
+                                              ),
+                                              Text(
+                                                "Data yang dicari tidak ditemukan. Silahkan coba kata kunci lain!",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(color: grey500),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
                                         )
                                       : MediaQuery.removePadding(
                                           context: context,
@@ -402,10 +414,11 @@ class TransaksiView extends GetView<CashflowController> {
 class DataViewWidget extends StatelessWidget {
   DataViewWidget({super.key});
 
-  final CashflowController controller = Get.put(CashflowController());
+  final TransaksiController controller = Get.put(TransaksiController());
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('id_ID');
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
       height: 60.75.h,
@@ -460,7 +473,7 @@ class DataViewWidget extends StatelessWidget {
                       ),
                       onPressed: () => PersistentNavBarNavigator.pushNewScreen(
                         context,
-                        screen: const FormTransaksiView(),
+                        screen: FormTransaksiView(),
                       ),
                     ),
                   ),
@@ -469,16 +482,17 @@ class DataViewWidget extends StatelessWidget {
             );
           } else {
             final data = snapshot.data!.docs.map((e) => e.data()).toList();
+            data.sort((a, b) =>
+                a['tanggalTransaksi'].compareTo(b['tanggalTransaksi']));
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: StickyGroupedListView<dynamic, String>(
                   shrinkWrap: true,
                   elements: data,
-                  // groupBy: (dynamic element) => element['tanggalTransaksi'],
-                  groupBy: (dynamic element) => DateFormat('yy MMMM dd')
+                  groupBy: (dynamic element) => DateFormat('yy MM dd')
                       .format(element['tanggalTransaksi'].toDate()),
                   groupSeparatorBuilder: (dynamic element) => Text(
-                        DateFormat('dd MMMM yyyy')
+                        DateFormat('dd MMMM yyyy', 'id')
                             .format(element['tanggalTransaksi'].toDate()),
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey500, fontWeight: FontWeight.w600),

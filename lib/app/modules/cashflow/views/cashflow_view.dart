@@ -19,11 +19,15 @@ import '../controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
+
 class CashflowView extends GetView<CashflowController> {
   CashflowView({Key? key}) : super(key: key);
 
   @override
   final CashflowController controller = Get.put(CashflowController());
+
+  final TransaksiController co = Get.put(TransaksiController());
 
   @override
   Widget build(BuildContext context) {
@@ -320,7 +324,7 @@ class CashflowView extends GetView<CashflowController> {
                                         .copyWith(color: backgroundColor1),
                                   ),
                                   onPressed: () =>
-                                      Get.to(const FormAnggaranView()),
+                                      Get.to(() => FormAnggaranView()),
                                 ),
                               ),
                             ],

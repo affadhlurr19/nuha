@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,15 +12,17 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/gridicons.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
-import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sizer/sizer.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
 
-class TransaksiEditView extends GetView<CashflowController> {
+class TransaksiEditView extends GetView<TransaksiController> {
   final String id;
 
-  const TransaksiEditView({Key? key, required this.id}) : super(key: key);
+  TransaksiEditView({Key? key, required this.id}) : super(key: key);
+
+  final c = Get.find<TransaksiController>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,7 @@ class TransaksiEditView extends GetView<CashflowController> {
         ),
         body: SingleChildScrollView(
             child: FutureBuilder<Map<String, dynamic>?>(
-          future: controller.getTransaksiById(id.toString()),
+          future: c.getTransaksiById(id.toString()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -70,18 +73,20 @@ class TransaksiEditView extends GetView<CashflowController> {
               );
             } else {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                controller.jenisC.value = snapshot.data!["jenisTransaksi"];
-                controller.namaTransaksiC.text =
-                    snapshot.data!["namaTransaksi"];
-                controller.kategoriC.value = snapshot.data!["kategori"];
-                controller.nominalTransaksiC.text = NumberFormat.currency(
+                c.jenisC.value = snapshot.data!["jenisTransaksi"];
+                c.namaTransaksiC.text = snapshot.data!["namaTransaksi"];
+                c.kategoriC.value = snapshot.data!["kategori"];
+                c.nominalTransaksiC.text = NumberFormat.currency(
                         locale: 'id', symbol: "", decimalDigits: 0)
                     .format(snapshot.data!["nominal"]);
-                controller.deskripsiC.text = snapshot.data?["deskripsi"];
-                controller.update();
+                c.deskripsiC.text = snapshot.data?["deskripsi"];
+                Timestamp timestamp = snapshot.data?["tanggalTransaksi"];
+                DateTime dateTime = timestamp.toDate();
+                c.selectDate.value = dateTime;
+                c.update();
               });
 
-              return GetBuilder<CashflowController>(
+              return GetBuilder<TransaksiController>(
                 builder: (controller) => Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
@@ -141,7 +146,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Obx(() => Text(
-                                          controller.jenisC.value,
+                                          c.jenisC.value,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium!
@@ -180,7 +185,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                           SizedBox(
                             height: 5.5.h,
                             child: TextField(
-                              controller: controller.namaTransaksiC,
+                              controller: c.namaTransaksiC,
                               textAlign: TextAlign.left,
                               style: Theme.of(context)
                                   .textTheme
@@ -239,7 +244,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                           SizedBox(
                             height: 5.5.h,
                             child: TextField(
-                              controller: controller.nominalTransaksiC,
+                              controller: c.nominalTransaksiC,
                               keyboardType: TextInputType.number,
                               inputFormatters: <TextInputFormatter>[
                                 CurrencyTextInputFormatter(
@@ -329,7 +334,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                             child: GestureDetector(
                               onTap: () {
                                 Get.bottomSheet(
-                                  controller.jenisC.value == "Pengeluaran"
+                                  c.jenisC.value == "Pengeluaran"
                                       ? const BottomSheetPengeluaran()
                                       : const BottomSheetPendapatan(),
                                 );
@@ -343,8 +348,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Obx(() => Text(
-                                        controller.kategoriC.toString(),
+                                    Obx(() => Text(c.kategoriC.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium!
@@ -388,7 +392,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                 color: backgroundColor1),
                             child: GestureDetector(
                               onTap: () {
-                                controller.chooseDate();
+                                c.chooseDate();
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -400,8 +404,8 @@ class TransaksiEditView extends GetView<CashflowController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Obx(() => Text(
-                                          DateFormat("dd-MM-yyyy").format(
-                                              controller.selectDate.value),
+                                          DateFormat("dd-MM-yyyy")
+                                              .format(c.selectDate.value),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium!
@@ -441,7 +445,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                           SizedBox(
                             height: 14.875.h,
                             child: TextField(
-                              controller: controller.deskripsiC,
+                              controller: c.deskripsiC,
                               minLines: 5,
                               maxLines: null,
                               textAlign: TextAlign.left,
@@ -499,7 +503,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                           SizedBox(
                             height: 0.75.h,
                           ),
-                          GetBuilder<CashflowController>(
+                          GetBuilder<TransaksiController>(
                             builder: (c) {
                               return c.image != null
                                   ? Stack(
@@ -635,9 +639,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20))),
                               child: Text(
-                                controller.isLoading.isFalse
-                                    ? "Simpan"
-                                    : "Loading...",
+                                c.isLoading.isFalse ? "Simpan" : "Loading...",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -645,9 +647,8 @@ class TransaksiEditView extends GetView<CashflowController> {
                               ),
                               // onPressed: () => print(snapshot.data?["foto"]),
                               onPressed: () {
-                                if (controller.isLoading.isFalse) {
-                                  controller.updateTransaksiById(
-                                      context, id.toString());
+                                if (c.isLoading.isFalse) {
+                                  c.updateTransaksiById(context, id.toString());
                                 }
                               },
                             )),
@@ -663,7 +664,7 @@ class TransaksiEditView extends GetView<CashflowController> {
 }
 
 showDeleteTransaksiById(BuildContext context, docId) {
-  final controller = Get.find<CashflowController>();
+  final c = Get.find<TransaksiController>();
   // set up the buttons
   Widget batalButton = ElevatedButton(
     style: ElevatedButton.styleFrom(
@@ -692,8 +693,8 @@ showDeleteTransaksiById(BuildContext context, docId) {
       ),
       onPressed: () {
         // print(docId);
-        if (controller.isLoading.isFalse) {
-          controller.deleteTransaksiById(context, docId);
+        if (c.isLoading.isFalse) {
+          c.deleteTransaksiById(context, docId);
         }
       });
 

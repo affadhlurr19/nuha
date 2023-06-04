@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart' as s;
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/models/laporankeuangan_model.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 // import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
 // import 'package:intl/intl.dart';
 
@@ -13,15 +14,17 @@ class LaporankeuanganController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
 
-  List<LineChart> lineChartM = <LineChart>[].obs;
-  List<LineChart> lineChartK = <LineChart>[].obs;
-  List<ChartPemasukan> chartPemasukan = <ChartPemasukan>[].obs;
-  List<ChartPengeluaran> chartPengeluaran = <ChartPengeluaran>[].obs;
+  RxList<LineChart> lineChartM = <LineChart>[].obs;
+  RxList<LineChart> lineChartK = <LineChart>[].obs;
+  RxList<ChartPemasukan> chartPemasukan = <ChartPemasukan>[].obs;
+  RxList<ChartPengeluaran> chartPengeluaran = <ChartPengeluaran>[].obs;
 
   var startDate = DateTime(
           DateTime.now().year, DateTime.now().month - 1, DateTime.now().day)
       .obs;
   var endDate = DateTime.now().obs;
+  var totalPendapatan = 0.obs;
+  var totalPengeluaran = 0.obs;
 
   @override
   void onInit() {
@@ -35,6 +38,7 @@ class LaporankeuanganController extends GetxController {
   Future pickDateRange() async {
     DateTimeRange? newDateRange = await showDateRangePicker(
       context: Get.context!,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDateRange:
           DateTimeRange(start: startDate.value, end: endDate.value),
       firstDate: DateTime(2000),
@@ -54,14 +58,15 @@ class LaporankeuanganController extends GetxController {
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                   foregroundColor: grey900,
-                  textStyle: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontWeight: FontWeight.w600)),
+                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      )),
             ),
           ),
           child: SizedBox(
-            height: 400, // Sesuaikan dengan ukuran yang diinginkan
+            height: 40.h,
+            width: 20.w, // Sesuaikan dengan ukuran yang diinginkan
             child: child,
           ),
         );
@@ -79,10 +84,6 @@ class LaporankeuanganController extends GetxController {
     getDataPengeluaran();
     getDataMasukKeluar();
     getDataPemasukan();
-    update();
-    // Get.off(LaporankeuanganView());
-
-    // print(dateRange.end);
   }
 
   Future<void> getDataPemasukan() async {
@@ -116,7 +117,9 @@ class LaporankeuanganController extends GetxController {
             ))
         .toList();
 
-    chartPemasukan = list;
+    list.sort((a, b) => b.nominal!.compareTo(a.nominal!.toInt()));
+
+    chartPemasukan.assignAll(list);
     // print(chartPemasukan);
   }
 
@@ -151,7 +154,10 @@ class LaporankeuanganController extends GetxController {
             ))
         .toList();
 
-    chartPengeluaran = list;
+    list.sort((a, b) => b.nominal!.compareTo(a.nominal!.toInt()));
+
+    chartPengeluaran.clear();
+    chartPengeluaran.addAll(list);
     // print(chartPemasukan);
   }
 
@@ -168,6 +174,13 @@ class LaporankeuanganController extends GetxController {
         .orderBy("tanggalTransaksi")
         .get();
 
+    int totalNominal = snapShotsPemasukan.docs.fold(0, (total, doc) {
+      int nominal = doc.data()["nominal"] as int;
+      return total + nominal;
+    });
+
+    totalPendapatan.value = totalNominal;
+
     List<LineChart> list = snapShotsPemasukan.docs
         .map((e) => LineChart(
               jenisTransaksi: e.data()['jenisTransaksi'],
@@ -177,7 +190,7 @@ class LaporankeuanganController extends GetxController {
               color: const Color(0XFF0096C7),
             ))
         .toList();
-    lineChartM = list;
+    lineChartM.assignAll(list);
 
     var snapShotsPengeluaran = await firestore
         .collection("users")
@@ -190,6 +203,13 @@ class LaporankeuanganController extends GetxController {
         .orderBy("tanggalTransaksi")
         .get();
 
+    int totalNominal2 = snapShotsPengeluaran.docs.fold(0, (total, doc) {
+      int nominal = doc.data()["nominal"] as int;
+      return total + nominal;
+    });
+
+    totalPengeluaran.value = totalNominal2;
+
     List<LineChart> list2 = snapShotsPengeluaran.docs
         .map((e) => LineChart(
             jenisTransaksi: e.data()['jenisTransaksi'],
@@ -198,6 +218,6 @@ class LaporankeuanganController extends GetxController {
             tanggalTransaksi: e.data()['tanggalTransaksi'].toDate(),
             color: const Color(0XFFCC444B)))
         .toList();
-    lineChartK = list2;
+    lineChartK.assignAll(list2);
   }
 }

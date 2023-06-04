@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/laporankeuangan_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
@@ -16,10 +17,12 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class LaporankeuanganView extends GetView<LaporankeuanganController> {
   LaporankeuanganView({Key? key}) : super(key: key);
   final c = Get.find<LaporankeuanganController>();
-  final con = Get.find<CashflowController>();
+  final con = Get.find<TransaksiController>();
+  final TransaksiController co = Get.put(TransaksiController());
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('id_ID');
     return Scaffold(
         body: SingleChildScrollView(
       // physics: const BouncingScrollPhysics(),
@@ -92,7 +95,7 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                       Obx(() => Text(
                             // "WAit",
                             // "${DateFormat('dd MMMM yyyy').format(c.dateRange.start)} - ${DateFormat('dd MMMM yyyy').format(c.dateRange.end)}",
-                            "${DateFormat('dd MMMM yyyy').format(c.startDate.value)} - ${DateFormat('dd MMMM yyyy').format(c.endDate.value)}",
+                            "${DateFormat('dd MMMM yyyy', 'id').format(c.startDate.value)} - ${DateFormat('dd MMMM yyyy', 'id').format(c.endDate.value)}",
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
                                       color: grey900,
@@ -153,7 +156,7 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                       LineSeries<LineChart, DateTime>(
                         name: 'Pendapatan',
                         color: const Color(0XFF0096C7),
-                        dataSource: c.lineChartM,
+                        dataSource: c.lineChartM.value,
                         pointColorMapper: (LineChart data, _) => data.color,
                         xValueMapper: (LineChart dat, _) =>
                             dat.tanggalTransaksi,
@@ -182,7 +185,7 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                 Obx(() => Text(
                       NumberFormat.currency(
                               locale: 'id', symbol: "Rp. ", decimalDigits: 0)
-                          .format(con.totalPengeluaran.value),
+                          .format(c.totalPengeluaran.value),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: const Color(0XFFCC444B),
                           fontWeight: FontWeight.w600),
@@ -211,6 +214,70 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                     ],
                   ),
                 ),
+                Text(
+                  "Rincian Pengeluaran",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: dark,
+                      ),
+                ),
+                SizedBox(
+                  height: 25.h,
+                  child: ListView.builder(
+                    padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      final data = c.chartPengeluaran[index];
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/${data.kategori}.png'),
+                                width: 11.w,
+                              ),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data.kategori!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          color: dark,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                  Text(
+                                    NumberFormat.currency(
+                                            locale: 'id',
+                                            symbol: "Rp.",
+                                            decimalDigits: 0)
+                                        .format(data.nominal),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          color: grey400,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
                 const Divider(),
                 Text(
                   "Pendapatan",
@@ -222,7 +289,7 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                 Obx(() => Text(
                       NumberFormat.currency(
                               locale: 'id', symbol: "Rp. ", decimalDigits: 0)
-                          .format(con.totalPendapatan.value),
+                          .format(c.totalPendapatan.value),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: const Color(0XFF0096C7),
                           fontWeight: FontWeight.w600),
@@ -247,6 +314,70 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Text(
+                  "Rincian Pendapatan",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: dark,
+                      ),
+                ),
+                SizedBox(
+                  height: 25.h,
+                  child: ListView.builder(
+                    padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      final data = c.chartPemasukan[index];
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/${data.kategori}.png'),
+                                width: 11.w,
+                              ),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data.kategori!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          color: dark,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                  Text(
+                                    NumberFormat.currency(
+                                            locale: 'id',
+                                            symbol: "Rp.",
+                                            decimalDigits: 0)
+                                        .format(data.nominal),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          color: grey400,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],

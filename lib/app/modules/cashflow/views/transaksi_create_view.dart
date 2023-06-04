@@ -1,21 +1,22 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/gridicons.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:intl/intl.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_create_controller.dart';
 
-class FormTransaksiView extends GetView<CashflowController> {
-  const FormTransaksiView({Key? key}) : super(key: key);
+class FormTransaksiView extends GetView<TransaksiCreateController> {
+  FormTransaksiView({Key? key}) : super(key: key);
+
+  @override
+  final controller = Get.find<TransaksiCreateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -436,7 +437,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                     SizedBox(
                       height: 0.75.h,
                     ),
-                    GetBuilder<CashflowController>(
+                    GetBuilder<TransaksiCreateController>(
                       builder: (c) {
                         return c.image != null
                             ? Stack(
@@ -558,7 +559,7 @@ class DialogContent extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Get.find<CashflowController>().updateToPengeluaran();
+              Get.find<TransaksiCreateController>().updateToPengeluaran();
             },
             child: Text(
               "Pengeluaran",
@@ -569,7 +570,7 @@ class DialogContent extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Get.find<CashflowController>().updateToPendapatan();
+              Get.find<TransaksiCreateController>().updateToPendapatan();
             },
             child: Text(
               "Pendapatan",
@@ -587,7 +588,8 @@ class DialogContent extends StatelessWidget {
 class DialogCamera extends StatelessWidget {
   DialogCamera({super.key});
 
-  final CashflowController controller = Get.put(CashflowController());
+  final TransaksiCreateController controller =
+      Get.put(TransaksiCreateController());
 
   @override
   Widget build(BuildContext context) {
@@ -843,7 +845,7 @@ class CategoryWidget extends StatelessWidget {
       width: 25.27778.w,
       child: GestureDetector(
         onTap: () {
-          Get.find<CashflowController>().updateKategori(text);
+          Get.find<TransaksiCreateController>().updateKategori(text);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

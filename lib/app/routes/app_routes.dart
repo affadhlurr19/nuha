@@ -57,4 +57,5 @@ abstract class _Paths {
   static const PERENCANAAN_KEUANGAN = '/perencanaan-keuangan';
   static const DAFTAR_LEMBAGA = '/daftar-lembaga';
   static const ZIS = '/zis';
+  static const LAPORAN_KEUANGAN = '/laporankeuangan';
 }
