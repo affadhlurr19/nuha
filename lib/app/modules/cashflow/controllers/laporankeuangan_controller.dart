@@ -32,7 +32,8 @@ class LaporankeuanganController extends GetxController {
 
   RxBool shouldRefreshPage = false.obs;
 
-  ScreenshotController screenshotController = ScreenshotController();
+  ScreenshotController screenshot1Controller = ScreenshotController();
+  ScreenshotController screenshot2Controller = ScreenshotController();
 
   @override
   void onInit() {
@@ -258,7 +259,7 @@ class LaporankeuanganController extends GetxController {
     );
   }
 
-  Future<void> getPdf(Uint8List capturedImage, String name) async {
+  Future<void> getPdf(List<Uint8List> capturedImage, String name) async {
     showDialog(
         barrierDismissible: false,
         context: Get.context!,
@@ -310,78 +311,85 @@ class LaporankeuanganController extends GetxController {
         page: page,
         bounds: Rect.fromLTWH(0, 60, pageSize.width, pageSize.height))!;
 
-    page.graphics.drawImage(PdfBitmap(capturedImage),
-        Rect.fromLTWH(50, 80, pageSize.width - 180, pageSize.height - 470));
-
-    // textElement.text = simpulan;
-    textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
-        style: PdfFontStyle.regular);
-    layoutResult = textElement.draw(
-        page: page,
-        bounds: Rect.fromLTWH(60, layoutResult.bounds.bottom + 210,
-            pageSize.width - 180, pageSize.height))!;
-
-    textElement.text = "Beberapa hal perlu diperbaiki:";
+    textElement.text =
+        "${DateFormat('dd MMMM yyyy', 'id').format(startDate.value)} - ${DateFormat('dd MMMM yyyy', 'id').format(endDate.value)}";
     textElement.font =
-        PdfStandardFont(PdfFontFamily.helvetica, 14, style: PdfFontStyle.bold);
+        PdfStandardFont(PdfFontFamily.helvetica, 16, style: PdfFontStyle.bold);
     layoutResult = textElement.draw(
         page: page,
         bounds: Rect.fromLTWH(0, layoutResult.bounds.bottom + 10,
-            pageSize.width - 200, pageSize.height))!;
+            pageSize.width, pageSize.height))!;
 
-    for (int i = 0; i < chartPemasukan.length; i++) {
-      ChartPemasukan data = chartPemasukan[i];
+    page.graphics.drawImage(PdfBitmap(capturedImage[0]),
+        Rect.fromLTWH(0, 0, pageSize.width - 370, pageSize.height - 400));
 
-      textElement.text = data.kategori!;
-      textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
-          style: PdfFontStyle.bold);
-      textElement.brush = PdfSolidBrush(PdfColor(255, 203, 36));
-      layoutResult = textElement.draw(
-          page: page,
-          bounds: Rect.fromLTWH(0, layoutResult.bounds.bottom + 5,
-              pageSize.width - 350, pageSize.height))!;
+    page.graphics.drawImage(PdfBitmap(capturedImage[1]),
+        Rect.fromLTWH(250, 0, pageSize.width - 370, pageSize.height - 400));
 
-      // //description
-      // textElement.text =
-      //     "${data.toDo!} ${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(data.nominal!)}";
-      // textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
-      //     style: PdfFontStyle.regular);
-      // textElement.brush = PdfSolidBrush(PdfColor(31, 31, 31));
-      // layoutResult = textElement.draw(
-      //     page: page,
-      //     bounds: Rect.fromLTWH(0, layoutResult.bounds.bottom + 2,
-      //         pageSize.width - 350, pageSize.height))!;
-    }
-
-    textElement.text = "Beberapa hal perlu dipertahankan:";
+    textElement.text = "Pengeluaranmu:";
     textElement.font =
         PdfStandardFont(PdfFontFamily.helvetica, 14, style: PdfFontStyle.bold);
+    textElement.brush = PdfSolidBrush(PdfColor(31, 31, 31));
     layoutResult = textElement.draw(
         page: page,
-        bounds:
-            Rect.fromLTWH(280, 335, pageSize.width - 350, pageSize.height))!;
+        bounds: Rect.fromLTWH(0, 335, pageSize.width - 200, pageSize.height))!;
 
     for (int i = 0; i < chartPengeluaran.length; i++) {
       ChartPengeluaran data = chartPengeluaran[i];
 
       textElement.text = data.kategori!;
       textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
-          style: PdfFontStyle.bold);
-      textElement.brush = PdfSolidBrush(PdfColor(83, 153, 139));
+          style: PdfFontStyle.regular);
+      textElement.brush = PdfSolidBrush(PdfColor(31, 31, 31));
+      layoutResult = textElement.draw(
+          page: page,
+          bounds: Rect.fromLTWH(0, layoutResult.bounds.bottom + 5,
+              pageSize.width - 350, pageSize.height))!;
+
+      // //description
+      textElement.text =
+          NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0)
+              .format(data.nominal!);
+      textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
+          style: PdfFontStyle.regular);
+      textElement.brush = PdfSolidBrush(PdfColor(228, 30, 30));
+      layoutResult = textElement.draw(
+          page: page,
+          bounds: Rect.fromLTWH(0, layoutResult.bounds.bottom + 2,
+              pageSize.width - 350, pageSize.height))!;
+    }
+
+    textElement.text = "Pendapatanmu:";
+    textElement.font =
+        PdfStandardFont(PdfFontFamily.helvetica, 14, style: PdfFontStyle.bold);
+    textElement.brush = PdfSolidBrush(PdfColor(31, 31, 31));
+    layoutResult = textElement.draw(
+        page: page,
+        bounds:
+            Rect.fromLTWH(280, 335, pageSize.width - 350, pageSize.height))!;
+
+    for (int i = 0; i < chartPemasukan.length; i++) {
+      ChartPemasukan data = chartPemasukan[i];
+
+      textElement.text = data.kategori!;
+      textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
+          style: PdfFontStyle.regular);
+      textElement.brush = PdfSolidBrush(PdfColor(31, 31, 31));
       layoutResult = textElement.draw(
           page: page,
           bounds: Rect.fromLTWH(280, layoutResult.bounds.bottom + 5,
               pageSize.width - 350, pageSize.height))!;
 
-      //description
-      // textElement.text = data.nominal!;
-      // textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
-      //     style: PdfFontStyle.regular);
-      // textElement.brush = PdfSolidBrush(PdfColor(31, 31, 31));
-      // layoutResult = textElement.draw(
-      //     page: page,
-      //     bounds: Rect.fromLTWH(280, layoutResult.bounds.bottom + 2,
-      //         pageSize.width - 350, pageSize.height))!;
+      textElement.text =
+          NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0)
+              .format(data.nominal!);
+      textElement.font = PdfStandardFont(PdfFontFamily.helvetica, 14,
+          style: PdfFontStyle.regular);
+      textElement.brush = PdfSolidBrush(PdfColor(0, 150, 199));
+      layoutResult = textElement.draw(
+          page: page,
+          bounds: Rect.fromLTWH(280, layoutResult.bounds.bottom + 2,
+              pageSize.width - 350, pageSize.height))!;
     }
 
     List<int> bytes = await document.save();

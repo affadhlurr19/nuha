@@ -13,7 +13,6 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 import 'package:nuha/app/modules/cashflow/models/laporankeuangan_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:screenshot/screenshot.dart';
 
 class LaporankeuanganView extends GetView<LaporankeuanganController> {
   LaporankeuanganView({Key? key}) : super(key: key);
@@ -29,18 +28,15 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
       // physics: const BouncingScrollPhysics(),
       child: Stack(
         children: <Widget>[
-          Screenshot(
-            controller: c.screenshotController,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [buttonColor1, buttonColor2],
-                ),
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [buttonColor1, buttonColor2],
               ),
-              height: 16.625.h,
             ),
+            height: 16.625.h,
           ),
           Positioned(
             top: 0.0,
@@ -69,14 +65,81 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                     MaterialSymbols.download,
                     color: backgroundColor1,
                   ),
-                  onPressed: () {
-                    c.screenshotController
-                        .capture(delay: const Duration(milliseconds: 10))
-                        .then((capturedImage) async {
-                      c.getPdf(capturedImage!, "Laporan Keuangan");
-                    }).catchError((onError) {
-                      c.errMsg("Terjadi kesalahan, coba lagi nanti!");
-                    });
+                  onPressed: () async {
+                    List<Uint8List> screenshots = [];
+
+                    try {
+                      Uint8List? capturedImage1 =
+                          await c.screenshot1Controller.captureFromWidget(
+                        MediaQuery(
+                          data: const MediaQueryData(),
+                          child: SfCircularChart(
+                            margin: const EdgeInsets.all(0),
+                            series: <CircularSeries>[
+                              DoughnutSeries<ChartPengeluaran, String>(
+                                dataSource: c.chartPengeluaran,
+                                animationDuration: 0,
+                                animationDelay: 0,
+                                xValueMapper: (ChartPengeluaran data, _) =>
+                                    data.kategori,
+                                yValueMapper: (ChartPengeluaran data, _) =>
+                                    data.nominal,
+                                dataLabelMapper: (ChartPengeluaran data, _) =>
+                                    data.kategori,
+                                radius: '70%',
+                                dataLabelSettings: const DataLabelSettings(
+                                  isVisible: true,
+                                  // Positioning the data label
+                                  labelPosition: ChartDataLabelPosition.outside,
+                                  // labelIntersectAction: LabelIntersectAction.shift,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      screenshots.add(capturedImage1);
+                    } catch (error) {
+                      print(error);
+                    }
+                    await Future.delayed(const Duration(seconds: 1));
+
+                    try {
+                      Uint8List? capturedImage2 =
+                          await c.screenshot2Controller.captureFromWidget(
+                        MediaQuery(
+                          data: const MediaQueryData(),
+                          child: SfCircularChart(
+                            margin: const EdgeInsets.all(0),
+                            series: <CircularSeries>[
+                              DoughnutSeries<ChartPemasukan, String>(
+                                animationDuration: 0,
+                                animationDelay: 0,
+                                dataSource: c.chartPemasukan,
+                                xValueMapper: (ChartPemasukan data, _) =>
+                                    data.kategori,
+                                yValueMapper: (ChartPemasukan data, _) =>
+                                    data.nominal,
+                                dataLabelMapper: (ChartPemasukan data, _) =>
+                                    data.kategori,
+                                radius: '70%',
+                                dataLabelSettings: const DataLabelSettings(
+                                  isVisible: true,
+                                  // Positioning the data label
+                                  labelPosition: ChartDataLabelPosition.outside,
+                                  // labelIntersectAction: LabelIntersectAction.shift,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      screenshots.add(capturedImage2);
+                    } catch (error) {
+                      print(error);
+                    }
+
+                    c.getPdf(screenshots, "Laporan Keuangan");
                   },
                 ),
               ],
