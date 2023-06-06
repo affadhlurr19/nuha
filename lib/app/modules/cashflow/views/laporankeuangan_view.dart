@@ -13,6 +13,7 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/ic.dart';
 import 'package:nuha/app/modules/cashflow/models/laporankeuangan_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:screenshot/screenshot.dart';
 
 class LaporankeuanganView extends GetView<LaporankeuanganController> {
   LaporankeuanganView({Key? key}) : super(key: key);
@@ -28,15 +29,18 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
       // physics: const BouncingScrollPhysics(),
       child: Stack(
         children: <Widget>[
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [buttonColor1, buttonColor2],
+          Screenshot(
+            controller: c.screenshotController,
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [buttonColor1, buttonColor2],
+                ),
               ),
+              height: 16.625.h,
             ),
-            height: 16.625.h,
           ),
           Positioned(
             top: 0.0,
@@ -65,7 +69,15 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                     MaterialSymbols.download,
                     color: backgroundColor1,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    c.screenshotController
+                        .capture(delay: const Duration(milliseconds: 10))
+                        .then((capturedImage) async {
+                      c.getPdf(capturedImage!, "Laporan Keuangan");
+                    }).catchError((onError) {
+                      c.errMsg("Terjadi kesalahan, coba lagi nanti!");
+                    });
+                  },
                 ),
               ],
             ),
@@ -123,265 +135,283 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
           Container(
             margin: EdgeInsets.fromLTRB(7.77778.w, 22.h, 7.77778.w, 0.h),
             height: 75.h,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.only(top: 0),
-              shrinkWrap: true,
-              children: [
-                Text(
-                  "Pendapatan vs Pengeluaran",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: dark,
+            child: c.shouldRefreshPage.isFalse
+                ? ListView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.only(top: 0),
+                    shrinkWrap: true,
+                    children: [
+                      Text(
+                        "Pendapatan vs Pengeluaran",
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: dark,
+                            ),
                       ),
-                ),
-                SizedBox(
-                  height: 1.5.h,
-                ),
-                SizedBox(
-                  height: 32.5.h,
-                  child: SfCartesianChart(
-                    primaryXAxis: DateTimeAxis(),
-                    primaryYAxis: NumericAxis(
-                      rangePadding: ChartRangePadding.auto,
-                      // numberFormat: NumberFormat.currency(
-                      //     locale: 'id', symbol: "Rp", decimalDigits: 0),
-                      numberFormat: NumberFormat.compact(locale: 'id'),
-                    ),
-                    legend: Legend(
-                      isVisible: true,
-                      position: LegendPosition.bottom,
-                    ),
-                    series: <ChartSeries>[
-                      LineSeries<LineChart, DateTime>(
-                        name: 'Pendapatan',
-                        color: const Color(0XFF0096C7),
-                        dataSource: c.lineChartM.value,
-                        pointColorMapper: (LineChart data, _) => data.color,
-                        xValueMapper: (LineChart dat, _) =>
-                            dat.tanggalTransaksi,
-                        yValueMapper: (LineChart dat, _) => dat.nominal,
+                      SizedBox(
+                        height: 1.5.h,
                       ),
-                      LineSeries<LineChart, DateTime>(
-                        name: 'Pengeluaran',
-                        color: const Color(0XFFCC444B),
-                        dataSource: c.lineChartK,
-                        pointColorMapper: (LineChart data, _) => data.color,
-                        xValueMapper: (LineChart dat, _) =>
-                            dat.tanggalTransaksi,
-                        yValueMapper: (LineChart dat, _) => dat.nominal,
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(),
-                Text(
-                  "Pengeluaran",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: dark,
-                      ),
-                ),
-                Obx(() => Text(
-                      NumberFormat.currency(
-                              locale: 'id', symbol: "Rp. ", decimalDigits: 0)
-                          .format(c.totalPengeluaran.value),
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: const Color(0XFFCC444B),
-                          fontWeight: FontWeight.w600),
-                    )),
-                SizedBox(
-                  height: 32.5.h,
-                  child: SfCircularChart(
-                    margin: const EdgeInsets.all(0),
-                    series: <CircularSeries>[
-                      DoughnutSeries<ChartPengeluaran, String>(
-                        dataSource: c.chartPengeluaran,
-                        xValueMapper: (ChartPengeluaran data, _) =>
-                            data.kategori,
-                        yValueMapper: (ChartPengeluaran data, _) =>
-                            data.nominal,
-                        dataLabelMapper: (ChartPengeluaran data, _) =>
-                            data.kategori,
-                        radius: '70%',
-                        dataLabelSettings: const DataLabelSettings(
-                          isVisible: true,
-                          // Positioning the data label
-                          labelPosition: ChartDataLabelPosition.outside,
-                          // labelIntersectAction: LabelIntersectAction.shift,
+                      SizedBox(
+                        height: 32.5.h,
+                        child: SfCartesianChart(
+                          primaryXAxis: DateTimeAxis(),
+                          primaryYAxis: NumericAxis(
+                            rangePadding: ChartRangePadding.auto,
+                            // numberFormat: NumberFormat.currency(
+                            //     locale: 'id', symbol: "Rp", decimalDigits: 0),
+                            numberFormat: NumberFormat.compact(locale: 'id'),
+                          ),
+                          legend: Legend(
+                            isVisible: true,
+                            position: LegendPosition.bottom,
+                          ),
+                          series: <ChartSeries>[
+                            LineSeries<LineChart, DateTime>(
+                              name: 'Pendapatan',
+                              color: const Color(0XFF0096C7),
+                              dataSource: c.lineChartM,
+                              pointColorMapper: (LineChart data, _) =>
+                                  data.color,
+                              xValueMapper: (LineChart dat, _) =>
+                                  dat.tanggalTransaksi,
+                              yValueMapper: (LineChart dat, _) => dat.nominal,
+                            ),
+                            LineSeries<LineChart, DateTime>(
+                              name: 'Pengeluaran',
+                              color: const Color(0XFFCC444B),
+                              dataSource: c.lineChartK,
+                              pointColorMapper: (LineChart data, _) =>
+                                  data.color,
+                              xValueMapper: (LineChart dat, _) =>
+                                  dat.tanggalTransaksi,
+                              yValueMapper: (LineChart dat, _) => dat.nominal,
+                            )
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Text(
-                  "Rincian Pengeluaran",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: dark,
+                      const Divider(),
+                      Text(
+                        "Pengeluaran",
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: dark,
+                            ),
                       ),
-                ),
-                SizedBox(
-                  height: 25.h,
-                  child: ListView.builder(
-                    padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      final data = c.chartPengeluaran[index];
-                      return Column(
-                        children: [
-                          Row(
-                            children: [
-                              Image(
-                                image: AssetImage(
-                                    'assets/images/${data.kategori}.png'),
-                                width: 11.w,
+                      Obx(() => Text(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: "Rp. ",
+                                    decimalDigits: 0)
+                                .format(c.totalPengeluaran.value),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    color: const Color(0XFFCC444B),
+                                    fontWeight: FontWeight.w600),
+                          )),
+                      SizedBox(
+                        height: 32.5.h,
+                        child: SfCircularChart(
+                          margin: const EdgeInsets.all(0),
+                          series: <CircularSeries>[
+                            DoughnutSeries<ChartPengeluaran, String>(
+                              dataSource: c.chartPengeluaran,
+                              xValueMapper: (ChartPengeluaran data, _) =>
+                                  data.kategori,
+                              yValueMapper: (ChartPengeluaran data, _) =>
+                                  data.nominal,
+                              dataLabelMapper: (ChartPengeluaran data, _) =>
+                                  data.kategori,
+                              radius: '70%',
+                              dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                                // Positioning the data label
+                                labelPosition: ChartDataLabelPosition.outside,
+                                // labelIntersectAction: LabelIntersectAction.shift,
                               ),
-                              SizedBox(
-                                width: 3.w,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data.kategori!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          color: dark,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                  Text(
-                                    NumberFormat.currency(
-                                            locale: 'id',
-                                            symbol: "Rp.",
-                                            decimalDigits: 0)
-                                        .format(data.nominal),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          color: grey400,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-                const Divider(),
-                Text(
-                  "Pendapatan",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: dark,
-                      ),
-                ),
-                Obx(() => Text(
-                      NumberFormat.currency(
-                              locale: 'id', symbol: "Rp. ", decimalDigits: 0)
-                          .format(c.totalPendapatan.value),
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: const Color(0XFF0096C7),
-                          fontWeight: FontWeight.w600),
-                    )),
-                SizedBox(
-                  height: 32.5.h,
-                  child: SfCircularChart(
-                    margin: const EdgeInsets.all(0),
-                    series: <CircularSeries>[
-                      DoughnutSeries<ChartPemasukan, String>(
-                        dataSource: c.chartPemasukan,
-                        xValueMapper: (ChartPemasukan data, _) => data.kategori,
-                        yValueMapper: (ChartPemasukan data, _) => data.nominal,
-                        dataLabelMapper: (ChartPemasukan data, _) =>
-                            data.kategori,
-                        radius: '70%',
-                        dataLabelSettings: const DataLabelSettings(
-                          isVisible: true,
-                          // Positioning the data label
-                          labelPosition: ChartDataLabelPosition.outside,
-                          // labelIntersectAction: LabelIntersectAction.shift,
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Text(
-                  "Rincian Pendapatan",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: dark,
+                      Text(
+                        "Rincian Pengeluaran Terbesar",
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: dark,
+                            ),
                       ),
-                ),
-                SizedBox(
-                  height: 25.h,
-                  child: ListView.builder(
-                    padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      final data = c.chartPemasukan[index];
-                      return Column(
-                        children: [
-                          Row(
-                            children: [
-                              Image(
-                                image: AssetImage(
-                                    'assets/images/${data.kategori}.png'),
-                                width: 11.w,
-                              ),
-                              SizedBox(
-                                width: 3.w,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data.kategori!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          color: dark,
-                                          fontWeight: FontWeight.w600,
+                      Obx(() => SizedBox(
+                            height: 25.h,
+                            child: ListView.builder(
+                              padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                              itemCount: c.chartPengeluaran.length.clamp(0, 3),
+                              itemBuilder: (context, index) {
+                                final data = c.chartPengeluaran[index];
+                                return Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              'assets/images/${data.kategori}.png'),
+                                          width: 11.w,
                                         ),
-                                  ),
-                                  Text(
-                                    NumberFormat.currency(
-                                            locale: 'id',
-                                            symbol: "Rp.",
-                                            decimalDigits: 0)
-                                        .format(data.nominal),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          color: grey400,
+                                        SizedBox(
+                                          width: 3.w,
                                         ),
-                                  ),
-                                ],
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.kategori!,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: dark,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                            Text(
+                                              NumberFormat.currency(
+                                                      locale: 'id',
+                                                      symbol: "Rp.",
+                                                      decimalDigits: 0)
+                                                  .format(data.nominal),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: grey400,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          )),
+                      const Divider(),
+                      Text(
+                        "Pendapatan",
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: dark,
+                            ),
+                      ),
+                      Obx(() => Text(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: "Rp. ",
+                                    decimalDigits: 0)
+                                .format(c.totalPendapatan.value),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    color: const Color(0XFF0096C7),
+                                    fontWeight: FontWeight.w600),
+                          )),
+                      SizedBox(
+                        height: 32.5.h,
+                        child: SfCircularChart(
+                          margin: const EdgeInsets.all(0),
+                          series: <CircularSeries>[
+                            DoughnutSeries<ChartPemasukan, String>(
+                              dataSource: c.chartPemasukan,
+                              xValueMapper: (ChartPemasukan data, _) =>
+                                  data.kategori,
+                              yValueMapper: (ChartPemasukan data, _) =>
+                                  data.nominal,
+                              dataLabelMapper: (ChartPemasukan data, _) =>
+                                  data.kategori,
+                              radius: '70%',
+                              dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                                // Positioning the data label
+                                labelPosition: ChartDataLabelPosition.outside,
+                                // labelIntersectAction: LabelIntersectAction.shift,
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        "Rincian Pendapatan Terbesar",
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: dark,
+                            ),
+                      ),
+                      Obx(() => SizedBox(
+                            height: 25.h,
+                            child: ListView.builder(
+                              padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                              itemCount: c.chartPemasukan.length.clamp(0, 3),
+                              itemBuilder: (context, index) {
+                                final data = c.chartPemasukan[index];
+                                return Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              'assets/images/${data.kategori}.png'),
+                                          width: 11.w,
+                                        ),
+                                        SizedBox(
+                                          width: 3.w,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.kategori!,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: dark,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                            Text(
+                                              NumberFormat.currency(
+                                                      locale: 'id',
+                                                      symbol: "Rp.",
+                                                      decimalDigits: 0)
+                                                  .format(data.nominal),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: grey400,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          )),
+                    ],
+                  )
+                : SizedBox(),
           )
         ],
       ),

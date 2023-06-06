@@ -181,4 +181,15 @@ class TransaksiCreateController extends GetxController {
       c.errMsg("Tidak dapat menambahkan data");
     }
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamData() async* {
+    String uid = auth.currentUser!.uid;
+    yield* firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .where("kategori", isGreaterThanOrEqualTo: "Dana")
+        .where("kategori", isLessThan: 'Danaz')
+        .snapshots();
+  }
 }

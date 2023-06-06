@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -268,7 +269,7 @@ class FormTransaksiView extends GetView<TransaksiCreateController> {
                         onTap: () {
                           Get.bottomSheet(
                             controller.jenisC.value == "Pengeluaran"
-                                ? const BottomSheetPengeluaran()
+                                ? BottomSheetPengeluaran()
                                 : const BottomSheetPendapatan(),
                           );
                         },
@@ -701,7 +702,9 @@ class BottomSheetPendapatan extends StatelessWidget {
 }
 
 class BottomSheetPengeluaran extends StatelessWidget {
-  const BottomSheetPengeluaran({super.key});
+  BottomSheetPengeluaran({super.key});
+
+  final c = Get.find<TransaksiCreateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -818,11 +821,41 @@ class BottomSheetPengeluaran extends StatelessWidget {
             Wrap(
               spacing: 4.166667.w,
               runSpacing: 2.5.h,
-              children: const [
-                CategoryWidget(
+              children: [
+                const CategoryWidget(
                   image: AssetImage('assets/images/Lainnya.png'),
                   text: "Lainnya",
                 ),
+                StreamBuilder<QuerySnapshot>(
+                    stream: c.streamData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasData) {
+                        List<DocumentSnapshot> documents = snapshot.data!.docs;
+                        List<Map<String, dynamic>> data = documents
+                            .map((doc) => doc.data() as Map<String, dynamic>)
+                            .toList();
+
+                        return Wrap(
+                          spacing: 4.166667.w,
+                          runSpacing: 2.5.h,
+                          children: List.generate(
+                            data.length,
+                            (index) => CategoryWidget(
+                              image: AssetImage(
+                                  'assets/images/${data[index]["kategori"]}.png'),
+                              text: data[index]['kategori'],
+                            ),
+                          ),
+                        );
+                      }
+
+                      return const SizedBox();
+                    })
               ],
             )
           ],

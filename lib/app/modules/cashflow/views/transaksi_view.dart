@@ -8,6 +8,7 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/uil.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_create_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_edit_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -20,6 +21,7 @@ class TransaksiView extends GetView<TransaksiController> {
 
   @override
   final TransaksiController controller = Get.put(TransaksiController());
+  final TransaksiCreateController c = Get.put(TransaksiCreateController());
 
   @override
   Widget build(BuildContext context) {

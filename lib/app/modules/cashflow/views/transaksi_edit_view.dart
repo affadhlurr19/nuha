@@ -335,7 +335,7 @@ class TransaksiEditView extends GetView<TransaksiController> {
                               onTap: () {
                                 Get.bottomSheet(
                                   c.jenisC.value == "Pengeluaran"
-                                      ? const BottomSheetPengeluaran()
+                                      ? BottomSheetPengeluaran()
                                       : const BottomSheetPendapatan(),
                                 );
                               },
