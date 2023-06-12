@@ -22,6 +22,7 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
 
+  final HomeController co = Get.put(HomeController());
   final ProfileController c = Get.find<ProfileController>();
   final CashflowController con = Get.find<CashflowController>();
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -122,19 +123,19 @@ class HomeView extends GetView<HomeController> {
               );
             },
           ),
-          actions: [
-            Container(
-              margin: EdgeInsets.only(right: 3.333.w),
-              child: IconButton(
-                icon: Iconify(
-                  Ph.bell,
-                  size: 20.sp,
-                  color: grey400,
-                ),
-                onPressed: () => Get.to(const ZisView()),
-              ),
-            ),
-          ],
+          // actions: [
+          //   Container(
+          //     margin: EdgeInsets.only(right: 3.333.w),
+          //     child: IconButton(
+          //       icon: Iconify(
+          //         Ph.bell,
+          //         size: 20.sp,
+          //         color: grey400,
+          //       ),
+          //       onPressed: () => Get.to(const ZisView()),
+          //     ),
+          //   ),
+          // ],
         ),
         backgroundColor: backgroundColor2,
         body: SingleChildScrollView(
@@ -278,7 +279,7 @@ class HomeView extends GetView<HomeController> {
                 height: 2.h,
               ),
               Text(
-                "Bingung mau mulai dari mana?",
+                "Bagi Berkah, Berbagi Kasih",
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -287,16 +288,38 @@ class HomeView extends GetView<HomeController> {
               SizedBox(
                 height: 1.h,
               ),
-              InkWell(
-                onTap: () {
-                  Get.toNamed('/perencanaan-keuangan');
-                },
-                child: Image(
-                  image: const AssetImage(
-                      'assets/images/banner_mulaisekarang.png'),
-                  width: 83.44444.w,
+              Stack(children: [
+                InkWell(
+                  onTap: () {
+                    Get.to(const ZisView());
+                  },
+                  child: Image(
+                    image: const AssetImage('assets/images/banner_zis.png'),
+                    width: 83.44444.w,
+                  ),
                 ),
-              ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(27.w, 4.5.h, 0, 0),
+                  // child: Text(
+                  //   "Rekomendasi nominal zakat: ${controller.rekomendasiZakat}",
+                  //   style: Theme.of(context)
+                  //       .textTheme
+                  //       .bodySmall!
+                  //       .copyWith(color: Colors.white),
+                  // ),
+                  child: Obx(() => Text(
+                        NumberFormat.currency(
+                                locale: 'id',
+                                symbol: "Rekomendasi nominal zakat Rp.",
+                                decimalDigits: 0)
+                            .format(controller.rekomendasiZakat.value),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelSmall!
+                            .copyWith(color: Colors.white, letterSpacing: 0.2),
+                      )),
+                ),
+              ]),
               SizedBox(
                 height: 2.h,
               ),

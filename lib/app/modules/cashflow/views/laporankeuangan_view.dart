@@ -136,7 +136,7 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                       );
                       screenshots.add(capturedImage2);
                     } catch (error) {
-                      print(error);
+                      // print(error);
                     }
 
                     c.getPdf(screenshots, "Laporan Keuangan");
