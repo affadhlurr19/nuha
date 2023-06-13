@@ -299,7 +299,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(27.w, 4.5.h, 0, 0),
+                  margin: EdgeInsets.fromLTRB(27.w, 4.5.h, 1.h, 0),
                   // child: Text(
                   //   "Rekomendasi nominal zakat: ${controller.rekomendasiZakat}",
                   //   style: Theme.of(context)
