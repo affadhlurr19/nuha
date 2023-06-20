@@ -1,23 +1,32 @@
 import 'package:get/get.dart';
-import 'package:nuha/app/modules/literasi/views/bookmarked_artikel_view.dart';
-import 'package:nuha/app/modules/literasi/views/cari_artikel_view.dart';
-import 'package:nuha/app/modules/literasi/views/detail_artikel_view.dart';
-import 'package:nuha/app/modules/literasi/views/list_artikel_view.dart';
-import 'package:nuha/app/modules/literasi/views/list_video_view.dart';
+import 'package:nuha/app/modules/konsultasi/views/create_jadwal_konsultasi_view.dart';
+import 'package:nuha/app/modules/konsultasi/views/history_consultation_view.dart';
+import 'package:nuha/app/modules/literasi/views/cari_video_view.dart';
+import 'package:nuha/app/modules/profile/views/pengaturan_notifikasi_view.dart';
 
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
-import '../modules/edit_note/bindings/edit_note_binding.dart';
-import '../modules/edit_note/views/edit_note_view.dart';
 import '../modules/cashflow/bindings/cashflow_binding.dart';
 import '../modules/cashflow/views/cashflow_view.dart';
+import '../modules/edit_note/bindings/edit_note_binding.dart';
+import '../modules/edit_note/views/edit_note_view.dart';
 import '../modules/fincheck/bindings/fincheck_binding.dart';
 import '../modules/fincheck/views/fincheck_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/konsultasi/bindings/konsultasi_binding.dart';
+import '../modules/konsultasi/views/list_konsultasi_view.dart';
 import '../modules/landing/bindings/landing_binding.dart';
 import '../modules/landing/views/landing_view.dart';
 import '../modules/literasi/bindings/literasi_binding.dart';
+import '../modules/literasi/views/bookmarked_artikel_view.dart';
+import '../modules/literasi/views/bookmarked_video_view.dart';
+import '../modules/literasi/views/bookmarked_view.dart';
+import '../modules/literasi/views/cari_artikel_view.dart';
+import '../modules/literasi/views/detail_artikel_view.dart';
+import '../modules/literasi/views/detail_video_view.dart';
+import '../modules/literasi/views/list_artikel_view.dart';
+import '../modules/literasi/views/list_video_view.dart';
 import '../modules/literasi/views/literasi_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
@@ -25,14 +34,14 @@ import '../modules/memulai/bindings/memulai_binding.dart';
 import '../modules/memulai/views/memulai_view.dart';
 import '../modules/navbar/bindings/navbar_binding.dart';
 import '../modules/navbar/views/navbar_view.dart';
+import '../modules/perencanaan_keuangan/bindings/perencanaan_keuangan_binding.dart';
+import '../modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/edit_profile_view.dart';
 import '../modules/profile/views/ganti_foto_profil_view.dart';
 import '../modules/profile/views/ganti_kata_sandi_view.dart';
 import '../modules/profile/views/pengaturan_keamanan_view.dart';
 import '../modules/profile/views/profile_view.dart';
-import '../modules/perencanaan_keuangan/bindings/perencanaan_keuangan_binding.dart';
-import '../modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
@@ -129,6 +138,11 @@ class AppPages {
       binding: LiterasiBinding(),
     ),
     GetPage(
+      name: _Paths.BOOKMARKED,
+      page: () => const BookmarkedView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
       name: _Paths.LITERASI_LIST_ARTIKEL,
       page: () => ListArtikelView(),
       binding: LiterasiBinding(),
@@ -162,6 +176,41 @@ class AppPages {
       name: _Paths.BOOKMARKED_ARTIKEL,
       page: () => BookmarkedArtikelView(),
       binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOKMARKED_VIDEO,
+      page: () => BookmarkedVideoView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_VIDEO,
+      page: () => DetailVideoView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.LIST_KONSULTASI,
+      page: () => ListKonsultasiView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_JADWAL_KONSULTASI,
+      page: () => CreateJadwalKonsultasiView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIWAYAT_KONSULTASI,
+      page: () => HistoryConsultationView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.CARI_VIDEO,
+      page: () => CariVideoView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.PENGATURAN_NOTIFIKASI,
+      page: () => PengaturanNotifikasiView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

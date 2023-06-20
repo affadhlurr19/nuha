@@ -34,7 +34,7 @@ class LiterasiView extends GetView<LiterasiController> {
           Padding(
             padding: EdgeInsets.only(right: 4.6.w),
             child: IconButton(
-              onPressed: () => Get.toNamed(Routes.BOOKMARKED_ARTIKEL),
+              onPressed: () => Get.toNamed(Routes.BOOKMARKED),
               icon: Iconify(
                 MaterialSymbols.bookmark_outline,
                 size: 18.sp,

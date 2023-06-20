@@ -1,81 +1,86 @@
 import 'dart:convert';
 
-DetailArtikel detailArtikelFromJson(String str) => DetailArtikel.fromJson(json.decode(str));
+DetailArtikel detailArtikelFromJson(String str) =>
+    DetailArtikel.fromJson(json.decode(str));
 
 String detailArtikelToJson(DetailArtikel data) => json.encode(data.toJson());
 
 class DetailArtikel {
-    DetailArtikel({
-        required this.code,
-        required this.message,
-        required this.founded,
-        required this.article,
-    });
+  int code;
+  String message;
+  int founded;
+  Data data;
 
-    int code;
-    String message;
-    int founded;
-    Article article;
+  DetailArtikel({
+    required this.code,
+    required this.message,
+    required this.founded,
+    required this.data,
+  });
 
-    factory DetailArtikel.fromJson(Map<String, dynamic> json) => DetailArtikel(
+  factory DetailArtikel.fromJson(Map<String, dynamic> json) => DetailArtikel(
         code: json["code"],
         message: json["message"],
         founded: json["founded"],
-        article: Article.fromJson(json["article"]),
-    );
+        data: Data.fromJson(json["data"]),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "code": code,
         "message": message,
         "founded": founded,
-        "article": article.toJson(),
-    };
+        "data": data.toJson(),
+      };
 }
 
-class Article {
-    Article({
-        required this.id,
-        required this.title,
-        required this.category,
-        required this.content,
-        required this.imageUrl,
-        required this.author,
-        required this.readTime,
-        required this.createdAt,
-        required this.updatedAt,
-    });
+class Data {
+  int id;
+  int adminId;
+  String title;
+  String category;
+  String content;
+  String imageUrl;
+  String writer;
+  int readTime;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-    int id;
-    String title;
-    String category;
-    String content;
-    String imageUrl;
-    String author;
-    int readTime;
-    DateTime createdAt;
-    DateTime updatedAt;
+  Data({
+    required this.id,
+    required this.adminId,
+    required this.title,
+    required this.category,
+    required this.content,
+    required this.imageUrl,
+    required this.writer,
+    required this.readTime,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
-    factory Article.fromJson(Map<String, dynamic> json) => Article(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
+        adminId: json["adminId"],
         title: json["title"],
         category: json["category"],
         content: json["content"],
         imageUrl: json["image_url"],
-        author: json["author"],
+        writer: json["writer"],
         readTime: json["read_time"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
+        "adminId": adminId,
         "title": title,
         "category": category,
         "content": content,
         "image_url": imageUrl,
-        "author": author,
+        "writer": writer,
         "read_time": readTime,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-    };
+      };
 }

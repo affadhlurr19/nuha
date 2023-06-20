@@ -28,6 +28,14 @@ abstract class Routes {
   static const CASHFLOW = _Paths.CASHFLOW;
   static const PERENCANAAN_KEUANGAN = _Paths.PERENCANAAN_KEUANGAN;
   static const BOOKMARKED_ARTIKEL = _Paths.BOOKMARKED_ARTIKEL;
+  static const DETAIL_VIDEO = _Paths.DETAIL_VIDEO;
+  static const BOOKMARKED = _Paths.BOOKMARKED;
+  static const BOOKMARKED_VIDEO = _Paths.BOOKMARKED_VIDEO;
+  static const LIST_KONSULTASI = _Paths.LIST_KONSULTASI;
+  static const CREATE_JADWAL_KONSULTASI = _Paths.CREATE_JADWAL_KONSULTASI;
+  static const RIWAYAT_KONSULTASI = _Paths.RIWAYAT_KONSULTASI;
+  static const CARI_VIDEO = _Paths.CARI_VIDEO;
+  static const PENGATURAN_NOTIFIKASI = _Paths.PENGATURAN_NOTIFIKASI;
 }
 
 abstract class _Paths {
@@ -55,4 +63,12 @@ abstract class _Paths {
   static const CASHFLOW = '/cashflow';
   static const PERENCANAAN_KEUANGAN = '/perencanaan-keuangan';
   static const BOOKMARKED_ARTIKEL = '/bookmarked-artikel';
+  static const BOOKMARKED_VIDEO = '/bookmarked-video';
+  static const DETAIL_VIDEO = '/detail-video';
+  static const BOOKMARKED = '/bookmarked';
+  static const LIST_KONSULTASI = '/list-konsultasi';
+  static const CREATE_JADWAL_KONSULTASI = '/create-jadwal-konsultasi';
+  static const RIWAYAT_KONSULTASI = '/riwayat-konsultasi';
+  static const CARI_VIDEO = '/cari-video';
+  static const PENGATURAN_NOTIFIKASI = '/pengaturan-notifikasi';
 }

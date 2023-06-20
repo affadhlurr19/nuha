@@ -19,7 +19,7 @@ class PengaturanKeamananView extends GetView {
         centerTitle: true,
         title: Text(
           'Pengaturan Keamanan',
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(
                 fontWeight: FontWeight.w600,
                 fontSize: 13.sp,
                 color: titleColor,

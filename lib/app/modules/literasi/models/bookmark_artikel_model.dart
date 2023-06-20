@@ -11,15 +11,6 @@ class Like {
     required this.userId,
   });
 
-  // factory Like.fromFirestore(DocumentSnapshot doc) {
-  //   Map data = doc.data() as Map<String, dynamic>;
-  //   return Like(
-  //     id: doc.id,
-  //     postId: data['postId'],
-  //     userId: data['userId'],
-  //   );
-  // }
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,

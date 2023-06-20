@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nuha/app/routes/app_pages.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
@@ -54,7 +55,8 @@ class CariArtikelView extends GetView<CariArtikelController> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 2.5.h),
             Padding(
@@ -65,7 +67,7 @@ class CariArtikelView extends GetView<CariArtikelController> {
                     case ResultStatus.loading:
                       return Center(
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 30.h),
+                          padding: EdgeInsets.symmetric(vertical: 35.h),
                           child: const CircularProgressIndicator(
                             color: buttonColor1,
                           ),
@@ -77,9 +79,12 @@ class CariArtikelView extends GetView<CariArtikelController> {
                         physics: const ScrollPhysics(),
                         itemCount: c.resultCariArtikel.founded.toInt(),
                         itemBuilder: (context, index) {
-                          var artikel = c.resultCariArtikel.article[index];
+                          var artikel = c.resultCariArtikel.data[index];
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.toNamed(Routes.DETAIL_ARTIKEL,
+                                  arguments: artikel.id.toString());
+                            },
                             child: Card(
                               color: backgroundColor2,
                               elevation: 0,
@@ -148,25 +153,65 @@ class CariArtikelView extends GetView<CariArtikelController> {
                         },
                       );
                     case ResultStatus.noData:
-                      return SizedBox(
-                        height: 85.h,
-                        width: widthDevice,
-                        child: Center(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.not_interested,
-                              size: 80,
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 30.h),
+                        child: Column(
+                          children: [
+                            Image.asset('assets/images/404_error.png'),
+                            SizedBox(height: 2.5.h),
+                            Text(
+                              'Maaf, artikel yang kamu cari tidak ditemukan. Silahkan coba lagi dengan menggunakan kata kunci yang berbeda.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(
+                                      fontSize: 9.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: grey500),
+                              textAlign: TextAlign.center,
                             ),
-                            Text('Data Kosong'),
                           ],
-                        )),
+                        ),
                       );
                     case ResultStatus.error:
-                      return Text(c.resultState.value.toString());
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 17.083.w, vertical: 35.h),
+                        child: Text(
+                          'Mulai temukan artikel yang kamu cari! Cukup masukkan kata kunci atau topik yang kamu inginkan.',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                                  fontSize: 9.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: grey500),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
                     default:
-                      return const SizedBox();
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 30.h),
+                        child: Column(
+                          children: [
+                            Image.asset('assets/images/found_error.png'),
+                            SizedBox(height: 2.5.h),
+                            Text(
+                              'Maaf, sepertinya terjadi kesalahan. Silahkan untuk mencoba kembali atau hubungi kami  jika masalah masih berlanjut.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(
+                                      fontSize: 9.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: grey500),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      );
                   }
                 },
               ),

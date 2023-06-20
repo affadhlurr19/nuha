@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Komentar {
   final String idKomentar;
   final String idArtikel;
   final String idUser;
+  final String name;
+  final String imageURL;
   final String descKomentar;
   final DateTime createdAt;
 
@@ -11,6 +11,8 @@ class Komentar {
     required this.idKomentar,
     required this.idArtikel,
     required this.idUser,
+    required this.name,
+    required this.imageURL,
     required this.descKomentar,
     required this.createdAt,
   });

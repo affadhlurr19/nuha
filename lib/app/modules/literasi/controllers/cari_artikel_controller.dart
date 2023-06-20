@@ -35,7 +35,7 @@ class CariArtikelController extends GetxController {
   Future<dynamic> searchArtikelResult(keyword) async {
     try {
       final artikel = await listArtikelProvider.cariArtikel(keyword);
-      if (artikel.article.isEmpty) {
+      if (artikel.data.isEmpty) {
         resultState.value = ResultState.noData();
       } else {
         resultState.value = ResultState.hasData(artikel);

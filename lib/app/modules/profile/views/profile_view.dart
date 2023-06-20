@@ -298,7 +298,7 @@ class ProfileView extends GetView<ProfileController> {
                                       ),
                                 ),
                                 onTap: () =>
-                                    Get.toNamed(Routes.PENGATURAN_KEAMANAN),
+                                    Get.toNamed(Routes.PENGATURAN_NOTIFIKASI),
                               ),
                             ),
                           ],

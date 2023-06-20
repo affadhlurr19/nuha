@@ -27,7 +27,7 @@ class DetailArtikelController extends GetxController {
   Future<dynamic> fetchDetailArtikel(idArtikel) async {
     try {
       final artikel = await listArtikelProvider.getDetailArtikel(idArtikel);
-      if (artikel.article.toJson().isEmpty) {
+      if (artikel.data.toJson().isEmpty) {
         resultState.value = ResultState.noData();
         return _message = 'Data Kosong';
       } else {

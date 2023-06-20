@@ -6,10 +6,13 @@ import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/cashflow_view.dart';
 import 'package:nuha/app/modules/home/controllers/home_controller.dart';
 import 'package:nuha/app/modules/home/views/home_view.dart';
+import 'package:nuha/app/modules/konsultasi/controllers/konsultasi_controller.dart';
+import 'package:nuha/app/modules/konsultasi/views/list_konsultasi_view.dart';
 import 'package:nuha/app/modules/literasi/controllers/list_artikel_controller.dart';
 import 'package:nuha/app/modules/literasi/controllers/literasi_controller.dart';
-import 'package:nuha/app/modules/literasi/controllers/video_controller.dart';
+import 'package:nuha/app/modules/literasi/controllers/list_video_controller.dart';
 import 'package:nuha/app/modules/literasi/providers/list_artikel_provider.dart';
+import 'package:nuha/app/modules/literasi/providers/list_video_provider.dart';
 import 'package:nuha/app/modules/literasi/views/literasi_view.dart';
 import 'package:nuha/app/modules/navbar/controllers/navbar_controller.dart';
 
@@ -26,13 +29,14 @@ class NavbarView extends StatefulWidget {
 class _NavbarView extends State<NavbarView> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
+  final navbarC = Get.find<NavbarController>();
 
   List<Widget> _buildScreen() {
     return [
       HomeView(),
       CashflowView(),
       const LiterasiView(),
-      HomeView(),
+      ListKonsultasiView(),
       HomeView(),
     ];
   }
@@ -109,18 +113,6 @@ class _NavbarView extends State<NavbarView> {
       onItemSelected: (index) {
         Get.find<NavbarController>().updateIndex(index);
 
-        // if(Get.isRegistered<HomeController>()) {
-        //   Get.delete<HomeController>();
-        // } 
-        // if(Get.isRegistered<CashflowController>()) {
-        //   Get.delete<CashflowController>();
-        // } 
-        // if(Get.isRegistered<LiterasiController>() && Get.isRegistered<ListArtikelController>() && Get.isRegistered<VideoController>()) {
-        //   Get.delete<LiterasiController>();
-        //   Get.delete<ListArtikelController>();
-        //   Get.delete<VideoController>();
-        // } 
-
         switch (index) {
           case 0:
             Get.lazyPut<HomeController>(() => HomeController());
@@ -132,7 +124,11 @@ class _NavbarView extends State<NavbarView> {
             Get.lazyPut<LiterasiController>(() => LiterasiController());
             Get.lazyPut<ListArtikelController>(() => ListArtikelController(
                 listArtikelProvider: ListArtikelProvider()));
-            Get.lazyPut<VideoController>(() => VideoController());
+            Get.lazyPut<ListVideoController>(() =>
+                ListVideoController(listVideoProvider: ListVideoProvider()));
+            break;
+          case 3:
+            Get.lazyPut<KonsultasiController>(() => KonsultasiController());
             break;
           default:
             break;

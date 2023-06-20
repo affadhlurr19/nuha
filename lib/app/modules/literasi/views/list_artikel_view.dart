@@ -132,9 +132,9 @@ class ListArtikelView extends GetView<ListArtikelController> {
                     return ListView.separated(
                       shrinkWrap: true,
                       physics: const ScrollPhysics(),
-                      itemCount: c.result.article.length,
+                      itemCount: c.result.data.length,
                       itemBuilder: (context, index) {
-                        var artikel = c.result.article[index];
+                        var artikel = c.result.data[index];
                         return GestureDetector(
                           onTap: () => Get.toNamed(Routes.DETAIL_ARTIKEL,
                               arguments: artikel.id.toString()),
