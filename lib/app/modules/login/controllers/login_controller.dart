@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
+import 'package:nuha/app/utility/notification_service_controller.dart';
 
 class LoginController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -71,7 +72,17 @@ class LoginController extends GetxController {
             });
           }
 
-          Get.offAllNamed(Routes.NAVBAR);
+          final DocumentSnapshot<Map<String, dynamic>> userDoc = await firestore
+              .collection('users')
+              .doc(auth.currentUser!.uid)
+              .get();
+          var pinCheck = userDoc.data()!['pin'];
+
+          if (pinCheck == '') {
+            Get.toNamed(Routes.CREATE_PIN);
+          } else {
+            Get.toNamed(Routes.AUTH_PIN, arguments: Routes.NAVBAR);
+          }
         } else {
           print('User belum terverifikasi');
           Get.defaultDialog(
@@ -139,10 +150,19 @@ class LoginController extends GetxController {
           "phone": "",
           "tgl_lahir": "",
           "pekerjaan": "",
+          "pin": "",
           "created_at": DateTime.now().toIso8601String(),
         });
       }
-      Get.offAllNamed(Routes.NAVBAR);
+      final DocumentSnapshot<Map<String, dynamic>> userDoc =
+          await firestore.collection('users').doc(auth.currentUser!.uid).get();
+      var pinCheck = userDoc.data()!['pin'];
+
+      if (pinCheck == '') {
+        Get.toNamed(Routes.CREATE_PIN);
+      } else {
+        Get.toNamed(Routes.AUTH_PIN, arguments: Routes.NAVBAR);
+      }
     } on FirebaseAuthException catch (e) {
       isLoadingG.value = false;
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {

@@ -29,7 +29,7 @@ class TransaksiEditView extends GetView<CashflowController> {
           centerTitle: true,
           title: Text(
             "Edit Transaksi",
-            style: Theme.of(context).textTheme.button!.copyWith(
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   color: dark,
                 ),
           ),
@@ -105,7 +105,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Jenis Transaksi*",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -120,7 +120,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                               title: "Pilih Jenis Transaksi",
                               titleStyle: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                       color: grey900,
                                       fontWeight: FontWeight.w600),
@@ -146,7 +146,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                         controller.jenisC.value,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText2!
+                                            .bodyMedium!
                                             .copyWith(
                                               color: grey900,
                                             ),
@@ -170,7 +170,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Nama Transaksi*",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -184,14 +184,14 @@ class TransaksiEditView extends GetView<CashflowController> {
                             controller: controller.namaTransaksiC,
                             textAlign: TextAlign.left,
                             style:
-                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                Theme.of(context).textTheme.bodyMedium!.copyWith(
                                       color: grey900,
                                     ),
                             decoration: InputDecoration(
                               hintText: "Masukan Nama Transaksi",
                               hintStyle: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                     color: grey400,
                                   ),
@@ -226,7 +226,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Nominal Transaksi*",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -248,7 +248,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                             ],
                             textAlign: TextAlign.left,
                             style:
-                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                Theme.of(context).textTheme.bodyMedium!.copyWith(
                                       color: grey900,
                                     ),
                             decoration: InputDecoration(
@@ -259,7 +259,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                   "Rp. ",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .bodyMedium!
                                       .copyWith(color: grey400),
                                 ),
                               ),
@@ -268,7 +268,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                               hintText: "0",
                               hintStyle: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                     color: grey400,
                                   ),
@@ -276,7 +276,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                   horizontal: 1.w, vertical: 1.h),
                               labelStyle: Theme.of(context)
                                   .textTheme
-                                  .caption!
+                                  .bodySmall!
                                   .copyWith(
                                       color: grey400,
                                       fontWeight: FontWeight.bold),
@@ -307,7 +307,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Kategori*",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -341,7 +341,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                   Text(controller.kategoriC.toString(),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText2!
+                                          .bodyMedium!
                                           .copyWith(
                                             color: grey900,
                                           )),
@@ -365,7 +365,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Tanggal*",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -397,7 +397,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                             controller.selectDate.value),
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText2!
+                                            .bodyMedium!
                                             .copyWith(
                                               color: grey900,
                                             ),
@@ -422,7 +422,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Deskripsi",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -438,14 +438,14 @@ class TransaksiEditView extends GetView<CashflowController> {
                             maxLines: null,
                             textAlign: TextAlign.left,
                             style:
-                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                Theme.of(context).textTheme.bodyMedium!.copyWith(
                                       color: grey900,
                                     ),
                             decoration: InputDecoration(
                               hintText: "Tulis deskripsi...",
                               hintStyle: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                     color: grey400,
                                   ),
@@ -480,7 +480,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Unggah Foto",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -558,7 +558,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                                 title: "Unggah Foto",
                                                 titleStyle: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText2!
+                                                    .bodyMedium!
                                                     .copyWith(
                                                         color: grey900,
                                                         fontWeight:
@@ -580,7 +580,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                           title: "Unggah Foto",
                                           titleStyle: Theme.of(context)
                                               .textTheme
-                                              .bodyText2!
+                                              .bodyMedium!
                                               .copyWith(
                                                   color: grey900,
                                                   fontWeight: FontWeight.w600),
@@ -626,7 +626,7 @@ class TransaksiEditView extends GetView<CashflowController> {
                                   : "Loading...",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(color: backgroundColor1),
                             ),
                             // onPressed: () => print(snapshot.data?["foto"]),
@@ -659,7 +659,7 @@ showDeleteTransaksiById(BuildContext context, docId) {
     child: Text(
       "Batal",
       style:
-          Theme.of(context).textTheme.bodyText2!.copyWith(color: buttonColor2),
+          Theme.of(context).textTheme.bodyMedium!.copyWith(color: buttonColor2),
     ),
     onPressed: () => Get.back(),
   );
@@ -672,7 +672,7 @@ showDeleteTransaksiById(BuildContext context, docId) {
         "Ya",
         style: Theme.of(context)
             .textTheme
-            .bodyText2!
+            .bodyMedium!
             .copyWith(color: backgroundColor1),
       ),
       onPressed: () {
@@ -688,13 +688,13 @@ showDeleteTransaksiById(BuildContext context, docId) {
       "Apakah kamu yakin ingin menghapus transaksi ini?",
       style: Theme.of(context)
           .textTheme
-          .headline4!
+          .headlineMedium!
           .copyWith(color: grey900, fontWeight: FontWeight.w600),
     ),
     titlePadding: EdgeInsets.fromLTRB(7.777778.w, 3.5.h, 7.777778.w, 0.25.h),
     content: Text(
       "Dengan menyetujui ini, maka transaksi ini akan terhapus secara permanen. Apakah kamu yakin?",
-      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             color: grey400,
           ),
     ),

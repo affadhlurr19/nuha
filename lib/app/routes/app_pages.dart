@@ -1,4 +1,15 @@
 import 'package:get/get.dart';
+import 'package:nuha/app/modules/konsultasi/views/confirm_consultation_payment_view.dart';
+import 'package:nuha/app/modules/konsultasi/views/create_jadwal_konsultasi_view.dart';
+import 'package:nuha/app/modules/konsultasi/views/create_pesanan_konsultasi_view.dart';
+import 'package:nuha/app/modules/konsultasi/views/history_consultation_view.dart';
+import 'package:nuha/app/modules/literasi/views/cari_video_view.dart';
+import 'package:nuha/app/modules/profile/views/auth_pin_view.dart';
+import 'package:nuha/app/modules/profile/views/confirmation_pin_view.dart';
+import 'package:nuha/app/modules/profile/views/create_pin_view.dart';
+import 'package:nuha/app/modules/profile/views/edit_pin_view.dart';
+import 'package:nuha/app/modules/profile/views/pin_view.dart';
+import 'package:nuha/app/modules/profile/views/pengaturan_notifikasi_view.dart';
 
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
@@ -12,11 +23,17 @@ import '../modules/fincheck/bindings/fincheck_binding.dart';
 import '../modules/fincheck/views/fincheck_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/konsultasi/bindings/konsultasi_binding.dart';
+import '../modules/konsultasi/views/list_konsultasi_view.dart';
 import '../modules/landing/bindings/landing_binding.dart';
 import '../modules/landing/views/landing_view.dart';
 import '../modules/literasi/bindings/literasi_binding.dart';
+import '../modules/literasi/views/bookmarked_artikel_view.dart';
+import '../modules/literasi/views/bookmarked_video_view.dart';
+import '../modules/literasi/views/bookmarked_view.dart';
 import '../modules/literasi/views/cari_artikel_view.dart';
 import '../modules/literasi/views/detail_artikel_view.dart';
+import '../modules/literasi/views/detail_video_view.dart';
 import '../modules/literasi/views/list_artikel_view.dart';
 import '../modules/literasi/views/list_video_view.dart';
 import '../modules/literasi/views/literasi_view.dart';
@@ -130,6 +147,11 @@ class AppPages {
       binding: LiterasiBinding(),
     ),
     GetPage(
+      name: _Paths.BOOKMARKED,
+      page: () => const BookmarkedView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
       name: _Paths.LITERASI_LIST_ARTIKEL,
       page: () => ListArtikelView(),
       binding: LiterasiBinding(),
@@ -163,6 +185,81 @@ class AppPages {
       name: _Paths.DAFTAR_LEMBAGA,
       page: () => DaftarLembagaView(),
       binding: DaftarLembagaBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOKMARKED_ARTIKEL,
+      page: () => BookmarkedArtikelView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOKMARKED_VIDEO,
+      page: () => BookmarkedVideoView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_VIDEO,
+      page: () => DetailVideoView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.LIST_KONSULTASI,
+      page: () => ListKonsultasiView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_JADWAL_KONSULTASI,
+      page: () => CreateJadwalKonsultasiView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIWAYAT_KONSULTASI,
+      page: () => HistoryConsultationView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.CARI_VIDEO,
+      page: () => CariVideoView(),
+      binding: LiterasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.PENGATURAN_NOTIFIKASI,
+      page: () => PengaturanNotifikasiView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_PESANAN_KONSULTASI,
+      page: () => CreatePesananKonsultasiView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONFIRM_CONSULTATION_PAYMENT,
+      page: () => ConfirmConsultationPaymentView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.PIN,
+      page: () => PinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PIN,
+      page: () => EditPinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_PIN,
+      page: () => CreatePinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONFIRM_PIN,
+      page: () => ConfirmationPinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.AUTH_PIN,
+      page: () => AuthPinView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

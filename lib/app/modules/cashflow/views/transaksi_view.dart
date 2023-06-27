@@ -73,7 +73,7 @@ class TransaksiView extends GetView<CashflowController> {
                 centerTitle: true,
                 title: Text(
                   "Transaksi",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                         color: backgroundColor1,
                       ),
@@ -129,7 +129,7 @@ class TransaksiView extends GetView<CashflowController> {
                                       "Pendapatan",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(color: grey400),
                                     )
                                   ],
@@ -143,7 +143,7 @@ class TransaksiView extends GetView<CashflowController> {
                                               controller.totalPendapatan.value),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(
                                               color: const Color(0XFF0096C7),
                                               fontWeight: FontWeight.w600),
@@ -177,7 +177,7 @@ class TransaksiView extends GetView<CashflowController> {
                                       "Pengeluaran",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(color: grey400),
                                     )
                                   ],
@@ -191,7 +191,7 @@ class TransaksiView extends GetView<CashflowController> {
                                               .totalPengeluaran.value),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(
                                               color: const Color(0XFFCC444B),
                                               fontWeight: FontWeight.w600),
@@ -212,7 +212,7 @@ class TransaksiView extends GetView<CashflowController> {
                       onChanged: (value) => controller.searchTransaksi(value),
                       // textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.text,
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                           ),
                       decoration: InputDecoration(
@@ -231,7 +231,7 @@ class TransaksiView extends GetView<CashflowController> {
                         suffixIconColor: grey400,
                         hintText: "Cari transaksi kamu disini",
                         hintStyle:
-                            Theme.of(context).textTheme.caption!.copyWith(
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
                                   color: grey400,
                                 ),
                         border: const OutlineInputBorder(
@@ -262,7 +262,7 @@ class TransaksiView extends GetView<CashflowController> {
                             "Semua Transaksi",
                             style: Theme.of(context)
                                 .textTheme
-                                .caption!
+                                .bodySmall!
                                 .copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: backgroundColor1),
@@ -283,7 +283,7 @@ class TransaksiView extends GetView<CashflowController> {
                             "Kategori Transaksi",
                             style: Theme.of(context)
                                 .textTheme
-                                .caption!
+                                .bodySmall!
                                 .copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: grey400),
@@ -343,7 +343,7 @@ class TransaksiView extends GetView<CashflowController> {
                                                                 style: Theme.of(
                                                                         context)
                                                                     .textTheme
-                                                                    .caption!
+                                                                    .bodySmall!
                                                                     .copyWith(
                                                                       fontWeight:
                                                                           FontWeight
@@ -383,7 +383,7 @@ class TransaksiView extends GetView<CashflowController> {
                                                                     ? Theme.of(
                                                                             context)
                                                                         .textTheme
-                                                                        .caption!
+                                                                        .bodySmall!
                                                                         .copyWith(
                                                                           color:
                                                                               const Color(0XFFCC444B),
@@ -391,7 +391,7 @@ class TransaksiView extends GetView<CashflowController> {
                                                                     : Theme.of(
                                                                             context)
                                                                         .textTheme
-                                                                        .bodyText2!
+                                                                        .bodyMedium!
                                                                         .copyWith(
                                                                           color:
                                                                               const Color(0XFF0096C7),
@@ -485,7 +485,7 @@ class DataViewWidget extends StatelessWidget {
                     "Kamu belum melakukan pencatatan transaksi, nih. Yuk, catat transaksi dan pantau alur keuanganmu dengan mudah~",
                     style: Theme.of(context)
                         .textTheme
-                        .caption!
+                        .bodySmall!
                         .copyWith(color: grey400),
                     textAlign: TextAlign.center,
                   ),
@@ -505,7 +505,7 @@ class DataViewWidget extends StatelessWidget {
                         "Tambah transaksi sekarang",
                         style: Theme.of(context)
                             .textTheme
-                            .caption!
+                            .bodySmall!
                             .copyWith(color: backgroundColor1),
                       ),
                       onPressed: () => PersistentNavBarNavigator.pushNewScreen(
@@ -519,108 +519,103 @@ class DataViewWidget extends StatelessWidget {
             );
           } else {
             final data = snapshot.data!.docs.map((e) => e.data()).toList();
-            return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: StickyGroupedListView<dynamic, String>(
-                  shrinkWrap: true,
-                  elements: data,
-                  groupBy: (dynamic element) => element['tanggalTransaksi'],
-                  groupSeparatorBuilder: (dynamic element) => Text(
-                        element['tanggalTransaksi'],
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: grey500, fontWeight: FontWeight.w600),
-                      ),
-                  order: StickyGroupedListOrder.DESC,
-                  itemBuilder: (context, dynamic element) => Column(
+            return StickyGroupedListView<dynamic, String>(
+              elements: data,
+              groupBy: (dynamic element) => element['tanggalTransaksi'],
+              groupSeparatorBuilder: (dynamic element) => Text(
+                element['tanggalTransaksi'],
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: grey500, fontWeight: FontWeight.w600),
+              ),
+              order: StickyGroupedListOrder.DESC,
+              itemBuilder: (context, dynamic element) => Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Image(
+                            width: 10.55556.w,
+                            image: AssetImage(
+                                'assets/images/${element["kategori"]}.png'),
+                          ),
+                          SizedBox(
+                            width: 4.44444.w,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Image(
-                                    width: 10.55556.w,
-                                    image: AssetImage(
-                                        'assets/images/${element["kategori"]}.png'),
-                                  ),
-                                  SizedBox(
-                                    width: 4.44444.w,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${element["namaTransaksi"]}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .caption!
-                                            .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              color: dark,
-                                            ),
-                                      ),
-                                      Text(
-                                        element["jenisTransaksi"] ==
-                                                "Pengeluaran"
-                                            ? NumberFormat.currency(
-                                                    locale: 'id',
-                                                    symbol: "- ",
-                                                    decimalDigits: 0)
-                                                .format(element["nominal"])
-                                            : NumberFormat.currency(
-                                                    locale: 'id',
-                                                    symbol: "+ ",
-                                                    decimalDigits: 0)
-                                                .format(element["nominal"]),
-                                        style: element["jenisTransaksi"] ==
-                                                "Pengeluaran"
-                                            ? Theme.of(context)
-                                                .textTheme
-                                                .caption!
-                                                .copyWith(
-                                                  color:
-                                                      const Color(0XFFCC444B),
-                                                )
-                                            : Theme.of(context)
-                                                .textTheme
-                                                .caption!
-                                                .copyWith(
-                                                  color:
-                                                      const Color(0XFF0096C7),
-                                                ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              Text(
+                                "${element["namaTransaksi"]}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: dark,
+                                    ),
                               ),
-                              IconButton(
-                                onPressed: () =>
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                  context,
-                                  screen: TransaksiEditView(id: element["id"]),
-                                ),
-                                icon: Iconify(
-                                  MaterialSymbols.edit,
-                                  size: 12.sp,
-                                  color: grey400,
-                                ),
+                              Text(
+                                element["jenisTransaksi"] == "Pengeluaran"
+                                    ? NumberFormat.currency(
+                                            locale: 'id',
+                                            symbol: "- ",
+                                            decimalDigits: 0)
+                                        .format(element["nominal"])
+                                    : NumberFormat.currency(
+                                            locale: 'id',
+                                            symbol: "+ ",
+                                            decimalDigits: 0)
+                                        .format(element["nominal"]),
+                                style:
+                                    element["jenisTransaksi"] == "Pengeluaran"
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              color: const Color(0XFFCC444B),
+                                            )
+                                        : Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              color: const Color(0XFF0096C7),
+                                            ),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                          const Divider(
-                            thickness: 1,
-                            height: 0,
-                            color: grey100,
-                          ),
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
                         ],
-                      )),
+                      ),
+                      IconButton(
+                        onPressed: () =>
+                            PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: TransaksiEditView(id: element["id"]),
+                        ),
+                        icon: Iconify(
+                          MaterialSymbols.edit,
+                          size: 12.sp,
+                          color: grey400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 1.5.h,
+                  ),
+                  const Divider(
+                    thickness: 1,
+                    height: 0,
+                    color: grey100,
+                  ),
+                  SizedBox(
+                    height: 1.5.h,
+                  ),
+                ],
+              ),
             );
           }
         },

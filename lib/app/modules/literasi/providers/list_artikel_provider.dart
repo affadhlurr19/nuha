@@ -5,9 +5,10 @@ import 'package:nuha/app/modules/literasi/models/cari_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/detail_artikel_model.dart';
 import 'dart:convert';
 import 'package:nuha/app/modules/literasi/models/list_artikel_model.dart';
+import 'package:nuha/app/modules/literasi/models/recommended_artikel_model.dart';
 
 class ListArtikelProvider {
-  static const String _baseUrl = 'https://nuha-api.000webhostapp.com/api/';
+  static const String _baseUrl = 'https://nuha-restapi.000webhostapp.com/api/';
 
   Future<ListArtikel> getListArtikel(http.Client client) async {
     try {
@@ -44,6 +45,20 @@ class ListArtikelProvider {
           await http.get(Uri.parse("${_baseUrl}article/$idArtikel"));
       if (response.statusCode == 200) {
         return DetailArtikel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data detail artikel!!!');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<RecommendedArticle> getRecommendArticleById(String idArtikel) async {
+    try {
+      final response = await http.get(Uri.parse(
+          "https://web-production-c571f.up.railway.app/recommend/article?id=$idArtikel"));
+      if (response.statusCode == 200) {
+        return RecommendedArticle.fromJson(json.decode(response.body));
       } else {
         throw Exception('Gagal mengambil data detail artikel!!!');
       }

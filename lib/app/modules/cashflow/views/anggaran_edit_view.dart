@@ -23,7 +23,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
         centerTitle: true,
         title: Text(
           "Edit Anggaran",
-          style: Theme.of(context).textTheme.button!.copyWith(
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: dark,
               ),
         ),
@@ -89,7 +89,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Kategori*",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -114,7 +114,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                                 Text(controller.kategoriC.toString(),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText2!
+                                        .bodyMedium!
                                         .copyWith(
                                           color: grey900,
                                         )),
@@ -132,7 +132,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Nominal Anggaran*",
-                          style: Theme.of(context).textTheme.caption!.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: grey900,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -154,7 +154,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                             ],
                             textAlign: TextAlign.left,
                             style:
-                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                Theme.of(context).textTheme.bodyMedium!.copyWith(
                                       color: grey900,
                                     ),
                             decoration: InputDecoration(
@@ -165,7 +165,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                                   "Rp. ",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .bodyMedium!
                                       .copyWith(color: grey400),
                                 ),
                               ),
@@ -174,7 +174,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                               hintText: "0",
                               hintStyle: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                     color: grey400,
                                   ),
@@ -182,7 +182,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                                   horizontal: 1.w, vertical: 1.h),
                               labelStyle: Theme.of(context)
                                   .textTheme
-                                  .caption!
+                                  .bodySmall!
                                   .copyWith(
                                       color: grey400,
                                       fontWeight: FontWeight.bold),
@@ -223,7 +223,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                                   : "Loading...",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(color: backgroundColor1),
                             ),
                             onPressed: () {
@@ -255,7 +255,7 @@ showDeleteAnggaranDialog(BuildContext context, docId) {
     child: Text(
       "Batal",
       style:
-          Theme.of(context).textTheme.bodyText2!.copyWith(color: buttonColor2),
+          Theme.of(context).textTheme.bodyMedium!.copyWith(color: buttonColor2),
     ),
     onPressed: () => Get.back(),
   );
@@ -268,7 +268,7 @@ showDeleteAnggaranDialog(BuildContext context, docId) {
         "Ya",
         style: Theme.of(context)
             .textTheme
-            .bodyText2!
+            .bodyMedium!
             .copyWith(color: backgroundColor1),
       ),
       onPressed: () {
@@ -284,13 +284,13 @@ showDeleteAnggaranDialog(BuildContext context, docId) {
       "Apakah kamu yakin ingin menghapus anggaran ini?",
       style: Theme.of(context)
           .textTheme
-          .headline4!
+          .headlineMedium!
           .copyWith(color: grey900, fontWeight: FontWeight.w600),
     ),
     titlePadding: EdgeInsets.fromLTRB(7.777778.w, 3.5.h, 7.777778.w, 0.25.h),
     content: Text(
       "Dengan menyetujui ini, maka anggaran ini akan terhapus secara permanen. Apakah kamu yakin?",
-      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             color: grey400,
           ),
     ),

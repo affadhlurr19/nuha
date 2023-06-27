@@ -86,7 +86,10 @@ const Color backBar = Color(0XFFDDDDDD);
 final myTextTheme = TextTheme(
     //Large Title 34px
     titleMedium: GoogleFonts.jost(
+<<<<<<< HEAD
       //subtitle1
+=======
+>>>>>>> ahmad
       fontSize: 26.sp,
       fontWeight: FontWeight.bold,
       letterSpacing: 0.15,
@@ -94,7 +97,10 @@ final myTextTheme = TextTheme(
 
     // Heading 1 30px
     displayLarge: GoogleFonts.jost(
+<<<<<<< HEAD
       //headline1
+=======
+>>>>>>> ahmad
       fontSize: 23.sp,
       fontWeight: FontWeight.bold,
       letterSpacing: -1.5,
@@ -102,55 +108,79 @@ final myTextTheme = TextTheme(
 
     //Heading 2 28px
     displayMedium: GoogleFonts.jost(
+<<<<<<< HEAD
       //headline2
+=======
+>>>>>>> ahmad
       fontSize: 21.sp,
       fontWeight: FontWeight.w600,
     ),
 
     //Heading 3 22px
     displaySmall: GoogleFonts.jost(
+<<<<<<< HEAD
       //headline3
+=======
+>>>>>>> ahmad
       fontSize: 17.sp,
       fontWeight: FontWeight.w600,
     ),
 
     //Body 17px reguler
     headlineMedium: GoogleFonts.jost(
+<<<<<<< HEAD
       //headline4
+=======
+>>>>>>> ahmad
       fontSize: 13.sp,
       fontWeight: FontWeight.normal,
     ),
 
     //Body 20px reguler
     bodyLarge: GoogleFonts.jost(
+<<<<<<< HEAD
       //bodyRext1
+=======
+>>>>>>> ahmad
       fontSize: 15.sp,
       letterSpacing: 0.5,
     ),
 
     //Body 15px reguler
     bodyMedium: GoogleFonts.jost(
+<<<<<<< HEAD
       //bodyText2
+=======
+>>>>>>> ahmad
       fontSize: 11.sp,
       fontWeight: FontWeight.w400,
     ),
 
     //Body 17px semibold
     labelLarge: GoogleFonts.jost(
+<<<<<<< HEAD
       //button
+=======
+>>>>>>> ahmad
       fontSize: 13.sp,
       fontWeight: FontWeight.w600,
     ),
 
     //Caption 12px reguler
     bodySmall: GoogleFonts.jost(
+<<<<<<< HEAD
       //caption
+=======
+>>>>>>> ahmad
       fontSize: 9.sp,
       letterSpacing: 0.4,
     ),
 
     //Small 10px
     labelSmall: GoogleFonts.jost(
+<<<<<<< HEAD
       //overline
+=======
+>>>>>>> ahmad
       fontSize: 8.sp,
     ));

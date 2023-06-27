@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class NavbarController extends GetxController {
   late PageController pageController;
@@ -21,5 +22,14 @@ class NavbarController extends GetxController {
   void onClose() {
     pageController.dispose();
     super.onClose();
+  }
+
+  final persistentController = PersistentTabController(initialIndex: 0);
+
+  final _currentIndex = 0.obs;
+  int get currentIndex => _currentIndex.value;
+
+  void updateIndex(int index) {
+    _currentIndex.value = index;
   }
 }

@@ -110,7 +110,7 @@ class CashflowController extends GetxController {
                   foregroundColor: grey900,
                   textStyle: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(fontWeight: FontWeight.w600)),
             ),
           ),
@@ -449,6 +449,35 @@ class CashflowController extends GetxController {
         nomTotal += nominal;
       }
 
+      if (nomTotal > 0) {
+        firestore
+            .collection("users")
+            .doc(uid)
+            .collection("anggaran")
+            .where("kategori", isEqualTo: kategori)
+            .get()
+            .then((value) {
+          if (value.docs.isNotEmpty) {
+            idData = value.docs[0].data()["id"];
+            nominal = value.docs[0].data()["nominal"];
+
+            sisaLimit = nominal - nomTotal;
+            persentaseLimit = (nomTotal / nominal).toStringAsFixed(2);
+
+            firestore
+                .collection("users")
+                .doc(uid)
+                .collection("anggaran")
+                .doc(idData)
+                .update({
+              "nominalTerpakai": nomTotal,
+              "sisaLimit": sisaLimit,
+              "persentase": persentaseLimit,
+            });
+          }
+        });
+      }
+
       firestore
           .collection("users")
           .doc(uid)
@@ -673,7 +702,7 @@ class CashflowController extends GetxController {
             .where("kategori", isLessThan: '${capitalize}z')
             .get();
 
-        // print("Total data: ${keyNameResult.docs.length}");
+        print("Total data: ${keyNameResult.docs.length}");
         if (keyNameResult.docs.isNotEmpty) {
           queryAwal.value = [];
           for (int i = 0; i < keyNameResult.docs.length; i++) {
@@ -779,7 +808,7 @@ class CashflowController extends GetxController {
             .where("namaTransaksi", isLessThan: '${capitalize}z')
             .get();
 
-        // print("Total data: ${keyNameResult.docs.length}");
+        print("Total data: ${keyNameResult.docs.length}");
         if (keyNameResult.docs.isNotEmpty) {
           querySearch.value = [];
           for (int i = 0; i < keyNameResult.docs.length; i++) {

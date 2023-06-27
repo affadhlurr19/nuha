@@ -1,6 +1,8 @@
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/ri.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/literasi/controllers/list_artikel_controller.dart';
 import 'package:nuha/app/routes/app_pages.dart';
@@ -52,7 +54,7 @@ class ListArtikelView extends GetView<ListArtikelController> {
                   choiceStyle: C2ChipStyle.filled(
                     foregroundStyle: Theme.of(context)
                         .textTheme
-                        .caption!
+                        .bodySmall!
                         .copyWith(
                             color: grey400,
                             fontWeight: FontWeight.w600,
@@ -63,7 +65,7 @@ class ListArtikelView extends GetView<ListArtikelController> {
                       backgroundColor: buttonColor1,
                       foregroundStyle: Theme.of(context)
                           .textTheme
-                          .caption!
+                          .bodySmall!
                           .copyWith(
                               color: backgroundColor1,
                               fontWeight: FontWeight.w600,
@@ -78,13 +80,15 @@ class ListArtikelView extends GetView<ListArtikelController> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 7.78.w),
             child: TextField(
+              onTap: () => Get.toNamed(Routes.CARI_ARTIKEL),
+              readOnly: true,
               cursorColor: buttonColor1,
               autocorrect: false,
-              style: Theme.of(context).textTheme.caption!.copyWith(
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   fontWeight: FontWeight.w400, fontSize: 9.sp, color: grey400),
               decoration: InputDecoration(
                 hintText: 'Cari artikel disini',
-                hintStyle: Theme.of(context).textTheme.caption!.copyWith(
+                hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                     fontWeight: FontWeight.w400,
                     fontSize: 9.sp,
                     color: grey400),
@@ -102,8 +106,8 @@ class ListArtikelView extends GetView<ListArtikelController> {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onPressed: () => Get.toNamed(Routes.CARI_ARTIKEL),
-                  icon: Icon(
-                    Icons.search,
+                  icon: Iconify(
+                    Ri.search_line,
                     size: 12.sp,
                     color: grey400,
                   ),
@@ -128,9 +132,9 @@ class ListArtikelView extends GetView<ListArtikelController> {
                     return ListView.separated(
                       shrinkWrap: true,
                       physics: const ScrollPhysics(),
-                      itemCount: c.result.article.length,
+                      itemCount: c.result.data.length,
                       itemBuilder: (context, index) {
-                        var artikel = c.result.article[index];
+                        var artikel = c.result.data[index];
                         return GestureDetector(
                           onTap: () => Get.toNamed(Routes.DETAIL_ARTIKEL,
                               arguments: artikel.id.toString()),
@@ -165,7 +169,7 @@ class ListArtikelView extends GetView<ListArtikelController> {
                                         overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .caption!
+                                            .bodySmall!
                                             .copyWith(
                                                 fontWeight: FontWeight.w600,
                                                 color: const Color(0XFF0D4136),

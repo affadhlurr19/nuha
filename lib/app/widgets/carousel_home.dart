@@ -29,7 +29,7 @@ class _CarouselHomeState extends State<CarouselHome> {
               child: Center(
                 child: Text(
                   "Item 1",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: backgroundColor1, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -49,7 +49,7 @@ class _CarouselHomeState extends State<CarouselHome> {
               child: Center(
                 child: Text(
                   "Item 2",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: backgroundColor1, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -69,7 +69,7 @@ class _CarouselHomeState extends State<CarouselHome> {
               child: Center(
                 child: Text(
                   "Item 3",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: backgroundColor1, fontWeight: FontWeight.bold),
                 ),
               ),

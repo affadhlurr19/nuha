@@ -50,7 +50,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                 ),
                 GradientText(
                   "Dana Darurat",
-                  style: Theme.of(context).textTheme.headline3!,
+                  style: Theme.of(context).textTheme.displaySmall!,
                   colors: const [
                     buttonColor1,
                     buttonColor2,
@@ -61,7 +61,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                 ),
                 Text(
                   "(Jika tidak ada, ketika 0)",
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: grey400,
                       ),
                 ),
@@ -81,7 +81,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                   children: [
                     Text(
                       "Status Pernikahan",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
                           ),
@@ -102,7 +102,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                               "Pilih Status Pernikahan",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .bodyMedium!
                                   .copyWith(
                                     color: grey400,
                                   ),
@@ -155,7 +155,7 @@ class PkDaruratView extends GetView<PerencanaanKeuanganController> {
                     "Hitung Dana",
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2!
+                        .bodyMedium!
                         .copyWith(color: Colors.white),
                   ),
                   onPressed: () {},

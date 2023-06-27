@@ -96,7 +96,7 @@ class HomeView extends GetView<HomeController> {
                             text: "SALAAM, ",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2!
+                                .bodyMedium!
                                 .copyWith(
                                     color: grey400,
                                     fontWeight: FontWeight.w400),

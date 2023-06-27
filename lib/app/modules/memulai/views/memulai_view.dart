@@ -50,7 +50,7 @@ class MemulaiView extends GetView<MemulaiController> {
               padding: EdgeInsets.only(right: 11.1.w, left: 11.1.w),
               child: Text(
                 'Selamat datang di Nuha!',
-                style: Theme.of(context).textTheme.headline3!.copyWith(
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       fontWeight: FontWeight.w600,
                       fontSize: 17.sp,
                       color: grey900,
@@ -63,7 +63,7 @@ class MemulaiView extends GetView<MemulaiController> {
               padding: EdgeInsets.only(right: 11.1.w, left: 11.1.w),
               child: Text(
                 'Mari bergabung dengan Nuha untuk peningkatan finansial berdasarkan syariat islam.',
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontWeight: FontWeight.w400,
                     fontSize: 13.sp,
                     color: const Color(0XFF717171)),
@@ -83,7 +83,7 @@ class MemulaiView extends GetView<MemulaiController> {
                           borderRadius: BorderRadius.circular(20))),
                   child: Text(
                     "Daftar",
-                    style: Theme.of(context).textTheme.button!.copyWith(
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 13.sp,
@@ -109,7 +109,7 @@ class MemulaiView extends GetView<MemulaiController> {
                           borderRadius: BorderRadius.circular(20))),
                   child: Text(
                     "Masuk",
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: 13.sp,
                         color: buttonColor1,
@@ -128,7 +128,7 @@ class MemulaiView extends GetView<MemulaiController> {
                 text: TextSpan(
                   text:
                       'Dengan masuk atau melakukan pendaftaran, kamu menyetujui ',
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         fontSize: 9.sp,
                         color: const Color(0xFF919191),
                         fontWeight: FontWeight.w400,
@@ -136,7 +136,7 @@ class MemulaiView extends GetView<MemulaiController> {
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Ketentuan Layanan ',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontSize: 9.sp,
                             color: buttonColor1,
                             fontWeight: FontWeight.w600,
@@ -144,7 +144,7 @@ class MemulaiView extends GetView<MemulaiController> {
                     ),
                     TextSpan(
                       text: 'dan ',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontSize: 9.sp,
                             color: const Color(0xFF919191),
                             fontWeight: FontWeight.w400,
@@ -152,7 +152,7 @@ class MemulaiView extends GetView<MemulaiController> {
                     ),
                     TextSpan(
                       text: 'Kebijakan Privasi',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontSize: 9.sp,
                             color: buttonColor1,
                             fontWeight: FontWeight.w600,

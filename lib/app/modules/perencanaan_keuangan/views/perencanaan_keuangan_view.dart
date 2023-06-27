@@ -33,7 +33,7 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
               "Perencanaan Keuangan",
               style: Theme.of(context)
                   .textTheme
-                  .button!
+                  .labelLarge!
                   .copyWith(color: titleColor),
             ),
             backgroundColor: backgroundColor1,
@@ -51,7 +51,7 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
               ),
               GradientText(
                 "Rencanakan Keuangan Kamu Sekarang",
-                style: Theme.of(context).textTheme.headline2!,
+                style: Theme.of(context).textTheme.displayMedium!,
                 colors: const [
                   buttonColor1,
                   buttonColor2,
@@ -64,7 +64,7 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
                 "Perencanaan keuangan dapat membantu dalam pengelolaan keuangan dengan lebih bijak, mencapai tujuan keuangan jangka panjang, dan menghadapi situasi keuangan yang tidak terduga.",
                 style: Theme.of(context)
                     .textTheme
-                    .headline4!
+                    .headlineMedium!
                     .copyWith(color: grey500, wordSpacing: 0.sp),
                 textAlign: TextAlign.justify,
               ),
@@ -72,7 +72,7 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
                 height: 3.125.h,
               ),
               Text("Silahkan Pilih Kategori Perencanaan Keuanganmu :",
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: buttonColor1, fontWeight: FontWeight.bold)),
               SizedBox(
                 height: 1.25.h,
@@ -151,7 +151,7 @@ class CategoryPerencanaanWidget extends StatelessWidget {
             ),
             Text(
               text,
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: grey500,
                   ),
               textAlign: TextAlign.center,

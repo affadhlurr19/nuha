@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/literasi/views/list_artikel_view.dart';
 import 'package:nuha/app/modules/literasi/views/list_video_view.dart';
+import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/literasi_controller.dart';
 
@@ -18,22 +21,22 @@ class LiterasiView extends GetView<LiterasiController> {
         backgroundColor: backgroundColor1,
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: EdgeInsets.only(left: 8.3.w),
+          padding: EdgeInsets.only(left: 4.6.w),
           child: Text(
             'Literasi',
             style: Theme.of(context)
                 .textTheme
-                .bodyText1!
+                .bodyLarge!
                 .copyWith(fontWeight: FontWeight.w600, fontSize: 13.sp),
           ),
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 8.3.w),
+            padding: EdgeInsets.only(right: 4.6.w),
             child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.bookmark,
+              onPressed: () => Get.toNamed(Routes.BOOKMARKED),
+              icon: Iconify(
+                MaterialSymbols.bookmark_outline,
                 size: 18.sp,
                 color: titleColor,
               ),
@@ -48,12 +51,12 @@ class LiterasiView extends GetView<LiterasiController> {
           tabs: controller.literasiTabs,
           labelStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(fontWeight: FontWeight.w600, fontSize: 11.sp),
           unselectedLabelColor: grey400,
           unselectedLabelStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
         ),
         systemOverlayStyle: const SystemUiOverlayStyle(

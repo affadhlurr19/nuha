@@ -127,13 +127,13 @@ class GantiFotoProfilView extends GetView {
                                                     titleStyle:
                                                         Theme.of(context)
                                                             .textTheme
-                                                            .headline5,
+                                                            .headlineSmall,
                                                     middleText:
                                                         "Apakah kamu yakin untuk menghapus foto profile ?",
                                                     middleTextStyle:
                                                         Theme.of(context)
                                                             .textTheme
-                                                            .bodyText2,
+                                                            .bodyMedium,
                                                     actions: [
                                                       OutlinedButton(
                                                         onPressed: () =>
@@ -142,7 +142,7 @@ class GantiFotoProfilView extends GetView {
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .button),
+                                                                .labelLarge),
                                                       ),
                                                       ElevatedButton(
                                                         style: ElevatedButton
@@ -156,7 +156,7 @@ class GantiFotoProfilView extends GetView {
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme
-                                                              .button!
+                                                              .labelLarge!
                                                               .copyWith(
                                                                   color:
                                                                       backgroundColor1),
@@ -191,7 +191,7 @@ class GantiFotoProfilView extends GetView {
                                                       'Ubah Foto Profil',
                                                       style: Theme.of(context)
                                                           .textTheme
-                                                          .button!
+                                                          .labelLarge!
                                                           .copyWith(
                                                               color:
                                                                   backgroundColor1),
@@ -232,7 +232,7 @@ class GantiFotoProfilView extends GetView {
                                                     'Ubah Foto Profil',
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .button!
+                                                        .labelLarge!
                                                         .copyWith(
                                                           color:
                                                               backgroundColor1,
@@ -270,10 +270,13 @@ class GantiFotoProfilView extends GetView {
                           onPressed: () => Get.back(),
                           child: Text(
                             'Batalkan',
-                            style: Theme.of(context).textTheme.button!.copyWith(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11.sp,
-                                color: buttonColor2),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 11.sp,
+                                    color: buttonColor2),
                           ),
                         ),
                       ),
@@ -298,7 +301,7 @@ class GantiFotoProfilView extends GetView {
                                     'Simpan',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .button!
+                                        .labelLarge!
                                         .copyWith(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 11.sp,

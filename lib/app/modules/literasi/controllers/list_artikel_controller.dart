@@ -27,7 +27,7 @@ class ListArtikelController extends GetxController {
   Future<dynamic> getListArtikel() async {
     try {
       final artikel = await listArtikelProvider.getListArtikel(http.Client());
-      if (artikel.article.isEmpty) {
+      if (artikel.data.isEmpty) {
         resultState.value = ResultState.noData();
       } else {
         resultState.value = ResultState.hasData(artikel);

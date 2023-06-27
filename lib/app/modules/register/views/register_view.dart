@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/mdi_light.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -49,7 +51,7 @@ class RegisterView extends GetView<RegisterController> {
                   width: widthDevice,
                   child: Text(
                     'Selamat datang di Nuha!',
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 17.sp,
                         color: const Color(0XFF1F1F1F)),
@@ -61,7 +63,7 @@ class RegisterView extends GetView<RegisterController> {
                   width: widthDevice,
                   child: Text(
                     'Untuk mendaftar, silahkan lengkapi data diri kamu dibawah, ya!',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: 11.sp,
                         color: grey500),
@@ -73,7 +75,7 @@ class RegisterView extends GetView<RegisterController> {
                   width: widthDevice,
                   child: Text(
                     'Nama Lengkap',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 11.sp,
                         color: grey500),
@@ -90,13 +92,13 @@ class RegisterView extends GetView<RegisterController> {
                     textInputAction: TextInputAction.next,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2!
+                        .bodyMedium!
                         .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                     decoration: InputDecoration(
                       hintText: 'Nuha Finansial',
                       hintStyle: Theme.of(context)
                           .textTheme
-                          .bodyText2!
+                          .bodyMedium!
                           .copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 11.sp,
@@ -120,7 +122,7 @@ class RegisterView extends GetView<RegisterController> {
                   width: widthDevice,
                   child: Text(
                     'Email',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 11.sp,
                         color: grey500),
@@ -138,13 +140,13 @@ class RegisterView extends GetView<RegisterController> {
                     textInputAction: TextInputAction.next,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2!
+                        .bodyMedium!
                         .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                     decoration: InputDecoration(
                       hintText: 'Nuha@gmail.com',
                       hintStyle: Theme.of(context)
                           .textTheme
-                          .bodyText2!
+                          .bodyMedium!
                           .copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 11.sp,
@@ -168,7 +170,7 @@ class RegisterView extends GetView<RegisterController> {
                   width: widthDevice,
                   child: Text(
                     'Kata Sandi',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 11.sp,
                         color: grey500),
@@ -185,13 +187,13 @@ class RegisterView extends GetView<RegisterController> {
                       controller: controller.passC,
                       cursorColor: buttonColor1,
                       textInputAction: TextInputAction.next,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontWeight: FontWeight.w400, fontSize: 11.sp),
                       decoration: InputDecoration(
                         hintText: 'min. 8 karakter',
                         hintStyle: Theme.of(context)
                             .textTheme
-                            .bodyText2!
+                            .bodyMedium!
                             .copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 11.sp,
@@ -208,11 +210,11 @@ class RegisterView extends GetView<RegisterController> {
                             borderRadius: BorderRadius.circular(20)),
                         suffixIcon: IconButton(
                           onPressed: () => controller.isHiddenPass.toggle(),
-                          icon: Icon(
+                          icon: Iconify(
                             controller.isHiddenPass.isTrue
-                                ? Icons.remove_red_eye
-                                : Icons.remove_red_eye_outlined,
-                            color: buttonColor1,
+                                ? MdiLight.eye_off
+                                : MdiLight.eye,
+                            color: grey400,
                           ),
                         ),
                       ),
@@ -225,7 +227,7 @@ class RegisterView extends GetView<RegisterController> {
                   width: widthDevice,
                   child: Text(
                     'Konfirmasi Kata Sandi',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 11.sp,
                         color: grey500),
@@ -242,13 +244,13 @@ class RegisterView extends GetView<RegisterController> {
                       controller: controller.konfirpassC,
                       cursorColor: buttonColor1,
                       textInputAction: TextInputAction.done,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontWeight: FontWeight.w400, fontSize: 11.sp),
                       decoration: InputDecoration(
                         hintText: 'min. 8 karakter',
                         hintStyle: Theme.of(context)
                             .textTheme
-                            .bodyText2!
+                            .bodyMedium!
                             .copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 11.sp,
@@ -266,11 +268,11 @@ class RegisterView extends GetView<RegisterController> {
                         suffixIcon: IconButton(
                           onPressed: () =>
                               controller.isHiddenConfirmPass.toggle(),
-                          icon: Icon(
+                          icon: Iconify(
                             controller.isHiddenConfirmPass.isTrue
-                                ? Icons.remove_red_eye
-                                : Icons.remove_red_eye_outlined,
-                            color: buttonColor1,
+                                ? MdiLight.eye_off
+                                : MdiLight.eye,
+                            color: grey400,
                           ),
                         ),
                       ),
@@ -283,7 +285,7 @@ class RegisterView extends GetView<RegisterController> {
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       text: 'Sudah punya akun? ',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontSize: 9.sp,
                             color: const Color(0xFF919191),
                             fontWeight: FontWeight.w400,
@@ -293,11 +295,12 @@ class RegisterView extends GetView<RegisterController> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => Get.toNamed(Routes.LOGIN),
                           text: 'Masuk',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                                fontSize: 9.sp,
-                                color: buttonColor1,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    fontSize: 9.sp,
+                                    color: buttonColor1,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                       ],
                     ),
@@ -322,7 +325,7 @@ class RegisterView extends GetView<RegisterController> {
                                 "Daftar",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .button!
+                                    .labelLarge!
                                     .copyWith(
                                         fontSize: 11.sp,
                                         fontWeight: FontWeight.w400,
@@ -374,7 +377,7 @@ class RegisterView extends GetView<RegisterController> {
                                     "Daftar dengan Google",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .copyWith(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 11.sp,

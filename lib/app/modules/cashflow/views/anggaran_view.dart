@@ -82,7 +82,7 @@ class AnggaranView extends GetView<CashflowController> {
                 centerTitle: true,
                 title: Text(
                   "Anggaran",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                         color: backgroundColor1,
                       ),
@@ -126,7 +126,7 @@ class AnggaranView extends GetView<CashflowController> {
                                     .format(controller.sisaAnggaran.value),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .button!
+                                    .labelLarge!
                                     .copyWith(
                                         color: buttonColor1,
                                         fontWeight: FontWeight.w600),
@@ -139,7 +139,7 @@ class AnggaranView extends GetView<CashflowController> {
                                     .format(controller.totalNominal.value),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .caption!
+                                    .bodySmall!
                                     .copyWith(
                                       color: grey400,
                                     ),
@@ -169,7 +169,7 @@ class AnggaranView extends GetView<CashflowController> {
                       // onChanged: (value) => controller.searchFunction(value),
                       // textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.text,
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: grey900,
                           ),
                       decoration: InputDecoration(
@@ -188,7 +188,7 @@ class AnggaranView extends GetView<CashflowController> {
                         suffixIconColor: grey400,
                         hintText: "Cari anggaran kamu disini",
                         hintStyle:
-                            Theme.of(context).textTheme.caption!.copyWith(
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
                                   color: grey400,
                                 ),
                         border: const OutlineInputBorder(
@@ -225,7 +225,7 @@ class AnggaranView extends GetView<CashflowController> {
                                   tabBar[index],
                                   style: Theme.of(context)
                                       .textTheme
-                                      .caption!
+                                      .bodySmall!
                                       .copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: backgroundColor1),
@@ -314,7 +314,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                           "${controller.queryAwal[index]["kategori"]}",
                                                                           style: Theme.of(context)
                                                                               .textTheme
-                                                                              .caption!
+                                                                              .bodySmall!
                                                                               .copyWith(
                                                                                 fontWeight: FontWeight.w600,
                                                                                 color: dark,
@@ -330,7 +330,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                               "sisaLimit"]),
                                                                           style: Theme.of(context)
                                                                               .textTheme
-                                                                              .caption!
+                                                                              .bodySmall!
                                                                               .copyWith(
                                                                                 color: grey400,
                                                                               ),
@@ -406,7 +406,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .caption!
+                                                                  .bodySmall!
                                                                   .copyWith(
                                                                     color:
                                                                         grey400,
@@ -417,7 +417,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .caption!
+                                                                  .bodySmall!
                                                                   .copyWith(
                                                                     color:
                                                                         grey400,
@@ -490,7 +490,7 @@ class SemuaWidget extends StatelessWidget {
                     "Kamu belum mengatur anggaran keuangan kamu, nih. Yuk, catat anggaran keuanganmu dengan mudah~",
                     style: Theme.of(context)
                         .textTheme
-                        .caption!
+                        .bodySmall!
                         .copyWith(color: grey400),
                     textAlign: TextAlign.center,
                   ),
@@ -510,7 +510,7 @@ class SemuaWidget extends StatelessWidget {
                         "Atur Anggaran Sekarang",
                         style: Theme.of(context)
                             .textTheme
-                            .caption!
+                            .bodySmall!
                             .copyWith(color: backgroundColor1),
                       ),
                       onPressed: () => Get.to(const FormAnggaranView()),
@@ -523,154 +523,148 @@ class SemuaWidget extends StatelessWidget {
             return MediaQuery.removePadding(
               context: context,
               removeTop: true,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    var docAnggaran = snapshot.data!.docs[index];
-                    Map<String, dynamic> anggaran = docAnggaran.data();
-                    return GestureDetector(
-                      onTap: () => PersistentNavBarNavigator.pushNewScreen(
-                        context,
-                        screen: AnggaranDetailView(id: docAnggaran.id),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Image(
-                                          width: 10.55556.w,
-                                          image: AssetImage(
-                                              'assets/images/${anggaran["kategori"]}.png'),
-                                        ),
-                                        SizedBox(
-                                          width: 4.44444.w,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${anggaran["kategori"]}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .caption!
-                                                  .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: dark,
-                                                  ),
-                                            ),
-                                            SizedBox(
-                                              height: 0.5.h,
-                                            ),
-                                            Text(
-                                              NumberFormat.currency(
-                                                      locale: 'id',
-                                                      symbol: "Tersisa Rp. ",
-                                                      decimalDigits: 0)
-                                                  .format(
-                                                      anggaran["sisaLimit"]),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .caption!
-                                                  .copyWith(
-                                                    color: grey400,
-                                                  ),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                IconButton(
-                                  onPressed: () =>
-                                      PersistentNavBarNavigator.pushNewScreen(
-                                    context,
-                                    screen: UpdateAnggaranView(
-                                      id: docAnggaran.id,
-                                    ),
+              child: ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  var docAnggaran = snapshot.data!.docs[index];
+                  Map<String, dynamic> anggaran = docAnggaran.data();
+                  return GestureDetector(
+                    onTap: () => PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: AnggaranDetailView(id: docAnggaran.id),
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image(
+                                        width: 10.55556.w,
+                                        image: AssetImage(
+                                            'assets/images/${anggaran["kategori"]}.png'),
+                                      ),
+                                      SizedBox(
+                                        width: 4.44444.w,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${anggaran["kategori"]}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: dark,
+                                                ),
+                                          ),
+                                          SizedBox(
+                                            height: 0.5.h,
+                                          ),
+                                          Text(
+                                            NumberFormat.currency(
+                                                    locale: 'id',
+                                                    symbol: "Tersisa Rp. ",
+                                                    decimalDigits: 0)
+                                                .format(anggaran["sisaLimit"]),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
+                                                .copyWith(
+                                                  color: grey400,
+                                                ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  icon: Iconify(
-                                    MaterialSymbols.edit,
-                                    size: 12.sp,
-                                    color: grey400,
+                                ],
+                              ),
+                              IconButton(
+                                onPressed: () =>
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: UpdateAnggaranView(
+                                    id: docAnggaran.id,
                                   ),
                                 ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 1.5.h,
-                            ),
-                            LinearPercentIndicator(
-                              barRadius: const Radius.circular(40),
-                              width: 75.55556.w,
-                              lineHeight: 2.5.h,
-                              percent: double.parse(
-                                  anggaran["persentase"].toString()),
-                              backgroundColor: backBar,
-                              progressColor: controller.getProgressColor(
-                                  double.parse(
-                                      anggaran["persentase"].toString())),
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  NumberFormat.currency(
-                                          locale: 'id',
-                                          symbol: "Limit Rp. ",
-                                          decimalDigits: 0)
-                                      .format(anggaran["nominal"]),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .copyWith(
-                                        color: grey400,
-                                      ),
+                                icon: Iconify(
+                                  MaterialSymbols.edit,
+                                  size: 12.sp,
+                                  color: grey400,
                                 ),
-                                Text(
-                                  "${anggaran["persentase"]}%",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption!
-                                      .copyWith(
-                                        color: grey400,
-                                      ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 1.5.h,
-                            ),
-                            const Divider(
-                              thickness: 1,
-                              height: 0,
-                              color: grey100,
-                            ),
-                            SizedBox(
-                              height: 1.5.h,
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                          LinearPercentIndicator(
+                            barRadius: const Radius.circular(40),
+                            width: 75.55556.w,
+                            lineHeight: 2.5.h,
+                            percent:
+                                double.parse(anggaran["persentase"].toString()),
+                            backgroundColor: backBar,
+                            progressColor: controller.getProgressColor(
+                                double.parse(
+                                    anggaran["persentase"].toString())),
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                NumberFormat.currency(
+                                        locale: 'id',
+                                        symbol: "Limit Rp. ",
+                                        decimalDigits: 0)
+                                    .format(anggaran["nominal"]),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      color: grey400,
+                                    ),
+                              ),
+                              Text(
+                                "${anggaran["persentase"]}%",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      color: grey400,
+                                    ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                          const Divider(
+                            thickness: 1,
+                            height: 0,
+                            color: grey100,
+                          ),
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             );
           }

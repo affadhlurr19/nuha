@@ -27,7 +27,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
           centerTitle: true,
           title: Text(
             "Detail Anggaran",
-            style: Theme.of(context).textTheme.button!.copyWith(
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   color: dark,
                 ),
           ),
@@ -78,7 +78,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                               // textAlignVertical: TextAlignVertical.center,
                               keyboardType: TextInputType.text,
                               style:
-                                  Theme.of(context).textTheme.caption!.copyWith(
+                                  Theme.of(context).textTheme.bodySmall!.copyWith(
                                         color: grey900,
                                       ),
                               decoration: InputDecoration(
@@ -98,7 +98,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                 hintText: "Cari transaksi kamu disini",
                                 hintStyle: Theme.of(context)
                                     .textTheme
-                                    .caption!
+                                    .bodySmall!
                                     .copyWith(
                                       color: grey400,
                                     ),
@@ -146,7 +146,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                       .toString(),
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .caption!
+                                                      .bodySmall!
                                                       .copyWith(
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -166,7 +166,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                           .data!["sisaLimit"]),
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .caption!
+                                                      .bodySmall!
                                                       .copyWith(
                                                         color: grey400,
                                                       ),
@@ -221,7 +221,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                               controller.nomAnggaranC.text)),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption!
+                                          .bodySmall!
                                           .copyWith(
                                             color: grey400,
                                           ),
@@ -296,7 +296,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                         "Kamu belum melakukan pencatatan transaksi, nih. Yuk, catat transaksi dan pantau alur keuanganmu dengan mudah~",
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .caption!
+                                                            .bodySmall!
                                                             .copyWith(
                                                                 color: grey400),
                                                         textAlign:
@@ -323,7 +323,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .caption!
+                                                                .bodySmall!
                                                                 .copyWith(
                                                                     color:
                                                                         backgroundColor1),
@@ -352,7 +352,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                         "Detail Anggaran",
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .caption!
+                                                            .bodySmall!
                                                             .copyWith(
                                                               fontWeight:
                                                                   FontWeight
@@ -408,7 +408,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                           children: [
                                                                             Text(
                                                                               "${transaksi["namaTransaksi"]}",
-                                                                              style: Theme.of(context).textTheme.caption!.copyWith(
+                                                                              style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                                                                     fontWeight: FontWeight.w600,
                                                                                     color: dark,
                                                                                   ),
@@ -416,10 +416,10 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                             Text(
                                                                               transaksi["jenisTransaksi"] == "Pengeluaran" ? NumberFormat.currency(locale: 'id', symbol: "- ", decimalDigits: 0).format(transaksi["nominal"]) : NumberFormat.currency(locale: 'id', symbol: "+ ", decimalDigits: 0).format(transaksi["nominal"]),
                                                                               style: transaksi["jenisTransaksi"] == "Pengeluaran"
-                                                                                  ? Theme.of(context).textTheme.caption!.copyWith(
+                                                                                  ? Theme.of(context).textTheme.bodySmall!.copyWith(
                                                                                         color: const Color(0XFFCC444B),
                                                                                       )
-                                                                                  : Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                                  : Theme.of(context).textTheme.bodyMedium!.copyWith(
                                                                                         color: const Color(0XFF0096C7),
                                                                                       ),
                                                                             ),
@@ -433,7 +433,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                       style: Theme.of(
                                                                               context)
                                                                           .textTheme
-                                                                          .caption!
+                                                                          .bodySmall!
                                                                           .copyWith(
                                                                               color: grey400),
                                                                     ),
@@ -474,7 +474,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                 "Hasil Pencarian",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .caption!
+                                                    .bodySmall!
                                                     .copyWith(
                                                       fontWeight:
                                                           FontWeight.w600,
@@ -529,7 +529,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                           children: [
                                                                             Text(
                                                                               "${controller.querySearch[index]["namaTransaksi"]}",
-                                                                              style: Theme.of(context).textTheme.caption!.copyWith(
+                                                                              style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                                                                     fontWeight: FontWeight.w600,
                                                                                     color: dark,
                                                                                   ),
@@ -543,10 +543,10 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                                       controller.querySearch[index]["nominal"],
                                                                                     ),
                                                                               style: controller.querySearch[index]["jenisTransaksi"] == "Pengeluaran"
-                                                                                  ? Theme.of(context).textTheme.caption!.copyWith(
+                                                                                  ? Theme.of(context).textTheme.bodySmall!.copyWith(
                                                                                         color: const Color(0XFFCC444B),
                                                                                       )
-                                                                                  : Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                                  : Theme.of(context).textTheme.bodyMedium!.copyWith(
                                                                                         color: const Color(0XFF0096C7),
                                                                                       ),
                                                                             ),
@@ -564,7 +564,7 @@ class AnggaranDetailView extends GetView<CashflowController> {
                                                                       style: Theme.of(
                                                                               context)
                                                                           .textTheme
-                                                                          .caption!
+                                                                          .bodySmall!
                                                                           .copyWith(
                                                                               color: grey400),
                                                                     ),

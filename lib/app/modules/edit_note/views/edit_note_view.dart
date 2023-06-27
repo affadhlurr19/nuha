@@ -37,7 +37,7 @@ class EditNoteView extends GetView<EditNoteController> {
                   autocorrect: false,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                   decoration: const InputDecoration(
                     labelText: "title",
@@ -50,7 +50,7 @@ class EditNoteView extends GetView<EditNoteController> {
                   autocorrect: false,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                   decoration: const InputDecoration(
                     labelText: "description",

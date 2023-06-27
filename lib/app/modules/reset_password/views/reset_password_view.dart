@@ -48,7 +48,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                 width: widthDevice,
                 child: Text(
                   'Setel ulang kata sandi anda!',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       fontWeight: FontWeight.w600,
                       fontSize: 17.sp,
                       color: const Color(0XFF1F1F1F)),
@@ -60,7 +60,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                 width: widthDevice,
                 child: Text(
                   'Untuk setel ulang kata sandi, silahkan masukkan email yang sudah terdaftar, ya!',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 11.sp,
                       color: grey500),
@@ -72,7 +72,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                 width: widthDevice,
                 child: Text(
                   'Email',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w600,
                       fontSize: 11.sp,
                       color: grey500),
@@ -90,11 +90,11 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   textInputAction: TextInputAction.done,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2!
+                      .bodyMedium!
                       .copyWith(fontWeight: FontWeight.w400, fontSize: 11.sp),
                   decoration: InputDecoration(
                     hintText: 'Nuha@gmail.com',
-                    hintStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: 11.sp,
                         color: grey400),
@@ -117,7 +117,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   textAlign: TextAlign.center,
                   text: TextSpan(
                     text: 'Kata sandi sudah di setel ulang? ',
-                    style: Theme.of(context).textTheme.caption!.copyWith(
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           fontSize: 9.sp,
                           color: const Color(0xFF919191),
                           fontWeight: FontWeight.w400,
@@ -127,7 +127,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () => Get.toNamed(Routes.LOGIN),
                         text: 'Masuk',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               fontSize: 9.sp,
                               color: buttonColor1,
                               fontWeight: FontWeight.w600,
@@ -155,7 +155,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                               "Kirim",
                               style: Theme.of(context)
                                   .textTheme
-                                  .button!
+                                  .labelLarge!
                                   .copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white,
@@ -185,7 +185,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   text: TextSpan(
                     text:
                         'Dengan masuk atau melakukan pendaftaran, kamu menyetujui ',
-                    style: Theme.of(context).textTheme.caption!.copyWith(
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           fontSize: 9.sp,
                           color: const Color(0xFF919191),
                           fontWeight: FontWeight.w400,
@@ -193,7 +193,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                     children: <TextSpan>[
                       TextSpan(
                         text: 'Ketentuan Layanan ',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               fontSize: 9.sp,
                               color: buttonColor1,
                               fontWeight: FontWeight.w700,
@@ -201,7 +201,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                       ),
                       TextSpan(
                         text: 'dan ',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               fontSize: 9.sp,
                               color: const Color(0xFF919191),
                               fontWeight: FontWeight.w400,
@@ -209,7 +209,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                       ),
                       TextSpan(
                         text: 'Kebijakan Privasi',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               fontSize: 9.sp,
                               color: buttonColor1,
                               fontWeight: FontWeight.w700,

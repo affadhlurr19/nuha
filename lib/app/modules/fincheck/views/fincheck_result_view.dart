@@ -36,7 +36,7 @@ class FincheckResultView extends GetView<FincheckController> {
           children: [
             GradientText(
               "Hasil Analisa",
-              style: Theme.of(context).textTheme.headline3!,
+              style: Theme.of(context).textTheme.displaySmall!,
               colors: const [
                 buttonColor1,
                 buttonColor2,
