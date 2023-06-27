@@ -50,7 +50,7 @@ class DetailVideoView extends GetView<DetailVideoController> {
                 case ResultStatus.hasData:
                   var detail = c.resultDetailVideo.data;
                   final youtubeC = YoutubePlayerController(
-                    initialVideoId: detail.video.substring(17),
+                    initialVideoId: detail.video.substring(32),
                     flags: const YoutubePlayerFlags(
                       autoPlay: true,
                       mute: false,
@@ -182,22 +182,22 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                     colors: const [buttonColor1, buttonColor2],
                                   ),
                                 ),
-                                SizedBox(height: 0.5.h),
-                                Container(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 12.2.w),
-                                  child: Text(
-                                    DateFormat('dd MMMM yyyy, HH:mm')
-                                        .format(detail.createdAt),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 9.sp,
-                                            color: grey500),
-                                  ),
-                                ),
+                                // SizedBox(height: 0.5.h),
+                                // Container(
+                                //   padding:
+                                //       EdgeInsets.symmetric(horizontal: 12.2.w),
+                                //   child: Text(
+                                //     DateFormat('dd MMMM yyyy, HH:mm')
+                                //         .format(detail.createdAt),
+                                //     style: Theme.of(context)
+                                //         .textTheme
+                                //         .bodyLarge!
+                                //         .copyWith(
+                                //             fontWeight: FontWeight.w400,
+                                //             fontSize: 9.sp,
+                                //             color: grey500),
+                                //   ),
+                                // ),
                                 SizedBox(height: 2.5.h),
                                 Padding(
                                   padding:

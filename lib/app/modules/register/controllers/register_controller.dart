@@ -77,6 +77,7 @@ class RegisterController extends GetxController {
             "phone": "",
             "tgl_lahir": "",
             "pekerjaan": "",
+            "pin": "",
             "created_at": DateTime.now().toIso8601String(),
           });
           Get.offAllNamed(Routes.LOGIN);
@@ -124,10 +125,20 @@ class RegisterController extends GetxController {
           "phone": "",
           "tgl_lahir": "",
           "pekerjaan": "",
+          "pin": "",
           "created_at": DateTime.now().toIso8601String(),
         });
       }
-      Get.offAllNamed(Routes.NAVBAR);
+
+      final DocumentSnapshot<Map<String, dynamic>> userDoc =
+          await firestore.collection('users').doc(auth.currentUser!.uid).get();
+      var pinCheck = userDoc.data()!['pin'];
+
+      if (pinCheck == '') {
+        Get.toNamed(Routes.CREATE_PIN);
+      } else {
+        Get.toNamed(Routes.AUTH_PIN, arguments: Routes.NAVBAR);
+      }
     } on FirebaseAuthException catch (e) {
       isLoadingG.value = false;
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {

@@ -270,10 +270,13 @@ class GantiFotoProfilView extends GetView {
                           onPressed: () => Get.back(),
                           child: Text(
                             'Batalkan',
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11.sp,
-                                color: buttonColor2),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 11.sp,
+                                    color: buttonColor2),
                           ),
                         ),
                       ),

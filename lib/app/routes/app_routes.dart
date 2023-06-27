@@ -36,6 +36,14 @@ abstract class Routes {
   static const RIWAYAT_KONSULTASI = _Paths.RIWAYAT_KONSULTASI;
   static const CARI_VIDEO = _Paths.CARI_VIDEO;
   static const PENGATURAN_NOTIFIKASI = _Paths.PENGATURAN_NOTIFIKASI;
+  static const CREATE_PESANAN_KONSULTASI = _Paths.CREATE_PESANAN_KONSULTASI;
+  static const CONFIRM_CONSULTATION_PAYMENT =
+      _Paths.CONFIRM_CONSULTATION_PAYMENT;
+  static const PIN = _Paths.PIN;
+  static const EDIT_PIN = _Paths.EDIT_PIN;
+  static const CREATE_PIN = _Paths.CREATE_PIN;
+  static const CONFIRM_PIN = _Paths.CONFIRM_PIN;
+  static const AUTH_PIN = _Paths.AUTH_PIN;
 }
 
 abstract class _Paths {
@@ -71,4 +79,11 @@ abstract class _Paths {
   static const RIWAYAT_KONSULTASI = '/riwayat-konsultasi';
   static const CARI_VIDEO = '/cari-video';
   static const PENGATURAN_NOTIFIKASI = '/pengaturan-notifikasi';
+  static const CREATE_PESANAN_KONSULTASI = '/create-pesanan-konsultasi';
+  static const CONFIRM_CONSULTATION_PAYMENT = '/confirm-consultation-payment';
+  static const PIN = '/pin';
+  static const EDIT_PIN = '/edit-pin';
+  static const CREATE_PIN = '/create-pin';
+  static const CONFIRM_PIN = '/confirm-pin';
+  static const AUTH_PIN = '/auth-pin';
 }

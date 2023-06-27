@@ -34,13 +34,13 @@ class ListVideo {
 
 class Datum {
   int id;
-  int adminId;
-  String category;
+  String adminId;
+  Category category;
   String title;
   String video;
   String description;
-  DateTime createdAt;
-  DateTime updatedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Datum({
     required this.id,
@@ -49,29 +49,59 @@ class Datum {
     required this.title,
     required this.video,
     required this.description,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         adminId: json["adminId"],
-        category: json["category"],
+        category: categoryValues.map[json["category"]]!,
         title: json["title"],
         video: json["video"],
         description: json["description"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "adminId": adminId,
-        "category": category,
+        "category": categoryValues.reverse[category],
         "title": title,
         "video": video,
         "description": description,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
+}
+
+enum Category {
+  KEUANGAN_SYARIAH,
+  ASURANSI_SYARIAH,
+  EKONOMI_SYARIAH,
+  PERENCANAAN_KEUANGAN,
+  PENGELOLAAN_KEUANGAN,
+  INVESTASI_SYARIAH
+}
+
+final categoryValues = EnumValues({
+  "Asuransi Syariah": Category.ASURANSI_SYARIAH,
+  "Ekonomi Syariah": Category.EKONOMI_SYARIAH,
+  "Investasi Syariah": Category.INVESTASI_SYARIAH,
+  "Keuangan Syariah": Category.KEUANGAN_SYARIAH,
+  "Pengelolaan Keuangan": Category.PENGELOLAAN_KEUANGAN,
+  "Perencanaan Keuangan": Category.PERENCANAAN_KEUANGAN
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }

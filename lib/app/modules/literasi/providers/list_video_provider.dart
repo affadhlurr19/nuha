@@ -8,7 +8,7 @@ import 'package:nuha/app/modules/literasi/models/list_video_model.dart';
 import 'package:nuha/app/modules/literasi/models/recommended_video_model.dart';
 
 class ListVideoProvider {
-  static const String _baseUrl = 'https://nuha-restapi.000webhostapp.com/api/';
+  static const String _baseUrl = 'https://nuha.my.id/api/';
 
   Future<ListVideo> getListVideo(http.Client client) async {
     try {

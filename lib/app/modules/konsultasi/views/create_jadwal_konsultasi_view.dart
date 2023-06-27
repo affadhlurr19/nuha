@@ -19,7 +19,6 @@ class CreateJadwalKonsultasiView
     extends GetView<ScheduleConsultationController> {
   CreateJadwalKonsultasiView({Key? key}) : super(key: key);
   final c = Get.find<ScheduleConsultationController>();
-  final meetc = Get.find<GenerateMeetingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class CreateJadwalKonsultasiView
           Container(
             padding: EdgeInsets.only(right: 2.98.w),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => c.showConsultationInfo(),
               icon: Iconify(
                 Ion.md_information_circle_outline,
                 size: 3.h,
@@ -81,7 +80,7 @@ class CreateJadwalKonsultasiView
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.5.w),
             child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-              future: c.getConsultant(Get.arguments),
+              future: c.getConsultant(c.consultantId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -188,13 +187,13 @@ class CreateJadwalKonsultasiView
               'Silahkan Pilih Waktu Konsultasi Anda',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontWeight: FontWeight.w600,
-                    fontSize: 13.sp,
+                    fontSize: 12.sp,
                     color: titleColor,
                   ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 3.w),
+            padding: EdgeInsets.symmetric(horizontal: 5.w),
             child: Obx(
               () {
                 if (c.availableDays.isEmpty) {
@@ -329,32 +328,45 @@ class CreateJadwalKonsultasiView
           Expanded(
             child: Obx(
               () => Padding(
-                padding: EdgeInsets.symmetric(horizontal: 3.w),
+                padding: EdgeInsets.symmetric(horizontal: 5.w),
                 child: GridView.builder(
                   physics: const BouncingScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 170,
+                      maxCrossAxisExtent: 150,
                       childAspectRatio: 6 / 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
                   itemCount: c.schedules.length,
                   itemBuilder: (context, index) {
                     final schedules = c.schedules[index];
+                    TimeOfDay timeOfDayStart =
+                        c.timeConvert(schedules.startTime);
+                    TimeOfDay timeOfDayEnd = c.timeConvert(schedules.endTime);
+                    DateTime updateStartDateTime = DateTime(
+                      c.selectedDate.value.year,
+                      c.selectedDate.value.month,
+                      c.selectedDate.value.day,
+                      timeOfDayStart.hour,
+                      timeOfDayStart.minute,
+                    );
+                    DateTime updateEndDateTime = DateTime(
+                      c.selectedDate.value.year,
+                      c.selectedDate.value.month,
+                      c.selectedDate.value.day,
+                      timeOfDayEnd.hour,
+                      timeOfDayEnd.minute,
+                    );
                     return GestureDetector(
                       onTap: () {
-                        TimeOfDay timeOfDay =
-                            c.timeConvert(schedules.startTime);
-                        DateTime updateDateTime = DateTime(
-                          c.selectedDate.value.year,
-                          c.selectedDate.value.month,
-                          c.selectedDate.value.day,
-                          timeOfDay.hour,
-                          timeOfDay.minute,
-                        );
-                        print('Tanggal & Waktu Konsultasi: ${updateDateTime}');
-                        c.dateTimeBooked.value = updateDateTime;
+                        print(
+                            'Tanggal & Waktu Mulai Konsultasi: ${updateStartDateTime}');
+                        print(
+                            'Tanggal & Waktu Selesai Konsultasi: ${updateEndDateTime}');
+                        c.startDateTimeBooked.value = updateStartDateTime;
+                        c.endDateTimeBooked.value = updateEndDateTime;
                         c.isScheduleSelected.value = true;
-                        print(c.dateTimeBooked);
+                        c.scheduleConsultationId =
+                            c.schedules[index].scheduleId;
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -396,11 +408,11 @@ class CreateJadwalKonsultasiView
                       children: [
                         Text(
                           DateFormat('EEEE, d MMMM yyyy, HH:mm', 'id_ID')
-                              .format(c.dateTimeBooked.value),
+                              .format(c.startDateTimeBooked.value),
                           style:
                               Theme.of(context).textTheme.bodySmall!.copyWith(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 12.sp,
+                                    fontSize: 11.sp,
                                     color: titleColor,
                                   ),
                         ),
@@ -408,51 +420,13 @@ class CreateJadwalKonsultasiView
                           style: ElevatedButton.styleFrom(
                             backgroundColor: buttonColor2,
                           ),
-                          onPressed: () async {
-                            // final time =
-                            //     DateFormat('EEEE, d MMMM yyyy, HH:mm', 'id_ID')
-                            //         .format(c.dateTimeBooked.value);
-                            // print('Jadwal: ${time}');
-                            // await meetc.createNewMeetLink();
-
-                            // int startTimeInEpoch = DateTime(
-                            //   c.selectedDate.value.year,
-                            //   c.selectedDate.value.month,
-                            //   c.selectedDate.value.day,
-                            //   c.selectedDate.value.hour,
-                            //   c.selectedDate.value.minute,
-                            // ).microsecondsSinceEpoch;
-
-                            // int endTimeInEpoch = DateTime(
-                            //   c.selectedDate.value.year,
-                            //   c.selectedDate.value.month,
-                            //   c.selectedDate.value.day,
-                            //   12,
-                            //   00,
-                            // ).millisecondsSinceEpoch;
-
-                            // print(
-                            //     'DIFFERENCE: ${endTimeInEpoch - startTimeInEpoch}');
-
-                            // print(
-                            //     'Start Time: ${DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch)}');
-                            // print(
-                            //     'End Time: ${DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch)}');
-
-                            meetc.calendarClient.insert(
-                              'Contoh Event',
-                              meetc.startTime,
-                              meetc.endTime,
+                          onPressed: () {
+                            c.getOrderData(
+                              Get.arguments,
+                              c.scheduleConsultationId,
+                              c.startDateTimeBooked.value,
+                              c.endDateTimeBooked.value,
                             );
-
-                            // final meetingStartTime = DateTime.now().toUtc();
-                            // final meetingEndTime = meetingStartTime
-                            //     .add(Duration(hours: 1))
-                            //     .toUtc();
-
-                            // final meetingLink =
-                            //     await meetc.calendarClient.insert();
-                            // print('Google Meet Link: $meetingLink');
                           },
                           child: Text(
                             'Pesan',
@@ -475,7 +449,7 @@ class CreateJadwalKonsultasiView
                           style:
                               Theme.of(context).textTheme.bodySmall!.copyWith(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 12.sp,
+                                    fontSize: 11.sp,
                                     color: grey500,
                                   ),
                         ),

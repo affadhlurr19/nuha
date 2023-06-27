@@ -1,69 +1,188 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:nuha/app/modules/konsultasi/models/consultant_model.dart';
 
 class KonsultasiController extends GetxController {
   RxBool isSelected = false.obs;
   RxInt tag = RxInt(1);
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  RxList<DocumentSnapshot> consultants = RxList<DocumentSnapshot>([]);
-  RxList<DocumentSnapshot> detailConsultant = RxList<DocumentSnapshot>([]);
-  RxBool shouldUpdate = RxBool(false);
+  RxList<Consultant> consultantList = <Consultant>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     initializeDateFormatting('id', null);
-    fetchData();
   }
 
-  void fetchData() {
-    ever(tag, (_) {
-      updateData([]);
-      getConsultant().listen((snapshot) {
-        updateData(snapshot.docs);
-      });
-    });
-  }
+  Future<List<Consultant>> getAllConsultant() async {
+    try {
+      QuerySnapshot consultantData =
+          await firestore.collection('consultant').get();
 
-  void updateData(List<DocumentSnapshot> data) {
-    consultants.assignAll(data);
-  }
+      consultantList.clear();
 
-  Stream<QuerySnapshot> getConsultant() {
-    if (tag.value == 1) {
-      return firestore.collection('consultant').snapshots()
-        ..where((_) => shouldUpdate.value);
-    } else if (tag.value == 2) {
-      return firestore
-          .collection('consultant')
-          .where('category', isEqualTo: 'Dana Pensiun')
-          .snapshots()
-          .where((_) => shouldUpdate.value);
-    } else if (tag.value == 3) {
-      return firestore
-          .collection('consultant')
-          .where('category', isEqualTo: 'Pajak')
-          .snapshots()
-          .where((_) => shouldUpdate.value);
-    } else if (tag.value == 4) {
-      return firestore
-          .collection('consultant')
-          .where('category', isEqualTo: 'Perencanaan Keuangan')
-          .snapshots()
-          .where((_) => shouldUpdate.value);
-    } else {
-      return firestore
-          .collection('consultant')
-          .where('category', isEqualTo: 'Review Keuangan')
-          .snapshots()
-          .where((_) => shouldUpdate.value);
+      consultantList.value = consultantData.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        Consultant consultant = Consultant(
+          consultantId: doc.id,
+          name: data['name'],
+          category: data['category'],
+          description: data['description'],
+          imageUrl: data['imageUrl'],
+          lastEducation: data['lastEducation'],
+          location: data['location'],
+          price: data['price'].toString(),
+          sertificationId: data['sertificationId'],
+          isAvailable: data['isAvailable'],
+        );
+
+        return consultant;
+      }).toList();
+
+      return consultantList;
+    } catch (e) {
+      print(e);
+      return consultantList;
     }
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getDetailConsultant(
-      String id) async {
-    return FirebaseFirestore.instance.collection('consultant').doc(id).get();
+  Future<void> getConsultantDanaPensiun() async {
+    try {
+      QuerySnapshot consultantData = await firestore
+          .collection('consultant')
+          .where('category', isEqualTo: 'Dana Pensiun')
+          .get();
+
+      consultantList.clear();
+
+      consultantList.value = consultantData.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        Consultant consultant = Consultant(
+          consultantId: doc.id,
+          name: data['name'],
+          category: data['category'],
+          description: data['description'],
+          imageUrl: data['imageUrl'],
+          lastEducation: data['lastEducation'],
+          location: data['location'],
+          price: data['price'].toString(),
+          sertificationId: data['sertificationId'],
+          isAvailable: data['isAvailable'],
+        );
+
+        return consultant;
+      }).toList();
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(content: Text('$e')),
+      );
+    }
+  }
+
+  Future<void> getConsultantPajak() async {
+    try {
+      QuerySnapshot consultantData = await firestore
+          .collection('consultant')
+          .where('category', isEqualTo: 'Pajak')
+          .get();
+
+      consultantList.clear();
+
+      consultantList.value = consultantData.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        Consultant consultant = Consultant(
+          consultantId: doc.id,
+          name: data['name'],
+          category: data['category'],
+          description: data['description'],
+          imageUrl: data['imageUrl'],
+          lastEducation: data['lastEducation'],
+          location: data['location'],
+          price: data['price'].toString(),
+          sertificationId: data['sertificationId'],
+          isAvailable: data['isAvailable'],
+        );
+
+        return consultant;
+      }).toList();
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(content: Text('$e')),
+      );
+    }
+  }
+
+  Future<void> getConsultantPerencanaan() async {
+    try {
+      QuerySnapshot consultantData = await firestore
+          .collection('consultant')
+          .where('category', isEqualTo: 'Perencanaan Keuangan')
+          .get();
+
+      consultantList.clear();
+
+      consultantList.value = consultantData.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        Consultant consultant = Consultant(
+          consultantId: doc.id,
+          name: data['name'],
+          category: data['category'],
+          description: data['description'],
+          imageUrl: data['imageUrl'],
+          lastEducation: data['lastEducation'],
+          location: data['location'],
+          price: data['price'].toString(),
+          sertificationId: data['sertificationId'],
+          isAvailable: data['isAvailable'],
+        );
+
+        return consultant;
+      }).toList();
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(content: Text('$e')),
+      );
+    }
+  }
+
+  Future<void> getConsultantReviewKeuangan() async {
+    try {
+      QuerySnapshot consultantData = await firestore
+          .collection('consultant')
+          .where('category', isEqualTo: 'Review Keuangan')
+          .get();
+
+      consultantList.clear();
+
+      consultantList.value = consultantData.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        Consultant consultant = Consultant(
+          consultantId: doc.id,
+          name: data['name'],
+          category: data['category'],
+          description: data['description'],
+          imageUrl: data['imageUrl'],
+          lastEducation: data['lastEducation'],
+          location: data['location'],
+          price: data['price'].toString(),
+          sertificationId: data['sertificationId'],
+          isAvailable: data['isAvailable'],
+        );
+
+        return consultant;
+      }).toList();
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(content: Text('$e')),
+      );
+    }
   }
 }

@@ -153,11 +153,20 @@ class ListVideoView extends GetView<LiterasiController> {
                                     child: Image.network(
                                       YoutubeThumbnail(
                                               youtubeId:
-                                                  video.video.substring(17))
+                                                  video.video.substring(32))
                                           .standard(),
                                       height: 8.625.h,
                                       width: 29.72.w,
                                       fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, exception, stackTrace) {
+                                        return Container(
+                                          height: 8.625.h,
+                                          width: 29.72.w,
+                                          color: Colors.grey,
+                                          child: const Icon(Icons.error),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -181,19 +190,19 @@ class ListVideoView extends GetView<LiterasiController> {
                                                 color: const Color(0XFF0D4136),
                                                 fontSize: 9.sp),
                                       ),
-                                      Text(
-                                        timeago.format(video.createdAt,
-                                            locale: 'id'),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                color: grey500,
-                                                fontSize: 8.sp),
-                                      ),
+                                      // Text(
+                                      //   timeago.format(video.createdAt,
+                                      //       locale: 'id'),
+                                      //   maxLines: 1,
+                                      //   overflow: TextOverflow.ellipsis,
+                                      //   style: Theme.of(context)
+                                      //       .textTheme
+                                      //       .bodySmall!
+                                      //       .copyWith(
+                                      //           fontWeight: FontWeight.w400,
+                                      //           color: grey500,
+                                      //           fontSize: 8.sp),
+                                      // ),
                                     ],
                                   ),
                                 ),

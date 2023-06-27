@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
   flutter_localization
   permission_handler_windows
+  smart_auth
   url_launcher_windows
 )
 

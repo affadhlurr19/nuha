@@ -13,6 +13,7 @@ import 'package:iconify_flutter/icons/ph.dart';
 import 'package:iconify_flutter/icons/ri.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/konsultasi/models/consultant_model.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 
@@ -64,139 +65,141 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
       body: AnimationLimiter(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: StreamBuilder<QuerySnapshot>(
-              stream: konsultasiC.getConsultant(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Padding(
-                    padding: EdgeInsets.only(top: 50.h),
-                    child: const Center(
-                      child: CircularProgressIndicator(color: buttonColor1),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: 1.875.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  child: Obx(
+                    () => ChipsChoice.single(
+                      spacing: 3.3.w,
+                      wrapped: true,
+                      padding: EdgeInsets.symmetric(horizontal: 0.w),
+                      value: konsultasiC.tag.value,
+                      onChanged: (val) {
+                        konsultasiC.tag.value = val;
+                      },
+                      choiceItems: const <C2Choice>[
+                        C2Choice(value: 1, label: 'Semua'),
+                        C2Choice(value: 2, label: 'Dana Pensiun'),
+                        C2Choice(value: 3, label: 'Pajak'),
+                        C2Choice(value: 4, label: 'Perencanaan Keuangan'),
+                        C2Choice(value: 5, label: 'Review Keuangan'),
+                      ],
+                      choiceStyle: C2ChipStyle.filled(
+                        foregroundStyle: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(
+                                color: grey400,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 9.sp),
+                        color: grey50,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50)),
+                        selectedStyle: C2ChipStyle(
+                          backgroundColor: buttonColor1,
+                          foregroundStyle: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                  color: backgroundColor1,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 9.sp),
+                        ),
+                      ),
                     ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(
-                    child: Text('No data available'),
-                  );
-                } else {
-                  konsultasiC.updateData(snapshot.data?.docs ?? []);
-                  return Obx(
-                    () => Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 1.875.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            child: Obx(
-                              () => ChipsChoice.single(
-                                spacing: 3.3.w,
-                                wrapped: true,
-                                padding: EdgeInsets.symmetric(horizontal: 0.w),
-                                value: konsultasiC.tag.value,
-                                onChanged: (val) {
-                                  konsultasiC.tag.value = val;
-                                  konsultasiC.shouldUpdate.value =
-                                      !konsultasiC.shouldUpdate.value;
-                                },
-                                choiceItems: const <C2Choice>[
-                                  C2Choice(value: 1, label: 'Semua'),
-                                  C2Choice(value: 2, label: 'Dana Pensiun'),
-                                  C2Choice(value: 3, label: 'Pajak'),
-                                  C2Choice(
-                                      value: 4, label: 'Perencanaan Keuangan'),
-                                  C2Choice(value: 5, label: 'Review Keuangan'),
-                                ],
-                                choiceStyle: C2ChipStyle.filled(
-                                  foregroundStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                          color: grey400,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 9.sp),
-                                  color: grey50,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(50)),
-                                  selectedStyle: C2ChipStyle(
-                                    backgroundColor: buttonColor1,
-                                    foregroundStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                            color: backgroundColor1,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 9.sp),
-                                  ),
-                                ),
-                              ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 2.5.h),
+              // Container(
+              //   padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
+              //   child: TextField(
+              //     onTap: () {},
+              //     readOnly: true,
+              //     cursorColor: buttonColor1,
+              //     autocorrect: false,
+              //     style: Theme.of(context)
+              //         .textTheme
+              //         .bodySmall!
+              //         .copyWith(
+              //             fontWeight: FontWeight.w400,
+              //             fontSize: 9.sp,
+              //             color: grey400),
+              //     decoration: InputDecoration(
+              //       hintText: 'Cari konsultan disini',
+              //       hintStyle: Theme.of(context)
+              //           .textTheme
+              //           .bodySmall!
+              //           .copyWith(
+              //               fontWeight: FontWeight.w400,
+              //               fontSize: 9.sp,
+              //               color: grey400),
+              //       filled: true,
+              //       fillColor: backgroundColor1,
+              //       contentPadding: EdgeInsets.symmetric(
+              //           horizontal: 1.h, vertical: 1.h),
+              //       enabledBorder: OutlineInputBorder(
+              //           borderSide:
+              //               const BorderSide(width: 0, color: grey50),
+              //           borderRadius: BorderRadius.circular(10)),
+              //       focusedBorder: OutlineInputBorder(
+              //           borderSide:
+              //               const BorderSide(width: 0, color: grey50),
+              //           borderRadius: BorderRadius.circular(10)),
+              //       suffixIcon: IconButton(
+              //         splashColor: Colors.transparent,
+              //         highlightColor: Colors.transparent,
+              //         onPressed: () {},
+              //         icon: Iconify(
+              //           Ri.search_line,
+              //           size: 12.sp,
+              //           color: grey400,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(height: 2.5.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
+                child: Obx(
+                  () => FutureBuilder(
+                      future: (konsultasiC.tag.value == 1)
+                          ? konsultasiC.getAllConsultant()
+                          : (konsultasiC.tag.value == 2)
+                              ? konsultasiC.getConsultantDanaPensiun()
+                              : (konsultasiC.tag.value == 3)
+                                  ? konsultasiC.getConsultantPajak()
+                                  : (konsultasiC.tag.value == 4)
+                                      ? konsultasiC.getConsultantPerencanaan()
+                                      : konsultasiC
+                                          .getConsultantReviewKeuangan(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 40.h),
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                  color: buttonColor1),
                             ),
-                          ),
-                        ),
-                        SizedBox(height: 2.5.h),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
-                          child: TextField(
-                            onTap: () {},
-                            readOnly: true,
-                            cursorColor: buttonColor1,
-                            autocorrect: false,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 9.sp,
-                                    color: grey400),
-                            decoration: InputDecoration(
-                              hintText: 'Cari konsultan disini',
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 9.sp,
-                                      color: grey400),
-                              filled: true,
-                              fillColor: backgroundColor1,
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 1.h, vertical: 1.h),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(width: 0, color: grey50),
-                                  borderRadius: BorderRadius.circular(10)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(width: 0, color: grey50),
-                                  borderRadius: BorderRadius.circular(10)),
-                              suffixIcon: IconButton(
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onPressed: () {},
-                                icon: Iconify(
-                                  Ri.search_line,
-                                  size: 12.sp,
-                                  color: grey400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 2.5.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
-                          child: ListView.builder(
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return ListView.builder(
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
-                            itemCount: konsultasiC.consultants.length,
+                            itemCount: konsultasiC.consultantList.length,
                             itemBuilder: (context, index) {
-                              var consultant = controller.consultants[index];
+                              var consultant =
+                                  konsultasiC.consultantList[index];
                               return AnimationConfiguration.staggeredList(
                                 position: index,
                                 duration: const Duration(milliseconds: 375),
@@ -236,7 +239,7 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                                                         BorderRadius.circular(
                                                             16),
                                                     child: Image.network(
-                                                      consultant['imageUrl'],
+                                                      consultant.imageUrl,
                                                       height: 8.375.h,
                                                       width: 8.375.h,
                                                       fit: BoxFit.cover,
@@ -254,7 +257,7 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      consultant['name'],
+                                                      consultant.name,
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -270,7 +273,7 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                                                               fontSize: 9.sp),
                                                     ),
                                                     Text(
-                                                      consultant['category'],
+                                                      consultant.category,
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -289,8 +292,8 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                                                         locale: 'id',
                                                         symbol: 'Rp. ',
                                                       )
-                                                          .format(consultant[
-                                                              'price'])
+                                                          .format(int.parse(
+                                                              consultant.price))
                                                           .replaceAll(
                                                               ",00", ""),
                                                       maxLines: 1,
@@ -322,8 +325,9 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                                                               onPressed: () {
                                                                 customShowDialog(
                                                                     context,
-                                                                    consultant
-                                                                        .id);
+                                                                    konsultasiC
+                                                                            .consultantList[
+                                                                        index]);
                                                               },
                                                               style:
                                                                   ElevatedButton
@@ -363,19 +367,19 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                                 ),
                               );
                             },
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              }),
+                          );
+                        }
+                      }),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void customShowDialog(BuildContext context, String consultantId) {
+  void customShowDialog(BuildContext context, Consultant consultant) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -397,347 +401,308 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
-                  child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                      future: konsultasiC.getDetailConsultant(consultantId),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child:
-                                CircularProgressIndicator(color: buttonColor1),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Center(
-                            child: Text('Error: ${snapshot.error}'),
-                          );
-                        } else {
-                          if (snapshot.hasData && snapshot.data != null) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              buttonColor1,
+                              buttonColor2,
+                            ],
+                          ),
+                          border: Border.all(
+                            width: 2,
+                            style: BorderStyle.solid,
+                            color: Colors.transparent,
+                          ),
+                          borderRadius:
+                              BorderRadius.circular(100), //<-- SEE HERE
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(90),
+                          child: Image.network(
+                            consultant.imageUrl,
+                            height: 67,
+                            width: 67,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 2.49.h),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          consultant.name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: titleColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 2.13.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.11.w),
+                        child: Text(
+                          consultant.description,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: grey500,
+                                  fontSize: 11.sp),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 2.13.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.11.w),
+                        child: Text(
+                          NumberFormat.currency(
+                            locale: 'id',
+                            symbol: 'Rp. ',
+                          )
+                              .format(int.parse(consultant.price))
+                              .replaceAll(",00", ""),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: grey500,
+                                  fontSize: 11.sp),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 2.13.h),
+                      const Divider(
+                        color: grey50,
+                        thickness: 1,
+                      ),
+                      SizedBox(height: 2.13.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Expanded(
+                            flex: 1,
+                            child: Iconify(
+                              Cil.school,
+                              color: titleColor,
+                              size: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            flex: 9,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                      colors: [
-                                        buttonColor1,
-                                        buttonColor2,
-                                      ],
-                                    ),
-                                    border: Border.all(
-                                      width: 2,
-                                      style: BorderStyle.solid,
-                                      color: Colors.transparent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        100), //<-- SEE HERE
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(90),
-                                    child: Image.network(
-                                      snapshot.data!["imageUrl"],
-                                      height: 67,
-                                      width: 67,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                                Text(
+                                  'Alumnus',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          color: titleColor,
+                                          fontSize: 9.sp),
                                 ),
-                                SizedBox(height: 2.49.h),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: Text(
-                                    snapshot.data!["name"],
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(
-                                            fontSize: 13.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: titleColor),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                SizedBox(height: 2.13.h),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 4.11.w),
-                                  child: Text(
-                                    snapshot.data!["description"],
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            color: grey500,
-                                            fontSize: 11.sp),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                SizedBox(height: 2.13.h),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 4.11.w),
-                                  child: Text(
-                                    NumberFormat.currency(
-                                      locale: 'id',
-                                      symbol: 'Rp. ',
-                                    )
-                                        .format(snapshot.data!['price'])
-                                        .replaceAll(",00", ""),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            color: grey500,
-                                            fontSize: 11.sp),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                SizedBox(height: 2.13.h),
-                                const Divider(
-                                  color: grey50,
-                                  thickness: 1,
-                                ),
-                                SizedBox(height: 2.13.h),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Expanded(
-                                      flex: 1,
-                                      child: Iconify(
-                                        Cil.school,
-                                        color: titleColor,
-                                        size: 16,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      flex: 9,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Alumnus',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium!
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: titleColor,
-                                                    fontSize: 9.sp),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            snapshot.data!["lastEducation"],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium!
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w400,
-                                                    color: grey400,
-                                                    fontSize: 9.sp),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 2.13.h),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Expanded(
-                                      flex: 1,
-                                      child: Iconify(
-                                        Ph.map_pin_fill,
-                                        color: titleColor,
-                                        size: 16,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      flex: 9,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Lokasi',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium!
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: titleColor,
-                                                    fontSize: 9.sp),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            snapshot.data!["location"],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium!
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w400,
-                                                    color: grey400,
-                                                    fontSize: 9.sp),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 2.13.h),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Expanded(
-                                      flex: 1,
-                                      child: Iconify(
-                                        Carbon.certificate,
-                                        color: titleColor,
-                                        size: 16,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      flex: 9,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'ID Sertifikasi CFP',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium!
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: titleColor,
-                                                    fontSize: 9.sp),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            snapshot.data!["sertificationId"],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium!
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w400,
-                                                    color: grey400,
-                                                    fontSize: 9.sp),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 3.5.h),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    SizedBox(
-                                      height: 32,
-                                      width: 115,
-                                      child: OutlinedButton(
-                                        onPressed: () => Get.back(),
-                                        style: OutlinedButton.styleFrom(
-                                          foregroundColor: buttonColor2,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 18, vertical: 6),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          ),
-                                          side: const BorderSide(
-                                            color: buttonColor2,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Tutup',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: buttonColor2,
-                                                  fontSize: 11.sp),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 32,
-                                      width: 115,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          Get.back();
-                                          Get.toNamed(
-                                              Routes.CREATE_JADWAL_KONSULTASI,
-                                              arguments: consultantId);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: buttonColor2,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 18, vertical: 6),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Tanya',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white,
-                                                  fontSize: 11.sp),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                const SizedBox(height: 4),
+                                Text(
+                                  consultant.lastEducation,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: grey400,
+                                          fontSize: 9.sp),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
-                            );
-                          } else {
-                            return const Text('Data not Found');
-                          }
-                        }
-                      }),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 2.13.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Expanded(
+                            flex: 1,
+                            child: Iconify(
+                              Ph.map_pin_fill,
+                              color: titleColor,
+                              size: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            flex: 9,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Lokasi',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          color: titleColor,
+                                          fontSize: 9.sp),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  consultant.location,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: grey400,
+                                          fontSize: 9.sp),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 2.13.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Expanded(
+                            flex: 1,
+                            child: Iconify(
+                              Carbon.certificate,
+                              color: titleColor,
+                              size: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            flex: 9,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'ID Sertifikasi CFP',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          color: titleColor,
+                                          fontSize: 9.sp),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  consultant.sertificationId,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: grey400,
+                                          fontSize: 9.sp),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 3.5.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            height: 32,
+                            width: 115,
+                            child: OutlinedButton(
+                              onPressed: () => Get.back(),
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: buttonColor2,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 18, vertical: 6),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                side: const BorderSide(
+                                  color: buttonColor2,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Text(
+                                'Tutup',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: buttonColor2,
+                                        fontSize: 11.sp),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 32,
+                            width: 115,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Get.back();
+                                Get.toNamed(Routes.CREATE_JADWAL_KONSULTASI,
+                                    arguments: consultant.consultantId);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: buttonColor2,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 18, vertical: 6),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
+                              child: Text(
+                                'Tanya',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        fontSize: 11.sp),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         );
       },
-    ).then((result) {
-      if (result != null && result) {
-        // Aksi ketika pengguna menekan "OK"
-      } else {
-        // Aksi ketika pengguna menekan "Batal" atau menutup dialog
-      }
-    });
+    );
   }
 }

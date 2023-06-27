@@ -1,6 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-
 class Consultant {
   String consultantId;
   String name;
@@ -25,20 +22,4 @@ class Consultant {
     required this.sertificationId,
     required this.isAvailable,
   });
-
-  factory Consultant.fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>;
-    return Consultant(
-      consultantId: snapshot.id,
-      name: data['name'],
-      category: data['category'],
-      description: data['description'],
-      imageUrl: data['imageUrl'],
-      lastEducation: data['lastEducation'],
-      location: data['location'],
-      price: data['price'].toString(),
-      sertificationId: data['sertificationId'],
-      isAvailable: data['isAvailable'],
-    );
-  }
 }

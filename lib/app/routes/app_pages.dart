@@ -1,7 +1,14 @@
 import 'package:get/get.dart';
+import 'package:nuha/app/modules/konsultasi/views/confirm_consultation_payment_view.dart';
 import 'package:nuha/app/modules/konsultasi/views/create_jadwal_konsultasi_view.dart';
+import 'package:nuha/app/modules/konsultasi/views/create_pesanan_konsultasi_view.dart';
 import 'package:nuha/app/modules/konsultasi/views/history_consultation_view.dart';
 import 'package:nuha/app/modules/literasi/views/cari_video_view.dart';
+import 'package:nuha/app/modules/profile/views/auth_pin_view.dart';
+import 'package:nuha/app/modules/profile/views/confirmation_pin_view.dart';
+import 'package:nuha/app/modules/profile/views/create_pin_view.dart';
+import 'package:nuha/app/modules/profile/views/edit_pin_view.dart';
+import 'package:nuha/app/modules/profile/views/pin_view.dart';
 import 'package:nuha/app/modules/profile/views/pengaturan_notifikasi_view.dart';
 
 import '../modules/add_note/bindings/add_note_binding.dart';
@@ -210,6 +217,41 @@ class AppPages {
     GetPage(
       name: _Paths.PENGATURAN_NOTIFIKASI,
       page: () => PengaturanNotifikasiView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_PESANAN_KONSULTASI,
+      page: () => CreatePesananKonsultasiView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONFIRM_CONSULTATION_PAYMENT,
+      page: () => ConfirmConsultationPaymentView(),
+      binding: KonsultasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.PIN,
+      page: () => PinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PIN,
+      page: () => EditPinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_PIN,
+      page: () => CreatePinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONFIRM_PIN,
+      page: () => ConfirmationPinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.AUTH_PIN,
+      page: () => AuthPinView(),
       binding: ProfileBinding(),
     ),
   ];
