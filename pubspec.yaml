@@ -59,6 +59,7 @@ dependencies:
   chip_list: ^2.4.3+8
   pinput: ^2.2.31
   crypto: ^3.0.3
+  grouped_list: ^5.1.2
   
 
 dev_dependencies: 
