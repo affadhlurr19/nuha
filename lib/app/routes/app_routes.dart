@@ -45,6 +45,7 @@ abstract class Routes {
   static const CREATE_PIN = _Paths.CREATE_PIN;
   static const CONFIRM_PIN = _Paths.CONFIRM_PIN;
   static const AUTH_PIN = _Paths.AUTH_PIN;
+  static const ZIS = _Paths.ZIS;
 }
 
 abstract class _Paths {
@@ -88,4 +89,6 @@ abstract class _Paths {
   static const CREATE_PIN = '/create-pin';
   static const CONFIRM_PIN = '/confirm-pin';
   static const AUTH_PIN = '/auth-pin';
+  static const ZIS = '/zis';
+  static const LAPORAN_KEUANGAN = '/laporankeuangan';
 }

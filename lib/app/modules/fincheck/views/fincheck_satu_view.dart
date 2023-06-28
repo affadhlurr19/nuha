@@ -74,31 +74,31 @@ class FincheckSatuView extends GetView<FincheckController> {
                 ),
                 FieldCurrency(
                   labelText: "Pendapatan Aktif",
-                  contr: controller.pendapatanAktif!,
+                  contr: controller.pendapatanAktif,
                   infoText:
                       "Penghasilan yang kamu peroleh setelah bekerja setiap bulan.",
                 ),
                 FieldCurrency(
                   labelText: "Pendapatan Pasif",
-                  contr: controller.pendapatanPasif!,
+                  contr: controller.pendapatanPasif,
                   infoText:
                       "Penghasilan yang kamu dapatkan setiap bulan tanpa terlibat aktif dalam sebuah kegiatan bisnis.",
                 ),
                 FieldCurrency(
                   labelText: "Bisnis Usaha",
-                  contr: controller.bisnisUsaha!,
+                  contr: controller.bisnisUsaha,
                   infoText:
                       "Penghasilan yang kamu dapatkan dari hasil penjualan barang atau jasa.",
                 ),
                 FieldCurrency(
                   labelText: "Hasil Investasi",
-                  contr: controller.hasilInvestasi!,
+                  contr: controller.hasilInvestasi,
                   infoText:
                       "Penghasilan yang kamu dapatkan dari pembayaran dividen atau bunga ketika kamu menanamkan modal atau menjual aset.",
                 ),
                 FieldCurrency(
                   labelText: "Lainnya",
-                  contr: controller.lainnya!,
+                  contr: controller.lainnya,
                   infoText: "Penghasilan tambahan, seperti bonus.",
                 ),
               ],
@@ -194,19 +194,31 @@ class FincheckSatuView extends GetView<FincheckController> {
                       width: 39.7222.w,
                       height: 5.5.h,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: buttonColor2,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                        child: Text(
-                          "Selanjutnya",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.white),
-                        ),
-                        onPressed: () => Get.to(const FincheckDuaView()),
-                      ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: buttonColor2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20))),
+                          child: Text(
+                            "Selanjutnya",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            if (controller.pendapatanAktif.value.text.isNotEmpty &&
+                                controller
+                                    .pendapatanPasif.value.text.isNotEmpty &&
+                                controller.bisnisUsaha.value.text.isNotEmpty &&
+                                controller
+                                    .hasilInvestasi.value.text.isNotEmpty &&
+                                controller.lainnya.value.text.isNotEmpty) {
+                              Get.to(() => const FincheckDuaView());
+                            } else {
+                              controller
+                                  .errMsg("Mohon isi seluruh kolom yang ada!");
+                            }
+                          }),
                     )
                   ],
                 ),

@@ -4,16 +4,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_edit_controller.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
-class UpdateAnggaranView extends GetView<CashflowController> {
+class UpdateAnggaranView extends GetView<AnggaranEditController> {
   final String id;
 
-  const UpdateAnggaranView({Key? key, required this.id}) : super(key: key);
+  UpdateAnggaranView({Key? key, required this.id}) : super(key: key);
+  final c = Get.find<AnggaranEditController>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +69,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
               controller.nomAnggaranC.text = NumberFormat.currency(
                       locale: 'id', symbol: "", decimalDigits: 0)
                   .format(snapshot.data!["nominal"]);
+
               return SingleChildScrollView(
                   child: Container(
                 decoration: BoxDecoration(
@@ -89,10 +91,11 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Kategori*",
-                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                color: grey900,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: grey900,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                         SizedBox(
                           height: 0.75.h,
@@ -132,10 +135,11 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                       children: [
                         Text(
                           "Nominal Anggaran*",
-                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                color: grey900,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: grey900,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                         SizedBox(
                           height: 0.75.h,
@@ -153,10 +157,12 @@ class UpdateAnggaranView extends GetView<CashflowController> {
                               ),
                             ],
                             textAlign: TextAlign.left,
-                            style:
-                                Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                      color: grey900,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: grey900,
+                                ),
                             decoration: InputDecoration(
                               prefixIcon: Padding(
                                 padding:
@@ -244,7 +250,7 @@ class UpdateAnggaranView extends GetView<CashflowController> {
 }
 
 showDeleteAnggaranDialog(BuildContext context, docId) {
-  final controller = Get.find<CashflowController>();
+  final controller = Get.find<AnggaranEditController>();
   // set up the buttons
   Widget batalButton = ElevatedButton(
     style: ElevatedButton.styleFrom(

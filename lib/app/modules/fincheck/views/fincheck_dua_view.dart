@@ -74,13 +74,13 @@ class FincheckDuaView extends GetView<FincheckController> {
                 ),
                 FieldCurrency(
                   labelText: "Menabung dan Investasi",
-                  contr: controller.nabungInvestasi!,
+                  contr: controller.nabungInvestasi,
                   infoText:
                       "Total dana yang disisihkan perbulan untuk menabung dan berinvestasi setiap bulannya.",
                 ),
                 FieldCurrency(
                   labelText: "Total tabungan",
-                  contr: controller.totalTabungan!,
+                  contr: controller.totalTabungan,
                   infoText: "Total tabungan yang kamu miliki hingga saat ini.",
                 ),
               ],
@@ -184,7 +184,16 @@ class FincheckDuaView extends GetView<FincheckController> {
                               .bodyMedium!
                               .copyWith(color: Colors.white),
                         ),
-                        onPressed: () => Get.to(const FincheckTigaView()),
+                        onPressed: () {
+                          if (controller
+                                  .nabungInvestasi.value.text.isNotEmpty &&
+                              controller.totalTabungan.value.text.isNotEmpty) {
+                            Get.to(() => const FincheckTigaView());
+                          } else {
+                            controller
+                                .errMsg("Mohon isi seluruh kolom yang ada!");
+                          }
+                        },
                       ),
                     )
                   ],

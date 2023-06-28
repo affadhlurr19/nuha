@@ -45,7 +45,7 @@ class FincheckEmpatView extends GetView<FincheckController> {
           ),
           GradientText(
             "Berapa pengeluaranmu dalam sebulan?",
-            style: Theme.of(context).textTheme.displaySmall!,
+            style: Theme.of(context).textTheme.displaySmall,
             colors: const [
               buttonColor1,
               buttonColor2,
@@ -65,40 +65,40 @@ class FincheckEmpatView extends GetView<FincheckController> {
           ),
           FieldCurrency(
             labelText: "Belanja Kebutuhan",
-            contr: controller.belanja!,
+            contr: controller.belanja,
             infoText:
                 "Dana yang kamu keluarkan untuk memenuhi kebutuhan selama satu bulan.",
           ),
           FieldCurrency(
             labelText: "Transportasi",
-            contr: controller.transportasi!,
+            contr: controller.transportasi,
             infoText:
                 "Dana untuk membeli bahan bakar kendaraan, perbaikan kendaraan, atau transportasi umum.",
           ),
           FieldCurrency(
             labelText: "Sedekah/Donasi",
-            contr: controller.sedekah!,
+            contr: controller.sedekah,
             infoText: "Dana yang kamu sisihkan untuk sesama.",
           ),
           FieldCurrency(
             labelText: "Pendidikan",
-            contr: controller.pendidikan!,
+            contr: controller.pendidikan,
             infoText: "Dana kebutuhan pendidikan, seperti sekolah dan kursus.",
           ),
           FieldCurrency(
             labelText: "Pajak",
-            contr: controller.pajak!,
+            contr: controller.pajak,
             infoText: "Iuran yang diwajibkan oleh negara.",
           ),
           FieldCurrency(
             labelText: "Premi Asuransi Bulanan",
-            contr: controller.premiAsuransi!,
+            contr: controller.premiAsuransi,
             infoText:
                 "Dana untuk asuransi kesehatan, kendaraan, pendidikan, dan lainnya.",
           ),
           FieldCurrency(
             labelText: "Lainnya",
-            contr: controller.lainnyaP!,
+            contr: controller.lainnyaP,
             infoText: "Jumlah dana pengeluaran lainnya.",
           ),
           SizedBox(
@@ -197,7 +197,19 @@ class FincheckEmpatView extends GetView<FincheckController> {
                         .bodyMedium!
                         .copyWith(color: Colors.white),
                   ),
-                  onPressed: () => Get.to(const FincheckLimaView()),
+                  onPressed: () {
+                    if (controller.belanja.value.text.isNotEmpty &&
+                        controller.transportasi.value.text.isNotEmpty &&
+                        controller.sedekah.value.text.isNotEmpty &&
+                        controller.pendidikan.value.text.isNotEmpty &&
+                        controller.pajak.value.text.isNotEmpty &&
+                        controller.premiAsuransi.value.text.isNotEmpty &&
+                        controller.lainnya.value.text.isNotEmpty) {
+                      Get.to(() => const FincheckLimaView());
+                    } else {
+                      controller.errMsg("Mohon isi seluruh kolom yang ada!");
+                    }
+                  },
                 ),
               ),
             ],

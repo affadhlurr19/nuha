@@ -1,21 +1,23 @@
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/gridicons.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:intl/intl.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_create_controller.dart';
 
-class FormTransaksiView extends GetView<CashflowController> {
-  const FormTransaksiView({Key? key}) : super(key: key);
+class FormTransaksiView extends GetView<TransaksiCreateController> {
+  FormTransaksiView({Key? key}) : super(key: key);
+
+  @override
+  final controller = Get.find<TransaksiCreateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +269,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                         onTap: () {
                           Get.bottomSheet(
                             controller.jenisC.value == "Pengeluaran"
-                                ? const BottomSheetPengeluaran()
+                                ? BottomSheetPengeluaran()
                                 : const BottomSheetPendapatan(),
                           );
                         },
@@ -436,7 +438,7 @@ class FormTransaksiView extends GetView<CashflowController> {
                     SizedBox(
                       height: 0.75.h,
                     ),
-                    GetBuilder<CashflowController>(
+                    GetBuilder<TransaksiCreateController>(
                       builder: (c) {
                         return c.image != null
                             ? Stack(
@@ -558,7 +560,7 @@ class DialogContent extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Get.find<CashflowController>().updateToPengeluaran();
+              Get.find<TransaksiCreateController>().updateToPengeluaran();
             },
             child: Text(
               "Pengeluaran",
@@ -569,7 +571,7 @@ class DialogContent extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Get.find<CashflowController>().updateToPendapatan();
+              Get.find<TransaksiCreateController>().updateToPendapatan();
             },
             child: Text(
               "Pendapatan",
@@ -587,7 +589,8 @@ class DialogContent extends StatelessWidget {
 class DialogCamera extends StatelessWidget {
   DialogCamera({super.key});
 
-  final CashflowController controller = Get.put(CashflowController());
+  final TransaksiCreateController controller =
+      Get.put(TransaksiCreateController());
 
   @override
   Widget build(BuildContext context) {
@@ -699,7 +702,9 @@ class BottomSheetPendapatan extends StatelessWidget {
 }
 
 class BottomSheetPengeluaran extends StatelessWidget {
-  const BottomSheetPengeluaran({super.key});
+  BottomSheetPengeluaran({super.key});
+
+  final c = Get.find<TransaksiCreateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -816,11 +821,41 @@ class BottomSheetPengeluaran extends StatelessWidget {
             Wrap(
               spacing: 4.166667.w,
               runSpacing: 2.5.h,
-              children: const [
-                CategoryWidget(
+              children: [
+                const CategoryWidget(
                   image: AssetImage('assets/images/Lainnya.png'),
                   text: "Lainnya",
                 ),
+                StreamBuilder<QuerySnapshot>(
+                    stream: c.streamData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasData) {
+                        List<DocumentSnapshot> documents = snapshot.data!.docs;
+                        List<Map<String, dynamic>> data = documents
+                            .map((doc) => doc.data() as Map<String, dynamic>)
+                            .toList();
+
+                        return Wrap(
+                          spacing: 4.166667.w,
+                          runSpacing: 2.5.h,
+                          children: List.generate(
+                            data.length,
+                            (index) => CategoryWidget(
+                              image: AssetImage(
+                                  'assets/images/${data[index]["kategori"]}.png'),
+                              text: data[index]['kategori'],
+                            ),
+                          ),
+                        );
+                      }
+
+                      return const SizedBox();
+                    })
               ],
             )
           ],
@@ -843,7 +878,7 @@ class CategoryWidget extends StatelessWidget {
       width: 25.27778.w,
       child: GestureDetector(
         onTap: () {
-          Get.find<CashflowController>().updateKategori(text);
+          Get.find<TransaksiCreateController>().updateKategori(text);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

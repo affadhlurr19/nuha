@@ -76,12 +76,12 @@ class FincheckLimaView extends GetView<FincheckController> {
                 ),
                 FieldCurrency(
                   labelText: "Total Aset",
-                  contr: controller.aset!,
+                  contr: controller.aset,
                   infoText: "Total aset yang kamu miliki.",
                 ),
                 FieldCurrency(
                   labelText: "Total Hutang",
-                  contr: controller.hutang!,
+                  contr: controller.hutang,
                   infoText: "Total hutang yang kamu miliki.",
                 ),
               ],
@@ -185,7 +185,15 @@ class FincheckLimaView extends GetView<FincheckController> {
                               .bodyMedium!
                               .copyWith(color: Colors.white),
                         ),
-                        onPressed: () => controller.result(),
+                        onPressed: () {
+                          if (controller.aset.value.text.isNotEmpty &&
+                              controller.hutang.value.text.isNotEmpty) {
+                            controller.result();
+                          } else {
+                            controller
+                                .errMsg("Mohon isi seluruh kolom yang ada!");
+                          }
+                        },
                       ),
                     )
                   ],

@@ -8,15 +8,14 @@ environment:
 dependencies: 
   cupertino_icons: ^1.0.2
   get: 4.6.5
-  google_fonts: ^4.0.4    
-  firebase_auth: ^4.2.10  
+  google_fonts: ^4.0.4                    
+  firebase_auth: ^4.2.10
   firebase_storage: ^11.0.15
-  firebase_core: ^2.7.1          
-  get_storage: 2.1.1       
-  flutter: 
-    sdk: flutter    
-  google_sign_in: ^6.0.2    
-  badges: ^3.0.3  
+  firebase_core: ^2.7.1
+  get_storage: 2.1.1
+  image_picker: ^0.8.7+5
+  google_sign_in: ^6.0.2
+  badges: ^3.0.3
   chips_choice: ^3.0.0
   http: ^0.13.5
   timeago: ^3.3.0
@@ -35,7 +34,6 @@ dependencies:
   full_screen_image: ^2.0.0
   persistent_bottom_nav_bar: ^5.0.2
   sticky_grouped_list: ^3.1.0
-  image_picker: ^0.8.7+4
   cloud_firestore: ^4.6.0
   chat_bubbles: ^1.4.0  
   flutter_staggered_animations: ^1.1.1
@@ -60,7 +58,15 @@ dependencies:
   pinput: ^2.2.31
   crypto: ^3.0.3
   grouped_list: ^5.1.2
-  
+  open_file: 3.3.1
+  flutter_inappwebview: 5.7.2+3
+  syncfusion_flutter_charts: 21.2.6
+  syncfusion_flutter_gauges: 21.2.6
+  syncfusion_flutter_pdf: 21.2.6
+  screenshot: 2.1.0
+  pdf: 3.10.4
+  flutter: 
+    sdk: flutter
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
@@ -68,6 +74,10 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
+  fonts: 
+    - family: Montserrat
+      fonts: 
+        - asset: assets/fonts/OpenSans.ttf
   assets: 
     - assets/images/
     - assets/data/schedule_consultation.json

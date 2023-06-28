@@ -7,16 +7,26 @@ import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/uil.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_detail_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_detail_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_edit_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_create_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_edit_controller.dart';
 
+//ignore: must_be_immutable
 class AnggaranView extends GetView<CashflowController> {
   AnggaranView({Key? key}) : super(key: key);
+
+  final AnggaranCreateController c = Get.put(AnggaranCreateController());
+  final AnggaranDetailController co = Get.put(AnggaranDetailController());
+  final TransaksiController con = Get.put(TransaksiController());
+  final AnggaranEditController cont = Get.put(AnggaranEditController());
 
   List<String> tabBar = [
     "Semua",
@@ -46,7 +56,7 @@ class AnggaranView extends GetView<CashflowController> {
             foregroundColor: backgroundColor2,
             elevation: 0,
             onPressed: () => PersistentNavBarNavigator.pushNewScreen(context,
-                screen: const FormAnggaranView()),
+                screen: FormAnggaranView()),
             child: Icon(
               Icons.add,
               size: 23.sp,
@@ -87,15 +97,6 @@ class AnggaranView extends GetView<CashflowController> {
                         color: backgroundColor1,
                       ),
                 ),
-                actions: [
-                  IconButton(
-                    icon: const Iconify(
-                      MaterialSymbols.download,
-                      color: backgroundColor1,
-                    ),
-                    onPressed: () {},
-                  ),
-                ],
               ),
             ),
             Container(
@@ -254,8 +255,32 @@ class AnggaranView extends GetView<CashflowController> {
                               : Obx(
                                   () => SizedBox(
                                     child: controller.queryAwal.isEmpty
-                                        ? const Center(
-                                            child: Text("data tidak ada"),
+                                        ? Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10.w,
+                                                vertical: 10.h),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Image(
+                                                  image: const AssetImage(
+                                                      'assets/images/Empty.png'),
+                                                  height: 15.h,
+                                                ),
+                                                SizedBox(
+                                                  height: 2.h,
+                                                ),
+                                                Text(
+                                                  "Data yang dicari tidak ditemukan. Silahkan coba kata kunci lain!",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .copyWith(color: grey500),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            ),
                                           )
                                         : MediaQuery.removePadding(
                                             context: context,
@@ -513,7 +538,7 @@ class SemuaWidget extends StatelessWidget {
                             .bodySmall!
                             .copyWith(color: backgroundColor1),
                       ),
-                      onPressed: () => Get.to(const FormAnggaranView()),
+                      onPressed: () => Get.to(() => FormAnggaranView()),
                     ),
                   ),
                 ],
@@ -521,152 +546,160 @@ class SemuaWidget extends StatelessWidget {
             );
           } else {
             return MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              child: ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var docAnggaran = snapshot.data!.docs[index];
-                  Map<String, dynamic> anggaran = docAnggaran.data();
-                  return GestureDetector(
-                    onTap: () => PersistentNavBarNavigator.pushNewScreen(
-                      context,
-                      screen: AnggaranDetailView(id: docAnggaran.id),
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                context: context,
+                removeTop: true,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var docAnggaran = snapshot.data!.docs[index];
+                      Map<String, dynamic> anggaran = docAnggaran.data();
+                      return GestureDetector(
+                        onTap: () => PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: AnggaranDetailView(id: docAnggaran.id),
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 4.44444.w),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Column(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
+                                  Column(
                                     children: [
-                                      Image(
-                                        width: 10.55556.w,
-                                        image: AssetImage(
-                                            'assets/images/${anggaran["kategori"]}.png'),
-                                      ),
-                                      SizedBox(
-                                        width: 4.44444.w,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Row(
                                         children: [
-                                          Text(
-                                            "${anggaran["kategori"]}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: dark,
-                                                ),
+                                          Image(
+                                            width: 10.55556.w,
+                                            image: AssetImage(
+                                                'assets/images/${anggaran["kategori"]}.png'),
                                           ),
                                           SizedBox(
-                                            height: 0.5.h,
+                                            width: 4.44444.w,
                                           ),
-                                          Text(
-                                            NumberFormat.currency(
-                                                    locale: 'id',
-                                                    symbol: "Tersisa Rp. ",
-                                                    decimalDigits: 0)
-                                                .format(anggaran["sisaLimit"]),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .copyWith(
-                                                  color: grey400,
-                                                ),
-                                          )
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${anggaran["kategori"]}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: dark,
+                                                    ),
+                                              ),
+                                              SizedBox(
+                                                height: 0.5.h,
+                                              ),
+                                              Text(
+                                                NumberFormat.currency(
+                                                        locale: 'id',
+                                                        symbol: "Tersisa Rp. ",
+                                                        decimalDigits: 0)
+                                                    .format(
+                                                        anggaran["sisaLimit"]),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                      color: grey400,
+                                                    ),
+                                              )
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ],
                                   ),
+                                  IconButton(
+                                    icon: Iconify(
+                                      MaterialSymbols.edit,
+                                      size: 12.sp,
+                                      color: grey400,
+                                    ),
+                                    onPressed: () =>
+                                        PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: UpdateAnggaranView(
+                                        id: docAnggaran.id,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 1.5.h,
+                                  ),
+                                  LinearPercentIndicator(
+                                    barRadius: const Radius.circular(40),
+                                    width: 75.55556.w,
+                                    lineHeight: 2.5.h,
+                                    percent: double.parse(
+                                        anggaran["persentase"].toString()),
+                                    backgroundColor: backBar,
+                                    progressColor: controller.getProgressColor(
+                                        double.parse(
+                                            anggaran["persentase"].toString())),
+                                  ),
+                                  SizedBox(
+                                    height: 1.h,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        NumberFormat.currency(
+                                                locale: 'id',
+                                                symbol: "Limit Rp. ",
+                                                decimalDigits: 0)
+                                            .format(anggaran["nominal"]),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              color: grey400,
+                                            ),
+                                      ),
+                                      Text(
+                                        "${anggaran["persentase"]}%",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              color: grey400,
+                                            ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 1.5.h,
+                                  ),
+                                  const Divider(
+                                    thickness: 1,
+                                    height: 0,
+                                    color: grey100,
+                                  ),
+                                  SizedBox(
+                                    height: 1.5.h,
+                                  ),
                                 ],
                               ),
-                              IconButton(
-                                onPressed: () =>
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                  context,
-                                  screen: UpdateAnggaranView(
-                                    id: docAnggaran.id,
-                                  ),
-                                ),
-                                icon: Iconify(
-                                  MaterialSymbols.edit,
-                                  size: 12.sp,
-                                  color: grey400,
-                                ),
-                              ),
                             ],
                           ),
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                          LinearPercentIndicator(
-                            barRadius: const Radius.circular(40),
-                            width: 75.55556.w,
-                            lineHeight: 2.5.h,
-                            percent:
-                                double.parse(anggaran["persentase"].toString()),
-                            backgroundColor: backBar,
-                            progressColor: controller.getProgressColor(
-                                double.parse(
-                                    anggaran["persentase"].toString())),
-                          ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                NumberFormat.currency(
-                                        locale: 'id',
-                                        symbol: "Limit Rp. ",
-                                        decimalDigits: 0)
-                                    .format(anggaran["nominal"]),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      color: grey400,
-                                    ),
-                              ),
-                              Text(
-                                "${anggaran["persentase"]}%",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      color: grey400,
-                                    ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                          const Divider(
-                            thickness: 1,
-                            height: 0,
-                            color: grey100,
-                          ),
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            );
+                        ),
+                      );
+                    },
+                  ),
+                ));
           }
         },
       ),
