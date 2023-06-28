@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:nuha/app/modules/daftar_lembaga/daftar_pinjol_model.dart';
 
 class DaftarPinjolProvider {
-  static const String _baseUrl = 'https://nuha-restapi.000webhostapp.com/api/';
+  static const String _baseUrl = 'http://nuha.my.id/api/';
 
   Future<DaftarPinjol> getDaftarPinjol(http.Client client) async {
     try {

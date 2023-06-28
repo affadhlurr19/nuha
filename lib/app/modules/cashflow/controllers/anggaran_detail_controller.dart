@@ -18,10 +18,10 @@ class AnggaranDetailController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   Color getProgressColor(double percent) {
     if (percent >= 0.95) {

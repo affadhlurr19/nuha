@@ -257,7 +257,7 @@ class CashflowController extends GetxController {
             .where("kategori", isLessThan: '${capitalize}z')
             .get();
 
-        print("Total data: ${keyNameResult.docs.length}");
+        // print("Total data: ${keyNameResult.docs.length}");
         if (keyNameResult.docs.isNotEmpty) {
           queryAwal.value = [];
           for (int i = 0; i < keyNameResult.docs.length; i++) {

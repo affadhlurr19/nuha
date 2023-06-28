@@ -37,7 +37,6 @@ class _NavbarView extends State<NavbarView> {
       CashflowView(),
       const LiterasiView(),
       ListKonsultasiView(),
-      HomeView(),
     ];
   }
 
@@ -74,15 +73,6 @@ class _NavbarView extends State<NavbarView> {
         icon: const Icon(CupertinoIcons.person_2),
         iconSize: 15.sp,
         title: "Konsultasi",
-        textStyle:
-            Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
-        inactiveColorPrimary: grey500,
-        activeColorPrimary: buttonColor1,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.heart_circle),
-        iconSize: 15.sp,
-        title: "ZIS",
         textStyle:
             Theme.of(context).textTheme.labelSmall!.copyWith(letterSpacing: 0),
         inactiveColorPrimary: grey500,

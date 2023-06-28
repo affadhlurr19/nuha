@@ -100,7 +100,7 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                       );
                       screenshots.add(capturedImage1);
                     } catch (error) {
-                      print(error);
+                      // print(error);
                     }
                     await Future.delayed(const Duration(seconds: 1));
 
@@ -474,7 +474,7 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                           )),
                     ],
                   )
-                : SizedBox(),
+                : const SizedBox(),
           )
         ],
       ),
