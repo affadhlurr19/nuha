@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:nuha/app/modules/literasi/models/balasan_komentar_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/komentar_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/pengguna_model.dart';
@@ -242,7 +241,7 @@ class KomentarArtikelController extends GetxController
 
   Future<void> addReplyComment(String idKomentar, String descBalasan) async {
     final currentUser = FirebaseAuth.instance.currentUser;
-    final docRef = await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('comments')
         .doc(idKomentar)
         .collection('reply_comment_article')

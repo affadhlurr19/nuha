@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/profile/controllers/pin_controller.dart';
-import 'package:nuha/app/routes/app_pages.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sizer/sizer.dart';
 

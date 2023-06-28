@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bx.dart';
 import 'package:iconify_flutter/icons/ic.dart';
-import 'package:iconify_flutter/icons/mingcute.dart';
 import 'package:iconify_flutter/icons/ri.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';

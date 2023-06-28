@@ -7,12 +7,9 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ion.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:intl/intl.dart';
-import 'package:nuha/app/modules/konsultasi/controllers/generate_meeting_controller.dart';
 import 'package:nuha/app/modules/konsultasi/controllers/schedule_consultation_controller.dart';
-import 'package:nuha/app/modules/konsultasi/models/schedule_consultation_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/modules/konsultasi/controllers/konsultasi_controller.dart';
 import 'package:sizer/sizer.dart';
 
 class CreateJadwalKonsultasiView

@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/literasi/controllers/bookmarked_artikel_controller.dart';
 import 'package:nuha/app/routes/app_pages.dart';

@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/profile/controllers/notification_controller.dart';
-import 'package:nuha/main.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 

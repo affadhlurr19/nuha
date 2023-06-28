@@ -1,19 +1,14 @@
 import 'package:chips_choice/chips_choice.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:full_screen_image/full_screen_image.dart';
 
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
-import 'package:iconify_flutter/icons/ri.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/konsultasi/controllers/history_consultation_controller.dart';
-import 'package:nuha/app/modules/konsultasi/models/consultation_history.dart';
-import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 
 class HistoryConsultationView extends GetView<HistoryConsultationController> {

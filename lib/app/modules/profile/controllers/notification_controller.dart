@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
-import 'package:nuha/app/routes/app_pages.dart';
 import 'package:nuha/app/utility/background_service_controller.dart';
-import 'package:nuha/app/utility/date_time_helper.dart';
 import 'package:nuha/app/utility/notification_service_controller.dart';
 import 'package:nuha/main.dart';
 import 'package:permission_handler/permission_handler.dart';

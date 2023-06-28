@@ -21,12 +21,12 @@ dependencies:
   timeago: ^3.3.0
   intl_utils: ^2.8.2
   flutter_localization: ^0.1.10
-  get_cli: ^0.2.30
+  get_cli: ^1.5.0
   simple_gradient_text: ^1.2.4
   font_awesome_flutter: ^10.4.0
   zoom_tap_animation: ^1.1.0
   iconify_flutter: ^0.0.5
-  intl: ^0.17.0
+  intl: ^0.18.0
   currency_text_input_formatter: ^2.1.8
   sizer: ^2.0.15
   carousel_slider: ^4.2.1

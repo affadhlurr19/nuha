@@ -10,9 +10,7 @@ import 'package:nuha/app/modules/literasi/controllers/list_video_controller.dart
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:nuha/app/utility/result_state.dart';
 import 'package:sizer/sizer.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:youtube/youtube_thumbnail.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ListVideoView extends GetView<LiterasiController> {
   ListVideoView({Key? key}) : super(key: key);

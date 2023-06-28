@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 import 'package:iconify_flutter/icons/gg.dart';
-import 'package:iconify_flutter/icons/iconoir.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/mdi_light.dart';
 import 'package:iconify_flutter/icons/ph.dart';

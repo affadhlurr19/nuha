@@ -27,8 +27,8 @@ class NavbarView extends StatefulWidget {
 }
 
 class _NavbarView extends State<NavbarView> {
-  final PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+  // final PersistentTabController _controller =
+  //     PersistentTabController(initialIndex: 0);
   final navbarC = Get.find<NavbarController>();
 
   List<Widget> _buildScreen() {

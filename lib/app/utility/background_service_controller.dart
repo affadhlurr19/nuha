@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:nuha/app/modules/literasi/providers/list_artikel_provider.dart';
 import 'package:nuha/app/utility/notification_service_controller.dart';
-import 'package:nuha/main.dart';
 
 final ReceivePort port = ReceivePort();
 
