@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/modules/literasi/models/list_video_model.dart';
 import 'package:nuha/app/modules/literasi/providers/list_video_provider.dart';
@@ -7,6 +8,7 @@ import 'package:nuha/app/utility/result_state.dart';
 class ListVideoController extends GetxController {
   final ListVideoProvider listVideoProvider;
   ListVideoController({required this.listVideoProvider});
+  final scrollC = ScrollController();
 
   var resultState = ResultState.loading().obs;
   RxBool isSelected = false.obs;
@@ -18,6 +20,9 @@ class ListVideoController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    scrollC.addListener(() {
+      if (scrollC.position.maxScrollExtent == scrollC.offset) {}
+    });
     if (tag.value == 1) {
       getListVideo();
     }
