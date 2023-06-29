@@ -40,8 +40,9 @@ class Data {
   String title;
   String video;
   String description;
-  dynamic createdAt;
-  dynamic updatedAt;
+  DateTime publishedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   Data({
     required this.id,
@@ -50,8 +51,9 @@ class Data {
     required this.title,
     required this.video,
     required this.description,
-    this.createdAt,
-    this.updatedAt,
+    required this.publishedAt,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -61,8 +63,9 @@ class Data {
         title: json["title"],
         video: json["video"],
         description: json["description"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        publishedAt: DateTime.parse(json["published_at"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,7 +75,8 @@ class Data {
         "title": title,
         "video": video,
         "description": description,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "published_at": publishedAt.toIso8601String(),
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
       };
 }

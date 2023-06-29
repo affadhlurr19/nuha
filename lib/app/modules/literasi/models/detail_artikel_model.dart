@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final detailArtikel = detailArtikelFromJson(jsonString);
+
 import 'dart:convert';
 
 DetailArtikel detailArtikelFromJson(String str) =>
@@ -35,15 +39,16 @@ class DetailArtikel {
 
 class Data {
   int id;
-  int adminId;
+  String adminId;
   String title;
   String category;
   String content;
   String imageUrl;
   String writer;
-  int readTime;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String readTime;
+  DateTime publishedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Data({
     required this.id,
@@ -54,8 +59,9 @@ class Data {
     required this.imageUrl,
     required this.writer,
     required this.readTime,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.publishedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -67,8 +73,9 @@ class Data {
         imageUrl: json["image_url"],
         writer: json["writer"],
         readTime: json["read_time"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        publishedAt: DateTime.parse(json["published_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -80,7 +87,8 @@ class Data {
         "image_url": imageUrl,
         "writer": writer,
         "read_time": readTime,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "published_at": publishedAt.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
 }

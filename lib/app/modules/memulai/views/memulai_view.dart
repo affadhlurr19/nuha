@@ -36,13 +36,12 @@ class MemulaiView extends GetView<MemulaiController> {
                 colors: const [buttonColor1, buttonColor2],
               ),
             ),
-            SizedBox(height: 8.5.h),
-            Container(
+            SizedBox(height: 9.5.h),
+            SizedBox(
               width: 63.3.w,
-              height: 29.625.h,
-              color: grey100,
+              child: Image.asset('assets/images/Book Lovers.png'),
             ),
-            SizedBox(height: 8.5.h),
+            SizedBox(height: 10.5.h),
             Container(
               width: widthDevice,
               padding: EdgeInsets.only(right: 11.1.w, left: 11.1.w),

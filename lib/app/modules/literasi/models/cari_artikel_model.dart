@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final cariArtikel = cariArtikelFromJson(jsonString);
-
 import 'dart:convert';
 
 CariArtikel cariArtikelFromJson(String str) =>
@@ -13,7 +9,7 @@ class CariArtikel {
   int code;
   String message;
   int founded;
-  List<Data> data;
+  List<Datum> data;
 
   CariArtikel({
     required this.code,
@@ -26,7 +22,7 @@ class CariArtikel {
         code: json["code"],
         message: json["message"],
         founded: json["founded"],
-        data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,19 +33,20 @@ class CariArtikel {
       };
 }
 
-class Data {
+class Datum {
   int id;
-  int adminId;
+  String adminId;
   String title;
-  String category;
+  Category category;
   String content;
   String imageUrl;
   String writer;
-  int readTime;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String readTime;
+  DateTime publishedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
-  Data({
+  Datum({
     required this.id,
     required this.adminId,
     required this.title,
@@ -58,33 +55,53 @@ class Data {
     required this.imageUrl,
     required this.writer,
     required this.readTime,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.publishedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         adminId: json["adminId"],
         title: json["title"],
-        category: json["category"],
+        category: categoryValues.map[json["category"]]!,
         content: json["content"],
         imageUrl: json["image_url"],
         writer: json["writer"],
         readTime: json["read_time"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        publishedAt: DateTime.parse(json["published_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "adminId": adminId,
         "title": title,
-        "category": category,
+        "category": categoryValues.reverse[category],
         "content": content,
         "image_url": imageUrl,
         "writer": writer,
         "read_time": readTime,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "published_at": publishedAt.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
+}
+
+enum Category { KEUANGAN_SYARIAH }
+
+final categoryValues =
+    EnumValues({"Keuangan Syariah": Category.KEUANGAN_SYARIAH});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }

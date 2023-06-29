@@ -25,6 +25,102 @@ class ListVideoProvider {
     }
   }
 
+  Future<ListVideo> getListAsuransiSyariahVideo(http.Client client) async {
+    try {
+      final response =
+          await client.get(Uri.parse("${_baseUrl}category/Asuransi%20Syariah"));
+      if (response.statusCode == 200) {
+        return ListVideo.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list video');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListVideo> getListEkonomiSyariahVideo(http.Client client) async {
+    try {
+      final response =
+          await client.get(Uri.parse("${_baseUrl}category/Ekonomi%20Syariah"));
+      if (response.statusCode == 200) {
+        return ListVideo.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list video');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListVideo> getListInvestasiSyariahVideo(http.Client client) async {
+    try {
+      final response = await client
+          .get(Uri.parse("${_baseUrl}category/Investasi%20Syariah"));
+      if (response.statusCode == 200) {
+        return ListVideo.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list video');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListVideo> getListKeuanganSyariahVideo(http.Client client) async {
+    try {
+      final response =
+          await client.get(Uri.parse("${_baseUrl}category/Keuangan%20Syariah"));
+      if (response.statusCode == 200) {
+        return ListVideo.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list video');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListVideo> getListPengelolaanKeuanganVideo(http.Client client) async {
+    try {
+      final response = await client
+          .get(Uri.parse("${_baseUrl}category/Pengelolaan%Keuangan"));
+      if (response.statusCode == 200) {
+        return ListVideo.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list video');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListVideo> getListPerencanaanKeuanganVideo(http.Client client) async {
+    try {
+      final response = await client
+          .get(Uri.parse("${_baseUrl}category/Perencanaan%Keuangan"));
+      if (response.statusCode == 200) {
+        return ListVideo.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list video');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<CariVideo> cariVideo(String keyword) async {
     try {
       final response =

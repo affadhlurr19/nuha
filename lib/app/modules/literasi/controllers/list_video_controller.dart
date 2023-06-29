@@ -20,17 +20,101 @@ class ListVideoController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    scrollC.addListener(() {
-      if (scrollC.position.maxScrollExtent == scrollC.offset) {}
-    });
-    if (tag.value == 1) {
-      getListVideo();
-    }
   }
 
   Future<dynamic> getListVideo() async {
     try {
       final video = await listVideoProvider.getListVideo(http.Client());
+      if (video.data.isEmpty) {
+        resultState.value = ResultState.noData();
+      } else {
+        resultState.value = ResultState.hasData(video);
+        return _listVideo = video;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> getListAsuransiSyariahVideo() async {
+    try {
+      final video =
+          await listVideoProvider.getListAsuransiSyariahVideo(http.Client());
+      if (video.data.isEmpty) {
+        resultState.value = ResultState.noData();
+      } else {
+        resultState.value = ResultState.hasData(video);
+        return _listVideo = video;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> getListEkonomiSyariahVideo() async {
+    try {
+      final video =
+          await listVideoProvider.getListEkonomiSyariahVideo(http.Client());
+      if (video.data.isEmpty) {
+        resultState.value = ResultState.noData();
+      } else {
+        resultState.value = ResultState.hasData(video);
+        return _listVideo = video;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> getListInvestasiSyariahVideo() async {
+    try {
+      final video =
+          await listVideoProvider.getListInvestasiSyariahVideo(http.Client());
+      if (video.data.isEmpty) {
+        resultState.value = ResultState.noData();
+      } else {
+        resultState.value = ResultState.hasData(video);
+        return _listVideo = video;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> getListKeuanganSyariahVideo() async {
+    try {
+      final video =
+          await listVideoProvider.getListKeuanganSyariahVideo(http.Client());
+      if (video.data.isEmpty) {
+        resultState.value = ResultState.noData();
+      } else {
+        resultState.value = ResultState.hasData(video);
+        return _listVideo = video;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> getListPerencanaanKeuanganVideo() async {
+    try {
+      final video = await listVideoProvider
+          .getListPerencanaanKeuanganVideo(http.Client());
+      if (video.data.isEmpty) {
+        resultState.value = ResultState.noData();
+      } else {
+        resultState.value = ResultState.hasData(video);
+        return _listVideo = video;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> getListPengelolaanKeuanganVideo() async {
+    try {
+      final video = await listVideoProvider
+          .getListPengelolaanKeuanganVideo(http.Client());
       if (video.data.isEmpty) {
         resultState.value = ResultState.noData();
       } else {

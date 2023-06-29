@@ -11,6 +11,7 @@ import 'package:nuha/app/routes/app_pages.dart';
 import 'package:nuha/app/utility/result_state.dart';
 import 'package:sizer/sizer.dart';
 import 'package:youtube/youtube_thumbnail.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ListVideoView extends GetView<LiterasiController> {
   ListVideoView({Key? key}) : super(key: key);
@@ -36,21 +37,15 @@ class ListVideoView extends GetView<LiterasiController> {
                   value: c.tag.value,
                   onChanged: (val) {
                     c.tag.value = val;
-                    if (c.tag.value == 1) {
-                      print(c.tag.value);
-                    } else if (c.tag.value == 2) {
-                      print(c.tag.value);
-                    } else if (c.tag.value == 3) {
-                      print(c.tag.value);
-                    } else if (c.tag.value == 4) {
-                      print(c.tag.value);
-                    }
                   },
                   choiceItems: const <C2Choice>[
                     C2Choice(value: 1, label: 'Semua'),
-                    C2Choice(value: 2, label: 'Terbaru'),
-                    C2Choice(value: 3, label: 'Keuangan'),
-                    C2Choice(value: 4, label: 'Keuangan Syariah'),
+                    C2Choice(value: 2, label: 'Asuransi Syariah'),
+                    C2Choice(value: 3, label: 'Ekonomi Syariah'),
+                    C2Choice(value: 4, label: 'Investasi Syariah'),
+                    C2Choice(value: 5, label: 'Keuangan Syariah'),
+                    C2Choice(value: 6, label: 'Pengelolaan Keuangan'),
+                    C2Choice(value: 7, label: 'Perencanaan Keuangan'),
                   ],
                   choiceStyle: C2ChipStyle.filled(
                     foregroundStyle: Theme.of(context)
@@ -130,91 +125,132 @@ class ListVideoView extends GetView<LiterasiController> {
                       ),
                     );
                   case ResultStatus.hasData:
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemCount: c.result.data.length,
-                      itemBuilder: (context, index) {
-                        var video = c.result.data[index];
-                        return GestureDetector(
-                          onTap: () => Get.toNamed(Routes.DETAIL_VIDEO,
-                              arguments: video.id.toString()),
-                          child: Card(
-                            color: backgroundColor2,
-                            elevation: 0,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(18),
-                                    child: Image.network(
-                                      YoutubeThumbnail(
-                                              youtubeId:
-                                                  video.video.substring(32))
-                                          .standard(),
-                                      height: 8.625.h,
-                                      width: 29.72.w,
-                                      fit: BoxFit.cover,
-                                      errorBuilder:
-                                          (context, exception, stackTrace) {
-                                        return Container(
-                                          height: 8.625.h,
-                                          width: 29.72.w,
-                                          color: Colors.grey,
-                                          child: const Icon(Icons.error),
-                                        );
-                                      },
+                    return Obx(
+                      () => FutureBuilder(
+                        future: (c.tag.value == 1)
+                            ? c.getListVideo()
+                            : (c.tag.value == 2)
+                                ? c.getListAsuransiSyariahVideo()
+                                : (c.tag.value == 3)
+                                    ? c.getListEkonomiSyariahVideo()
+                                    : (c.tag.value == 4)
+                                        ? c.getListInvestasiSyariahVideo()
+                                        : (c.tag.value == 5)
+                                            ? c.getListKeuanganSyariahVideo()
+                                            : (c.tag.value == 6)
+                                                ? c.getListPengelolaanKeuanganVideo()
+                                                : c.getListPerencanaanKeuanganVideo(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(vertical: 30.h),
+                              child: const CircularProgressIndicator(
+                                color: buttonColor1,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              physics: const ScrollPhysics(),
+                              itemCount: c.result.data.length,
+                              itemBuilder: (context, index) {
+                                var video = c.result.data[index];
+                                return GestureDetector(
+                                  onTap: () => Get.toNamed(Routes.DETAIL_VIDEO,
+                                      arguments: video.id.toString()),
+                                  child: Card(
+                                    color: backgroundColor2,
+                                    elevation: 0,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Flexible(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(18),
+                                            child: Image.network(
+                                              YoutubeThumbnail(
+                                                youtubeId: video.video.length ==
+                                                        28
+                                                    ? video.video.substring(17)
+                                                    : video.video.substring(32),
+                                              ).standard(),
+                                              height: 8.625.h,
+                                              width: 29.72.w,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, exception,
+                                                  stackTrace) {
+                                                return Container(
+                                                  height: 8.625.h,
+                                                  width: 29.72.w,
+                                                  color: Colors.grey,
+                                                  child:
+                                                      const Icon(Icons.error),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 3.89.w),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text(
+                                                video.title,
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: const Color(
+                                                            0XFF0D4136),
+                                                        fontSize: 9.sp),
+                                              ),
+                                              Text(
+                                                timeago.format(
+                                                    video.publishedAt,
+                                                    locale: 'id'),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: grey500,
+                                                        fontSize: 8.sp),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: 3.89.w),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Text(
-                                        video.title,
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                color: const Color(0XFF0D4136),
-                                                fontSize: 9.sp),
-                                      ),
-                                      // Text(
-                                      //   timeago.format(video.createdAt,
-                                      //       locale: 'id'),
-                                      //   maxLines: 1,
-                                      //   overflow: TextOverflow.ellipsis,
-                                      //   style: Theme.of(context)
-                                      //       .textTheme
-                                      //       .bodySmall!
-                                      //       .copyWith(
-                                      //           fontWeight: FontWeight.w400,
-                                      //           color: grey500,
-                                      //           fontSize: 8.sp),
-                                      // ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: grey50,
-                          thickness: 0.2.h,
-                        );
-                      },
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return Divider(
+                                  color: grey50,
+                                  thickness: 0.2.h,
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
                     );
                   case ResultStatus.noData:
                     return const Text('Data Kosong');

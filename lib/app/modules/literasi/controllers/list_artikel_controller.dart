@@ -19,14 +19,42 @@ class ListArtikelController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    if (tag.value == 1) {
-      getListArtikel();
-    }
   }
 
   Future<dynamic> getListArtikel() async {
     try {
       final artikel = await listArtikelProvider.getListArtikel(http.Client());
+      if (artikel.data.isEmpty) {
+        resultState.value = ResultState.noData();
+      } else {
+        resultState.value = ResultState.hasData(artikel);
+
+        return _listArtikel = artikel;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> getListKeuanganSyariahArtikel() async {
+    try {
+      final artikel = await listArtikelProvider
+          .getListKeuanganSyariahArtikel(http.Client());
+      if (artikel.data.isEmpty) {
+        resultState.value = ResultState.noData();
+      } else {
+        resultState.value = ResultState.hasData(artikel);
+        return _listArtikel = artikel;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+    }
+  }
+
+  Future<dynamic> getListTabunganSyariahArtikel() async {
+    try {
+      final artikel = await listArtikelProvider
+          .getListTabunganSyariahArtikel(http.Client());
       if (artikel.data.isEmpty) {
         resultState.value = ResultState.noData();
       } else {

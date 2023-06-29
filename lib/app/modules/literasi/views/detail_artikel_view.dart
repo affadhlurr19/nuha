@@ -124,7 +124,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                         padding: EdgeInsets.symmetric(horizontal: 12.2.w),
                         child: Text(
                           DateFormat('dd MMMM yyyy, HH:mm')
-                              .format(detail.createdAt),
+                              .format(detail.publishedAt),
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -142,6 +142,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                             CircleAvatar(
                               radius: 5.w,
                               backgroundColor: buttonColor2,
+                              child: Image.asset('assets/images/user.png'),
                             ),
                             SizedBox(width: 3.3.w),
                             Column(
@@ -180,8 +181,6 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                           child: Image.network(
                             detail.imageUrl,
                             fit: BoxFit.cover,
-                            // height: 15.5.h,
-                            // width: 75.56.w,
                           ),
                         ),
                       ),

@@ -8,11 +8,43 @@ import 'package:nuha/app/modules/literasi/models/list_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/recommended_artikel_model.dart';
 
 class ListArtikelProvider {
-  static const String _baseUrl = 'https://nuha-restapi.000webhostapp.com/api/';
+  static const String _baseUrl = 'https://nuha.my.id/api/';
 
   Future<ListArtikel> getListArtikel(http.Client client) async {
     try {
       final response = await client.get(Uri.parse("${_baseUrl}article"));
+      if (response.statusCode == 200) {
+        return ListArtikel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list artikel');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListArtikel> getListKeuanganSyariahArtikel(http.Client client) async {
+    try {
+      final response = await client
+          .get(Uri.parse("${_baseUrl}article/category/Keuangan%20Syariah"));
+      if (response.statusCode == 200) {
+        return ListArtikel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list artikel');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListArtikel> getListTabunganSyariahArtikel(http.Client client) async {
+    try {
+      final response = await client
+          .get(Uri.parse("${_baseUrl}article/category/Tabungan%20Syariah"));
       if (response.statusCode == 200) {
         return ListArtikel.fromJson(json.decode(response.body));
       } else {

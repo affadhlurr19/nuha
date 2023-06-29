@@ -98,8 +98,10 @@ class CariVideoView extends GetView<CariVideoController> {
                                       borderRadius: BorderRadius.circular(18),
                                       child: Image.network(
                                         YoutubeThumbnail(
-                                                youtubeId:
-                                                    video.video.substring(17))
+                                                youtubeId: video.video.length ==
+                                                        28
+                                                    ? video.video.substring(17)
+                                                    : video.video.substring(32))
                                             .standard(),
                                         height: 8.625.h,
                                         width: 29.72.w,
@@ -130,7 +132,7 @@ class CariVideoView extends GetView<CariVideoController> {
                                                   fontSize: 9.sp),
                                         ),
                                         Text(
-                                          timeago.format(video.createdAt,
+                                          timeago.format(video.publishedAt,
                                               locale: 'id'),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,

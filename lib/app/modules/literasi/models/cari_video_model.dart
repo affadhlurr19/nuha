@@ -39,8 +39,9 @@ class Datum {
   String title;
   String video;
   String description;
-  dynamic createdAt;
-  dynamic updatedAt;
+  DateTime publishedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   Datum({
     required this.id,
@@ -49,6 +50,7 @@ class Datum {
     required this.title,
     required this.video,
     required this.description,
+    required this.publishedAt,
     this.createdAt,
     this.updatedAt,
   });
@@ -60,8 +62,13 @@ class Datum {
         title: json["title"],
         video: json["video"],
         description: json["description"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        publishedAt: DateTime.parse(json["published_at"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,26 +78,16 @@ class Datum {
         "title": title,
         "video": video,
         "description": description,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "published_at": publishedAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }
 
-enum Category {
-  KEUANGAN_SYARIAH,
-  ASURANSI_SYARIAH,
-  EKONOMI_SYARIAH,
-  PERENCANAAN_KEUANGAN,
-  PENGELOLAAN_KEUANGAN,
-  INVESTASI_SYARIAH
-}
+enum Category { INVESTASI_SYARIAH, PERENCANAAN_KEUANGAN }
 
 final categoryValues = EnumValues({
-  "Asuransi Syariah": Category.ASURANSI_SYARIAH,
-  "Ekonomi Syariah": Category.EKONOMI_SYARIAH,
   "Investasi Syariah": Category.INVESTASI_SYARIAH,
-  "Keuangan Syariah": Category.KEUANGAN_SYARIAH,
-  "Pengelolaan Keuangan": Category.PENGELOLAAN_KEUANGAN,
   "Perencanaan Keuangan": Category.PERENCANAAN_KEUANGAN
 });
 

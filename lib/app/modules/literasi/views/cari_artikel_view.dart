@@ -125,7 +125,7 @@ class CariArtikelView extends GetView<CariArtikelController> {
                                                   fontSize: 9.sp),
                                         ),
                                         Text(
-                                          timeago.format(artikel.createdAt,
+                                          timeago.format(artikel.publishedAt,
                                               locale: 'id'),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,

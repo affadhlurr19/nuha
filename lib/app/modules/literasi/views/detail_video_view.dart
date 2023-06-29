@@ -9,6 +9,7 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/gridicons.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/literasi/controllers/bookmark_video_controller.dart';
 import 'package:nuha/app/modules/literasi/controllers/detail_video_controller.dart';
@@ -49,7 +50,9 @@ class DetailVideoView extends GetView<DetailVideoController> {
                 case ResultStatus.hasData:
                   var detail = c.resultDetailVideo.data;
                   final youtubeC = YoutubePlayerController(
-                    initialVideoId: detail.video.substring(32),
+                    initialVideoId: detail.video.length == 28
+                        ? detail.video.substring(17)
+                        : detail.video.substring(32),
                     flags: const YoutubePlayerFlags(
                       autoPlay: true,
                       mute: false,
@@ -137,7 +140,9 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                 onPressed: () => bookmarkC.toggleBookmark(
                                   detail.id.toString(),
                                   detail.title,
-                                  detail.video.substring(17),
+                                  detail.video.length == 28
+                                      ? detail.video.substring(17)
+                                      : detail.video.substring(32),
                                 ),
                                 icon: Iconify(
                                   bookmarkC.isBookmarked.value
@@ -181,22 +186,22 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                     colors: const [buttonColor1, buttonColor2],
                                   ),
                                 ),
-                                // SizedBox(height: 0.5.h),
-                                // Container(
-                                //   padding:
-                                //       EdgeInsets.symmetric(horizontal: 12.2.w),
-                                //   child: Text(
-                                //     DateFormat('dd MMMM yyyy, HH:mm')
-                                //         .format(detail.createdAt),
-                                //     style: Theme.of(context)
-                                //         .textTheme
-                                //         .bodyLarge!
-                                //         .copyWith(
-                                //             fontWeight: FontWeight.w400,
-                                //             fontSize: 9.sp,
-                                //             color: grey500),
-                                //   ),
-                                // ),
+                                SizedBox(height: 0.5.h),
+                                Container(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 12.2.w),
+                                  child: Text(
+                                    DateFormat('dd MMMM yyyy, HH:mm')
+                                        .format(detail.publishedAt),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 9.sp,
+                                            color: grey500),
+                                  ),
+                                ),
                                 SizedBox(height: 2.5.h),
                                 Padding(
                                   padding:
