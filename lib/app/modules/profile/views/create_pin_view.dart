@@ -108,9 +108,17 @@ class CreatePinView extends GetView {
                     backgroundColor: buttonColor1,
                   ),
                   onPressed: () {
-                    c.newPinNode.unfocus();
-                    c.newFormKey.currentState!.validate();
-                    Get.toNamed(Routes.CONFIRM_PIN, arguments: Routes.NAVBAR);
+                    if (c.newpinController.text.isEmpty ||
+                        c.newpinController.length < 6) {
+                      ScaffoldMessenger.of(Get.context!).showSnackBar(
+                        const SnackBar(
+                            content: Text('Masukkan PIN dengan benar')),
+                      );
+                    } else {
+                      c.newPinNode.unfocus();
+                      c.newFormKey.currentState!.validate();
+                      Get.toNamed(Routes.CONFIRM_PIN, arguments: Routes.NAVBAR);
+                    }
                   },
                   child: Text(
                     'Buat PIN',

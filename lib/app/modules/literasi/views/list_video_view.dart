@@ -115,43 +115,42 @@ class ListVideoView extends GetView<LiterasiController> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 7.78.w),
             child: Obx(
-              () {
-                switch (c.resultState.value.status) {
-                  case ResultStatus.loading:
+              () => FutureBuilder(
+                future: (c.tag.value == 1)
+                    ? c.getListVideo()
+                    : (c.tag.value == 2)
+                        ? c.getListAsuransiSyariahVideo()
+                        : (c.tag.value == 3)
+                            ? c.getListEkonomiSyariahVideo()
+                            : (c.tag.value == 4)
+                                ? c.getListInvestasiSyariahVideo()
+                                : (c.tag.value == 5)
+                                    ? c.getListKeuanganSyariahVideo()
+                                    : (c.tag.value == 6)
+                                        ? c.getListPengelolaanKeuanganVideo()
+                                        : c.getListPerencanaanKeuanganVideo(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return Container(
                       padding: EdgeInsets.symmetric(vertical: 30.h),
                       child: const CircularProgressIndicator(
                         color: buttonColor1,
                       ),
                     );
-                  case ResultStatus.hasData:
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
                     return Obx(
-                      () => FutureBuilder(
-                        future: (c.tag.value == 1)
-                            ? c.getListVideo()
-                            : (c.tag.value == 2)
-                                ? c.getListAsuransiSyariahVideo()
-                                : (c.tag.value == 3)
-                                    ? c.getListEkonomiSyariahVideo()
-                                    : (c.tag.value == 4)
-                                        ? c.getListInvestasiSyariahVideo()
-                                        : (c.tag.value == 5)
-                                            ? c.getListKeuanganSyariahVideo()
-                                            : (c.tag.value == 6)
-                                                ? c.getListPengelolaanKeuanganVideo()
-                                                : c.getListPerencanaanKeuanganVideo(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
+                      () {
+                        switch (c.resultState.value.status) {
+                          case ResultStatus.loading:
                             return Container(
                               padding: EdgeInsets.symmetric(vertical: 30.h),
                               child: const CircularProgressIndicator(
                                 color: buttonColor1,
                               ),
                             );
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else {
+                          case ResultStatus.hasData:
                             return ListView.separated(
                               shrinkWrap: true,
                               physics: const ScrollPhysics(),
@@ -248,18 +247,18 @@ class ListVideoView extends GetView<LiterasiController> {
                                 );
                               },
                             );
-                          }
-                        },
-                      ),
+                          case ResultStatus.noData:
+                            return const Text('Data Kosong');
+                          case ResultStatus.error:
+                            return const Text('Error');
+                          default:
+                            return const SizedBox();
+                        }
+                      },
                     );
-                  case ResultStatus.noData:
-                    return const Text('Data Kosong');
-                  case ResultStatus.error:
-                    return const Text('Error');
-                  default:
-                    return const SizedBox();
-                }
-              },
+                  }
+                },
+              ),
             ),
           ),
         ],

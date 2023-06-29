@@ -112,9 +112,17 @@ class AuthPinView extends GetView {
                     backgroundColor: buttonColor1,
                   ),
                   onPressed: () {
-                    c.authPinNode.unfocus();
-                    c.authPinKey.currentState!.validate();
-                    Get.offAllNamed(Get.arguments);
+                    if (c.authPinController.text != c.myPIN.value) {
+                      c.authPinController.clear();
+                      ScaffoldMessenger.of(Get.context!).showSnackBar(
+                        const SnackBar(
+                            content: Text('Masukkan PIN dengan benar')),
+                      );
+                    } else {
+                      c.authPinNode.unfocus();
+                      c.authPinKey.currentState!.validate();
+                      Get.offAllNamed(Get.arguments);
+                    }
                   },
                   child: Text('Kirim',
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(

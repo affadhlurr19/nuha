@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final recommendedVideo = recommendedVideoFromJson(jsonString);
-
 import 'dart:convert';
 
 RecommendedVideo recommendedVideoFromJson(String str) =>
@@ -29,13 +25,14 @@ class RecommendedVideo {
 
 class Datum {
   int id;
-  int adminId;
+  String adminId;
   String category;
   String title;
   String video;
   String description;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime publishedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Datum({
     required this.id,
@@ -44,8 +41,9 @@ class Datum {
     required this.title,
     required this.video,
     required this.description,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.publishedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -55,8 +53,9 @@ class Datum {
         title: json["title"],
         video: json["video"],
         description: json["description"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        publishedAt: DateTime.parse(json["published_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -66,7 +65,8 @@ class Datum {
         "title": title,
         "video": video,
         "description": description,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "published_at": publishedAt.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
 }

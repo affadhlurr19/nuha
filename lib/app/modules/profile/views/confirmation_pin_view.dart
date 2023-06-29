@@ -112,9 +112,24 @@ class ConfirmationPinView extends GetView {
                     backgroundColor: buttonColor1,
                   ),
                   onPressed: () {
-                    c.confirmNewPinNode.unfocus();
-                    c.conFormKey.currentState!.validate();
-                    c.createUserPin(c.confirmNewPinController.text);
+                    if (c.confirmNewPinController.text.isEmpty ||
+                        c.confirmNewPinController.length < 6) {
+                      ScaffoldMessenger.of(Get.context!).showSnackBar(
+                        const SnackBar(
+                            content: Text('Masukkan PIN dengan benar')),
+                      );
+                    } else {
+                      if (c.confirmNewPinController.text !=
+                          c.newpinController.text) {
+                        ScaffoldMessenger.of(Get.context!).showSnackBar(
+                          const SnackBar(content: Text('Pin tidak cocok')),
+                        );
+                      } else {
+                        c.confirmNewPinNode.unfocus();
+                        c.conFormKey.currentState!.validate();
+                        c.createUserPin(c.confirmNewPinController.text);
+                      }
+                    }
                   },
                   child: Text(
                     'Konfirmasi PIN',

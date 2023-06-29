@@ -13,7 +13,7 @@ class DetailVideoController extends GetxController {
     fetchDetailVideo(idVideo);
   }
   YoutubePlayerController youtubeC = YoutubePlayerController(
-    initialVideoId: 'G9v3vEusKRg',
+    initialVideoId: '',
     flags: const YoutubePlayerFlags(
       autoPlay: true,
       mute: false,

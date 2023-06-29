@@ -15,6 +15,7 @@ import 'package:nuha/app/modules/literasi/controllers/komentar_artikel_controlle
 import 'package:nuha/app/modules/literasi/controllers/recommended_artikel_controller.dart';
 import 'package:nuha/app/modules/literasi/models/balasan_komentar_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/komentar_artikel_model.dart';
+import 'package:nuha/app/routes/app_pages.dart';
 import 'package:nuha/app/utility/result_state.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
@@ -422,7 +423,12 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                     var recommended =
                                         recommendedC.result.data[index];
                                     return GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.back();
+                                        Get.toNamed(Routes.DETAIL_ARTIKEL,
+                                            arguments:
+                                                recommended.id.toString());
+                                      },
                                       child: Card(
                                         color: backgroundColor1,
                                         elevation: 0,
@@ -468,7 +474,7 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                                   ),
                                                   Text(
                                                     timeago.format(
-                                                        recommended.createdAt,
+                                                        recommended.publishedAt,
                                                         locale: 'id'),
                                                     maxLines: 1,
                                                     overflow:
