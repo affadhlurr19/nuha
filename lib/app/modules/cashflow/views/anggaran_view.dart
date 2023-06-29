@@ -635,63 +635,63 @@ class SemuaWidget extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 1.5.h,
-                                  ),
-                                  LinearPercentIndicator(
-                                    barRadius: const Radius.circular(40),
-                                    width: 75.55556.w,
-                                    lineHeight: 2.5.h,
-                                    percent: double.parse(
-                                        anggaran["persentase"].toString()),
-                                    backgroundColor: backBar,
-                                    progressColor: controller.getProgressColor(
-                                        double.parse(
-                                            anggaran["persentase"].toString())),
-                                  ),
-                                  SizedBox(
-                                    height: 1.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        NumberFormat.currency(
-                                                locale: 'id',
-                                                symbol: "Limit Rp. ",
-                                                decimalDigits: 0)
-                                            .format(anggaran["nominal"]),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: grey400,
-                                            ),
-                                      ),
-                                      Text(
-                                        "${anggaran["persentase"]}%",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: grey400,
-                                            ),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 1.5.h,
-                                  ),
-                                  const Divider(
-                                    thickness: 1,
-                                    height: 0,
-                                    color: grey100,
-                                  ),
-                                  SizedBox(
-                                    height: 1.5.h,
-                                  ),
                                 ],
+                              ),
+                              SizedBox(
+                                height: 1.5.h,
+                              ),
+                              LinearPercentIndicator(
+                                barRadius: const Radius.circular(40),
+                                width: 75.55556.w,
+                                lineHeight: 2.5.h,
+                                percent: double.parse(
+                                    anggaran["persentase"].toString()),
+                                backgroundColor: backBar,
+                                progressColor: controller.getProgressColor(
+                                    double.parse(
+                                        anggaran["persentase"].toString())),
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    NumberFormat.currency(
+                                            locale: 'id',
+                                            symbol: "Limit Rp. ",
+                                            decimalDigits: 0)
+                                        .format(anggaran["nominal"]),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          color: grey400,
+                                        ),
+                                  ),
+                                  Text(
+                                    "${anggaran["persentase"]}%",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          color: grey400,
+                                        ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 1.5.h,
+                              ),
+                              const Divider(
+                                thickness: 1,
+                                height: 0,
+                                color: grey100,
+                              ),
+                              SizedBox(
+                                height: 1.5.h,
                               ),
                             ],
                           ),
