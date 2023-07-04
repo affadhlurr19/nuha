@@ -391,7 +391,7 @@ class HomeView extends GetView<HomeController> {
                       Obx(() => Text(
                             NumberFormat.currency(
                                     locale: 'id',
-                                    symbol: "Sisa anggaran kamu Rp. ",
+                                    symbol: "Sisa anggaran kamu Rp",
                                     decimalDigits: 0)
                                 .format(con.sisaAnggaran.value),
                             style: Theme.of(context)
@@ -402,15 +402,15 @@ class HomeView extends GetView<HomeController> {
                       SizedBox(
                         height: 1.5.h,
                       ),
-                      // Obx(() => LinearPercentIndicator(
-                      //       barRadius: const Radius.circular(40),
-                      //       // width: 75.55556.w,
-                      //       lineHeight: 2.5.h,
-                      //       percent: double.parse(con.persenAnggaran.value),
-                      //       backgroundColor: backBar,
-                      //       progressColor: con.getProgressColor(
-                      //           double.parse(con.persenAnggaran.value)),
-                      //     ))
+                      Obx(() => LinearPercentIndicator(
+                            barRadius: const Radius.circular(40),
+                            // width: 75.55556.w,
+                            lineHeight: 2.5.h,
+                            percent: double.parse(con.persenAnggaran.value),
+                            backgroundColor: backBar,
+                            progressColor: con.getProgressColor(
+                                double.parse(con.persenAnggaran.value)),
+                          ))
                     ],
                   ),
                 ),

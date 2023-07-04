@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
 import '../controllers/perencanaan_keuangan_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
 
 class PkPernikahanController extends GetxController {
   TextEditingController namaPasangan = TextEditingController();
@@ -15,6 +17,8 @@ class PkPernikahanController extends GetxController {
   TextEditingController nomDanaDisisihkan = TextEditingController();
 
   final con = Get.find<PerencanaanKeuanganController>();
+  final co = Get.find<TransaksiController>();
+  final c = Get.find<CashflowController>();
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -68,6 +72,24 @@ class PkPernikahanController extends GetxController {
       try {
         String uid = auth.currentUser!.uid;
         String id = firestore.collection("users").doc().id;
+        await firestore
+            .collection("users")
+            .doc(uid)
+            .collection("transaksi")
+            .doc(id)
+            .set({
+          "id": id,
+          "jenisTransaksi": "Pengeluaran",
+          "namaTransaksi": "Penyesuaian Dana",
+          "kategori": "Dana Pernikahan",
+          "nominal": int.parse(nomDanaTersedia.text.replaceAll(".", "")),
+          "tanggalTransaksi": Timestamp.now(),
+          "deskripsi": "",
+          "foto": "",
+          "createdAt": DateTime.now().toIso8601String(),
+          "updatedAt": DateTime.now().toIso8601String(),
+        });
+        co.totalTransPengeluaran();
 
         await firestore
             .collection("users")
@@ -77,7 +99,7 @@ class PkPernikahanController extends GetxController {
             .set({
           "id": id,
           "kategori": "Dana Pernikahan",
-          "nominal": danaPernikahan,
+          "nominal": danaPernikahan.toInt(),
           "jenisAnggaran": "Lainnya",
           "nominalTerpakai":
               int.parse(nomDanaTersedia.text.replaceAll(".", "")),
@@ -87,9 +109,11 @@ class PkPernikahanController extends GetxController {
           "createdAt": DateTime.now().toIso8601String(),
           "updatedAt": DateTime.now().toIso8601String(),
         });
+
+        c.totalNominalKategori();
         isLoading.value = false;
 
-        Get.to(const PerencanaanKeuanganView());
+        Get.to(() => const PerencanaanKeuanganView());
       } catch (e) {
         isLoading.value = false;
         // print(e);

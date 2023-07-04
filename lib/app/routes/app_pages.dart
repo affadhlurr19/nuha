@@ -11,6 +11,7 @@ import 'package:nuha/app/modules/profile/views/edit_pin_view.dart';
 import 'package:nuha/app/modules/profile/views/pin_view.dart';
 import 'package:nuha/app/modules/profile/views/pengaturan_notifikasi_view.dart';
 import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
+import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
 
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
@@ -177,6 +178,11 @@ class AppPages {
     GetPage(
       name: _Paths.CASHFLOW,
       page: () => CashflowView(),
+      binding: CashflowBinding(),
+    ),
+    GetPage(
+      name: _Paths.ANGGARAN,
+      page: () => AnggaranView(),
       binding: CashflowBinding(),
     ),
     GetPage(

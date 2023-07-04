@@ -11,6 +11,7 @@ import 'package:nuha/app/widgets/progress_bar.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_pendidikan_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 
 class RsPendidikanView extends GetView<PkPendidikanController> {
   RsPendidikanView({Key? key}) : super(key: key);
@@ -232,7 +233,7 @@ class RsPendidikanView extends GetView<PkPendidikanController> {
                                     ),
                                 children: [
                                   const TextSpan(
-                                    text: 'Perencanaan dana darurat ',
+                                    text: 'Perencanaan dana pendidikan ',
                                   ),
                                   TextSpan(
                                     text: c.danaStat,
@@ -284,7 +285,7 @@ class RsPendidikanView extends GetView<PkPendidikanController> {
                               ],
                             ),
                             Text(
-                              "Agar perencanaan dana darurat dapat tercapai",
+                              "Agar perencanaan dana pendidikan dapat tercapai",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
@@ -364,13 +365,15 @@ class RsPendidikanView extends GetView<PkPendidikanController> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
                   child: Text(
-                    "Kembali",
+                    "Selesai",
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
                         .copyWith(color: buttonColor1),
                   ),
-                  onPressed: () => Get.back(),
+                  onPressed: () {
+                    Get.to(() => const PerencanaanKeuanganView());
+                  },
                 ),
               ),
               SizedBox(

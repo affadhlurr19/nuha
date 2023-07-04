@@ -55,7 +55,7 @@ class FieldCurrency extends StatelessWidget {
                 padding:
                     EdgeInsets.symmetric(horizontal: 2.222.w, vertical: 1.h),
                 child: Text(
-                  "Rp. ",
+                  "Rp",
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!

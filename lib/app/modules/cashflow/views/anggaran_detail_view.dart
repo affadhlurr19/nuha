@@ -165,7 +165,7 @@ class AnggaranDetailView extends GetView<AnggaranDetailController> {
                                                     NumberFormat.currency(
                                                             locale: 'id',
                                                             symbol:
-                                                                "Tersisa Rp. ",
+                                                                "Tersisa Rp",
                                                             decimalDigits: 0)
                                                         .format(snapshot.data![
                                                             "sisaLimit"]),
@@ -221,7 +221,7 @@ class AnggaranDetailView extends GetView<AnggaranDetailController> {
                                       Text(
                                         NumberFormat.currency(
                                                 locale: 'id',
-                                                symbol: "Limit Rp. ",
+                                                symbol: "Limit Rp",
                                                 decimalDigits: 0)
                                             .format(int.parse(
                                                 controller.nomAnggaranC.text)),
@@ -428,14 +428,10 @@ class AnggaranDetailView extends GetView<AnggaranDetailController> {
                                                                                     ),
                                                                               ),
                                                                               Text(
-                                                                                transaksi["jenisTransaksi"] == "Pengeluaran" ? NumberFormat.currency(locale: 'id', symbol: "- ", decimalDigits: 0).format(transaksi["nominal"]) : NumberFormat.currency(locale: 'id', symbol: "+ ", decimalDigits: 0).format(transaksi["nominal"]),
-                                                                                style: transaksi["jenisTransaksi"] == "Pengeluaran"
-                                                                                    ? Theme.of(context).textTheme.bodySmall!.copyWith(
-                                                                                          color: const Color(0XFFCC444B),
-                                                                                        )
-                                                                                    : Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                                                                          color: const Color(0XFF0096C7),
-                                                                                        ),
+                                                                                NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(transaksi["nominal"]),
+                                                                                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                                                                      color: grey900,
+                                                                                    ),
                                                                               ),
                                                                             ],
                                                                           ),
