@@ -104,6 +104,8 @@ class FincheckController extends GetxController {
   }
 
   void result() async {
+    successMsg("Hasil test sedang diproses...");
+
     pengeluaranBulanan();
     penghasilanBulanan();
     totInvestasi();
@@ -341,7 +343,7 @@ class FincheckController extends GetxController {
     }
 
     idealPoint = 50;
-    point = (nominal / idealNum * 100);
+    point = (nominal / int.parse(aset.text.replaceAll(".", "")) * 100);
 
     await addData({
       "title": title,

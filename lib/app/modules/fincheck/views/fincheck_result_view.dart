@@ -68,7 +68,7 @@ class FincheckResultView extends GetView<FincheckController> {
                     child: SfRadialGauge(
                       axes: <RadialAxis>[
                         RadialAxis(
-                            axisLineStyle: AxisLineStyle(thickness: 30),
+                            axisLineStyle: const AxisLineStyle(thickness: 30),
                             showLabels: false,
                             showAxisLine: false,
                             showTicks: false,
@@ -472,6 +472,26 @@ class FincheckResultView extends GetView<FincheckController> {
                   ),
                 )
               ],
+            ),
+            SizedBox(
+              width: 39.7222.w,
+              height: 5.5.h,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: buttonColor2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),
+                child: Text(
+                  "Selesai",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white),
+                ),
+                onPressed: () {
+                  Get.toNamed('/home');
+                },
+              ),
             ),
             SizedBox(
               height: 3.h,
