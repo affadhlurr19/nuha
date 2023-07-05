@@ -137,7 +137,7 @@ class AnggaranDetailView extends GetView<AnggaranDetailController> {
                                               Image(
                                                 width: 10.555556.w,
                                                 image: AssetImage(
-                                                    'assets/images/${controller.kategoriC.value}.png'),
+                                                    'assets/images/${snapshot.data!["image"]}.png'),
                                               ),
                                               SizedBox(
                                                 width: 4.44444.w,
@@ -164,8 +164,12 @@ class AnggaranDetailView extends GetView<AnggaranDetailController> {
                                                   Text(
                                                     NumberFormat.currency(
                                                             locale: 'id',
-                                                            symbol:
-                                                                "Tersisa Rp",
+                                                            symbol: double.parse(
+                                                                        snapshot.data![
+                                                                            "persentase"]) >
+                                                                    1.0
+                                                                ? "Dana Lebih Rp"
+                                                                : "Tersisa Rp",
                                                             decimalDigits: 0)
                                                         .format(snapshot.data![
                                                             "sisaLimit"]),
@@ -205,7 +209,15 @@ class AnggaranDetailView extends GetView<AnggaranDetailController> {
                                     // width: 75.55556.w,
                                     lineHeight: 2.5.h,
                                     percent: double.parse(
-                                        snapshot.data!["persentase"]),
+                                                snapshot.data!["persentase"]) <
+                                            0.0
+                                        ? 0.0
+                                        : double.parse(snapshot
+                                                    .data!["persentase"]) >
+                                                1.0
+                                            ? 1.0
+                                            : double.parse(
+                                                snapshot.data!["persentase"]),
                                     backgroundColor: backBar,
                                     progressColor: controller.getProgressColor(
                                         double.parse(
@@ -410,7 +422,7 @@ class AnggaranDetailView extends GetView<AnggaranDetailController> {
                                                                             width:
                                                                                 10.55556.w,
                                                                             image:
-                                                                                AssetImage('assets/images/${transaksi["kategori"]}.png'),
+                                                                                AssetImage('assets/images/${transaksi["imgKategori"]}.png'),
                                                                           ),
                                                                           SizedBox(
                                                                             width:
@@ -563,7 +575,7 @@ class AnggaranDetailView extends GetView<AnggaranDetailController> {
                                                                             width:
                                                                                 10.55556.w,
                                                                             image:
-                                                                                AssetImage('assets/images/${controller.querySearch[index]["kategori"]}.png'),
+                                                                                AssetImage('assets/images/${controller.querySearch[index]["imgKategori"]}.png'),
                                                                           ),
                                                                           SizedBox(
                                                                             width:

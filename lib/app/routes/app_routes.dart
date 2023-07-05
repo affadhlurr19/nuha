@@ -46,6 +46,21 @@ abstract class Routes {
   static const CONFIRM_PIN = _Paths.CONFIRM_PIN;
   static const AUTH_PIN = _Paths.AUTH_PIN;
   static const ZIS = _Paths.ZIS;
+  static const ANGGARAN = _Paths.ANGGARAN;
+  static const RS_DARURAT = _Paths.RS_DARURAT;
+  static const RS_KENDARAAN = _Paths.RS_KENDARAAN;
+  static const RS_PENDIDIKAN = _Paths.RS_PENDIDIKAN;
+  static const RS_PENSIUN = _Paths.RS_PENSIUN;
+  static const RS_PERNIKAHAN = _Paths.RS_PERNIKAHAN;
+  static const RS_RUMAH = _Paths.RS_RUMAH;
+  static const RS_UMROH = _Paths.RS_UMROH;
+  static const PK_DARURAT = _Paths.PK_DARURAT;
+  static const PK_KENDARAAN = _Paths.PK_KENDARAAN;
+  static const PK_PENDIDIKAN = _Paths.PK_PENDIDIKAN;
+  static const PK_PENSIUN = _Paths.PK_PENSIUN;
+  static const PK_PERNIKAHAN = _Paths.PK_PERNIKAHAN;
+  static const PK_RUMAH = _Paths.PK_RUMAH;
+  static const PK_UMROH = _Paths.PK_UMROH;
 }
 
 abstract class _Paths {
@@ -92,4 +107,18 @@ abstract class _Paths {
   static const ZIS = '/zis';
   static const LAPORAN_KEUANGAN = '/laporankeuangan';
   static const ANGGARAN = '/anggaran';
+  static const RS_DARURAT = '/rs-darurat';
+  static const RS_KENDARAAN = '/rs-kendaraan';
+  static const RS_PENDIDIKAN = '/rs-pendidikan';
+  static const RS_PENSIUN = '/rs-pensiun';
+  static const RS_PERNIKAHAN = '/rs-pernikahan';
+  static const RS_RUMAH = '/rs-rumah';
+  static const RS_UMROH = '/rs-umroh';
+  static const PK_DARURAT = '/pk-darurat';
+  static const PK_KENDARAAN = '/pk-kendaraan';
+  static const PK_PENDIDIKAN = '/pk-pendidikan';
+  static const PK_PENSIUN = '/pk-pensiun';
+  static const PK_PERNIKAHAN = '/pk-pernikahan';
+  static const PK_RUMAH = '/pk-rumah';
+  static const PK_UMROH = '/pk-umroh';
 }

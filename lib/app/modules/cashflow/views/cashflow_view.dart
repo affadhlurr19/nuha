@@ -238,7 +238,11 @@ class CashflowView extends GetView<CashflowController> {
                         Obx(() => Text(
                               NumberFormat.currency(
                                       locale: 'id',
-                                      symbol: "Sisa anggaran kamu Rp",
+                                      symbol: double.parse(controller
+                                                  .persenAnggaran.value) >
+                                              1.0
+                                          ? "Melebihi anggaran sebesar Rp"
+                                          : "Sisa anggaran kamu Rp",
                                       decimalDigits: 0)
                                   .format(controller.sisaAnggaran.value),
                               style: Theme.of(context)
@@ -253,8 +257,16 @@ class CashflowView extends GetView<CashflowController> {
                               barRadius: const Radius.circular(40),
                               // width: 75.55556.w,
                               lineHeight: 2.5.h,
-                              percent:
-                                  double.parse(controller.persenAnggaran.value),
+                              percent: double.parse(
+                                          controller.persenAnggaran.value) <
+                                      0.0
+                                  ? 0.0
+                                  : double.parse(
+                                              controller.persenAnggaran.value) >
+                                          1.0
+                                      ? 1.0
+                                      : double.parse(
+                                          controller.persenAnggaran.value),
                               backgroundColor: backBar,
                               progressColor: controller.getProgressColor(
                                   double.parse(
@@ -372,7 +384,7 @@ class CashflowView extends GetView<CashflowController> {
                                                     children: [
                                                       Image(
                                                         image: AssetImage(
-                                                            'assets/images/${anggaran["kategori"]}.png'),
+                                                            'assets/images/${anggaran["image"]}.png'),
                                                         width: 10.55556.w,
                                                       ),
                                                       SizedBox(
@@ -403,8 +415,10 @@ class CashflowView extends GetView<CashflowController> {
                                                             NumberFormat.currency(
                                                                     locale:
                                                                         'id',
-                                                                    symbol:
-                                                                        "Tersisa Rp",
+                                                                    symbol: double.parse(anggaran["persentase"]) >
+                                                                            1.0
+                                                                        ? "Dana Lebih Rp"
+                                                                        : "Tersisa Rp",
                                                                     decimalDigits:
                                                                         0)
                                                                 .format(anggaran[
@@ -449,9 +463,17 @@ class CashflowView extends GetView<CashflowController> {
                                                 const Radius.circular(40),
                                             // width: 75.55556.w,
                                             lineHeight: 2.5.h,
-                                            percent: double.parse(
-                                                anggaran["persentase"]
-                                                    .toString()),
+                                            percent: double.parse(anggaran[
+                                                        "persentase"]) <
+                                                    0.0
+                                                ? 0.0
+                                                : double.parse(anggaran[
+                                                            "persentase"]) >
+                                                        1.0
+                                                    ? 1.0
+                                                    : double.parse(
+                                                        anggaran["persentase"]),
+
                                             backgroundColor: backBar,
                                             progressColor: controller
                                                 .getProgressColor(double.parse(

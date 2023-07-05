@@ -1,13 +1,11 @@
 import 'package:get/get.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/views/rs_pendidikan_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
-import '../controllers/perencanaan_keuangan_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class PkPendidikanController extends GetxController {
   TextEditingController namaAnak = TextEditingController();
@@ -19,13 +17,13 @@ class PkPendidikanController extends GetxController {
   TextEditingController lamaPendidikan = TextEditingController();
   TextEditingController nomDanaTersedia = TextEditingController();
 
-  final con = Get.find<PerencanaanKeuanganController>();
   final co = Get.find<TransaksiController>();
   final c = Get.find<CashflowController>();
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
+  DialogMessage dialogMessage = DialogMessage();
 
   RxBool isLoading = false.obs;
 
@@ -74,66 +72,85 @@ class PkPendidikanController extends GetxController {
       persentage = 0.1;
     }
 
-    Get.to(RsPendidikanView());
+    Get.toNamed('/rs-pendidikan');
   }
 
   void saveData(context) async {
-    if (nomDanaTersedia.text.isNotEmpty) {
-      isLoading.value = true;
-      try {
-        String uid = auth.currentUser!.uid;
-        String id = firestore.collection("users").doc().id;
+    String uid = auth.currentUser!.uid;
 
-        await firestore
-            .collection("users")
-            .doc(uid)
-            .collection("transaksi")
-            .doc(id)
-            .set({
-          "id": id,
-          "jenisTransaksi": "Pengeluaran",
-          "namaTransaksi": "Penyesuaian Dana",
-          "kategori": "Dana Pendidikan",
-          "nominal": int.parse(nomDanaTersedia.text.replaceAll(".", "")),
-          "tanggalTransaksi": Timestamp.now(),
-          "deskripsi": "",
-          "foto": "",
-          "createdAt": DateTime.now().toIso8601String(),
-          "updatedAt": DateTime.now().toIso8601String(),
-        });
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .where("kategori", isEqualTo: "Dana Pendidikan ${namaAnak.text}")
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        dialogMessage.errMsg(
+            "Anda sudah pernah membuat perencanaan ini. Silahkan buat dengan nama lain.");
+      } else {
+        if (nomDanaTersedia.text.isNotEmpty) {
+          isLoading.value = true;
 
-        co.totalTransPengeluaran();
+          try {
+            String id = firestore.collection("users").doc().id;
 
-        await firestore
-            .collection("users")
-            .doc(uid)
-            .collection("anggaran")
-            .doc(id)
-            .set({
-          "id": id,
-          "kategori": "Dana Pendidikan",
-          "nominal": danaSekolah.toInt(),
-          "jenisAnggaran": "Lainnya",
-          "nominalTerpakai":
-              int.parse(nomDanaTersedia.text.replaceAll(".", "")),
-          "persentase":
-              double.parse(realPersentage.toStringAsFixed(2)).toString(),
-          "sisaLimit": nomSisa,
-          "createdAt": DateTime.now().toIso8601String(),
-          "updatedAt": DateTime.now().toIso8601String(),
-        });
-        c.totalNominalKategori();
+            if (nomDanaTersedia.text != "0") {
+              firestore
+                  .collection("users")
+                  .doc(uid)
+                  .collection("transaksi")
+                  .doc(id)
+                  .set({
+                "id": id,
+                "jenisTransaksi": "Pengeluaran",
+                "namaTransaksi": "Penyesuaian Dana",
+                "kategori": "Dana Pendidikan ${namaAnak.text}",
+                "imgKategori": "Dana Pendidikan",
+                "nominal": int.parse(nomDanaTersedia.text.replaceAll(".", "")),
+                "tanggalTransaksi": Timestamp.now(),
+                "deskripsi": "Penyesuaian dana pendidikan ${namaAnak.text}",
+                "foto": "",
+                "createdAt": DateTime.now().toIso8601String(),
+                "updatedAt": DateTime.now().toIso8601String(),
+              });
 
-        isLoading.value = false;
+              co.totalTransPengeluaran();
+            }
 
-        Get.to(() => const PerencanaanKeuanganView());
-      } catch (e) {
-        isLoading.value = false;
-        // print(e);
-        con.errMsg("Tidak dapat menambahkan data!");
+            firestore
+                .collection("users")
+                .doc(uid)
+                .collection("anggaran")
+                .doc(id)
+                .set({
+              "id": id,
+              "kategori": "Dana Pendidikan ${namaAnak.text}",
+              "image": "Dana Pendidikan",
+              "nominal": danaSekolah.toInt(),
+              "jenisAnggaran": "Lainnya",
+              "nominalTerpakai":
+                  int.parse(nomDanaTersedia.text.replaceAll(".", "")),
+              "persentase":
+                  double.parse(realPersentage.toStringAsFixed(2)).toString(),
+              "sisaLimit": nomSisa,
+              "createdAt": DateTime.now().toIso8601String(),
+              "updatedAt": DateTime.now().toIso8601String(),
+            });
+            c.totalNominalKategori();
+
+            isLoading.value = false;
+
+            Get.offAllNamed("/perencanaan-keuangan");
+          } catch (e) {
+            isLoading.value = false;
+            // print(e);
+            dialogMessage.errMsg("Tidak dapat menambahkan data!");
+          }
+        } else {
+          dialogMessage.errMsg("Seluruh data wajib diisi");
+        }
       }
-    } else {
-      con.errMsg("Seluruh data wajib diisi");
-    }
+    });
   }
 }

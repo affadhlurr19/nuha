@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_pernikahan_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/views/pk_darurat_view.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/views/pk_kendaraan_view.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/views/pk_pendidikan_view.dart';
@@ -16,8 +17,23 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/perencanaan_keuangan_controller.dart';
 
+import '../controllers/pk_darurat_controller.dart';
+import '../controllers/pk_kendaraan_controller.dart';
+import '../controllers/pk_pendidikan_controller.dart';
+import '../controllers/pk_pensiun_controller.dart';
+import '../controllers/pk_rumah_controller.dart';
+import '../controllers/pk_umroh_controller.dart';
+
 class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
-  const PerencanaanKeuanganView({Key? key}) : super(key: key);
+  PerencanaanKeuanganView({Key? key}) : super(key: key);
+  final a = Get.find<PkDaruratController>();
+  final ab = Get.find<PkKendaraanController>();
+  final abc = Get.find<PkPendidikanController>();
+  final abcd = Get.find<PkPensiunController>();
+  final abcde = Get.find<PkPernikahanController>();
+  final abcdef = Get.find<PkRumahController>();
+  final abcdefg = Get.find<PkUmrohController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +43,7 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                Get.toNamed('/navbar');
               },
               color: dark,
             ),
@@ -85,37 +101,37 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
                 children: [
                   CategoryPerencanaanWidget(
                     image: const AssetImage('assets/images/Dana Darurat.png'),
-                    onTap: () => Get.to(PkDaruratView()),
+                    onTap: () => Get.to(() => PkDaruratView()),
                     text: "Dana Darurat",
                   ),
                   CategoryPerencanaanWidget(
                       image:
                           const AssetImage('assets/images/Dana Pendidikan.png'),
-                      onTap: () => Get.to(PkPendidikanView()),
+                      onTap: () => Get.to(() => PkPendidikanView()),
                       text: "Dana Pendidikan"),
                   CategoryPerencanaanWidget(
                       image:
                           const AssetImage('assets/images/Dana Haji Umroh.png'),
-                      onTap: () => Get.to(PkUmrohView()),
+                      onTap: () => Get.to(() => PkUmrohView()),
                       text: "Dana Haji/Umroh"),
                   CategoryPerencanaanWidget(
                       image:
                           const AssetImage('assets/images/Dana Pernikahan.png'),
-                      onTap: () => Get.to(PkPernikahanView()),
+                      onTap: () => Get.to(() => PkPernikahanView()),
                       text: "Dana Pernikahan"),
                   CategoryPerencanaanWidget(
                       image: const AssetImage(
                           'assets/images/Dana Rumah Impian.png'),
-                      onTap: () => Get.to(PkRumahView()),
+                      onTap: () => Get.to(() => PkRumahView()),
                       text: "Dana Beli Rumah"),
                   CategoryPerencanaanWidget(
                       image: const AssetImage(
                           'assets/images/Dana Beli Kendaraan.png'),
-                      onTap: () => Get.to(PkKendaraanView()),
+                      onTap: () => Get.to(() => PkKendaraanView()),
                       text: "Dana Beli Kendaraan"),
                   CategoryPerencanaanWidget(
                       image: const AssetImage('assets/images/Dana Pensiun.png'),
-                      onTap: () => Get.to(PkPensiunView()),
+                      onTap: () => Get.to(() => PkPensiunView()),
                       text: "Dana Pensiun"),
                 ],
               ),
@@ -188,7 +204,7 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
                                                     Image(
                                                       width: 10.55556.w,
                                                       image: AssetImage(
-                                                          'assets/images/${anggaran["kategori"]}.png'),
+                                                          'assets/images/${anggaran["image"]}.png'),
                                                     ),
                                                     SizedBox(
                                                       width: 4.44444.w,
@@ -217,8 +233,11 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
                                                         Text(
                                                           NumberFormat.currency(
                                                                   locale: 'id',
-                                                                  symbol:
-                                                                      "Tersisa Rp",
+                                                                  symbol: double.parse(anggaran[
+                                                                              "persentase"]) >
+                                                                          1.0
+                                                                      ? "Dana Lebih Rp"
+                                                                      : "Tersisa Rp",
                                                                   decimalDigits:
                                                                       0)
                                                               .format(anggaran[
@@ -248,8 +267,15 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
                                           width: 75.w,
                                           lineHeight: 2.5.h,
                                           percent: double.parse(
-                                              anggaran["persentase"]
-                                                  .toString()),
+                                                      anggaran["persentase"]) <
+                                                  0.0
+                                              ? 0.0
+                                              : double.parse(anggaran[
+                                                          "persentase"]) >
+                                                      1.0
+                                                  ? 1.0
+                                                  : double.parse(
+                                                      anggaran["persentase"]),
                                           backgroundColor: backBar,
                                           progressColor: controller
                                               .getProgressColor(double.parse(

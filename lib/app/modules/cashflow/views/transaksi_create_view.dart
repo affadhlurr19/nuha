@@ -847,7 +847,7 @@ class BottomSheetPengeluaran extends StatelessWidget {
                             data.length,
                             (index) => CategoryWidget(
                               image: AssetImage(
-                                  'assets/images/${data[index]["kategori"]}.png'),
+                                  'assets/images/${data[index]["image"]}.png'),
                               text: data[index]['kategori'],
                             ),
                           ),
@@ -878,7 +878,8 @@ class CategoryWidget extends StatelessWidget {
       width: 25.27778.w,
       child: GestureDetector(
         onTap: () {
-          Get.find<TransaksiCreateController>().updateKategori(text);
+          Get.find<TransaksiCreateController>()
+              .updateKategori(text, image.toString());
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

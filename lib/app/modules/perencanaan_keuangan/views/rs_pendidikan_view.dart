@@ -11,7 +11,6 @@ import 'package:nuha/app/widgets/progress_bar.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_pendidikan_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 
 class RsPendidikanView extends GetView<PkPendidikanController> {
   RsPendidikanView({Key? key}) : super(key: key);
@@ -372,7 +371,7 @@ class RsPendidikanView extends GetView<PkPendidikanController> {
                         .copyWith(color: buttonColor1),
                   ),
                   onPressed: () {
-                    Get.to(() => const PerencanaanKeuanganView());
+                    Get.offAllNamed('/perencanaan-keuangan');
                   },
                 ),
               ),

@@ -79,6 +79,7 @@ class AnggaranCreateController extends GetxController {
             .set({
           "id": id,
           "kategori": kategoriC.value,
+          "image": kategoriC.value,
           "nominal": int.parse(nomAnggaranC.text.replaceAll('.', '')),
           "jenisAnggaran": jenisKategori,
           "nominalTerpakai": 0,

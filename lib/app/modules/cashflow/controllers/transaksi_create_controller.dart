@@ -22,6 +22,7 @@ class TransaksiCreateController extends GetxController {
   var kategoriC = "Pilih Kategori".obs;
   var kategoriStat = "".obs;
   var selectDate = DateTime.now().obs;
+  var katImage = "";
   String transaksiUrl = "";
   XFile? image;
 
@@ -57,7 +58,13 @@ class TransaksiCreateController extends GetxController {
     Get.back();
   }
 
-  void updateKategori(text) {
+  void updateKategori(text, img) {
+    List<String> pathSegments = img.split("/");
+    String fileNameWithExtension = pathSegments.last;
+    String fileName = fileNameWithExtension.substring(
+        0, fileNameWithExtension.lastIndexOf('.'));
+
+    katImage = fileName.trim();
     kategoriC.value = text;
     kategoriStat.value = "choosen";
 
@@ -156,6 +163,7 @@ class TransaksiCreateController extends GetxController {
           "jenisTransaksi": jenisC.value,
           "namaTransaksi": namaTransaksiC.text,
           "kategori": kategoriC.value,
+          "imgKategori": katImage,
           "nominal": int.parse(nominalTransaksiC.text.replaceAll('.', '')),
           "tanggalTransaksi": selectDate.value,
           "deskripsi": deskripsiC.text,

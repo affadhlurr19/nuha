@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
-import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
+// import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
 
 class AnggaranEditController extends GetxController {
   final con = Get.find<CashflowController>();
@@ -111,7 +111,9 @@ class AnggaranEditController extends GetxController {
       con.totalNominalKategori();
       con.countAnggaranTerpakai();
 
-      Get.to(() => AnggaranView());
+      // Get.to(() => AnggaranView());
+
+      Get.offAndToNamed('/anggaran');
 
       successMsg("Data berhasil kami hapus dari database.");
     } catch (e) {

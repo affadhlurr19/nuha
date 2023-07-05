@@ -153,4 +153,22 @@ class PerencanaanKeuanganController extends GetxController {
       return buttonColor1;
     }
   }
+
+  void checkDataName(String text) async {
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .where("kategori", isEqualTo: text)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        // var anggaranActive = false;
+        Get.back();
+        Get.snackbar("Terjadi Kesalahan",
+            "Anda sudah pernah membuat anggaran dengan kategori ini!");
+      }
+    });
+  }
 }

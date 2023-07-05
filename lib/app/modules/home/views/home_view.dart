@@ -391,7 +391,11 @@ class HomeView extends GetView<HomeController> {
                       Obx(() => Text(
                             NumberFormat.currency(
                                     locale: 'id',
-                                    symbol: "Sisa anggaran kamu Rp",
+                                    symbol:
+                                        double.parse(con.persenAnggaran.value) >
+                                                1.0
+                                            ? "Melebihi anggaran sebesar Rp"
+                                            : "Sisa anggaran kamu Rp",
                                     decimalDigits: 0)
                                 .format(con.sisaAnggaran.value),
                             style: Theme.of(context)
@@ -406,7 +410,12 @@ class HomeView extends GetView<HomeController> {
                             barRadius: const Radius.circular(40),
                             // width: 75.55556.w,
                             lineHeight: 2.5.h,
-                            percent: double.parse(con.persenAnggaran.value),
+                            percent: double.parse(con.persenAnggaran.value) <
+                                    0.0
+                                ? 0.0
+                                : double.parse(con.persenAnggaran.value) > 1.0
+                                    ? 1.0
+                                    : double.parse(con.persenAnggaran.value),
                             backgroundColor: backBar,
                             progressColor: con.getProgressColor(
                                 double.parse(con.persenAnggaran.value)),

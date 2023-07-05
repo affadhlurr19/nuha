@@ -10,7 +10,6 @@ import 'package:nuha/app/widgets/progress_bar.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_pernikahan_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 
 class RsPernikahanView extends GetView<PkPernikahanController> {
   RsPernikahanView({Key? key}) : super(key: key);
@@ -325,7 +324,7 @@ class RsPernikahanView extends GetView<PkPernikahanController> {
                         .copyWith(color: buttonColor1),
                   ),
                   onPressed: () {
-                    Get.to(() => const PerencanaanKeuanganView());
+                    Get.offAllNamed('/perencanaan-keuangan');
                   },
                 ),
               ),

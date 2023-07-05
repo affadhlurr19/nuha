@@ -47,6 +47,20 @@ import '../modules/navbar/bindings/navbar_binding.dart';
 import '../modules/navbar/views/navbar_view.dart';
 import '../modules/perencanaan_keuangan/bindings/perencanaan_keuangan_binding.dart';
 import '../modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
+import '../modules/perencanaan_keuangan/views/rs_darurat_view.dart';
+import '../modules/perencanaan_keuangan/views/rs_kendaraan_view.dart';
+import '../modules/perencanaan_keuangan/views/rs_pendidikan_view.dart';
+import '../modules/perencanaan_keuangan/views/rs_pensiun_view.dart';
+import '../modules/perencanaan_keuangan/views/rs_pernikahan_view.dart';
+import '../modules/perencanaan_keuangan/views/rs_rumah_view.dart';
+import '../modules/perencanaan_keuangan/views/rs_umroh_view.dart';
+import '../modules/perencanaan_keuangan/views/pk_darurat_view.dart';
+import '../modules/perencanaan_keuangan/views/pk_kendaraan_view.dart';
+import '../modules/perencanaan_keuangan/views/pk_pendidikan_view.dart';
+import '../modules/perencanaan_keuangan/views/pk_pensiun_view.dart';
+import '../modules/perencanaan_keuangan/views/pk_pernikahan_view.dart';
+import '../modules/perencanaan_keuangan/views/pk_rumah_view.dart';
+import '../modules/perencanaan_keuangan/views/pk_umroh_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/edit_profile_view.dart';
 import '../modules/profile/views/ganti_foto_profil_view.dart';
@@ -59,7 +73,6 @@ import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/zis/bindings/zis_binding.dart';
 import '../modules/zis/views/zis_view.dart';
-
 // ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
@@ -187,7 +200,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PERENCANAAN_KEUANGAN,
-      page: () => const PerencanaanKeuanganView(),
+      page: () => PerencanaanKeuanganView(),
       binding: PerencanaanKeuanganBinding(),
     ),
     GetPage(
@@ -279,6 +292,76 @@ class AppPages {
       name: _Paths.LAPORAN_KEUANGAN,
       page: () => LaporankeuanganView(),
       binding: CashflowBinding(),
+    ),
+    GetPage(
+      name: _Paths.RS_DARURAT,
+      page: () => RsDaruratView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.RS_KENDARAAN,
+      page: () => RsKendaraanView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.RS_PENDIDIKAN,
+      page: () => RsPendidikanView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.RS_PENSIUN,
+      page: () => RsPensiunView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.RS_PERNIKAHAN,
+      page: () => RsPernikahanView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.RS_RUMAH,
+      page: () => RsRumahView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.RS_UMROH,
+      page: () => RsUmrohView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.PK_DARURAT,
+      page: () => PkDaruratView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.PK_KENDARAAN,
+      page: () => PkKendaraanView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.PK_PENDIDIKAN,
+      page: () => PkPendidikanView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.PK_PENSIUN,
+      page: () => PkPensiunView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.PK_PERNIKAHAN,
+      page: () => PkPernikahanView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.PK_RUMAH,
+      page: () => PkRumahView(),
+      binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.PK_UMROH,
+      page: () => PkUmrohView(),
+      binding: PerencanaanKeuanganBinding(),
     ),
   ];
 }
