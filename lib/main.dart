@@ -53,41 +53,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return StreamBuilder<User?>(
-    //   stream: auth.authStateChanges(),
-    //   builder: (context, snap) {
-    //     if (snap.connectionState == ConnectionState.waiting) {
-    //       return const CircularProgressIndicator();
-    //     }
-    //     return Sizer(
-    //       builder: (context, orientation, deviceType) {
-    //         return GetMaterialApp(
-    //           debugShowCheckedModeBanner: false,
-    //           theme: ThemeData(textTheme: myTextTheme),
-    //           title: "Nuha Financial",
-    //           initialRoute:
-    //               snap.data != null && snap.data!.emailVerified == true
-    //                   ? Routes.HOME
-    //                   : Routes.LANDING,
-    //           getPages: AppPages.routes,
-    //         );
-    //       },
-    //     );
-    //   },
-    // );
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return GetMaterialApp(
-          initialBinding: NotificationBindings(),
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            textTheme: myTextTheme,
-          ),
-          title: "Nuha Financial",
-          initialRoute: Routes.LANDING,
-          getPages: AppPages.routes,
+    return StreamBuilder<User?>(
+      stream: auth.authStateChanges(),
+      builder: (context, snap) {
+        if (snap.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        return Sizer(
+          builder: (context, orientation, deviceType) {
+            return GetMaterialApp(
+              initialBinding: NotificationBindings(),
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(textTheme: myTextTheme),
+              title: "Nuha Financial",
+              initialRoute:
+                  snap.data != null && snap.data!.emailVerified == true
+                      ? Routes.NAVBAR
+                      : Routes.LANDING,
+              getPages: AppPages.routes,
+            );
+          },
         );
       },
     );
+    // return Sizer(
+    //   builder: (context, orientation, deviceType) {
+    //     return GetMaterialApp(
+    //       initialBinding: NotificationBindings(),
+    //       debugShowCheckedModeBanner: false,
+    //       theme: ThemeData(
+    //         textTheme: myTextTheme,
+    //       ),
+    //       title: "Nuha Financial",
+    //       initialRoute: Routes.LANDING,
+    //       getPages: AppPages.routes,
+    //     );
+    //   },
+    // );
   }
 }
