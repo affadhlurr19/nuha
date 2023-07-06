@@ -10,6 +10,9 @@ import 'package:nuha/app/modules/profile/views/create_pin_view.dart';
 import 'package:nuha/app/modules/profile/views/edit_pin_view.dart';
 import 'package:nuha/app/modules/profile/views/pin_view.dart';
 import 'package:nuha/app/modules/profile/views/pengaturan_notifikasi_view.dart';
+import 'package:nuha/app/modules/profile/views/snk_view.dart';
+import 'package:nuha/app/modules/profile/views/hubungi_kami_view.dart';
+import 'package:nuha/app/modules/profile/views/bantuan_view.dart';
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
 import '../modules/cashflow/bindings/cashflow_binding.dart';
@@ -367,6 +370,21 @@ class AppPages {
       name: _Paths.ANGGARAN_CREATE,
       page: () => FormAnggaranView(),
       binding: CashflowBinding(),
+    ),
+    GetPage(
+      name: _Paths.SNK,
+      page: () => const SnkView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.BANTUAN,
+      page: () => const BantuanView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.HUBUNGI_KAMI,
+      page: () => const HubungiKamiView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

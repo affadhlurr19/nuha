@@ -64,4 +64,12 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
+    <queries>
+    <!-- Place inside the <queries> element. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="mailto" />
+        </intent>
+    </queries>
 </manifest>
