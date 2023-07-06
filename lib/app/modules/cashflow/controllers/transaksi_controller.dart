@@ -8,9 +8,12 @@ import 'package:firebase_storage/firebase_storage.dart' as s;
 import 'package:image_picker/image_picker.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/home/controllers/home_controller.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class TransaksiController extends GetxController {
   final c = Get.find<CashflowController>();
+  final co = Get.find<HomeController>();
   TextEditingController searchTransaksiC = TextEditingController();
   TextEditingController nominalTransaksiC = TextEditingController();
   TextEditingController namaTransaksiC = TextEditingController();
@@ -21,6 +24,7 @@ class TransaksiController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
+  DialogMessage dialogMessage = DialogMessage();
 
   var jenisC = "Pengeluaran".obs;
   var kategoriC = "Pilih Kategori".obs;
@@ -39,32 +43,6 @@ class TransaksiController extends GetxController {
     totalTransPengeluaran();
   }
 
-  void successMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: buttonColor1,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Berhasil",
-      msg,
-    );
-  }
-
-  void errMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: errColor,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Terjadi Kesalahan",
-      msg,
-    );
-  }
-
   void totalTransPendapatan() async {
     totalPendapatan.value = 0;
     String uid = auth.currentUser!.uid;
@@ -79,8 +57,8 @@ class TransaksiController extends GetxController {
         int nominalTrans = doc.data()['nominal'];
         totalPendapatan += nominalTrans;
       }
-      // print('Total nominal: $totalNominal');
     });
+    co.getRekomendasiZakat();
   }
 
   void totalTransPengeluaran() async {
@@ -251,11 +229,11 @@ class TransaksiController extends GetxController {
 
         // Get.back();
         Navigator.pop(context);
-        successMsg("Data berhasil diubah.");
+        dialogMessage.successMsg("Data berhasil diubah.");
       } catch (e) {
         // print(e);
         isLoading.value = false;
-        errMsg("Tidak dapat merubah data, coba lagi nanti!");
+        dialogMessage.errMsg("Tidak dapat merubah data, coba lagi nanti!");
       }
     }
   }
@@ -290,11 +268,11 @@ class TransaksiController extends GetxController {
       Get.back();
       Navigator.pop(context);
 
-      successMsg("Data berhasil kami hapus dari database.");
+      dialogMessage.successMsg("Data berhasil kami hapus dari database.");
     } catch (e) {
       // print(e);
       isLoading.value = false;
-      errMsg("Tidak dapat menghapus data, coba lagi nanti!");
+      dialogMessage.errMsg("Tidak dapat menghapus data, coba lagi nanti!");
     }
   }
 }

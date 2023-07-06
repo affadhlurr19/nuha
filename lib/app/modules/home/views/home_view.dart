@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/modules/cashflow/views/anggaran_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
 import 'package:nuha/app/modules/literasi/views/literasi_view.dart';
 import 'package:nuha/app/modules/profile/controllers/profile_controller.dart';
@@ -309,7 +310,7 @@ class HomeView extends GetView<HomeController> {
                   child: Obx(() => Text(
                         NumberFormat.currency(
                                 locale: 'id',
-                                symbol: "Rekomendasi nominal zakat Rp.",
+                                symbol: "Rekomendasi nominal zakat Rp",
                                 decimalDigits: 0)
                             .format(controller.rekomendasiZakat.value),
                         style: Theme.of(context)
@@ -332,98 +333,199 @@ class HomeView extends GetView<HomeController> {
               SizedBox(
                 height: 1.h,
               ),
-              Container(
-                width: 84.4444.w,
-                height: 20.75.h,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                    color: backgroundColor1),
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 4.4444.w, vertical: 1.875.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Laporan Keuangan",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                          color: buttonColor1,
-                                          fontWeight: FontWeight.w600,
-                                          height: 1.25),
+              Obx(() => Container(
+                  width: 84.4444.w,
+                  height: 20.75.h,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      color: backgroundColor1),
+                  child: controller.dataAnggaran.value != 0
+                      ? Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 4.4444.w, vertical: 1.875.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Laporan Keuangan",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: buttonColor1,
+                                                  fontWeight: FontWeight.w600,
+                                                  height: 1.25),
+                                        ),
+                                        Text(
+                                          "Cek laporan keuanganmu disini!",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                  color: grey400, height: 1.3),
+                                        ),
+                                      ],
+                                    ),
+                                    Iconify(
+                                      Ic.sharp_arrow_forward_ios,
+                                      size: 15.sp,
+                                      color: buttonColor1,
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "Cek laporan keuanganmu disini!",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(color: grey400, height: 1.3),
-                                ),
-                              ],
-                            ),
-                            Iconify(
-                              Ic.sharp_arrow_forward_ios,
-                              size: 15.sp,
-                              color: buttonColor1,
-                            ),
-                          ],
-                        ),
-                        onTap: () => Get.to(() => LaporankeuanganView()),
-                      ),
-                      const Divider(),
-                      Text(
-                        "Anggaran",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: grey900,
-                            fontWeight: FontWeight.w600,
-                            height: 1.25),
-                      ),
-                      Obx(() => Text(
-                            NumberFormat.currency(
-                                    locale: 'id',
-                                    symbol:
-                                        double.parse(con.persenAnggaran.value) >
+                                onTap: () {
+                                  showDialog(
+                                      barrierDismissible: false,
+                                      context: Get.context!,
+                                      builder: (_) {
+                                        return Dialog(
+                                          // The background color
+                                          backgroundColor: Colors.white,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 20),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                // The loading indicator
+                                                const CircularProgressIndicator(),
+                                                const SizedBox(
+                                                  height: 15,
+                                                ),
+                                                // Some text
+                                                Text('Tunggu sebentar...',
+                                                    style:
+                                                        Theme.of(Get.context!)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                              color: grey900,
+                                                            ))
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    Get.back(); // Tutup dialog "Tunggu sebentar"
+                                    Get.to(() =>
+                                        LaporankeuanganView()); // Pindah ke halaman LaporanKeuanganView()
+                                  });
+                                },
+                              ),
+                              const Divider(),
+                              Text(
+                                "Anggaran",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        color: grey900,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.25),
+                              ),
+                              Obx(() => Text(
+                                    NumberFormat.currency(
+                                            locale: 'id',
+                                            symbol: double.parse(con
+                                                        .persenAnggaran.value) >
+                                                    1.0
+                                                ? "Melebihi anggaran sebesar Rp"
+                                                : "Sisa anggaran kamu Rp",
+                                            decimalDigits: 0)
+                                        .format(con.sisaAnggaran.value),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: grey400, height: 1.3),
+                                  )),
+                              SizedBox(
+                                height: 1.5.h,
+                              ),
+                              Obx(() => LinearPercentIndicator(
+                                    barRadius: const Radius.circular(40),
+                                    // width: 75.55556.w,
+                                    lineHeight: 2.5.h,
+                                    percent: double.parse(
+                                                con.persenAnggaran.value) <
+                                            0.0
+                                        ? 0.0
+                                        : double.parse(
+                                                    con.persenAnggaran.value) >
                                                 1.0
-                                            ? "Melebihi anggaran sebesar Rp"
-                                            : "Sisa anggaran kamu Rp",
-                                    decimalDigits: 0)
-                                .format(con.sisaAnggaran.value),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: grey400, height: 1.3),
-                          )),
-                      SizedBox(
-                        height: 1.5.h,
-                      ),
-                      Obx(() => LinearPercentIndicator(
-                            barRadius: const Radius.circular(40),
-                            // width: 75.55556.w,
-                            lineHeight: 2.5.h,
-                            percent: double.parse(con.persenAnggaran.value) <
-                                    0.0
-                                ? 0.0
-                                : double.parse(con.persenAnggaran.value) > 1.0
-                                    ? 1.0
-                                    : double.parse(con.persenAnggaran.value),
-                            backgroundColor: backBar,
-                            progressColor: con.getProgressColor(
-                                double.parse(con.persenAnggaran.value)),
-                          ))
-                    ],
-                  ),
-                ),
-              ),
+                                            ? 1.0
+                                            : double.parse(
+                                                con.persenAnggaran.value),
+                                    backgroundColor: backBar,
+                                    progressColor: con.getProgressColor(
+                                        double.parse(con.persenAnggaran.value)),
+                                  ))
+                            ],
+                          ),
+                        )
+                      : Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 40.w,
+                                    child: Text(
+                                      "Yuk, catat anggaran keuanganmu dengan mudah~",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(color: grey500),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                  Image.asset(
+                                    'assets/images/no_records_1.png',
+                                    width: 32.w,
+                                    height: 14.125.h,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 50.27778.w,
+                                height: 4.25.h,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      backgroundColor: buttonColor2,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20))),
+                                  child: Text(
+                                    "Atur Anggaran Sekarang",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: backgroundColor1),
+                                  ),
+                                  onPressed: () =>
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                          context,
+                                          screen: FormAnggaranView()),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))),
               SizedBox(
                 height: 2.h,
               ),

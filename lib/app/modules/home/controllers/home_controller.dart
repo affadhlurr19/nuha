@@ -20,11 +20,13 @@ class HomeController extends GetxController {
   var endDate = DateTime.now().obs;
   var totalNominal = 0;
   var rekomendasiZakat = 0.0.obs;
+  var dataAnggaran = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    getDataPemasukan();
+    getRekomendasiZakat();
+    checkAnggaranCollectionExist();
   }
 
   Future<void> logoutGoogle() async {
@@ -80,7 +82,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getDataPemasukan() async {
+  Future<void> getRekomendasiZakat() async {
     String uid = auth.currentUser!.uid;
     var snapshotsPendapatan = await firestore
         .collection("users")
@@ -93,14 +95,28 @@ class HomeController extends GetxController {
         .get();
 
     snapshotsPendapatan.docs.forEach((doc) {
-      // Dapatkan nilai nominal dari dokumen
       int nominal = doc.data()['nominal'];
 
-      // Jumlahkan nilai nominal ke totalNominal
       totalNominal += nominal;
     });
 
-    print(totalNominal);
-    rekomendasiZakat.value = 0.25 * totalNominal.toDouble();
+    rekomendasiZakat.value = 0.025 * totalNominal.toDouble();
+  }
+
+  Future<bool> checkAnggaranCollectionExist() async {
+    String uid = auth.currentUser!.uid;
+
+    try {
+      CollectionReference anggaranCollection =
+          firestore.collection("users").doc(uid).collection("anggaran");
+      QuerySnapshot querySnapshot = await anggaranCollection.get();
+
+      dataAnggaran.value = querySnapshot.docs.length;
+
+      return querySnapshot.docs.isNotEmpty;
+    } catch (error) {
+      print('Terjadi kesalahan: $error');
+      return false;
+    }
   }
 }

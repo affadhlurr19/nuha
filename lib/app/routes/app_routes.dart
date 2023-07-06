@@ -61,6 +61,7 @@ abstract class Routes {
   static const PK_PERNIKAHAN = _Paths.PK_PERNIKAHAN;
   static const PK_RUMAH = _Paths.PK_RUMAH;
   static const PK_UMROH = _Paths.PK_UMROH;
+  static const ANGGARAN_CREATE = _Paths.ANGGARAN_CREATE;
 }
 
 abstract class _Paths {
@@ -121,4 +122,5 @@ abstract class _Paths {
   static const PK_PERNIKAHAN = '/pk-pernikahan';
   static const PK_RUMAH = '/pk-rumah';
   static const PK_UMROH = '/pk-umroh';
+  static const ANGGARAN_CREATE = '/form-anggaran';
 }

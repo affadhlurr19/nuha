@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
-import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
-// import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
+import 'package:nuha/app/modules/home/controllers/home_controller.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class AnggaranEditController extends GetxController {
   final con = Get.find<CashflowController>();
+  final co = Get.find<HomeController>();
+
   RxBool isLoading = false.obs;
   TextEditingController nomAnggaranC = TextEditingController();
   var kategoriC = "Pilih Kategori".obs;
@@ -16,32 +18,7 @@ class AnggaranEditController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
-
-  void successMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: buttonColor1,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Berhasil",
-      msg,
-    );
-  }
-
-  void errMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: errColor,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Terjadi Kesalahan",
-      msg,
-    );
-  }
+  DialogMessage dialogMessage = DialogMessage();
 
   Future<Map<String, dynamic>?> getAnggaranById(String docId) async {
     try {
@@ -57,7 +34,7 @@ class AnggaranEditController extends GetxController {
 
       return doc.data();
     } catch (e) {
-      errMsg("Coba lagi nanti!");
+      dialogMessage.errMsg("Coba lagi nanti!");
     }
     return null;
   }
@@ -87,13 +64,13 @@ class AnggaranEditController extends GetxController {
 
       isLoading.value = false;
       con.totalNominalKategori();
-      successMsg("Date berhasil diubah!");
+      dialogMessage.successMsg("Date berhasil diubah!");
 
       Navigator.pop(context);
     } catch (e) {
       // print(e);
       isLoading.value = false;
-      errMsg("Data gagal diubah, coba lagi nanti!");
+      dialogMessage.errMsg("Data gagal diubah, coba lagi nanti!");
     }
   }
 
@@ -110,15 +87,16 @@ class AnggaranEditController extends GetxController {
       isLoading.value = false;
       con.totalNominalKategori();
       con.countAnggaranTerpakai();
+      co.checkAnggaranCollectionExist();
 
       // Get.to(() => AnggaranView());
 
-      Get.offAndToNamed('/anggaran');
+      Get.offAllNamed('/navbar');
 
-      successMsg("Data berhasil kami hapus dari database.");
+      dialogMessage.successMsg("Data berhasil kami hapus dari database.");
     } catch (e) {
       isLoading.value = false;
-      errMsg("Tidak dapat menghapus data, coba lagi nanti!");
+      dialogMessage.errMsg("Tidak dapat menghapus data, coba lagi nanti!");
     }
   }
 }

@@ -183,10 +183,10 @@ class TransaksiCreateController extends GetxController {
       } catch (e) {
         isLoading.value = false;
         // print(e);
-        c.errMsg("Tidak dapat menambahkan data");
+        c.dialogMessage.errMsg("Tidak dapat menambahkan data");
       }
     } else {
-      c.errMsg("Tidak dapat menambahkan data");
+      c.dialogMessage.errMsg("Tidak dapat menambahkan data");
     }
   }
 

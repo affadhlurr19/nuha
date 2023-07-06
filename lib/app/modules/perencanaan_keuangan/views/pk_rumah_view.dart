@@ -214,10 +214,12 @@ class PkRumahView extends GetView<PkRumahController> {
                                 c.countKPRMurabahah(context);
                               }
                             } else {
-                              con.errMsg("Mohon isi seluruh kolom yang ada!");
+                              c.dialogMessage
+                                  .errMsg("Mohon isi seluruh kolom yang ada!");
                             }
                           } else {
-                            con.errMsg("Mohon isi seluruh kolom yang ada!");
+                            c.dialogMessage
+                                .errMsg("Mohon isi seluruh kolom yang ada!");
                           }
                         },
                       )),

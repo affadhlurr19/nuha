@@ -17,32 +17,6 @@ class PerencanaanKeuanganController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
 
-  void successMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: buttonColor1,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Berhasil",
-      msg,
-    );
-  }
-
-  void errMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: errColor,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Terjadi Kesalahan",
-      msg,
-    );
-  }
-
   Future<void> getPdf(Uint8List capturedImage, String name) async {
     showDialog(
         barrierDismissible: false,

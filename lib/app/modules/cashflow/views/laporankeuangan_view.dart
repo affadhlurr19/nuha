@@ -311,13 +311,14 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                               itemCount: c.chartPengeluaran.length.clamp(0, 3),
                               itemBuilder: (context, index) {
                                 final data = c.chartPengeluaran[index];
+                                // print(c.chartPengeluaran[1].kategori);
                                 return Column(
                                   children: [
                                     Row(
                                       children: [
                                         Image(
                                           image: AssetImage(
-                                              'assets/images/${data.kategori}.png'),
+                                              'assets/images/${data.imgKategori}.png'),
                                           width: 11.w,
                                         ),
                                         SizedBox(

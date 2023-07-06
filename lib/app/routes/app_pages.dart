@@ -10,13 +10,13 @@ import 'package:nuha/app/modules/profile/views/create_pin_view.dart';
 import 'package:nuha/app/modules/profile/views/edit_pin_view.dart';
 import 'package:nuha/app/modules/profile/views/pin_view.dart';
 import 'package:nuha/app/modules/profile/views/pengaturan_notifikasi_view.dart';
-import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
-import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
-
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
 import '../modules/cashflow/bindings/cashflow_binding.dart';
 import '../modules/cashflow/views/cashflow_view.dart';
+import '../modules/cashflow/views/anggaran_view.dart';
+import '../modules/cashflow/views/anggaran_create_view.dart';
+import '../modules/cashflow/views/laporankeuangan_view.dart';
 import '../modules/daftar_lembaga/bindings/daftar_lembaga_binding.dart';
 import '../modules/daftar_lembaga/views/daftar_lembaga_view.dart';
 import '../modules/edit_note/bindings/edit_note_binding.dart';
@@ -362,6 +362,11 @@ class AppPages {
       name: _Paths.PK_UMROH,
       page: () => PkUmrohView(),
       binding: PerencanaanKeuanganBinding(),
+    ),
+    GetPage(
+      name: _Paths.ANGGARAN_CREATE,
+      page: () => FormAnggaranView(),
+      binding: CashflowBinding(),
     ),
   ];
 }
