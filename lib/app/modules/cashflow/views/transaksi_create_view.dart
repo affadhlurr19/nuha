@@ -135,6 +135,7 @@ class FormTransaksiView extends GetView<TransaksiCreateController> {
                     SizedBox(
                       height: 5.5.h,
                       child: TextField(
+                        textCapitalization: TextCapitalization.sentences,
                         controller: controller.namaTransaksiC,
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -387,6 +388,7 @@ class FormTransaksiView extends GetView<TransaksiCreateController> {
                     SizedBox(
                       height: 14.875.h,
                       child: TextField(
+                        textCapitalization: TextCapitalization.sentences,
                         controller: controller.deskripsiC,
                         minLines: 5,
                         maxLines: null,

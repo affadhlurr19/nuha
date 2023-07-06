@@ -147,6 +147,20 @@ class TransaksiController extends GetxController {
     }
   }
 
+  pickImageTransaksi(String pickCam) async {
+    final ImagePicker picker = ImagePicker();
+    if (pickCam == "kamera") {
+      image = await picker.pickImage(source: ImageSource.camera);
+    } else {
+      image = await picker.pickImage(source: ImageSource.gallery);
+    }
+
+    if (image != null) {
+      update();
+      Get.back();
+    }
+  }
+
   void resetImageTransaksi() async {
     image = null;
     update();
@@ -230,6 +244,7 @@ class TransaksiController extends GetxController {
         // Get.back();
         Navigator.pop(context);
         dialogMessage.successMsg("Data berhasil diubah.");
+        resetImageTransaksi();
       } catch (e) {
         // print(e);
         isLoading.value = false;

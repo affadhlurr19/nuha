@@ -168,9 +168,9 @@ class LaporankeuanganController extends GetxController {
       String imgKategori = data['imgKategori'];
       int kategoriTotal = data['kategoriTotal'];
 
-      print('Kategori: $kategori');
-      print('Img Kategori: $imgKategori');
-      print('Kategori Total: $kategoriTotal');
+      // print('Kategori: $kategori');
+      // print('Img Kategori: $imgKategori');
+      // print('Kategori Total: $kategoriTotal');
     });
 
     List<ChartPengeluaran> list = kategoriTotal.entries.map((entry) {
