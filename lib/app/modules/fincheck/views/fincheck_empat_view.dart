@@ -198,17 +198,18 @@ class FincheckEmpatView extends GetView<FincheckController> {
                         .copyWith(color: Colors.white),
                   ),
                   onPressed: () {
-                    if (controller.belanja.value.text.isNotEmpty &&
-                        controller.transportasi.value.text.isNotEmpty &&
-                        controller.sedekah.value.text.isNotEmpty &&
-                        controller.pendidikan.value.text.isNotEmpty &&
-                        controller.pajak.value.text.isNotEmpty &&
-                        controller.premiAsuransi.value.text.isNotEmpty &&
-                        controller.lainnya.value.text.isNotEmpty) {
-                      Get.to(() => const FincheckLimaView());
-                    } else {
-                      controller.errMsg("Mohon isi seluruh kolom yang ada!");
-                    }
+                    Get.to(() => const FincheckLimaView());
+                    // if (controller.belanja.value.text.isNotEmpty &&
+                    //     controller.transportasi.value.text.isNotEmpty &&
+                    //     controller.sedekah.value.text.isNotEmpty &&
+                    //     controller.pendidikan.value.text.isNotEmpty &&
+                    //     controller.pajak.value.text.isNotEmpty &&
+                    //     controller.premiAsuransi.value.text.isNotEmpty &&
+                    //     controller.lainnya.value.text.isNotEmpty) {
+                    //   Get.to(() => const FincheckLimaView());
+                    // } else {
+                    //   controller.errMsg("Mohon isi seluruh kolom yang ada!");
+                    // }
                   },
                 ),
               ),

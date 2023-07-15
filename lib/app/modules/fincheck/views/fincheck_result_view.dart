@@ -161,7 +161,6 @@ class FincheckResultView extends GetView<FincheckController> {
                       } else {
                         final data =
                             snapshot.data!.docs.map((e) => e.data()).toList();
-
                         return SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
                           child: StickyGroupedListView<dynamic, String>(
@@ -257,163 +256,109 @@ class FincheckResultView extends GetView<FincheckController> {
                                   SizedBox(
                                     height: 1.h,
                                   ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                        width: 68.w,
-                                        child: Center(
-                                          child: SfLinearGauge(
-                                            showTicks: false,
-                                            showLabels: false,
-                                            axisTrackStyle:
-                                                const LinearAxisTrackStyle(
-                                                    color: grey50),
-                                            interval: 100,
-                                            markerPointers: [
-                                              LinearWidgetPointer(
-                                                value: element["idealPoint"],
-                                                child: Container(
-                                                    height: 1.75.h,
-                                                    width: 1.w,
-                                                    color: dark),
-                                              ),
-                                              LinearWidgetPointer(
-                                                  value: element["point"],
-                                                  child: element[
-                                                              "resultStatus"] ==
-                                                          "Bad"
-                                                      ? Iconify(
-                                                          Ph.warning_circle_fill,
-                                                          size: 15.sp,
-                                                          color: Colors.orange,
-                                                        )
-                                                      : Iconify(
-                                                          MaterialSymbols
-                                                              .check_circle_rounded,
-                                                          size: 15.sp,
-                                                          color: const Color
-                                                                  .fromARGB(
-                                                              255, 5, 92, 50),
-                                                        )),
-                                            ],
-                                            barPointers: [
-                                              LinearBarPointer(
-                                                  color:
-                                                      element["resultStatus"] ==
-                                                              "Bad"
-                                                          ? buttonColor2
-                                                              .withOpacity(0.7)
-                                                          : buttonColor1
-                                                              .withOpacity(0.7),
-                                                  value: element["point"],
-                                                  position:
-                                                      LinearElementPosition
-                                                          .cross),
-                                            ],
+                                  SizedBox(
+                                    width: 68.w,
+                                    child: Center(
+                                      child: SfLinearGauge(
+                                        showTicks: false,
+                                        showLabels: false,
+                                        axisTrackStyle:
+                                            const LinearAxisTrackStyle(
+                                                color: grey50),
+                                        interval: 100,
+                                        markerPointers: [
+                                          LinearWidgetPointer(
+                                            value: element["idealPoint"],
+                                            child: Container(
+                                                height: 1.75.h,
+                                                width: 1.w,
+                                                color: dark),
                                           ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15.sp,
-                                        width: 15.sp,
-                                        child: Obx(() => IconButton(
-                                              padding: const EdgeInsets.all(0),
-                                              iconSize: 15.sp,
-                                              onPressed: () {
-                                                c.toggleDescriptionVisibility();
-                                              },
-                                              icon: c.isVisible.isFalse
-                                                  ? Transform(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      transform:
-                                                          Matrix4.rotationX(
-                                                              math.pi),
-                                                      child: Iconify(
-                                                        MaterialSymbols
-                                                            .arrow_drop_down_circle_outline_rounded,
-                                                        size: 15.sp,
-                                                        color: dark,
-                                                      ),
+                                          LinearWidgetPointer(
+                                              value: element["point"],
+                                              child: element["resultStatus"] ==
+                                                      "Bad"
+                                                  ? Iconify(
+                                                      Ph.warning_circle_fill,
+                                                      size: 15.sp,
+                                                      color: Colors.orange,
                                                     )
                                                   : Iconify(
                                                       MaterialSymbols
-                                                          .arrow_drop_down_circle_outline_rounded,
+                                                          .check_circle_rounded,
                                                       size: 15.sp,
-                                                      color: dark,
-                                                    ),
-                                            )),
-                                      )
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255, 5, 92, 50),
+                                                    )),
+                                        ],
+                                        barPointers: [
+                                          LinearBarPointer(
+                                              color: element["resultStatus"] ==
+                                                      "Bad"
+                                                  ? buttonColor2
+                                                      .withOpacity(0.7)
+                                                  : buttonColor1
+                                                      .withOpacity(0.7),
+                                              value: element["point"],
+                                              position:
+                                                  LinearElementPosition.cross),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      Text("Deskripsi: ",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                  color: dark,
+                                                  fontWeight: FontWeight.w600)),
+                                      Text("${element["description"]}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                color: dark,
+                                              )),
+                                      element["resultStatus"] == "Good"
+                                          ? Container()
+                                          : Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  height: 1.h,
+                                                ),
+                                                Text(
+                                                    "Apa yang perlu dilakukan?",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .copyWith(
+                                                            color: dark,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600)),
+                                                Text(
+                                                    "${element["toDo"]} ${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(element["selisih"])}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .copyWith(
+                                                          color: dark,
+                                                        )),
+                                              ],
+                                            ),
                                     ],
                                   ),
-                                  Obx(() => SizedBox(
-                                        child: c.isVisible.isFalse
-                                            ? Container()
-                                            : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    height: 1.h,
-                                                  ),
-                                                  Text("Deskripsi: ",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall!
-                                                          .copyWith(
-                                                              color: dark,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600)),
-                                                  Text(
-                                                      "${element["description"]}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall!
-                                                          .copyWith(
-                                                            color: dark,
-                                                          )),
-                                                  element["resultStatus"] ==
-                                                          "Good"
-                                                      ? Container()
-                                                      : Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 1.h,
-                                                            ),
-                                                            Text(
-                                                                "Apa yang perlu dilakukan?",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodySmall!
-                                                                    .copyWith(
-                                                                        color:
-                                                                            dark,
-                                                                        fontWeight:
-                                                                            FontWeight.w600)),
-                                                            Text(
-                                                                "${element["toDo"]} ${NumberFormat.currency(locale: 'id', symbol: "Rp", decimalDigits: 0).format(element["selisih"])}",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodySmall!
-                                                                    .copyWith(
-                                                                      color:
-                                                                          dark,
-                                                                    )),
-                                                          ],
-                                                        ),
-                                                ],
-                                              ),
-                                      )),
                                 ],
                               ),
                             ),
@@ -456,7 +401,8 @@ class FincheckResultView extends GetView<FincheckController> {
                         .then((capturedImage) async {
                       c.getPdf(capturedImage!, "Cek Kesehatan Keuangan");
                     }).catchError((onError) {
-                      c.errMsg("Terjadi kesalahan, coba lagi nanti!");
+                      c.dialogMessage
+                          .errMsg("Terjadi kesalahan, coba lagi nanti!");
                     });
                   },
                   style: ButtonStyle(
@@ -489,7 +435,7 @@ class FincheckResultView extends GetView<FincheckController> {
                       .copyWith(color: Colors.white),
                 ),
                 onPressed: () {
-                  Get.toNamed('/home');
+                  Get.offAndToNamed('/navbar');
                 },
               ),
             ),

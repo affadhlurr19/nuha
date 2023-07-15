@@ -74,6 +74,15 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                         MediaQuery(
                           data: const MediaQueryData(),
                           child: SfCircularChart(
+                            palette: const <Color>[
+                              Color.fromARGB(255, 170, 239, 251),
+                              Color.fromRGBO(255, 228, 167, 1),
+                              Color.fromARGB(255, 134, 237, 138),
+                              Color.fromARGB(255, 255, 192, 158),
+                              Color.fromARGB(255, 222, 151, 248),
+                              Color.fromARGB(255, 148, 250, 179),
+                              Color.fromARGB(255, 255, 151, 151),
+                            ],
                             margin: const EdgeInsets.all(0),
                             series: <CircularSeries>[
                               DoughnutSeries<ChartPengeluaran, String>(
@@ -110,6 +119,15 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                         MediaQuery(
                           data: const MediaQueryData(),
                           child: SfCircularChart(
+                            palette: const <Color>[
+                              Color.fromARGB(255, 170, 239, 251),
+                              Color.fromRGBO(255, 228, 167, 1),
+                              Color.fromARGB(255, 134, 237, 138),
+                              Color.fromARGB(255, 255, 192, 158),
+                              Color.fromARGB(255, 222, 151, 248),
+                              Color.fromARGB(255, 148, 250, 179),
+                              Color.fromARGB(255, 255, 151, 151),
+                            ],
                             margin: const EdgeInsets.all(0),
                             series: <CircularSeries>[
                               DoughnutSeries<ChartPemasukan, String>(
@@ -276,6 +294,15 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                       SizedBox(
                         height: 32.5.h,
                         child: SfCircularChart(
+                          palette: const <Color>[
+                            Color.fromARGB(255, 170, 239, 251),
+                            Color.fromRGBO(255, 228, 167, 1),
+                            Color.fromARGB(255, 134, 237, 138),
+                            Color.fromARGB(255, 255, 192, 158),
+                            Color.fromARGB(255, 222, 151, 248),
+                            Color.fromARGB(255, 148, 250, 179),
+                            Color.fromARGB(255, 255, 151, 151),
+                          ],
                           margin: const EdgeInsets.all(0),
                           series: <CircularSeries>[
                             DoughnutSeries<ChartPengeluaran, String>(
@@ -387,6 +414,15 @@ class LaporankeuanganView extends GetView<LaporankeuanganController> {
                       SizedBox(
                         height: 32.5.h,
                         child: SfCircularChart(
+                          palette: const <Color>[
+                            Color.fromARGB(255, 170, 239, 251),
+                            Color.fromRGBO(255, 228, 167, 1),
+                            Color.fromARGB(255, 134, 237, 138),
+                            Color.fromARGB(255, 255, 192, 158),
+                            Color.fromARGB(255, 222, 151, 248),
+                            Color.fromARGB(255, 148, 250, 179),
+                            Color.fromARGB(255, 255, 151, 151),
+                          ],
                           margin: const EdgeInsets.all(0),
                           series: <CircularSeries>[
                             DoughnutSeries<ChartPemasukan, String>(

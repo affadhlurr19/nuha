@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_result_view.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
@@ -11,49 +12,54 @@ import 'package:nuha/mobile.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class FincheckController extends GetxController {
   ScreenshotController screenshotController = ScreenshotController();
 
   //fincheck page 1, data pemasukan per bulan
-  TextEditingController pendapatanAktif = TextEditingController();
-  TextEditingController pendapatanPasif = TextEditingController();
-  TextEditingController bisnisUsaha = TextEditingController();
-  TextEditingController hasilInvestasi = TextEditingController();
-  TextEditingController lainnya = TextEditingController();
+  TextEditingController pendapatanAktif = TextEditingController(text: "0");
+  TextEditingController pendapatanPasif = TextEditingController(text: "0");
+  TextEditingController bisnisUsaha = TextEditingController(text: "0");
+  TextEditingController hasilInvestasi = TextEditingController(text: "0");
+  TextEditingController lainnya = TextEditingController(text: "0");
 
   //fincheck page 2, data menabung per bulan
-  TextEditingController nabungInvestasi = TextEditingController();
-  TextEditingController totalTabungan = TextEditingController();
+  TextEditingController nabungInvestasi = TextEditingController(text: "0");
+  TextEditingController totalTabungan = TextEditingController(text: "0");
 
   //fincheck page 3, data investasi per bulan
-  TextEditingController reksadana = TextEditingController();
-  TextEditingController saham = TextEditingController();
-  TextEditingController obligasi = TextEditingController();
-  TextEditingController unitLink = TextEditingController();
-  TextEditingController deposito = TextEditingController();
-  TextEditingController crowdFunding = TextEditingController();
-  TextEditingController ebaRitel = TextEditingController();
-  TextEditingController logamMulia = TextEditingController();
+  TextEditingController reksadana = TextEditingController(text: "0");
+  TextEditingController saham = TextEditingController(text: "0");
+  TextEditingController obligasi = TextEditingController(text: "0");
+  TextEditingController unitLink = TextEditingController(text: "0");
+  TextEditingController deposito = TextEditingController(text: "0");
+  TextEditingController crowdFunding = TextEditingController(text: "0");
+  TextEditingController ebaRitel = TextEditingController(text: "0");
+  TextEditingController logamMulia = TextEditingController(text: "0");
 
   //fincheck page 4, data pengeluaran per bulan
-  TextEditingController belanja = TextEditingController();
-  TextEditingController transportasi = TextEditingController();
-  TextEditingController sedekah = TextEditingController();
-  TextEditingController pendidikan = TextEditingController();
-  TextEditingController pajak = TextEditingController();
-  TextEditingController premiAsuransi = TextEditingController();
-  TextEditingController lainnyaP = TextEditingController();
+  TextEditingController belanja = TextEditingController(text: "0");
+  TextEditingController transportasi = TextEditingController(text: "0");
+  TextEditingController sedekah = TextEditingController(text: "0");
+  TextEditingController pendidikan = TextEditingController(text: "0");
+  TextEditingController pajak = TextEditingController(text: "0");
+  TextEditingController premiAsuransi = TextEditingController(text: "0");
+  TextEditingController lainnyaP = TextEditingController(text: "0");
 
   //fincheck page 5, data hutang dan aset per bulan
-  TextEditingController aset = TextEditingController();
-  TextEditingController hutang = TextEditingController();
+  TextEditingController aset = TextEditingController(text: "0");
+  TextEditingController hutang = TextEditingController(text: "0");
 
   RxBool isLoading = false.obs;
   RxBool isVisible = false.obs;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
+  DialogMessage dialogMessage = DialogMessage();
+  RxString currentPaymentMethod = ''.obs;
+  RxBool isPaymentMethodSelected = false.obs;
 
   String resultStatus = "";
   String toDo = "";
@@ -77,34 +83,8 @@ class FincheckController extends GetxController {
     isVisible.toggle();
   }
 
-  void successMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: buttonColor1,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Berhasil",
-      msg,
-    );
-  }
-
-  void errMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: errColor,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Terjadi Kesalahan",
-      msg,
-    );
-  }
-
   void result() async {
-    successMsg("Hasil test sedang diproses...");
+    dialogMessage.successMsg("Hasil test sedang diproses...");
 
     pengeluaranBulanan();
     penghasilanBulanan();

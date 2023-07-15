@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,13 +8,14 @@ import 'package:nuha/app/modules/daftar_lembaga/controllers/daftar_pinjol_contro
 import 'package:nuha/app/modules/daftar_lembaga/providers/daftar_ikd_provider.dart';
 import 'package:nuha/app/modules/daftar_lembaga/providers/daftar_pinjol_provider.dart';
 import 'package:nuha/app/utility/result_state.dart';
-
+import 'package:iconify_flutter/icons/material_symbols.dart';
 import '../controllers/daftar_lembaga_controller.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:sizer/sizer.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/uil.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DaftarLembagaView extends GetView<DaftarLembagaController> {
   DaftarLembagaView({Key? key}) : super(key: key);
@@ -182,22 +185,47 @@ class DataIKD extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    itemBuilder: (context, element) => Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            element.namaPlatform,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(color: dark),
+                                    itemBuilder: (context, element) =>
+                                        GestureDetector(
+                                      onTap: () {
+                                        Get.defaultDialog(
+                                          radius: 25,
+                                          titlePadding:
+                                              EdgeInsets.only(top: 2.h),
+                                          title: "Detail Lembaga",
+                                          titleStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  color: grey900,
+                                                  fontWeight: FontWeight.w600),
+                                          content: IKDDialog(
+                                            namaPlatform: element.namaPlatform,
+                                            namaPT: element.namaPT,
+                                            suratTanda: element.suratTanda,
+                                            tanggalTercatat:
+                                                element.tglTercatat,
+                                            klaster: element.klaster,
                                           ),
-                                          Divider(
-                                            color: grey50,
-                                            thickness: 0.2.h,
-                                          )
-                                        ]),
+                                        );
+                                      },
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              element.namaPlatform,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(color: dark),
+                                            ),
+                                            Divider(
+                                              color: grey50,
+                                              thickness: 0.2.h,
+                                            )
+                                          ]),
+                                    ),
                                     order: GroupedListOrder.ASC,
                                   );
                                 case ResultStatus.noData:
@@ -294,22 +322,49 @@ class DataIKD extends StatelessWidget {
                                           )
                                         ],
                                       ),
-                                      itemBuilder: (context, element) => Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              element.namaPlatform,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(color: dark),
+                                      itemBuilder: (context, element) =>
+                                          GestureDetector(
+                                        onTap: () {
+                                          Get.defaultDialog(
+                                            radius: 25,
+                                            titlePadding:
+                                                EdgeInsets.only(top: 2.h),
+                                            title: "Detail Lembaga",
+                                            titleStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
+                                                .copyWith(
+                                                    color: grey900,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                            content: IKDDialog(
+                                              namaPlatform:
+                                                  element.namaPlatform,
+                                              namaPT: element.namaPT,
+                                              suratTanda: element.suratTanda,
+                                              tanggalTercatat:
+                                                  element.tglTercatat,
+                                              klaster: element.klaster,
                                             ),
-                                            Divider(
-                                              color: grey50,
-                                              thickness: 0.2.h,
-                                            )
-                                          ]),
+                                          );
+                                        },
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                element.namaPlatform,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(color: dark),
+                                              ),
+                                              Divider(
+                                                color: grey50,
+                                                thickness: 0.2.h,
+                                              )
+                                            ]),
+                                      ),
                                       order: GroupedListOrder.ASC,
                                     );
                                   case ResultStatus.noData:
@@ -486,22 +541,44 @@ class DataPinjol extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    itemBuilder: (context, element) => Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            element.namaPlatform,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(color: dark),
+                                    itemBuilder: (context, element) =>
+                                        GestureDetector(
+                                      onTap: () {
+                                        Get.defaultDialog(
+                                          radius: 25,
+                                          titlePadding:
+                                              EdgeInsets.only(top: 2.h),
+                                          title: "Detail Lembaga",
+                                          titleStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  color: grey900,
+                                                  fontWeight: FontWeight.w600),
+                                          content: PinjolDialog(
+                                            namaPlatform: element.namaPlatform,
+                                            situs: element.situs,
+                                            status: element.status,
                                           ),
-                                          Divider(
-                                            color: grey50,
-                                            thickness: 0.2.h,
-                                          )
-                                        ]),
+                                        );
+                                      },
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              element.namaPlatform,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(color: dark),
+                                            ),
+                                            Divider(
+                                              color: grey50,
+                                              thickness: 0.2.h,
+                                            )
+                                          ]),
+                                    ),
                                     order: GroupedListOrder.ASC,
                                   );
                                 case ResultStatus.noData:
@@ -594,22 +671,44 @@ class DataPinjol extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    itemBuilder: (context, element) => Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            element.namaPlatform,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(color: dark),
+                                    itemBuilder: (context, element) =>
+                                        GestureDetector(
+                                      onTap: () {
+                                        Get.defaultDialog(
+                                          radius: 25,
+                                          titlePadding:
+                                              EdgeInsets.only(top: 2.h),
+                                          title: "Detail Lembaga",
+                                          titleStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  color: grey900,
+                                                  fontWeight: FontWeight.w600),
+                                          content: PinjolDialog(
+                                            namaPlatform: element.namaPlatform,
+                                            situs: element.situs,
+                                            status: element.status,
                                           ),
-                                          Divider(
-                                            color: grey50,
-                                            thickness: 0.2.h,
-                                          )
-                                        ]),
+                                        );
+                                      },
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              element.namaPlatform,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(color: dark),
+                                            ),
+                                            Divider(
+                                              color: grey50,
+                                              thickness: 0.2.h,
+                                            )
+                                          ]),
+                                    ),
                                     order: GroupedListOrder.ASC,
                                   );
                                 case ResultStatus.noData:
@@ -672,6 +771,297 @@ class DataPinjol extends StatelessWidget {
                             }));
                 }),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class IKDDialog extends StatelessWidget {
+  final String namaPlatform;
+  final String namaPT;
+  final String suratTanda;
+  final String tanggalTercatat;
+  final String klaster;
+
+  const IKDDialog({
+    Key? key,
+    required this.namaPlatform,
+    required this.namaPT,
+    required this.suratTanda,
+    required this.tanggalTercatat,
+    required this.klaster,
+  }) : super(key: key);
+
+  void _launchGoogleSearch(String query) async {
+    final url = 'https://www.google.com/search?q=$query';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 5.w,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Nama Platform : ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+              ),
+              Flexible(
+                child: Text(
+                  namaPlatform,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: dark),
+                  maxLines: 3,
+                ),
+              )
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Nama PT         : ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+              ),
+              Flexible(
+                child: Text(
+                  namaPT,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: dark),
+                  maxLines: 3,
+                ),
+              )
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Surat Tanda      : ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+              ),
+              Flexible(
+                child: Text(
+                  suratTanda,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: dark),
+                  maxLines: 3,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Tanggal Tercatat: ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+              ),
+              Flexible(
+                child: Text(
+                  tanggalTercatat,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: dark),
+                  maxLines: 3,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Klaster             : ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+              ),
+              Flexible(
+                child: Text(
+                  klaster,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: dark),
+                  maxLines: 3,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _launchGoogleSearch(namaPlatform);
+            },
+            style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: buttonColor2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20))),
+            child: Text(
+              "Kunjungi Situs",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: backgroundColor1),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class PinjolDialog extends StatelessWidget {
+  final String namaPlatform;
+  final String situs;
+  final String status;
+
+  const PinjolDialog(
+      {Key? key,
+      required this.namaPlatform,
+      required this.situs,
+      required this.status})
+      : super(key: key);
+
+  void _launchGoogleSearch(String query) async {
+    final url = 'https://$query';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 5.w,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Nama Platform: ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+              ),
+              Flexible(
+                child: Text(
+                  namaPlatform,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: dark),
+                  maxLines: 3,
+                ),
+              )
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Status             : ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+              ),
+              Flexible(
+                child: Text(
+                  status,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: dark),
+                ),
+              )
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Situs              : ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: buttonColor1, fontWeight: FontWeight.w600),
+              ),
+              Flexible(
+                child: Text(
+                  situs,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: dark),
+                  maxLines: 3,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _launchGoogleSearch(situs);
+            },
+            style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: buttonColor2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20))),
+            child: Text(
+              "Kunjungi Situs",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: backgroundColor1),
+            ),
+          )
         ],
       ),
     );

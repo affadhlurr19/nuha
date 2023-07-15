@@ -186,13 +186,14 @@ class FincheckLimaView extends GetView<FincheckController> {
                               .copyWith(color: Colors.white),
                         ),
                         onPressed: () {
-                          if (controller.aset.value.text.isNotEmpty &&
-                              controller.hutang.value.text.isNotEmpty) {
-                            controller.result();
-                          } else {
-                            controller
-                                .errMsg("Mohon isi seluruh kolom yang ada!");
-                          }
+                          controller.result();
+                          // if (controller.aset.value.text.isNotEmpty &&
+                          //     controller.hutang.value.text.isNotEmpty) {
+                          //   controller.result();
+                          // } else {
+                          //   controller
+                          //       .errMsg("Mohon isi seluruh kolom yang ada!");
+                          // }
                         },
                       ),
                     )
