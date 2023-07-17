@@ -391,7 +391,7 @@ class HomeView extends GetView<HomeController> {
                       Obx(() => Text(
                             NumberFormat.currency(
                                     locale: 'id',
-                                    symbol: "Sisa anggaran kamu Rp. ",
+                                    symbol: "Sisa anggaran kamu Rp",
                                     decimalDigits: 0)
                                 .format(con.sisaAnggaran.value),
                             style: Theme.of(context)

@@ -160,8 +160,9 @@ class DataIKD extends StatelessWidget {
                                   return GroupedListView<dynamic, String>(
                                     shrinkWrap: true,
                                     elements: controller.resultIKD.data,
-                                    groupBy: (element) =>
-                                        element.namaPlatform.substring(0, 1),
+                                    groupBy: (element) => element.namaPlatform
+                                        .substring(0, 1)
+                                        .toUpperCase(),
                                     groupSeparatorBuilder:
                                         (String groupByValue) => Column(
                                       crossAxisAlignment:
@@ -270,8 +271,9 @@ class DataIKD extends StatelessWidget {
                                     return GroupedListView<dynamic, String>(
                                       shrinkWrap: true,
                                       elements: controller.resultSearch.data,
-                                      groupBy: (element) =>
-                                          element.namaPlatform.substring(0, 1),
+                                      groupBy: (element) => element.namaPlatform
+                                          .substring(0, 1)
+                                          .toUpperCase(),
                                       groupSeparatorBuilder:
                                           (String groupByValue) => Column(
                                         crossAxisAlignment:
@@ -462,8 +464,9 @@ class DataPinjol extends StatelessWidget {
                                   return GroupedListView<dynamic, String>(
                                     shrinkWrap: true,
                                     elements: c.resultPinjol.data,
-                                    groupBy: (element) =>
-                                        element.namaPlatform.substring(0, 1),
+                                    groupBy: (element) => element.namaPlatform
+                                        .substring(0, 1)
+                                        .toUpperCase(),
                                     groupSeparatorBuilder:
                                         (String groupByValue) => Column(
                                       crossAxisAlignment:
@@ -569,8 +572,9 @@ class DataPinjol extends StatelessWidget {
                                   return GroupedListView<dynamic, String>(
                                     shrinkWrap: true,
                                     elements: c.resultSearch.data,
-                                    groupBy: (element) =>
-                                        element.namaPlatform.substring(0, 1),
+                                    groupBy: (element) => element.namaPlatform
+                                        .substring(0, 1)
+                                        .toUpperCase(),
                                     groupSeparatorBuilder:
                                         (String groupByValue) => Column(
                                       crossAxisAlignment:

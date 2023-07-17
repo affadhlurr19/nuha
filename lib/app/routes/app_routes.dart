@@ -91,4 +91,5 @@ abstract class _Paths {
   static const AUTH_PIN = '/auth-pin';
   static const ZIS = '/zis';
   static const LAPORAN_KEUANGAN = '/laporankeuangan';
+  static const ANGGARAN = '/anggaran';
 }

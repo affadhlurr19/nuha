@@ -122,7 +122,7 @@ class AnggaranView extends GetView<CashflowController> {
                           Obx(() => Text(
                                 NumberFormat.currency(
                                         locale: 'id',
-                                        symbol: "Rp. ",
+                                        symbol: "Rp",
                                         decimalDigits: 0)
                                     .format(controller.sisaAnggaran.value),
                                 style: Theme.of(context)
@@ -135,7 +135,7 @@ class AnggaranView extends GetView<CashflowController> {
                           Obx(() => Text(
                                 NumberFormat.currency(
                                         locale: 'id',
-                                        symbol: "Tersisa dari Rp. ",
+                                        symbol: "Tersisa dari Rp",
                                         decimalDigits: 0)
                                     .format(controller.totalNominal.value),
                                 style: Theme.of(context)
@@ -350,7 +350,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                               0.5.h,
                                                                         ),
                                                                         Text(
-                                                                          NumberFormat.currency(locale: 'id', symbol: "Tersisa Rp. ", decimalDigits: 0).format(controller.queryAwal[index]
+                                                                          NumberFormat.currency(locale: 'id', symbol: "Tersisa Rp", decimalDigits: 0).format(controller.queryAwal[index]
                                                                               [
                                                                               "sisaLimit"]),
                                                                           style: Theme.of(context)
@@ -423,7 +423,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                       locale:
                                                                           'id',
                                                                       symbol:
-                                                                          "Limit Rp. ",
+                                                                          "Limit Rp",
                                                                       decimalDigits:
                                                                           0)
                                                                   .format(int.parse(
@@ -604,7 +604,7 @@ class SemuaWidget extends StatelessWidget {
                                               Text(
                                                 NumberFormat.currency(
                                                         locale: 'id',
-                                                        symbol: "Tersisa Rp. ",
+                                                        symbol: "Tersisa Rp",
                                                         decimalDigits: 0)
                                                     .format(
                                                         anggaran["sisaLimit"]),
@@ -661,7 +661,7 @@ class SemuaWidget extends StatelessWidget {
                                   Text(
                                     NumberFormat.currency(
                                             locale: 'id',
-                                            symbol: "Limit Rp. ",
+                                            symbol: "Limit Rp",
                                             decimalDigits: 0)
                                         .format(anggaran["nominal"]),
                                     style: Theme.of(context)
@@ -672,7 +672,7 @@ class SemuaWidget extends StatelessWidget {
                                         ),
                                   ),
                                   Text(
-                                    "${anggaran["persentase"]}%",
+                                    "${(double.parse(anggaran["persentase"]) * 100).toStringAsFixed(0)}%",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall!

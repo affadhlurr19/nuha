@@ -128,7 +128,7 @@ class TransaksiView extends GetView<TransaksiController> {
                                 Obx(() => Text(
                                       NumberFormat.currency(
                                               locale: 'id',
-                                              symbol: "Rp. ",
+                                              symbol: "Rp ",
                                               decimalDigits: 0)
                                           .format(
                                               controller.totalPendapatan.value),
@@ -176,7 +176,7 @@ class TransaksiView extends GetView<TransaksiController> {
                                 Obx(() => Text(
                                       NumberFormat.currency(
                                               locale: 'id',
-                                              symbol: "Rp. ",
+                                              symbol: "Rp ",
                                               decimalDigits: 0)
                                           .format(controller
                                               .totalPengeluaran.value),
@@ -534,12 +534,12 @@ class DataViewWidget extends StatelessWidget {
                                                 "Pengeluaran"
                                             ? NumberFormat.currency(
                                                     locale: 'id',
-                                                    symbol: "- ",
+                                                    symbol: "- Rp",
                                                     decimalDigits: 0)
                                                 .format(element["nominal"])
                                             : NumberFormat.currency(
                                                     locale: 'id',
-                                                    symbol: "+ ",
+                                                    symbol: "+ Rp",
                                                     decimalDigits: 0)
                                                 .format(element["nominal"]),
                                         style: element["jenisTransaksi"] ==
