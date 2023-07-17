@@ -6,6 +6,7 @@ import 'package:nuha/app/modules/cashflow/controllers/anggaran_edit_controller.d
 import 'package:nuha/app/modules/cashflow/controllers/laporankeuangan_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/transaksi_create_controller.dart';
+import 'package:nuha/app/modules/home/controllers/home_controller.dart';
 import 'package:nuha/app/modules/navbar/controllers/navbar_controller.dart';
 
 import '../controllers/cashflow_controller.dart';
@@ -40,6 +41,9 @@ class CashflowBinding extends Bindings {
     );
     Get.lazyPut<LaporankeuanganController>(
       () => LaporankeuanganController(),
+    );
+    Get.lazyPut<HomeController>(
+      () => HomeController(),
     );
   }
 }

@@ -11,7 +11,6 @@ import 'package:nuha/app/widgets/progress_bar.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_darurat_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 
 class RsDaruratView extends GetView<PkDaruratController> {
   RsDaruratView({Key? key}) : super(key: key);
@@ -19,6 +18,7 @@ class RsDaruratView extends GetView<PkDaruratController> {
   final c = Get.find<PkDaruratController>();
 
   final con = Get.find<PerencanaanKeuanganController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +72,7 @@ class RsDaruratView extends GetView<PkDaruratController> {
                       height: 1.5.h,
                     ),
                     Text(
-                      "Dana Darurat Yang Dibutuhkan",
+                      "Dana Darurat ${c.namaDana.text}",
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: grey900,
                             fontWeight: FontWeight.w600,
@@ -95,6 +95,16 @@ class RsDaruratView extends GetView<PkDaruratController> {
                       child: ProgressBarView(
                         value: c.persentage,
                       ),
+                    ),
+                    SizedBox(
+                      height: 0.5.h,
+                    ),
+                    Text(
+                      c.danaInfo,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: grey900),
                     ),
                     SizedBox(
                       height: 0.5.h,
@@ -378,7 +388,7 @@ class RsDaruratView extends GetView<PkDaruratController> {
                                       .copyWith(color: buttonColor1),
                                 ),
                                 onPressed: () {
-                                  Get.to(() => const PerencanaanKeuanganView());
+                                  Get.offAllNamed('/perencanaan-keuangan');
                                 },
                               ),
                             ),

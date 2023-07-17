@@ -32,7 +32,9 @@ class ChartPengeluaran {
   ChartPengeluaran({
     this.kategori,
     this.nominal,
+    this.imgKategori,
   });
   final String? kategori;
   final int? nominal;
+  final String? imgKategori;
 }

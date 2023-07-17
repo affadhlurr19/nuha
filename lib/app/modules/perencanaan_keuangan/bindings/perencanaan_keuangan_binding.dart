@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nuha/app/modules/cashflow/controllers/anggaran_detail_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
 
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_darurat_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_kendaraan_controller.dart';
@@ -39,6 +40,9 @@ class PerencanaanKeuanganBinding extends Bindings {
     );
     Get.lazyPut<AnggaranDetailController>(
       () => AnggaranDetailController(),
+    );
+    Get.lazyPut<TransaksiController>(
+      () => TransaksiController(),
     );
   }
 }

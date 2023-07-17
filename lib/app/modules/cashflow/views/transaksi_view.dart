@@ -292,7 +292,7 @@ class TransaksiView extends GetView<TransaksiController> {
                                                           Image(
                                                             width: 10.55556.w,
                                                             image: AssetImage(
-                                                                'assets/images/${controller.tempSearch[index]["kategori"]}.png'),
+                                                                'assets/images/${controller.tempSearch[index]["imgKategori"]}.png'),
                                                           ),
                                                           SizedBox(
                                                             width: 4.44444.w,
@@ -510,7 +510,7 @@ class DataViewWidget extends StatelessWidget {
                                   Image(
                                     width: 10.55556.w,
                                     image: AssetImage(
-                                        'assets/images/${element["kategori"]}.png'),
+                                        'assets/images/${element["imgKategori"]}.png'),
                                   ),
                                   SizedBox(
                                     width: 4.44444.w,

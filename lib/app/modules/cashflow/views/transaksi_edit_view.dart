@@ -185,6 +185,7 @@ class TransaksiEditView extends GetView<TransaksiController> {
                           SizedBox(
                             height: 5.5.h,
                             child: TextField(
+                              textCapitalization: TextCapitalization.sentences,
                               controller: c.namaTransaksiC,
                               textAlign: TextAlign.left,
                               style: Theme.of(context)
@@ -445,6 +446,7 @@ class TransaksiEditView extends GetView<TransaksiController> {
                           SizedBox(
                             height: 14.875.h,
                             child: TextField(
+                              textCapitalization: TextCapitalization.sentences,
                               controller: c.deskripsiC,
                               minLines: 5,
                               maxLines: null,
@@ -660,6 +662,48 @@ class TransaksiEditView extends GetView<TransaksiController> {
             }
           },
         )));
+  }
+}
+
+class DialogCamera extends StatelessWidget {
+  DialogCamera({super.key});
+
+  final TransaksiController controller = Get.put(TransaksiController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Divider(
+            color: grey400,
+            thickness: 1,
+            indent: 4.w,
+            endIndent: 4.w,
+          ),
+          TextButton(
+            onPressed: () => Get.to(controller.pickImageTransaksi("kamera")),
+            child: Text(
+              "Kamera",
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: grey900,
+                  ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Get.to(controller.pickImageTransaksi("galeri")),
+            child: Text(
+              "Galeri",
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: grey900,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

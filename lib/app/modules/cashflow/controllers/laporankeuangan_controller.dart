@@ -146,31 +146,49 @@ class LaporankeuanganController extends GetxController {
             isGreaterThanOrEqualTo: startDate.value,
             isLessThanOrEqualTo: endDate.value)
         .get();
-    Map<String, int> kategoriTotal = {};
+
+    Map<String, Map<String, dynamic>> kategoriTotal = {};
 
     snapshotsPengeluaran.docs.forEach((doc) {
       String kategori = doc.data()['kategori'];
+      String imgKategori = doc.data()['imgKategori'];
       int nominal = doc.data()['nominal'];
 
       if (kategoriTotal.containsKey(kategori)) {
-        kategoriTotal[kategori] = kategoriTotal[kategori]! + nominal;
+        kategoriTotal[kategori]!['kategoriTotal'] += nominal;
       } else {
-        kategoriTotal[kategori] = nominal;
+        kategoriTotal[kategori] = {
+          'kategoriTotal': nominal,
+          'imgKategori': imgKategori,
+        };
       }
     });
 
-    List<ChartPengeluaran> list = kategoriTotal.entries
-        .map((e) => ChartPengeluaran(
-              kategori: e.key,
-              nominal: e.value,
-            ))
-        .toList();
+    kategoriTotal.forEach((kategori, data) {
+      String imgKategori = data['imgKategori'];
+      int kategoriTotal = data['kategoriTotal'];
+
+      // print('Kategori: $kategori');
+      // print('Img Kategori: $imgKategori');
+      // print('Kategori Total: $kategoriTotal');
+    });
+
+    List<ChartPengeluaran> list = kategoriTotal.entries.map((entry) {
+      String kategori = entry.key;
+      int nominal = entry.value['kategoriTotal'];
+      String imgKategori = entry.value['imgKategori'];
+
+      return ChartPengeluaran(
+        kategori: kategori,
+        nominal: nominal,
+        imgKategori: imgKategori,
+      );
+    }).toList();
 
     list.sort((a, b) => b.nominal!.compareTo(a.nominal!.toInt()));
 
     chartPengeluaran.clear();
     chartPengeluaran.assignAll(list);
-    // print(chartPemasukan);
   }
 
   Future<void> getDataMasukKeluar() async {
@@ -231,32 +249,6 @@ class LaporankeuanganController extends GetxController {
             color: const Color(0XFFCC444B)))
         .toList();
     lineChartK.assignAll(list2);
-  }
-
-  void successMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: buttonColor1,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Berhasil",
-      msg,
-    );
-  }
-
-  void errMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: errColor,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Terjadi Kesalahan",
-      msg,
-    );
   }
 
   Future<void> getPdf(List<Uint8List> capturedImage, String name) async {

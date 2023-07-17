@@ -206,18 +206,19 @@ class FincheckSatuView extends GetView<FincheckController> {
                                 .copyWith(color: Colors.white),
                           ),
                           onPressed: () {
-                            if (controller.pendapatanAktif.value.text.isNotEmpty &&
-                                controller
-                                    .pendapatanPasif.value.text.isNotEmpty &&
-                                controller.bisnisUsaha.value.text.isNotEmpty &&
-                                controller
-                                    .hasilInvestasi.value.text.isNotEmpty &&
-                                controller.lainnya.value.text.isNotEmpty) {
-                              Get.to(() => const FincheckDuaView());
-                            } else {
-                              controller
-                                  .errMsg("Mohon isi seluruh kolom yang ada!");
-                            }
+                            Get.to(() => const FincheckDuaView());
+                            // if (controller.pendapatanAktif.value.text.isNotEmpty &&
+                            //     controller
+                            //         .pendapatanPasif.value.text.isNotEmpty &&
+                            //     controller.bisnisUsaha.value.text.isNotEmpty &&
+                            //     controller
+                            //         .hasilInvestasi.value.text.isNotEmpty &&
+                            //     controller.lainnya.value.text.isNotEmpty) {
+                            //   Get.to(() => const FincheckDuaView());
+                            // } else {
+                            //   controller
+                            //       .errMsg("Mohon isi seluruh kolom yang ada!");
+                            // }
                           }),
                     )
                   ],

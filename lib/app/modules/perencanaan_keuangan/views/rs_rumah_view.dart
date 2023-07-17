@@ -10,7 +10,6 @@ import 'package:nuha/app/widgets/progress_bar.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_rumah_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
 
 class RsRumahView extends GetView<PkRumahController> {
   RsRumahView({Key? key}) : super(key: key);
@@ -330,7 +329,7 @@ class CashWidget extends StatelessWidget {
                       .copyWith(color: buttonColor1),
                 ),
                 onPressed: () {
-                  Get.to(() => const PerencanaanKeuanganView());
+                  Get.offAllNamed('/perencanaan-keuangan');
                 },
               ),
             ),
@@ -709,7 +708,7 @@ class MurabahahWidget extends StatelessWidget {
                       .copyWith(color: buttonColor1),
                 ),
                 onPressed: () {
-                  Get.to(() => const PerencanaanKeuanganView());
+                  Get.offAllNamed('/perencanaan-keuangan');
                 },
               ),
             ),

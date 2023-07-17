@@ -203,18 +203,19 @@ class FincheckTigaView extends GetView<FincheckController> {
                         .copyWith(color: Colors.white),
                   ),
                   onPressed: () {
-                    if (controller.reksadana.value.text.isNotEmpty &&
-                        controller.saham.value.text.isNotEmpty &&
-                        controller.obligasi.value.text.isNotEmpty &&
-                        controller.unitLink.value.text.isNotEmpty &&
-                        controller.deposito.value.text.isNotEmpty &&
-                        controller.crowdFunding.value.text.isNotEmpty &&
-                        controller.ebaRitel.value.text.isNotEmpty &&
-                        controller.logamMulia.value.text.isNotEmpty) {
-                      Get.to(() => const FincheckEmpatView());
-                    } else {
-                      controller.errMsg("Mohon isi seluruh kolom yang ada!");
-                    }
+                    Get.to(() => const FincheckEmpatView());
+                    // if (controller.reksadana.value.text.isNotEmpty &&
+                    //     controller.saham.value.text.isNotEmpty &&
+                    //     controller.obligasi.value.text.isNotEmpty &&
+                    //     controller.unitLink.value.text.isNotEmpty &&
+                    //     controller.deposito.value.text.isNotEmpty &&
+                    //     controller.crowdFunding.value.text.isNotEmpty &&
+                    //     controller.ebaRitel.value.text.isNotEmpty &&
+                    //     controller.logamMulia.value.text.isNotEmpty) {
+                    //   Get.to(() => const FincheckEmpatView());
+                    // } else {
+                    //   controller.errMsg("Mohon isi seluruh kolom yang ada!");
+                    // }
                   },
                 ),
               ),

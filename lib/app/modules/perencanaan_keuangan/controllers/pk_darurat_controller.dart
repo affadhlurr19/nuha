@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/views/perencanaan_keuangan_view.dart';
-import 'package:nuha/app/modules/perencanaan_keuangan/views/rs_darurat_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
-import '../controllers/perencanaan_keuangan_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class PkDaruratController extends GetxController {
   TextEditingController namaDana = TextEditingController();
@@ -16,13 +14,13 @@ class PkDaruratController extends GetxController {
   TextEditingController nomDanaTersedia = TextEditingController();
   TextEditingController nomDanaDisisihkan = TextEditingController();
 
-  final con = Get.find<PerencanaanKeuanganController>();
   final co = Get.find<TransaksiController>();
   final c = Get.find<CashflowController>();
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
+  DialogMessage dialogMessage = DialogMessage();
 
   final textValidation = TextEditingController();
   RxBool isLoading = false.obs;
@@ -30,6 +28,7 @@ class PkDaruratController extends GetxController {
   var statusPernikahan = "Pilih Status Pernikahan".obs;
   var statusStat = "".obs;
   var danaStat = "";
+  var danaInfo = "";
   int danaDarurat = 0;
   int nomSisa = 0;
   double nomPerbulan = 0.0;
@@ -45,10 +44,16 @@ class PkDaruratController extends GetxController {
   void countDana(context) async {
     if (statusPernikahan.value == "Belum Menikah") {
       danaDarurat = 3 * int.parse(nomPengeluaran.text.replaceAll(".", ""));
+      danaInfo =
+          "Jumlah dana darurat dengan status belum menikah adalah 3 kali dari total pengeluaran perbulannya.";
     } else if (statusPernikahan.value == "Sudah Menikah") {
       danaDarurat = 6 * int.parse(nomPengeluaran.text.replaceAll(".", ""));
+      danaInfo =
+          "Jumlah dana darurat dengan status sudah menikah adalah 6 kali dari total pengeluaran perbulannya.";
     } else if (statusPernikahan.value == "Sudah Menikah dan Memiliki Anak") {
       danaDarurat = 12 * int.parse(nomPengeluaran.text.replaceAll(".", ""));
+      danaInfo =
+          "Jumlah dana darurat dengan status sudah menikah dan memiliki anak adalah 12 kali dari total pengeluaran perbulannya.";
     } else {
       danaDarurat = 0;
     }
@@ -73,67 +78,84 @@ class PkDaruratController extends GetxController {
       persentage = 0.1;
     }
 
-    Get.to(() => RsDaruratView());
+    Get.toNamed('/rs-darurat');
   }
 
   void saveData(context) async {
-    if (nomDanaTersedia.text.isNotEmpty) {
-      isLoading.value = true;
-      try {
-        String uid = auth.currentUser!.uid;
-        String id = firestore.collection("users").doc().id;
+    String uid = auth.currentUser!.uid;
+    firestore
+        .collection("users")
+        .doc(uid)
+        .collection("anggaran")
+        .where("kategori", isEqualTo: "Dana ${namaDana.text}")
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        dialogMessage.errMsg(
+            "Anda sudah pernah membuat perencanaan ini. Silahkan buat dengan nama lain.");
+      } else {
+        if (nomDanaTersedia.text.isNotEmpty) {
+          isLoading.value = true;
+          try {
+            String id = firestore.collection("users").doc().id;
 
-        await firestore
-            .collection("users")
-            .doc(uid)
-            .collection("transaksi")
-            .doc(id)
-            .set({
-          "id": id,
-          "jenisTransaksi": "Pengeluaran",
-          "namaTransaksi": "Penyesuaian Dana",
-          "kategori": "Dana Darurat",
-          "nominal": int.parse(nomDanaTersedia.text.replaceAll(".", "")),
-          "tanggalTransaksi": Timestamp.now(),
-          "deskripsi": "",
-          "foto": "",
-          "createdAt": DateTime.now().toIso8601String(),
-          "updatedAt": DateTime.now().toIso8601String(),
-        });
+            if (nomDanaTersedia.text != "0") {
+              firestore
+                  .collection("users")
+                  .doc(uid)
+                  .collection("transaksi")
+                  .doc(id)
+                  .set({
+                "id": id,
+                "jenisTransaksi": "Pengeluaran",
+                "namaTransaksi": "Penyesuaian Dana",
+                "kategori": "Dana ${namaDana.text}",
+                "imgKategori": "Dana Darurat",
+                "nominal": int.parse(nomDanaTersedia.text.replaceAll(".", "")),
+                "tanggalTransaksi": Timestamp.now(),
+                "deskripsi": "Penyesuaian dana darurat ${namaDana.text}",
+                "foto": "",
+                "createdAt": DateTime.now().toIso8601String(),
+                "updatedAt": DateTime.now().toIso8601String(),
+              });
 
-        co.totalTransPengeluaran();
+              co.totalTransPengeluaran();
+            }
 
-        await firestore
-            .collection("users")
-            .doc(uid)
-            .collection("anggaran")
-            .doc(id)
-            .set({
-          "id": id,
-          "kategori": "Dana Darurat",
-          "nominal": danaDarurat.toInt(),
-          "jenisAnggaran": "Lainnya",
-          "nominalTerpakai":
-              int.parse(nomDanaTersedia.text.replaceAll(".", "")),
-          "persentase":
-              double.parse(realPersentage.toStringAsFixed(2)).toString(),
-          "sisaLimit": nomSisa,
-          "createdAt": DateTime.now().toIso8601String(),
-          "updatedAt": DateTime.now().toIso8601String(),
-        });
+            firestore
+                .collection("users")
+                .doc(uid)
+                .collection("anggaran")
+                .doc(id)
+                .set({
+              "id": id,
+              "image": "Dana Darurat",
+              "kategori": "Dana ${namaDana.text}",
+              "nominal": danaDarurat.toInt(),
+              "jenisAnggaran": "Lainnya",
+              "nominalTerpakai":
+                  int.parse(nomDanaTersedia.text.replaceAll(".", "")),
+              "persentase":
+                  double.parse(realPersentage.toStringAsFixed(2)).toString(),
+              "sisaLimit": nomSisa,
+              "createdAt": DateTime.now().toIso8601String(),
+              "updatedAt": DateTime.now().toIso8601String(),
+            });
 
-        c.totalNominalKategori();
+            c.totalNominalKategori();
 
-        isLoading.value = false;
+            isLoading.value = false;
 
-        Get.to(() => const PerencanaanKeuanganView());
-      } catch (e) {
-        isLoading.value = false;
-        // print(e);
-        con.errMsg("Tidak dapat menambahkan data!");
+            Get.offAllNamed("/perencanaan-keuangan");
+          } catch (e) {
+            isLoading.value = false;
+            // print(e);
+            dialogMessage.errMsg("Tidak dapat menambahkan data!");
+          }
+        } else {
+          dialogMessage.errMsg("Seluruh data wajib diisi");
+        }
       }
-    } else {
-      con.errMsg("Seluruh data wajib diisi");
-    }
+    });
   }
 }

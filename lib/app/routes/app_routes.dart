@@ -48,6 +48,25 @@ abstract class Routes {
   static const ZIS = _Paths.ZIS;
   static const SETEL_ULANG_PIN = _Paths.SETEL_ULANG_PIN;
   static const SETEL_ULANG_PIN_AUTH = _Paths.SETEL_ULANG_PIN_AUTH;
+  static const ANGGARAN = _Paths.ANGGARAN;
+  static const RS_DARURAT = _Paths.RS_DARURAT;
+  static const RS_KENDARAAN = _Paths.RS_KENDARAAN;
+  static const RS_PENDIDIKAN = _Paths.RS_PENDIDIKAN;
+  static const RS_PENSIUN = _Paths.RS_PENSIUN;
+  static const RS_PERNIKAHAN = _Paths.RS_PERNIKAHAN;
+  static const RS_RUMAH = _Paths.RS_RUMAH;
+  static const RS_UMROH = _Paths.RS_UMROH;
+  static const PK_DARURAT = _Paths.PK_DARURAT;
+  static const PK_KENDARAAN = _Paths.PK_KENDARAAN;
+  static const PK_PENDIDIKAN = _Paths.PK_PENDIDIKAN;
+  static const PK_PENSIUN = _Paths.PK_PENSIUN;
+  static const PK_PERNIKAHAN = _Paths.PK_PERNIKAHAN;
+  static const PK_RUMAH = _Paths.PK_RUMAH;
+  static const PK_UMROH = _Paths.PK_UMROH;
+  static const ANGGARAN_CREATE = _Paths.ANGGARAN_CREATE;
+  static const SNK = _Paths.SNK;
+  static const HUBUNGI_KAMI = _Paths.HUBUNGI_KAMI;
+  static const BANTUAN = _Paths.BANTUAN;
 }
 
 abstract class _Paths {
@@ -96,4 +115,22 @@ abstract class _Paths {
   static const ANGGARAN = '/anggaran';
   static const SETEL_ULANG_PIN = '/setel-ulang-pin';
   static const SETEL_ULANG_PIN_AUTH = '/setel-ulang-pin-auth';
+  static const RS_DARURAT = '/rs-darurat';
+  static const RS_KENDARAAN = '/rs-kendaraan';
+  static const RS_PENDIDIKAN = '/rs-pendidikan';
+  static const RS_PENSIUN = '/rs-pensiun';
+  static const RS_PERNIKAHAN = '/rs-pernikahan';
+  static const RS_RUMAH = '/rs-rumah';
+  static const RS_UMROH = '/rs-umroh';
+  static const PK_DARURAT = '/pk-darurat';
+  static const PK_KENDARAAN = '/pk-kendaraan';
+  static const PK_PENDIDIKAN = '/pk-pendidikan';
+  static const PK_PENSIUN = '/pk-pensiun';
+  static const PK_PERNIKAHAN = '/pk-pernikahan';
+  static const PK_RUMAH = '/pk-rumah';
+  static const PK_UMROH = '/pk-umroh';
+  static const ANGGARAN_CREATE = '/form-anggaran';
+  static const SNK = '/snk';
+  static const HUBUNGI_KAMI = '/hubungi-kami';
+  static const BANTUAN = '/bantuan';
 }

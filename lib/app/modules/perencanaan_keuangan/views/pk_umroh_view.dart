@@ -119,7 +119,8 @@ class PkUmrohView extends GetView<PkUmrohController> {
                               c.countDana(context);
                             }
                           } else {
-                            con.errMsg("Mohon isi seluruh kolom yang ada!");
+                            c.dialogMessage
+                                .errMsg("Mohon isi seluruh kolom yang ada!");
                           }
                         },
                       )),

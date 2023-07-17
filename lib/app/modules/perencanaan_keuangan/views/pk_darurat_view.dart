@@ -199,7 +199,8 @@ class PkDaruratView extends GetView<PkDaruratController> {
                             c.countDana(context);
                           }
                         } else {
-                          con.errMsg("Mohon isi seluruh kolom yang ada!");
+                          c.dialogMessage
+                              .errMsg("Mohon isi seluruh kolom yang ada!");
                         }
                       },
                     )),

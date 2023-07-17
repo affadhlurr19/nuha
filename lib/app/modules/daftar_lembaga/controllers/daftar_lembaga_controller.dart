@@ -80,7 +80,7 @@ class DaftarLembagaController extends GetxController
         return _cariIKD = data;
       }
     } catch (e) {
-      print(e);
+      // print(e);
       update();
       // resultStateSearch.value = ResultState.error('An error occurred: $e');
     }

@@ -69,7 +69,7 @@ class DaftarPinjolController extends GetxController
         return _cariPinjol = data;
       }
     } catch (e) {
-      print(e);
+      // print(e);
       update();
       // resultStateSearch.value = ResultState.error('An error occurred: $e');
     }

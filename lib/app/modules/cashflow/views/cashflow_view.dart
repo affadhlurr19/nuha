@@ -6,11 +6,14 @@ import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_create_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/anggaran_edit_controller.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_create_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_detail_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_edit_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
 import 'package:nuha/app/modules/cashflow/views/transaksi_view.dart';
+import 'package:nuha/app/modules/home/controllers/home_controller.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -26,8 +29,11 @@ class CashflowView extends GetView<CashflowController> {
 
   @override
   final CashflowController controller = Get.put(CashflowController());
+  final HomeController cont = Get.put(HomeController());
 
   final TransaksiController co = Get.put(TransaksiController());
+  final AnggaranCreateController con = Get.put(AnggaranCreateController());
+  final AnggaranEditController cono = Get.put(AnggaranEditController());
 
   @override
   Widget build(BuildContext context) {
@@ -177,93 +183,160 @@ class CashflowView extends GetView<CashflowController> {
                 SizedBox(
                   height: 2.h,
                 ),
-                Container(
-                  width: 84.4444.w,
-                  height: 20.75.h,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      color: backgroundColor1),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 4.4444.w, vertical: 1.875.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Laporan Keuangan",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
+                Obx(() => SizedBox(
+                      child: cont.dataAnggaran.value != 0
+                          ? Container(
+                              width: 84.4444.w,
+                              height: 20.75.h,
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25)),
+                                  color: backgroundColor1),
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 4.4444.w, vertical: 1.875.h),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Laporan Keuangan",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        color: buttonColor1,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        height: 1.25),
+                                              ),
+                                              Text(
+                                                "Cek laporan keuanganmu disini!",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .copyWith(
+                                                        color: grey400,
+                                                        height: 1.3),
+                                              ),
+                                            ],
+                                          ),
+                                          Iconify(
+                                            Ic.sharp_arrow_forward_ios,
+                                            size: 15.sp,
                                             color: buttonColor1,
-                                            fontWeight: FontWeight.w600,
-                                            height: 1.25),
-                                  ),
-                                  Text(
-                                    "Cek laporan keuanganmu disini!",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(color: grey400, height: 1.3),
-                                  ),
-                                ],
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        showDialog(
+                                            barrierDismissible: false,
+                                            context: Get.context!,
+                                            builder: (_) {
+                                              return Dialog(
+                                                // The background color
+                                                backgroundColor: Colors.white,
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 20),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      // The loading indicator
+                                                      const CircularProgressIndicator(),
+                                                      const SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      // Some text
+                                                      Text('Tunggu sebentar...',
+                                                          style: Theme.of(
+                                                                  Get.context!)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                color: grey900,
+                                                              ))
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                        Future.delayed(
+                                            const Duration(seconds: 2), () {
+                                          Get.back(); // Tutup dialog "Tunggu sebentar"
+                                          Get.to(() =>
+                                              LaporankeuanganView()); // Pindah ke halaman LaporanKeuanganView()
+                                        });
+                                      },
+                                    ),
+                                    const Divider(),
+                                    Text(
+                                      "Anggaran",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              color: grey900,
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.25),
+                                    ),
+                                    Obx(() => Text(
+                                          NumberFormat.currency(
+                                                  locale: 'id',
+                                                  symbol: double.parse(controller
+                                                              .persenAnggaran
+                                                              .value) >
+                                                          1.0
+                                                      ? "Melebihi anggaran sebesar Rp"
+                                                      : "Sisa anggaran kamu Rp",
+                                                  decimalDigits: 0)
+                                              .format(controller
+                                                  .sisaAnggaran.value),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                  color: grey400, height: 1.3),
+                                        )),
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
+                                    Obx(() => LinearPercentIndicator(
+                                          barRadius: const Radius.circular(40),
+                                          // width: 75.55556.w,
+                                          lineHeight: 2.5.h,
+                                          percent: double.parse(controller
+                                                      .persenAnggaran.value) <
+                                                  0.0
+                                              ? 0.0
+                                              : double.parse(controller
+                                                          .persenAnggaran
+                                                          .value) >
+                                                      1.0
+                                                  ? 1.0
+                                                  : double.parse(controller
+                                                      .persenAnggaran.value),
+                                          backgroundColor: backBar,
+                                          progressColor:
+                                              controller.getProgressColor(
+                                                  double.parse(controller
+                                                      .persenAnggaran.value)),
+                                        )),
+                                  ],
+                                ),
                               ),
-                              Iconify(
-                                Ic.sharp_arrow_forward_ios,
-                                size: 15.sp,
-                                color: buttonColor1,
-                              ),
-                            ],
-                          ),
-                          onTap: () => Get.to(() => LaporankeuanganView()),
-                        ),
-                        const Divider(),
-                        Text(
-                          "Anggaran",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                  color: grey900,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.25),
-                        ),
-                        Obx(() => Text(
-                              NumberFormat.currency(
-                                      locale: 'id',
-                                      symbol: "Sisa anggaran kamu Rp",
-                                      decimalDigits: 0)
-                                  .format(controller.sisaAnggaran.value),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(color: grey400, height: 1.3),
-                            )),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                        Obx(() => LinearPercentIndicator(
-                              barRadius: const Radius.circular(40),
-                              // width: 75.55556.w,
-                              lineHeight: 2.5.h,
-                              percent:
-                                  double.parse(controller.persenAnggaran.value),
-                              backgroundColor: backBar,
-                              progressColor: controller.getProgressColor(
-                                  double.parse(
-                                      controller.persenAnggaran.value)),
-                            )),
-                      ],
-                    ),
-                  ),
-                ),
+                            )
+                          : const SizedBox(),
+                    )),
                 SizedBox(
                   height: 2.h,
                 ),
@@ -324,7 +397,9 @@ class CashflowView extends GetView<CashflowController> {
                                         .copyWith(color: backgroundColor1),
                                   ),
                                   onPressed: () =>
-                                      Get.to(() => FormAnggaranView()),
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                          context,
+                                          screen: FormAnggaranView()),
                                 ),
                               ),
                             ],
@@ -372,7 +447,7 @@ class CashflowView extends GetView<CashflowController> {
                                                     children: [
                                                       Image(
                                                         image: AssetImage(
-                                                            'assets/images/${anggaran["kategori"]}.png'),
+                                                            'assets/images/${anggaran["image"]}.png'),
                                                         width: 10.55556.w,
                                                       ),
                                                       SizedBox(
@@ -403,8 +478,10 @@ class CashflowView extends GetView<CashflowController> {
                                                             NumberFormat.currency(
                                                                     locale:
                                                                         'id',
-                                                                    symbol:
-                                                                        "Tersisa Rp",
+                                                                    symbol: double.parse(anggaran["persentase"]) >
+                                                                            1.0
+                                                                        ? "Dana Lebih Rp"
+                                                                        : "Tersisa Rp",
                                                                     decimalDigits:
                                                                         0)
                                                                 .format(anggaran[
@@ -449,9 +526,17 @@ class CashflowView extends GetView<CashflowController> {
                                                 const Radius.circular(40),
                                             // width: 75.55556.w,
                                             lineHeight: 2.5.h,
-                                            percent: double.parse(
-                                                anggaran["persentase"]
-                                                    .toString()),
+                                            percent: double.parse(anggaran[
+                                                        "persentase"]) <
+                                                    0.0
+                                                ? 0.0
+                                                : double.parse(anggaran[
+                                                            "persentase"]) >
+                                                        1.0
+                                                    ? 1.0
+                                                    : double.parse(
+                                                        anggaran["persentase"]),
+
                                             backgroundColor: backBar,
                                             progressColor: controller
                                                 .getProgressColor(double.parse(

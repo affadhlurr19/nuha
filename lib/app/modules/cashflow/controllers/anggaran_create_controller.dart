@@ -2,12 +2,15 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:nuha/app/modules/home/controllers/home_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
 import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class AnggaranCreateController extends GetxController {
   final con = Get.find<CashflowController>();
+  final co = Get.find<HomeController>();
+
   TextEditingController nomAnggaranC = TextEditingController();
   TextEditingController searchAnggaranC = TextEditingController();
   RxBool isLoading = false.obs;
@@ -15,6 +18,7 @@ class AnggaranCreateController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   s.FirebaseStorage storage = s.FirebaseStorage.instance;
+  DialogMessage dialogMessage = DialogMessage();
 
   var kategoriC = "Pilih Kategori".obs;
   var kategoriStat = "".obs;
@@ -56,8 +60,8 @@ class AnggaranCreateController extends GetxController {
       if (querySnapshot.docs.isNotEmpty) {
         // var anggaranActive = false;
         Get.back();
-        Get.snackbar("Terjadi Kesalahan",
-            "Anda sudah pernah membuat anggaran dengan kategori ini!");
+        dialogMessage
+            .errMsg("Anda sudah pernah membuat anggaran dengan kategori ini!");
       } else {
         updateKategori(text);
       }
@@ -79,6 +83,7 @@ class AnggaranCreateController extends GetxController {
             .set({
           "id": id,
           "kategori": kategoriC.value,
+          "image": kategoriC.value,
           "nominal": int.parse(nomAnggaranC.text.replaceAll('.', '')),
           "jenisAnggaran": jenisKategori,
           "nominalTerpakai": 0,
@@ -94,15 +99,16 @@ class AnggaranCreateController extends GetxController {
 
         con.totalNominalKategori();
         con.countAnggaranDetail(kategoriC.value);
+        co.checkAnggaranCollectionExist();
 
         Navigator.pop(context);
       } catch (e) {
         isLoading.value = false;
         // print(e);
-        Get.snackbar("TERJADI KESALAHAN", "Tidak dapat menambahkan data");
+        dialogMessage.errMsg("Tidak dapat menambahkan data.");
       }
     } else {
-      Get.snackbar("TERJADI KESALAHAN", "Kategori dan nominal wajib diisi");
+      dialogMessage.errMsg("Kategori dan nominal wajib diisi.");
     }
   }
 }

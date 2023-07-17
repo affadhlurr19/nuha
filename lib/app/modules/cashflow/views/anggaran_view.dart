@@ -135,7 +135,11 @@ class AnggaranView extends GetView<CashflowController> {
                           Obx(() => Text(
                                 NumberFormat.currency(
                                         locale: 'id',
-                                        symbol: "Tersisa dari Rp",
+                                        symbol: double.parse(controller
+                                                    .persenAnggaran.value) >
+                                                1.0
+                                            ? "Melebihi anggaran sebesar Rp"
+                                            : "Sisa anggaran kamu Rp",
                                         decimalDigits: 0)
                                     .format(controller.totalNominal.value),
                                 style: Theme.of(context)
@@ -150,7 +154,15 @@ class AnggaranView extends GetView<CashflowController> {
                                 // width: 75.55556.w,
                                 lineHeight: 2.5.h,
                                 percent: double.parse(
-                                    controller.persenAnggaran.value),
+                                            controller.persenAnggaran.value) <
+                                        0.0
+                                    ? 0.0
+                                    : double.parse(controller
+                                                .persenAnggaran.value) >
+                                            1.0
+                                        ? 1.0
+                                        : double.parse(
+                                            controller.persenAnggaran.value),
                                 backgroundColor: backBar,
                                 progressColor: controller.getProgressColor(
                                     double.parse(
@@ -320,7 +332,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                   children: [
                                                                     Image(
                                                                       image: AssetImage(
-                                                                          'assets/images/${controller.queryAwal[index]["kategori"]}.png'),
+                                                                          'assets/images/${controller.queryAwal[index]["image"]}.png'),
                                                                       width:
                                                                           10.55556
                                                                               .w,
@@ -350,7 +362,7 @@ class AnggaranView extends GetView<CashflowController> {
                                                                               0.5.h,
                                                                         ),
                                                                         Text(
-                                                                          NumberFormat.currency(locale: 'id', symbol: "Tersisa Rp", decimalDigits: 0).format(controller.queryAwal[index]
+                                                                          NumberFormat.currency(locale: 'id', symbol: double.parse(controller.queryAwal[index]["persentase"]) > 1.0 ? "Dana Lebih Rp" : "Tersisa Rp", decimalDigits: 0).format(controller.queryAwal[index]
                                                                               [
                                                                               "sisaLimit"]),
                                                                           style: Theme.of(context)
@@ -397,9 +409,21 @@ class AnggaranView extends GetView<CashflowController> {
                                                           width: 75.55556.w,
                                                           lineHeight: 2.5.h,
                                                           percent: double.parse(
-                                                              controller.queryAwal[
-                                                                      index][
-                                                                  "persentase"]),
+                                                                      controller
+                                                                              .queryAwal[index][
+                                                                          "persentase"]) <
+                                                                  0.0
+                                                              ? 0.0
+                                                              : double.parse(controller
+                                                                              .queryAwal[index]
+                                                                          [
+                                                                          "persentase"]) >
+                                                                      1.0
+                                                                  ? 1.0
+                                                                  : double.parse(
+                                                                      controller
+                                                                              .queryAwal[index]
+                                                                          ["persentase"]),
                                                           backgroundColor:
                                                               backBar,
                                                           progressColor: controller
@@ -578,7 +602,7 @@ class SemuaWidget extends StatelessWidget {
                                           Image(
                                             width: 10.55556.w,
                                             image: AssetImage(
-                                                'assets/images/${anggaran["kategori"]}.png'),
+                                                'assets/images/${anggaran["image"]}.png'),
                                           ),
                                           SizedBox(
                                             width: 4.44444.w,
@@ -604,7 +628,12 @@ class SemuaWidget extends StatelessWidget {
                                               Text(
                                                 NumberFormat.currency(
                                                         locale: 'id',
-                                                        symbol: "Tersisa Rp",
+                                                        symbol: double.parse(
+                                                                    anggaran[
+                                                                        "persentase"]) >
+                                                                1.0
+                                                            ? "Dana Lebih Rp"
+                                                            : "Tersisa Rp",
                                                         decimalDigits: 0)
                                                     .format(
                                                         anggaran["sisaLimit"]),
@@ -644,8 +673,12 @@ class SemuaWidget extends StatelessWidget {
                                 barRadius: const Radius.circular(40),
                                 width: 75.55556.w,
                                 lineHeight: 2.5.h,
-                                percent: double.parse(
-                                    anggaran["persentase"].toString()),
+                                percent: double.parse(anggaran["persentase"]) <
+                                        0.0
+                                    ? 0.0
+                                    : double.parse(anggaran["persentase"]) > 1.0
+                                        ? 1.0
+                                        : double.parse(anggaran["persentase"]),
                                 backgroundColor: backBar,
                                 progressColor: controller.getProgressColor(
                                     double.parse(

@@ -185,14 +185,15 @@ class FincheckDuaView extends GetView<FincheckController> {
                               .copyWith(color: Colors.white),
                         ),
                         onPressed: () {
-                          if (controller
-                                  .nabungInvestasi.value.text.isNotEmpty &&
-                              controller.totalTabungan.value.text.isNotEmpty) {
-                            Get.to(() => const FincheckTigaView());
-                          } else {
-                            controller
-                                .errMsg("Mohon isi seluruh kolom yang ada!");
-                          }
+                          Get.to(() => const FincheckTigaView());
+                          // if (controller
+                          //         .nabungInvestasi.value.text.isNotEmpty &&
+                          //     controller.totalTabungan.value.text.isNotEmpty) {
+                          //   Get.to(() => const FincheckTigaView());
+                          // } else {
+                          //   controller
+                          //       .errMsg("Mohon isi seluruh kolom yang ada!");
+                          // }
                         },
                       ),
                     )

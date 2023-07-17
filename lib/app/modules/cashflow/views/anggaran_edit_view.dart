@@ -168,7 +168,7 @@ class UpdateAnggaranView extends GetView<AnggaranEditController> {
                                 padding:
                                     EdgeInsets.fromLTRB(4.5833.w, 1.h, 0, 1.h),
                                 child: Text(
-                                  "Rp. ",
+                                  "Rp",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
