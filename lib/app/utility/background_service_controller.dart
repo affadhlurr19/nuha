@@ -30,7 +30,7 @@ class BackgroundServiceController {
     final NotificationServiceController notificationServiceController =
         NotificationServiceController();
     var result =
-        await ListArtikelProvider().getListArtikel(http.Client(), 1, 1);
+        await ListArtikelProvider().getNotificationArticle(http.Client());
     await notificationServiceController.showNotification(result);
 
     _uiSendPort ??= IsolateNameServer.lookupPortByName(_isolateName);

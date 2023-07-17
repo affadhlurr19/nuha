@@ -5,6 +5,7 @@ import 'package:nuha/app/modules/literasi/models/cari_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/detail_artikel_model.dart';
 import 'dart:convert';
 import 'package:nuha/app/modules/literasi/models/list_artikel_model.dart';
+import 'package:nuha/app/modules/literasi/models/notifikasi_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/recommended_artikel_model.dart';
 
 class ListArtikelProvider {
@@ -152,6 +153,23 @@ class ListArtikelProvider {
       }
     } catch (e) {
       throw Exception(e);
+    }
+  }
+
+  Future<NotifikasiArtikel> getNotificationArticle(http.Client client) async {
+    try {
+      final response =
+          await client.get(Uri.parse("${_baseUrl}article/allData"));
+      if (response.statusCode == 200) {
+        final data = NotifikasiArtikel.fromJson(json.decode(response.body));
+        return data;
+      } else {
+        throw Exception('Gagal mengambil data list artikel');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
     }
   }
 }

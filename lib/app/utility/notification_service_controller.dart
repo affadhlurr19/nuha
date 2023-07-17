@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:nuha/app/modules/literasi/models/list_artikel_model.dart';
+import 'package:nuha/app/modules/literasi/models/notifikasi_artikel_model.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:nuha/app/utility/received_notification.dart';
 import 'package:rxdart/subjects.dart';
@@ -62,7 +62,7 @@ class NotificationServiceController {
     );
   }
 
-  Future<void> showNotification(ListArtikel article) async {
+  Future<void> showNotification(NotifikasiArtikel article) async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       _channelId,
       _channelName,
