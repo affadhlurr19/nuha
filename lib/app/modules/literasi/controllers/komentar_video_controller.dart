@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nuha/app/modules/literasi/models/balasan_komentar_video_model.dart';
 import 'package:nuha/app/modules/literasi/models/komentar_video_model.dart';
 import 'package:nuha/app/modules/literasi/models/pengguna_model.dart';
+import 'package:rxdart/rxdart.dart';
 
 class KomentarVideoController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -46,13 +47,18 @@ class KomentarVideoController extends GetxController
     final usersCollection = FirebaseFirestore.instance.collection('users');
     final commentsCollection =
         FirebaseFirestore.instance.collection('comments_video');
+    final usersSubject = BehaviorSubject<QuerySnapshot>();
 
-    return usersCollection.snapshots().asyncMap((usersSnapshot) {
+    usersCollection.snapshots().listen((usersSnapshot) {
+      usersSubject.add(usersSnapshot);
+    });
+
+    return usersSubject.switchMap((usersSnapshot) {
       return commentsCollection
           .where('idVideo', isEqualTo: idVideo)
           .orderBy('createdAt', descending: true)
-          .get()
-          .then((commentQuerySnapshot) {
+          .snapshots()
+          .map((commentQuerySnapshot) {
         // membersihkan data sebelum memuat perubahan data baru
         comments.clear();
         var usersDocs = usersSnapshot.docs;
@@ -62,11 +68,11 @@ class KomentarVideoController extends GetxController
               var commentData = commentDoc.data();
 
               for (var userDoc in usersDocs) {
-                var uid = userDoc.data()['uid'];
-                var userData = userDoc.data();
+                var userData = userDoc.data() as Map<String, dynamic>;
+                var uid = userData['uid'] as String?;
                 if (uid == commentData['idUser']) {
                   if (userData['profile'] != null) {
-                    var profile = userData['profile'];
+                    var profile = userData['profile'] as String;
                     return KomentarVideo(
                       idKomentar: commentDoc.id,
                       idVideo: commentData['idVideo'],
@@ -108,14 +114,19 @@ class KomentarVideoController extends GetxController
     final usersCollection = FirebaseFirestore.instance.collection('users');
     final commentsCollection =
         FirebaseFirestore.instance.collection('comments_video');
+    final usersSubject = BehaviorSubject<QuerySnapshot>();
 
-    return usersCollection.snapshots().asyncMap((usersSnapshot) {
+    usersCollection.snapshots().listen((usersSnapshot) {
+      usersSubject.add(usersSnapshot);
+    });
+
+    return usersSubject.switchMap((usersSnapshot) {
       return commentsCollection
           .doc(idKomentar)
           .collection('reply_comment_video')
           .orderBy('createdAt', descending: true)
-          .get()
-          .then((commentQuerySnapshot) {
+          .snapshots()
+          .map((commentQuerySnapshot) {
         // membersihkan data sebelum memuat perubahan data baru
         replys.clear();
         var usersDocs = usersSnapshot.docs;
@@ -125,11 +136,12 @@ class KomentarVideoController extends GetxController
               var commentData = commentDoc.data();
 
               for (var userDoc in usersDocs) {
-                var uid = userDoc.data()['uid'];
-                var userData = userDoc.data();
+                var userData = userDoc.data() as Map<String, dynamic>;
+                var uid = userData['uid'] as String?;
+
                 if (uid == commentData['idUser']) {
                   if (userData['profile'] != null) {
-                    var profile = userData['profile'];
+                    var profile = userData['profile'] as String;
                     return ReplyVideo(
                       idReply: commentDoc.id,
                       idKomentar: commentDoc.id,

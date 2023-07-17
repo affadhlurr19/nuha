@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -96,8 +97,8 @@ class CariVideoView extends GetView<CariVideoController> {
                                   Flexible(
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(18),
-                                      child: Image.network(
-                                        YoutubeThumbnail(
+                                      child: CachedNetworkImage(
+                                        imageUrl: YoutubeThumbnail(
                                                 youtubeId: video.video.length ==
                                                         28
                                                     ? video.video.substring(17)
@@ -106,6 +107,15 @@ class CariVideoView extends GetView<CariVideoController> {
                                         height: 8.625.h,
                                         width: 29.72.w,
                                         fit: BoxFit.cover,
+                                        errorWidget:
+                                            (context, exception, stackTrace) {
+                                          return Container(
+                                            height: 8.625.h,
+                                            width: 29.72.w,
+                                            color: Colors.grey,
+                                            child: const Icon(Icons.error),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),

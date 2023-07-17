@@ -10,9 +10,29 @@ import 'package:nuha/app/modules/literasi/models/recommended_artikel_model.dart'
 class ListArtikelProvider {
   static const String _baseUrl = 'https://nuha.my.id/api/';
 
-  Future<ListArtikel> getListArtikel(http.Client client) async {
+  Future<ListArtikel> getListArtikel(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client.get(Uri.parse("${_baseUrl}article"));
+      final response = await client
+          .get(Uri.parse("${_baseUrl}article?page=$page&page_size=$limit"));
+      if (response.statusCode == 200) {
+        final data = ListArtikel.fromJson(json.decode(response.body));
+        return data;
+      } else {
+        throw Exception('Gagal mengambil data list artikel');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListArtikel> getListKeuanganSyariahArtikel(
+      http.Client client, int page, int limit) async {
+    try {
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}article/category/Keuangan%20Syariah?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListArtikel.fromJson(json.decode(response.body));
       } else {
@@ -25,10 +45,11 @@ class ListArtikelProvider {
     }
   }
 
-  Future<ListArtikel> getListKeuanganSyariahArtikel(http.Client client) async {
+  Future<ListArtikel> getListTabunganSyariahArtikel(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client
-          .get(Uri.parse("${_baseUrl}article/category/Keuangan%20Syariah"));
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}article/category/Tabungan%20Syariah?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListArtikel.fromJson(json.decode(response.body));
       } else {
@@ -41,10 +62,45 @@ class ListArtikelProvider {
     }
   }
 
-  Future<ListArtikel> getListTabunganSyariahArtikel(http.Client client) async {
+  Future<ListArtikel> getListEkonomiSyariahArtikel(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client
-          .get(Uri.parse("${_baseUrl}article/category/Tabungan%20Syariah"));
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}article/category/Ekonomi%20Syariah?page=$page&page_size=$limit"));
+      if (response.statusCode == 200) {
+        return ListArtikel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list artikel');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListArtikel> getListInvestasiSyariahArtikel(
+      http.Client client, int page, int limit) async {
+    try {
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}article/category/Investasi%20Syariah?page=$page&page_size=$limit"));
+      if (response.statusCode == 200) {
+        return ListArtikel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Gagal mengambil data list artikel');
+      }
+    } on SocketException {
+      throw Exception('Koneksi internet tidak tersedia');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ListArtikel> getListArtikelLainnya(
+      http.Client client, int page, int limit) async {
+    try {
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}article/category/Lainnya?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListArtikel.fromJson(json.decode(response.body));
       } else {

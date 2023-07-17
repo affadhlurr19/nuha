@@ -12,6 +12,8 @@ import 'package:nuha/app/modules/profile/views/pin_view.dart';
 import 'package:nuha/app/modules/profile/views/pengaturan_notifikasi_view.dart';
 import 'package:nuha/app/modules/cashflow/views/laporankeuangan_view.dart';
 import 'package:nuha/app/modules/cashflow/views/anggaran_view.dart';
+import 'package:nuha/app/modules/profile/views/reset_pin_on_auth_view.dart';
+import 'package:nuha/app/modules/profile/views/reset_pin_view.dart';
 
 import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
@@ -122,7 +124,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PENGATURAN_KEAMANAN,
-      page: () => const PengaturanKeamananView(),
+      page: () => PengaturanKeamananView(),
       binding: ProfileBinding(),
     ),
     GetPage(
@@ -279,6 +281,16 @@ class AppPages {
       name: _Paths.LAPORAN_KEUANGAN,
       page: () => LaporankeuanganView(),
       binding: CashflowBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETEL_ULANG_PIN,
+      page: () => ResetPinView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETEL_ULANG_PIN_AUTH,
+      page: () => ResetPinOnAuthView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

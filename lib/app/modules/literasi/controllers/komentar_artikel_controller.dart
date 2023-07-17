@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nuha/app/modules/literasi/models/balasan_komentar_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/komentar_artikel_model.dart';
 import 'package:nuha/app/modules/literasi/models/pengguna_model.dart';
+import 'package:rxdart/rxdart.dart';
 
 class KomentarArtikelController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -46,14 +47,19 @@ class KomentarArtikelController extends GetxController
     final usersCollection = FirebaseFirestore.instance.collection('users');
     final commentsCollection =
         FirebaseFirestore.instance.collection('comments');
+    final usersSubject = BehaviorSubject<QuerySnapshot>();
 
-    return usersCollection.snapshots().asyncMap((usersSnapshot) {
+    usersCollection.snapshots().listen((usersSnapshot) {
+      usersSubject.add(usersSnapshot);
+    });
+
+    return usersSubject.switchMap((usersSnapshot) {
       return commentsCollection
           .where('idArtikel', isEqualTo: idArtikel)
           .orderBy('createdAt', descending: true)
-          .get()
-          .then((commentQuerySnapshot) {
-        // membersihkan data sebelum memuat perubahan data baru
+          .snapshots()
+          .map((commentQuerySnapshot) {
+        // Membersihkan data sebelum memuat perubahan data baru
         comments.clear();
         var usersDocs = usersSnapshot.docs;
         var commentsDocs = commentQuerySnapshot.docs;
@@ -62,11 +68,11 @@ class KomentarArtikelController extends GetxController
               var commentData = commentDoc.data();
 
               for (var userDoc in usersDocs) {
-                var uid = userDoc.data()['uid'];
-                var userData = userDoc.data();
+                var userData = userDoc.data() as Map<String, dynamic>;
+                var uid = userData['uid'] as String?;
                 if (uid == commentData['idUser']) {
                   if (userData['profile'] != null) {
-                    var profile = userData['profile'];
+                    var profile = userData['profile'] as String;
                     return Komentar(
                       idKomentar: commentDoc.id,
                       idArtikel: commentData['idArtikel'],
@@ -79,7 +85,7 @@ class KomentarArtikelController extends GetxController
                   } else {
                     var linkProfile = userData['name'];
                     var profile =
-                        "https://ui-avatars.com/api/?name=$linkProfile]";
+                        "https://ui-avatars.com/api/?name=$linkProfile";
                     return Komentar(
                       idKomentar: commentDoc.id,
                       idArtikel: commentData['idArtikel'],
@@ -102,46 +108,25 @@ class KomentarArtikelController extends GetxController
         return comments.toList();
       });
     });
-
-    // // Looping melalui pengguna
-    // for (var userDoc in usersQuerySnapshot.datadocs) {
-    //   var uid = userDoc.data()['uid'];
-    //   // Query untuk mendapatkan data komentar berdasarkan userId dengan proyeksi
-    //   var commentsQuerySnapshot = commentsCollection
-    //       .where('idArtikel', isEqualTo: idArtikel)
-    //       .where('idUser', isEqualTo: uid)
-    //       .orderBy('createdAt', descending: true)
-    //       .snapshots();
-
-    //   // Loop melalui komentar pengguna
-    //   for (var commentDoc in commentsQuerySnapshot.docs) {
-    //     var commentData = commentDoc.data();
-
-    //     final myModel = Komentar(
-    //       idKomentar: commentDoc.id,
-    //       idArtikel: commentData['idArtikel'],
-    //       idUser: commentData['idUser'],
-    //       descKomentar: commentData['descKomentar'],
-    //       createdAt: commentData['createdAt'].toDate(),
-    //     );
-
-    //     comments.add(myModel);
-    //   }
-    // }
   }
 
   Stream<List<Reply>> loadReplyComments(String idKomentar) {
     final usersCollection = FirebaseFirestore.instance.collection('users');
     final commentsCollection =
         FirebaseFirestore.instance.collection('comments');
+    final usersSubject = BehaviorSubject<QuerySnapshot>();
 
-    return usersCollection.snapshots().asyncMap((usersSnapshot) {
+    usersCollection.snapshots().listen((usersSnapshot) {
+      usersSubject.add(usersSnapshot);
+    });
+
+    return usersSubject.switchMap((usersSnapshot) {
       return commentsCollection
           .doc(idKomentar)
           .collection('reply_comment_article')
           .orderBy('createdAt', descending: true)
-          .get()
-          .then((commentQuerySnapshot) {
+          .snapshots()
+          .map((commentQuerySnapshot) {
         // membersihkan data sebelum memuat perubahan data baru
         replys.clear();
         var usersDocs = usersSnapshot.docs;
@@ -151,11 +136,11 @@ class KomentarArtikelController extends GetxController
               var commentData = commentDoc.data();
 
               for (var userDoc in usersDocs) {
-                var uid = userDoc.data()['uid'];
-                var userData = userDoc.data();
+                var userData = userDoc.data() as Map<String, dynamic>;
+                var uid = userData['uid'] as String?;
                 if (uid == commentData['idUser']) {
                   if (userData['profile'] != null) {
-                    var profile = userData['profile'];
+                    var profile = userData['profile'] as String;
                     return Reply(
                       idReply: commentDoc.id,
                       idKomentar: commentDoc.id,
@@ -193,27 +178,6 @@ class KomentarArtikelController extends GetxController
         return replys.toList();
       });
     });
-
-    // final querySnapshot = FirebaseFirestore.instance
-    //     .collection('comments')
-    //     .doc(idKomentar)
-    //     .collection('reply_comment_article')
-    //     .orderBy('createdAt', descending: true)
-    //     .snapshots();
-
-    // querySnapshot.listen((snapshot) {
-    //   _replys.value = snapshot.docs.map((doc) {
-    //     return Reply(
-    //         idReply: doc.id,
-    //         idKomentar: idKomentar,
-    //         idArtikel: doc.data()['idArtikel'],
-    //         idUser: doc.data()['idUser'],
-    //         descBalasan: doc.data()['descBalasan'],
-    //         createdAt: doc.data()['createdAt'].toDate());
-    //   }).toList();
-    // });
-
-    // return querySnapshot;
   }
 
   Future<Map<String, dynamic>?> getProfile() async {

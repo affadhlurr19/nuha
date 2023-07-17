@@ -396,8 +396,8 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                                                 const EdgeInsets
                                                                     .all(0),
                                                             leading: SizedBox(
-                                                              height: 45,
-                                                              width: 45,
+                                                              height: 40,
+                                                              width: 40,
                                                               child: CircleAvatar(
                                                                   backgroundImage:
                                                                       NetworkImage(
@@ -720,8 +720,8 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                     child: ListTile(
                                       contentPadding: const EdgeInsets.all(0),
                                       leading: SizedBox(
-                                        height: 45, // Tinggi yang diinginkan
-                                        width: 45,
+                                        height: 40,
+                                        width: 40,
                                         child: CircleAvatar(
                                             backgroundImage:
                                                 NetworkImage(comment.imageURL)),
@@ -731,7 +731,7 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                           SizedBox(height: 1.h),
                                           Text(
                                             comment.name.substring(0,
-                                                min(comment.name.length, 21)),
+                                                min(comment.name.length, 15)),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
@@ -823,95 +823,90 @@ class DetailVideoView extends GetView<DetailVideoController> {
                     ),
                   ),
                   const Divider(color: grey100, thickness: 1, height: 0),
-                  Align(
-                    alignment: FractionalOffset.bottomCenter,
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 0.3.h),
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 0.3.h),
-                      child: Padding(
-                        padding: EdgeInsets.all(1.h),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              FutureBuilder<Map<String, dynamic>?>(
-                                future: komentarC.getProfile(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.data == null) {
-                                    return const SizedBox(
-                                      height: 30,
-                                      width: 30,
-                                      child: CircularProgressIndicator(
-                                          color: buttonColor1),
-                                    );
-                                  } else {
-                                    return snapshot.data!["profile"] != null
-                                        ? SizedBox(
-                                            height: 30,
-                                            width: 30,
-                                            child: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                  snapshot.data!["profile"]),
+                      padding: EdgeInsets.all(1.h),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            FutureBuilder<Map<String, dynamic>?>(
+                              future: komentarC.getProfile(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return const SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(
+                                        color: buttonColor1),
+                                  );
+                                } else {
+                                  return snapshot.data!["profile"] != null
+                                      ? SizedBox(
+                                          height: 30,
+                                          width: 30,
+                                          child: CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                snapshot.data!["profile"]),
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          height: 30,
+                                          width: 30,
+                                          child: CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                              "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
                                             ),
-                                          )
-                                        : SizedBox(
-                                            height: 30,
-                                            width: 30,
-                                            child: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
-                                              ),
-                                            ),
-                                          );
-                                  }
+                                          ),
+                                        );
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            SizedBox(
+                              width: 84.5.w,
+                              child: TextField(
+                                onTap: () {
+                                  commentTextField(context);
                                 },
-                              ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              SizedBox(
-                                width: 84.5.w,
-                                child: TextField(
-                                  onTap: () {
-                                    commentTextField(context);
-                                  },
-                                  readOnly: true,
-                                  style: Theme.of(context)
+                                readOnly: true,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 9.sp,
+                                        color: grey900),
+                                decoration: InputDecoration(
+                                  hintText: 'Tambahkan komentar...',
+                                  hintStyle: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
                                       .copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 9.sp,
-                                          color: grey900),
-                                  decoration: InputDecoration(
-                                    hintText: 'Tambahkan komentar...',
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 9.sp,
-                                            color: grey400),
-                                    border: const OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 1.5.h, horizontal: 1.5.h),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 0, color: grey50),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 0, color: grey50),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    isDense: true,
-                                    filled: true,
-                                    fillColor: grey50,
-                                  ),
+                                          color: grey400),
+                                  border: const OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 1.5.h, horizontal: 1.5.h),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          width: 0, color: grey50),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          width: 0, color: grey50),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  isDense: true,
+                                  filled: true,
+                                  fillColor: grey50,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -1149,15 +1144,19 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                     padding: EdgeInsets.only(top: 1.h),
                                     child: ListTile(
                                       contentPadding: const EdgeInsets.all(0),
-                                      leading: CircleAvatar(
-                                          backgroundImage:
-                                              NetworkImage(reply.imageURL)),
+                                      leading: SizedBox(
+                                        width: 40,
+                                        height: 40,
+                                        child: CircleAvatar(
+                                            backgroundImage:
+                                                NetworkImage(reply.imageURL)),
+                                      ),
                                       title: Row(
                                         children: [
                                           SizedBox(height: 1.h),
                                           Text(
                                             reply.name.substring(
-                                                0, min(reply.name.length, 21)),
+                                                0, min(reply.name.length, 15)),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
@@ -1231,95 +1230,90 @@ class DetailVideoView extends GetView<DetailVideoController> {
                     ),
                   ),
                   const Divider(color: grey100, thickness: 1, height: 0),
-                  Align(
-                    alignment: FractionalOffset.bottomCenter,
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 0.3.h),
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 0.3.h),
-                      child: Padding(
-                        padding: EdgeInsets.all(1.h),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              FutureBuilder<Map<String, dynamic>?>(
-                                future: komentarC.getProfile(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.data == null) {
-                                    return const SizedBox(
-                                      height: 30,
-                                      width: 30,
-                                      child: CircularProgressIndicator(
-                                          color: buttonColor1),
-                                    );
-                                  } else {
-                                    return snapshot.data!["profile"] != null
-                                        ? SizedBox(
-                                            height: 30,
-                                            width: 30,
-                                            child: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                  snapshot.data!["profile"]),
+                      padding: EdgeInsets.all(1.h),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            FutureBuilder<Map<String, dynamic>?>(
+                              future: komentarC.getProfile(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return const SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(
+                                        color: buttonColor1),
+                                  );
+                                } else {
+                                  return snapshot.data!["profile"] != null
+                                      ? SizedBox(
+                                          height: 30,
+                                          width: 30,
+                                          child: CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                snapshot.data!["profile"]),
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          height: 30,
+                                          width: 30,
+                                          child: CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                              "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
                                             ),
-                                          )
-                                        : SizedBox(
-                                            height: 30,
-                                            width: 30,
-                                            child: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
-                                              ),
-                                            ),
-                                          );
-                                  }
+                                          ),
+                                        );
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            SizedBox(
+                              width: 86.w,
+                              child: TextField(
+                                onTap: () {
+                                  replyTextFIeld(context, idKomentar);
                                 },
-                              ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              SizedBox(
-                                width: 86.w,
-                                child: TextField(
-                                  onTap: () {
-                                    replyTextFIeld(context, idKomentar);
-                                  },
-                                  readOnly: true,
-                                  style: Theme.of(context)
+                                readOnly: true,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 9.sp,
+                                        color: grey900),
+                                decoration: InputDecoration(
+                                  hintText: 'Tambahkan balasan...',
+                                  hintStyle: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
                                       .copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 9.sp,
-                                          color: grey900),
-                                  decoration: InputDecoration(
-                                    hintText: 'Tambahkan balasan...',
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 9.sp,
-                                            color: grey400),
-                                    border: const OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 1.5.h, horizontal: 1.5.h),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 0, color: grey50),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 0, color: grey50),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    isDense: true,
-                                    filled: true,
-                                    fillColor: grey50,
-                                  ),
+                                          color: grey400),
+                                  border: const OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 1.5.h, horizontal: 1.5.h),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          width: 0, color: grey50),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          width: 0, color: grey50),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  isDense: true,
+                                  filled: true,
+                                  fillColor: grey50,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

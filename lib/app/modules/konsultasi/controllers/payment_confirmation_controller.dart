@@ -10,11 +10,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/konsultasi/controllers/history_consultation_controller.dart';
 import 'package:nuha/app/modules/konsultasi/models/confirm_consultation_payment.dart';
 import 'package:sizer/sizer.dart';
 
 class PaymentConfirmationController extends GetxController {
   ConfirmConsultationPayment confirmConsultationPayment = Get.arguments;
+  HistoryConsultationController _historyConsultationController =
+      HistoryConsultationController();
   RxList<String> paymentMethodList = <String>[].obs;
   RxString currentPaymentMethod = ''.obs;
   RxBool isPaymentMethodSelected = false.obs;

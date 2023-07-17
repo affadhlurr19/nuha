@@ -5,29 +5,17 @@ ListVideo listVideoFromJson(String str) => ListVideo.fromJson(json.decode(str));
 String listVideoToJson(ListVideo data) => json.encode(data.toJson());
 
 class ListVideo {
-  int code;
-  String message;
-  int founded;
   List<Datum> data;
 
   ListVideo({
-    required this.code,
-    required this.message,
-    required this.founded,
     required this.data,
   });
 
   factory ListVideo.fromJson(Map<String, dynamic> json) => ListVideo(
-        code: json["code"],
-        message: json["message"],
-        founded: json["founded"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "message": message,
-        "founded": founded,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
 }
@@ -85,12 +73,12 @@ class Datum {
 }
 
 enum Category {
+  ASURANSI_SYARIAH,
+  EKONOMI_SYARIAH,
   INVESTASI_SYARIAH,
   KEUANGAN_SYARIAH,
-  ASURANSI_SYARIAH,
-  PERENCANAAN_KEUANGAN,
   PENGELOLAAN_KEUANGAN,
-  EKONOMI_SYARIAH
+  PERENCANAAN_KEUANGAN,
 }
 
 final categoryValues = EnumValues({
@@ -99,7 +87,7 @@ final categoryValues = EnumValues({
   "Investasi Syariah": Category.INVESTASI_SYARIAH,
   "Keuangan Syariah": Category.KEUANGAN_SYARIAH,
   "Pengelolaan Keuangan": Category.PENGELOLAAN_KEUANGAN,
-  "Perencanaan Keuangan": Category.PERENCANAAN_KEUANGAN
+  "Perencanaan Keuangan": Category.PERENCANAAN_KEUANGAN,
 });
 
 class EnumValues<T> {

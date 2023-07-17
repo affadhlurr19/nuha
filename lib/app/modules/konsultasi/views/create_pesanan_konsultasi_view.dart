@@ -778,7 +778,7 @@ class CreatePesananKonsultasiView
                         ),
                         child: c.isLoading.isFalse
                             ? Text(
-                                'Konfirmasi Pembayaran',
+                                'Pesan Sekarang',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!

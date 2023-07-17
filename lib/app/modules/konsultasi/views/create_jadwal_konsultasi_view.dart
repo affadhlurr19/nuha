@@ -4,8 +4,11 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/bx.dart';
+import 'package:iconify_flutter/icons/ic.dart';
 import 'package:iconify_flutter/icons/ion.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:iconify_flutter/icons/ri.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/modules/konsultasi/controllers/schedule_consultation_controller.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -74,105 +77,112 @@ class CreateJadwalKonsultasiView
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 1.5.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.5.w),
-            child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-              future: c.getConsultant(c.consultantId),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: buttonColor1),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                } else {
-                  if (snapshot.hasData && snapshot.data != null) {
-                    return Column(
-                      children: [
-                        Card(
-                          color: backgroundColor2,
-                          elevation: 0,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(18),
-                                  child: Image.network(
-                                    snapshot.data!['imageUrl'],
-                                    height: 8.625.h,
-                                    width: 8.625.h,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 3.89.w),
-                              Expanded(
-                                flex: 3,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                      snapshot.data!['name'],
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              color: const Color(0XFF0D4136),
-                                              fontSize: 13.sp),
-                                    ),
-                                    Text(
-                                      snapshot.data!['category'],
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w400,
-                                              color: grey500,
-                                              fontSize: 11.sp),
-                                    ),
-                                    Text(
-                                      NumberFormat.currency(
-                                        locale: 'id',
-                                        symbol: 'Rp. ',
-                                      )
-                                          .format(snapshot.data!['price'])
-                                          .replaceAll(",00", ""),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w400,
-                                              color: grey900,
-                                              fontSize: 11.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.5.w),
+              child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                future: c.getConsultant(c.consultantId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Padding(
+                      padding: EdgeInsets.only(top: 30.h),
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(
+                            color: buttonColor1),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
                     );
                   } else {
-                    return const Text('Data not Found');
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return Column(
+                        children: [
+                          Card(
+                            color: backgroundColor2,
+                            elevation: 0,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(18),
+                                    child: Image.network(
+                                      snapshot.data!['imageUrl'],
+                                      height: 8.625.h,
+                                      width: 8.625.h,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 3.89.w),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        snapshot.data!['name'],
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                color: const Color(0XFF0D4136),
+                                                fontSize: 13.sp),
+                                      ),
+                                      Text(
+                                        snapshot.data!['category'],
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w400,
+                                                color: grey500,
+                                                fontSize: 11.sp),
+                                      ),
+                                      Text(
+                                        NumberFormat.currency(
+                                          locale: 'id',
+                                          symbol: 'Rp. ',
+                                        )
+                                            .format(snapshot.data!['price'])
+                                            .replaceAll(",00", ""),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w400,
+                                                color: grey900,
+                                                fontSize: 11.sp),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const Text('Data not Found');
+                    }
                   }
-                }
-              },
+                },
+              ),
             ),
           ),
-          SizedBox(height: 1.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.5.w),
             child: const Divider(color: grey400),
@@ -194,12 +204,26 @@ class CreateJadwalKonsultasiView
             child: Obx(
               () {
                 if (c.availableDays.isEmpty) {
-                  return Padding(
-                    padding: EdgeInsets.only(top: 30.h),
-                    child: Container(
-                        alignment: Alignment.center,
-                        child: const CircularProgressIndicator(
-                            color: buttonColor1)),
+                  return Container(
+                    padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 5.h),
+                    child: Column(
+                      children: [
+                        Image.asset('assets/images/found_error.png'),
+                        SizedBox(height: 2.5.h),
+                        Text(
+                          'Maaf, konsultan yang anda pilih sedang tidak memiliki jadwal. Silahkan untuk mencoba kembali atau mencari konsultan lain.',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                                fontSize: 9.sp,
+                                fontWeight: FontWeight.w400,
+                                color: grey500,
+                              ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   );
                 } else {
                   return TableCalendar(
@@ -415,7 +439,7 @@ class CreateJadwalKonsultasiView
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: buttonColor2,
+                            backgroundColor: buttonColor1,
                           ),
                           onPressed: () {
                             c.getOrderData(
@@ -471,6 +495,159 @@ class CreateJadwalKonsultasiView
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void showEmptyScheduleConsultant() {
+    Get.bottomSheet(
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 4.w,
+          vertical: 3.h,
+        ),
+        child: SizedBox(
+          height: 43.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset('assets/images/found_error.png'),
+                  SizedBox(height: 2.5.h),
+                  Text(
+                    'Maaf, sepertinya terjadi kesalahan. Silahkan untuk mencoba kembali atau hubungi kami  jika masalah masih berlanjut.',
+                    style: Theme.of(Get.context!)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(
+                            fontSize: 9.sp,
+                            fontWeight: FontWeight.w400,
+                            color: grey500),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 3.h),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Iconify(
+                          Ic.round_av_timer,
+                          color: buttonColor1,
+                          size: 30.sp,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2.w,
+                      ),
+                      Expanded(
+                        flex: 9,
+                        child: Text(
+                          'Masuk ke meeting room tepat waktu, ya. Konsultan hanya akan menunggumu maksimal 15 menit.',
+                          style: Theme.of(Get.context!)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                fontSize: 11.sp,
+                                color: Colors.black,
+                              ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 3.h),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Iconify(
+                          Ri.user_unfollow_fill,
+                          color: buttonColor1,
+                          size: 30.sp,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2.w,
+                      ),
+                      Expanded(
+                        flex: 9,
+                        child: Text(
+                          'Kamu bisa membatalkan janji konsultasimu pada 60 menit sebelum pertemuan.',
+                          style: Theme.of(Get.context!)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                fontSize: 11.sp,
+                                color: Colors.black,
+                              ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 3.h),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Iconify(
+                          Bx.wallet,
+                          color: buttonColor1,
+                          size: 30.sp,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2.w,
+                      ),
+                      Expanded(
+                        flex: 9,
+                        child: Text(
+                          'Uangmu akan dikembalikan jika konsultan membatalkan atau tidak hadir saat konsultasi.',
+                          style: Theme.of(Get.context!)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                fontSize: 11.sp,
+                                color: Colors.black,
+                              ),
+                        ),
+                      ),
+                      SizedBox(height: 1.5.h),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttonColor1,
+                  ),
+                  onPressed: () => Get.back(),
+                  child: Text(
+                    'Mengerti',
+                    style:
+                        Theme.of(Get.context!).textTheme.labelMedium!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13.sp,
+                              color: backgroundColor1,
+                            ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
     );
   }

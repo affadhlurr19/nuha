@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/bi.dart';
 import 'package:iconify_flutter/icons/gg.dart';
-import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:iconify_flutter/icons/mdi_light.dart';
 import 'package:iconify_flutter/icons/ph.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/profile/controllers/delete_account_controller.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,8 +18,8 @@ import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   ProfileView({Key? key}) : super(key: key);
-
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final accountC = Get.find<DeleteAccountController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,66 +44,68 @@ class ProfileView extends GetView<ProfileController> {
           ),
           //Content
           StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-              stream: controller.streamProfile(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircleAvatar(
-                    backgroundColor: Colors.grey[400],
-                  );
-                }
+            stream: controller.streamProfile(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircleAvatar(
+                  backgroundColor: Colors.grey[400],
+                );
+              } else if (snapshot.hasData) {
                 Map<String, dynamic>? data = snapshot.data!.data();
                 return Column(
                   children: <Widget>[
                     SizedBox(height: 12.125.h),
                     Center(
-                      child: SizedBox(
-                          height: 10.h,
-                          width: 10.h,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            fit: StackFit.expand,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.grey[400],
-                                backgroundImage: NetworkImage(
-                                  data?["profile"] != null
-                                      ? snapshot.data!["profile"].toString()
-                                      : "https://ui-avatars.com/api/?name=${data!["name"]}",
+                      child: GestureDetector(
+                        onTap: () => Get.toNamed(Routes.GANTI_FOTO_PROFIL),
+                        child: SizedBox(
+                            height: 10.h,
+                            width: 10.h,
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              fit: StackFit.expand,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.grey[400],
+                                  backgroundImage: NetworkImage(
+                                    data?["profile"] != null
+                                        ? snapshot.data!["profile"].toString()
+                                        : "https://ui-avatars.com/api/?name=${data!["name"]}",
+                                  ),
                                 ),
-                              ),
-                              Positioned(
-                                bottom: -5,
-                                right: -23,
-                                child: Container(
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 3,
+                                Positioned(
+                                  bottom: -5,
+                                  right: -23,
+                                  child: Container(
+                                    height: 35,
+                                    width: 35,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 3,
+                                        color: Colors.white,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(50)),
                                       color: Colors.white,
                                     ),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(50)),
-                                    color: Colors.white,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: SizedBox(
-                                      child: IconButton(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () => Get.toNamed(
-                                            Routes.GANTI_FOTO_PROFIL),
-                                        color: buttonColor1,
-                                        iconSize: 18,
-                                        icon: const Icon(Icons.add_a_photo,
-                                            color: buttonColor1),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: SizedBox(
+                                        child: IconButton(
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {},
+                                          color: buttonColor1,
+                                          iconSize: 18,
+                                          icon: const Icon(Icons.add_a_photo,
+                                              color: buttonColor1),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )),
+                              ],
+                            )),
+                      ),
                     ),
                     SizedBox(height: 1.h),
                     Center(
@@ -134,7 +136,7 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                       color: backgroundColor1,
                       child: SizedBox(
-                        height: 41.975.h,
+                        height: 33.975.h,
                         width: 84.4.w,
                         child: Column(
                           children: [
@@ -189,42 +191,6 @@ class ProfileView extends GetView<ProfileController> {
                                 ),
                                 onTap: () => Get.toNamed(Routes.PIN,
                                     arguments: Routes.EDIT_PROFILE),
-                              ),
-                            ),
-                            SizedBox(height: 1.h),
-                            Container(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    width: 1,
-                                    color: Color(0XFFF1F1F1),
-                                  ),
-                                ),
-                              ),
-                              width: widthDevice,
-                              child: ListTile(
-                                leading: const Iconify(
-                                  Mdi.diamond_stone,
-                                  size: 24,
-                                  color: titleColor,
-                                ),
-                                trailing: const Iconify(
-                                  Bi.chevron_right,
-                                  size: 24,
-                                  color: titleColor,
-                                ),
-                                title: Text(
-                                  'Upgrade Akun',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 9.sp,
-                                        color: titleColor,
-                                      ),
-                                ),
-                                onTap: () {},
                               ),
                             ),
                             SizedBox(height: 1.h),
@@ -474,7 +440,92 @@ class ProfileView extends GetView<ProfileController> {
                                         color: titleColor,
                                       ),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  Get.defaultDialog(
+                                    title: 'Perhatian',
+                                    titleStyle: Theme.of(Get.context!)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 15.sp,
+                                            color: grey900),
+                                    middleText:
+                                        'Apakah kamu yakin ingin menghapus akun milikmu?',
+                                    middleTextStyle: Theme.of(Get.context!)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 11.sp,
+                                            color: grey900),
+                                    actions: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5.w),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            OutlinedButton(
+                                              onPressed: () => Get.back(),
+                                              style: OutlinedButton.styleFrom(
+                                                foregroundColor: buttonColor1,
+                                                backgroundColor:
+                                                    backgroundColor1,
+                                                side: const BorderSide(
+                                                    color: buttonColor1,
+                                                    width: 1),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 2.w),
+                                                child: Text(
+                                                  'Batalkan',
+                                                  style: Theme.of(Get.context!)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 11.sp,
+                                                          color: buttonColor1),
+                                                ),
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Get.back();
+                                                Get.toNamed(Routes.PIN,
+                                                    arguments:
+                                                        'delete-account');
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: buttonColor1,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 2.w),
+                                                child: Text(
+                                                  'Ya',
+                                                  style: Theme.of(Get.context!)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 11.sp,
+                                                          color:
+                                                              backgroundColor1),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -570,7 +621,11 @@ class ProfileView extends GetView<ProfileController> {
                     SizedBox(height: 3.53125.h),
                   ],
                 );
-              }),
+              } else {
+                return Container();
+              }
+            },
+          ),
           // Positioned to take only AppBar size
           Positioned(
             top: 0.0,

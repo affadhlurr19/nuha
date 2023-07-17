@@ -92,7 +92,7 @@ class OrderConstultationController extends GetxController {
       title: 'Perhatian',
       titleStyle: Theme.of(Get.context!).textTheme.headlineMedium!.copyWith(
           fontWeight: FontWeight.w600, fontSize: 15.sp, color: grey900),
-      middleText: 'Apakah kamu yakin ingin mengkonfirmasi pembayaranmu?',
+      middleText: 'Apakah kamu yakin ingin melakukan pemesanan konsultasi?',
       middleTextStyle: Theme.of(Get.context!).textTheme.bodyMedium!.copyWith(
           fontWeight: FontWeight.w400, fontSize: 11.sp, color: grey900),
       actions: [

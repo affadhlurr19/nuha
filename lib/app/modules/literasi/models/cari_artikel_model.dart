@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final cariArtikel = cariArtikelFromJson(jsonString);
+
 import 'dart:convert';
 
 CariArtikel cariArtikelFromJson(String str) =>
@@ -37,7 +41,7 @@ class Datum {
   int id;
   String adminId;
   String title;
-  Category category;
+  String category;
   String content;
   String imageUrl;
   String writer;
@@ -64,7 +68,7 @@ class Datum {
         id: json["id"],
         adminId: json["adminId"],
         title: json["title"],
-        category: categoryValues.map[json["category"]]!,
+        category: json["category"],
         content: json["content"],
         imageUrl: json["image_url"],
         writer: json["writer"],
@@ -78,7 +82,7 @@ class Datum {
         "id": id,
         "adminId": adminId,
         "title": title,
-        "category": categoryValues.reverse[category],
+        "category": category,
         "content": content,
         "image_url": imageUrl,
         "writer": writer,
@@ -87,21 +91,4 @@ class Datum {
         "created_at": createdAt,
         "updated_at": updatedAt,
       };
-}
-
-enum Category { KEUANGAN_SYARIAH }
-
-final categoryValues =
-    EnumValues({"Keuangan Syariah": Category.KEUANGAN_SYARIAH});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

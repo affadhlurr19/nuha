@@ -65,7 +65,7 @@ class EditProfileView extends GetView {
                         ),
                         color: backgroundColor1,
                         child: SizedBox(
-                          height: 59.375.h,
+                          height: 60.5.h,
                           width: 84.4.w,
                           child: Column(
                             children: [
@@ -216,6 +216,7 @@ class EditProfileView extends GetView {
                                   keyboardType: TextInputType.number,
                                   cursorColor: buttonColor1,
                                   textInputAction: TextInputAction.next,
+                                  maxLength: 13,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -375,7 +376,7 @@ class EditProfileView extends GetView {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 13.h),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.056.w),
                       child: Row(

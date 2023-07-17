@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nuha/app/routes/app_pages.dart';
@@ -94,8 +95,8 @@ class CariArtikelView extends GetView<CariArtikelController> {
                                   Flexible(
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(18),
-                                      child: Image.network(
-                                        artikel.imageUrl,
+                                      child: CachedNetworkImage(
+                                        imageUrl: artikel.imageUrl,
                                         height: 8.625.h,
                                         width: 29.72.w,
                                         fit: BoxFit.cover,

@@ -10,9 +10,11 @@ import 'package:nuha/app/modules/literasi/models/recommended_video_model.dart';
 class ListVideoProvider {
   static const String _baseUrl = 'https://nuha.my.id/api/';
 
-  Future<ListVideo> getListVideo(http.Client client) async {
+  Future<ListVideo> getListVideo(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client.get(Uri.parse("${_baseUrl}video"));
+      final response = await client
+          .get(Uri.parse("${_baseUrl}video?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListVideo.fromJson(json.decode(response.body));
       } else {
@@ -25,10 +27,11 @@ class ListVideoProvider {
     }
   }
 
-  Future<ListVideo> getListAsuransiSyariahVideo(http.Client client) async {
+  Future<ListVideo> getListAsuransiSyariahVideo(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client
-          .get(Uri.parse("${_baseUrl}video/category/Asuransi%20Syariah"));
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}video/category/Asuransi%20Syariah?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListVideo.fromJson(json.decode(response.body));
       } else {
@@ -41,10 +44,11 @@ class ListVideoProvider {
     }
   }
 
-  Future<ListVideo> getListEkonomiSyariahVideo(http.Client client) async {
+  Future<ListVideo> getListEkonomiSyariahVideo(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client
-          .get(Uri.parse("${_baseUrl}video/category/Ekonomi%20Syariah"));
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}video/category/Ekonomi%20Syariah?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListVideo.fromJson(json.decode(response.body));
       } else {
@@ -57,10 +61,11 @@ class ListVideoProvider {
     }
   }
 
-  Future<ListVideo> getListInvestasiSyariahVideo(http.Client client) async {
+  Future<ListVideo> getListInvestasiSyariahVideo(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client
-          .get(Uri.parse("${_baseUrl}video/category/Investasi%20Syariah"));
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}video/category/Investasi%20Syariah?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListVideo.fromJson(json.decode(response.body));
       } else {
@@ -73,10 +78,11 @@ class ListVideoProvider {
     }
   }
 
-  Future<ListVideo> getListKeuanganSyariahVideo(http.Client client) async {
+  Future<ListVideo> getListKeuanganSyariahVideo(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client
-          .get(Uri.parse("${_baseUrl}video/category/Keuangan%20Syariah"));
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}video/category/Keuangan%20Syariah?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListVideo.fromJson(json.decode(response.body));
       } else {
@@ -89,10 +95,11 @@ class ListVideoProvider {
     }
   }
 
-  Future<ListVideo> getListPengelolaanKeuanganVideo(http.Client client) async {
+  Future<ListVideo> getListPengelolaanKeuanganVideo(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client
-          .get(Uri.parse("${_baseUrl}video/category/Pengelolaan%Keuangan"));
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}video/category/Pengelolaan%20Keuangan?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListVideo.fromJson(json.decode(response.body));
       } else {
@@ -105,10 +112,11 @@ class ListVideoProvider {
     }
   }
 
-  Future<ListVideo> getListPerencanaanKeuanganVideo(http.Client client) async {
+  Future<ListVideo> getListPerencanaanKeuanganVideo(
+      http.Client client, int page, int limit) async {
     try {
-      final response = await client
-          .get(Uri.parse("${_baseUrl}video/category/Perencanaan%Keuangan"));
+      final response = await client.get(Uri.parse(
+          "${_baseUrl}video/category/Perencanaan%20Keuangan?page=$page&page_size=$limit"));
       if (response.statusCode == 200) {
         return ListVideo.fromJson(json.decode(response.body));
       } else {

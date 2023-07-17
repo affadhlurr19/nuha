@@ -7,6 +7,7 @@ import 'package:nuha/app/utility/notification_service_controller.dart';
 import 'package:nuha/main.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -14,6 +15,22 @@ class NotificationController extends GetxController {
   RxBool isLiterasiOn = false.obs;
   RxBool isCashFlowOn = false.obs;
   RxBool isZakatOn = false.obs;
+
+  final literasiController = SuperTooltipController();
+  final cashFlowController = SuperTooltipController();
+  final zakatController = SuperTooltipController();
+
+  void literasiTooltip() {
+    literasiController.showTooltip();
+  }
+
+  void cashFlowTooltip() {
+    cashFlowController.showTooltip();
+  }
+
+  void zakatTooltip() {
+    zakatController.showTooltip();
+  }
 
   final NotificationServiceController notificationServiceController =
       NotificationServiceController();
