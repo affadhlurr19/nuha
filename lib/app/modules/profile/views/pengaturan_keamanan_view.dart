@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,7 +10,9 @@ import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 
 class PengaturanKeamananView extends GetView {
-  const PengaturanKeamananView({Key? key}) : super(key: key);
+  PengaturanKeamananView({Key? key}) : super(key: key);
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,74 +47,121 @@ class PengaturanKeamananView extends GetView {
                 borderRadius: BorderRadius.circular(25),
               ),
               color: backgroundColor1,
-              child: SizedBox(
-                height: 20.475.h,
-                width: 84.4.w,
-                child: Column(
-                  children: [
-                    SizedBox(height: 2.5.h),
-                    Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: 1,
-                            color: Color(0XFFF1F1F1),
-                          ),
-                        ),
-                      ),
-                      width: widthDevice,
-                      child: ListTile(
-                        trailing: const Iconify(
-                          Bi.chevron_right,
-                          size: 24,
-                          color: titleColor,
-                        ),
-                        title: Text(
-                          'Ganti Kata Sandi',
-                          style:
-                              Theme.of(context).textTheme.labelMedium!.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 9.sp,
+              child:
+                  auth.currentUser!.providerData[0].providerId == 'google.com'
+                      ? SizedBox(
+                          height: 14.475.h,
+                          width: 84.4.w,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 2.5.h),
+                              SizedBox(height: 1.h),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      width: 1,
+                                      color: Color(0XFFF1F1F1),
+                                    ),
+                                  ),
+                                ),
+                                width: widthDevice,
+                                child: ListTile(
+                                  trailing: const Iconify(
+                                    Bi.chevron_right,
+                                    size: 24,
                                     color: titleColor,
                                   ),
-                        ),
-                        onTap: () => Get.toNamed(Routes.PIN,
-                            arguments: Routes.GANTI_KATA_SANDI),
-                      ),
-                    ),
-                    SizedBox(height: 1.h),
-                    Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: 1,
-                            color: Color(0XFFF1F1F1),
+                                  title: Text(
+                                    'Ganti PIN',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 9.sp,
+                                          color: titleColor,
+                                        ),
+                                  ),
+                                  onTap: () => Get.toNamed(Routes.PIN,
+                                      arguments: Routes.EDIT_PIN),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                      width: widthDevice,
-                      child: ListTile(
-                        trailing: const Iconify(
-                          Bi.chevron_right,
-                          size: 24,
-                          color: titleColor,
-                        ),
-                        title: Text(
-                          'Ganti PIN',
-                          style:
-                              Theme.of(context).textTheme.labelMedium!.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 9.sp,
+                        )
+                      : SizedBox(
+                          height: 20.475.h,
+                          width: 84.4.w,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 2.5.h),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      width: 1,
+                                      color: Color(0XFFF1F1F1),
+                                    ),
+                                  ),
+                                ),
+                                width: widthDevice,
+                                child: ListTile(
+                                  trailing: const Iconify(
+                                    Bi.chevron_right,
+                                    size: 24,
                                     color: titleColor,
                                   ),
+                                  title: Text(
+                                    'Ganti Kata Sandi',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 9.sp,
+                                          color: titleColor,
+                                        ),
+                                  ),
+                                  onTap: () => Get.toNamed(Routes.PIN,
+                                      arguments: Routes.GANTI_KATA_SANDI),
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      width: 1,
+                                      color: Color(0XFFF1F1F1),
+                                    ),
+                                  ),
+                                ),
+                                width: widthDevice,
+                                child: ListTile(
+                                  trailing: const Iconify(
+                                    Bi.chevron_right,
+                                    size: 24,
+                                    color: titleColor,
+                                  ),
+                                  title: Text(
+                                    'Ganti PIN',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 9.sp,
+                                          color: titleColor,
+                                        ),
+                                  ),
+                                  onTap: () => Get.toNamed(Routes.PIN,
+                                      arguments: Routes.EDIT_PIN),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        onTap: () =>
-                            Get.toNamed(Routes.PIN, arguments: Routes.EDIT_PIN),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ),
           ),
         ],

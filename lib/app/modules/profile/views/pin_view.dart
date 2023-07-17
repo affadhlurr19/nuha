@@ -1,18 +1,32 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
+import 'package:nuha/app/modules/profile/controllers/delete_account_controller.dart';
 import 'package:nuha/app/modules/profile/controllers/pin_controller.dart';
+import 'package:nuha/app/routes/app_pages.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sizer/sizer.dart';
 
 class PinView extends GetView {
   PinView({Key? key}) : super(key: key);
   final c = Get.find<PinController>();
+  final accountC = Get.find<DeleteAccountController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: backgroundColor1,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        elevation: 0,
+        toolbarHeight: 0,
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(4.4.w, 10.h, 4.4.w, 5.h),
@@ -45,6 +59,8 @@ class PinView extends GetView {
                         child: Directionality(
                           textDirection: TextDirection.ltr,
                           child: Pinput(
+                            obscureText: true,
+                            obscuringCharacter: "*",
                             length: 6,
                             errorTextStyle: Theme.of(context)
                                 .textTheme
@@ -104,25 +120,76 @@ class PinView extends GetView {
                   ),
                 ],
               ),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: buttonColor1,
+              Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(right: 11.1.w, left: 11.1.w),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: 'Kamu lupa PIN? ',
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              fontSize: 9.sp,
+                              color: const Color(0xFF919191),
+                              fontWeight: FontWeight.w400,
+                            ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => Get.toNamed(Routes.SETEL_ULANG_PIN),
+                            text: 'Setel Ulang PIN',
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      fontSize: 9.sp,
+                                      color: buttonColor1,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  onPressed: () {
-                    c.pinNode.unfocus();
-                    c.formKey.currentState!.validate();
-                    Get.offAndToNamed(Get.arguments);
-                  },
-                  child: Text('Kirim',
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13.sp,
-                          color: backgroundColor1)),
-                ),
-              )
+                  SizedBox(height: 2.h),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: buttonColor1,
+                      ),
+                      onPressed: () {
+                        if (c.pinController.text.isEmpty ||
+                            c.pinController.length < 6) {
+                          c.dialogMessage.errMsg('Masukkan PIN dengan benar');
+                        } else {
+                          if (c.pinController.text != c.myPIN.value) {
+                            c.dialogMessage.errMsg('PIN tidak cocok');
+                          } else {
+                            c.pinNode.unfocus();
+                            c.formKey.currentState!.validate();
+                            if (Get.arguments == 'delete-account') {
+                              if (accountC.isLoading.isFalse) {
+                                accountC.deleteAccount();
+                              }
+                            } else {
+                              Get.offAndToNamed(Get.arguments);
+                            }
+                          }
+                        }
+                      },
+                      child: Text('Kirim',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 13.sp,
+                                  color: backgroundColor1)),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         ),

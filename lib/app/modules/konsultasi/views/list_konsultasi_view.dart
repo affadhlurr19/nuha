@@ -168,28 +168,49 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                 padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
                 child: Obx(
                   () => FutureBuilder(
-                      future: (konsultasiC.tag.value == 1)
-                          ? konsultasiC.getAllConsultant()
-                          : (konsultasiC.tag.value == 2)
-                              ? konsultasiC.getConsultantDanaPensiun()
-                              : (konsultasiC.tag.value == 3)
-                                  ? konsultasiC.getConsultantPajak()
-                                  : (konsultasiC.tag.value == 4)
-                                      ? konsultasiC.getConsultantPerencanaan()
-                                      : konsultasiC
-                                          .getConsultantReviewKeuangan(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 40.h),
-                            child: const Center(
-                              child: CircularProgressIndicator(
-                                  color: buttonColor1),
+                    future: (konsultasiC.tag.value == 1)
+                        ? konsultasiC.getAllConsultant()
+                        : (konsultasiC.tag.value == 2)
+                            ? konsultasiC.getConsultantDanaPensiun()
+                            : (konsultasiC.tag.value == 3)
+                                ? konsultasiC.getConsultantPajak()
+                                : (konsultasiC.tag.value == 4)
+                                    ? konsultasiC.getConsultantPerencanaan()
+                                    : konsultasiC.getConsultantReviewKeuangan(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Padding(
+                          padding: EdgeInsets.only(top: 40.h),
+                          child: const Center(
+                            child:
+                                CircularProgressIndicator(color: buttonColor1),
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        if (konsultasiC.consultantList.isEmpty) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 25.h),
+                            child: Column(
+                              children: [
+                                Image.asset('assets/images/404_error.png'),
+                                SizedBox(height: 2.5.h),
+                                Text(
+                                  'Maaf, konsultan pada kategori ini kosong. Silahkan pilih konsultan pada kategori lainnya.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .copyWith(
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: grey500),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
                           );
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
                         } else {
                           return ListView.builder(
                             shrinkWrap: true,
@@ -367,7 +388,9 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                             },
                           );
                         }
-                      }),
+                      }
+                    },
+                  ),
                 ),
               ),
             ],

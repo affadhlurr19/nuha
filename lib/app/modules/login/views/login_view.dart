@@ -236,7 +236,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ],
               ),
-              SizedBox(height: 23.3.h),
+              SizedBox(height: 22.3.h),
               Container(
                 padding: EdgeInsets.only(right: 11.1.w, left: 11.1.w),
                 child: RichText(

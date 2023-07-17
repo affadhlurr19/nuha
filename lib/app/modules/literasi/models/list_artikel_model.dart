@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final listArtikel = listArtikelFromJson(jsonString);
+
 import 'dart:convert';
 
 ListArtikel listArtikelFromJson(String str) =>
@@ -6,29 +10,17 @@ ListArtikel listArtikelFromJson(String str) =>
 String listArtikelToJson(ListArtikel data) => json.encode(data.toJson());
 
 class ListArtikel {
-  int code;
-  String message;
-  int founded;
   List<Datum> data;
 
   ListArtikel({
-    required this.code,
-    required this.message,
-    required this.founded,
     required this.data,
   });
 
   factory ListArtikel.fromJson(Map<String, dynamic> json) => ListArtikel(
-        code: json["code"],
-        message: json["message"],
-        founded: json["founded"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "message": message,
-        "founded": founded,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
 }
@@ -40,11 +32,11 @@ class Datum {
   Category category;
   String content;
   String imageUrl;
-  Writer writer;
+  String writer;
   String readTime;
   DateTime publishedAt;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Datum({
     required this.id,
@@ -67,15 +59,11 @@ class Datum {
         category: categoryValues.map[json["category"]]!,
         content: json["content"],
         imageUrl: json["image_url"],
-        writer: writerValues.map[json["writer"]]!,
+        writer: json["writer"],
         readTime: json["read_time"],
         publishedAt: DateTime.parse(json["published_at"]),
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,34 +73,41 @@ class Datum {
         "category": categoryValues.reverse[category],
         "content": content,
         "image_url": imageUrl,
-        "writer": writerValues.reverse[writer],
+        "writer": writer,
         "read_time": readTime,
         "published_at": publishedAt.toIso8601String(),
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
 }
 
-enum Category { TABUNGAN_SYARIAH, KEUANGAN_SYARIAH }
+enum Category {
+  KEUANGAN_SYARIAH,
+  TABUNGAN_SYARIAH,
+  EKONOMI_SYARIAH,
+  INVESTASI_SYARIAH,
+  LAINNYA,
+}
 
 final categoryValues = EnumValues({
   "Keuangan Syariah": Category.KEUANGAN_SYARIAH,
-  "Tabungan Syariah": Category.TABUNGAN_SYARIAH
+  "Tabungan Syariah": Category.TABUNGAN_SYARIAH,
+  "Ekonomi Syariah": Category.EKONOMI_SYARIAH,
+  "Investasi Syariah": Category.INVESTASI_SYARIAH,
+  "Lainnya": Category.LAINNYA,
 });
 
 enum Writer {
-  FITRIA,
   FUJI_PRATIWI,
   LIDA_PUSPANINGTYAS,
-  FRISKA_YOLANDHA,
   AHMAD_FIKRI_NOOR,
   ICHSAN_EMRALD_ALAMSYAH,
-  GITA_AMANDA
+  GITA_AMANDA,
+  FRISKA_YOLANDHA
 }
 
 final writerValues = EnumValues({
   "Ahmad Fikri Noor": Writer.AHMAD_FIKRI_NOOR,
-  "Fitria": Writer.FITRIA,
   "Friska Yolandha": Writer.FRISKA_YOLANDHA,
   "Fuji Pratiwi": Writer.FUJI_PRATIWI,
   "Gita Amanda": Writer.GITA_AMANDA,

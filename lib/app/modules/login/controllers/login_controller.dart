@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class LoginController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -19,35 +19,10 @@ class LoginController extends GetxController {
   RxBool rememeberMe = false.obs;
   final box = GetStorage();
   RxBool isLoadingG = false.obs;
+  DialogMessage dialogMessage = DialogMessage();
 
   //Google Sign In
   final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  void successMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: buttonColor1,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Berhasil",
-      msg,
-    );
-  }
-
-  void errMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: errColor,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Terjadi Kesalahan",
-      msg,
-    );
-  }
 
   void login() async {
     if (emailC.text.isNotEmpty && passC.text.isNotEmpty) {
@@ -99,10 +74,12 @@ class LoginController extends GetxController {
                   try {
                     await userCredential.user!.sendEmailVerification();
                     Get.back();
-                    successMsg('Verifikasi email berhasil dikirim');
+                    dialogMessage
+                        .successMsg('Verifikasi email berhasil dikirim');
                   } catch (e) {
                     Get.back();
-                    errMsg('Terlalu banyak permintaan verifikasi email');
+                    dialogMessage
+                        .errMsg('Terlalu banyak permintaan verifikasi email');
                     print(e);
                   }
                 },
@@ -114,13 +91,13 @@ class LoginController extends GetxController {
       } on FirebaseAuthException catch (e) {
         isLoading.value = false;
         if (e.code == 'user-not-found') {
-          errMsg('No user found for that email.');
+          dialogMessage.errMsg('No user found for that email.');
         } else if (e.code == 'wrong-password') {
-          errMsg('Wrong password provided for that user.');
+          dialogMessage.errMsg('Wrong password provided for that user.');
         }
       }
     } else {
-      errMsg('Email dan Password tidak boleh kosong');
+      dialogMessage.errMsg('Email dan Password tidak boleh kosong');
     }
   }
 
@@ -165,9 +142,10 @@ class LoginController extends GetxController {
     } on FirebaseAuthException catch (e) {
       isLoadingG.value = false;
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-        errMsg('This account exists with different credential.');
+        dialogMessage.errMsg('This account exists with different credential.');
       }
     } catch (e) {
+      isLoadingG.value = false;
       print(e);
     }
   }

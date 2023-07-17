@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 import 'package:pinput/pinput.dart';
 
 class PinController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
+  DialogMessage dialogMessage = DialogMessage();
 
   final pinController = TextEditingController();
   final newpinController = TextEditingController();
@@ -65,14 +67,10 @@ class PinController extends GetxController {
       if (dataDoc.exists) {
         myPIN.value = dataDoc.data()!['pin'];
       } else {
-        ScaffoldMessenger.of(Get.context!).showSnackBar(
-          const SnackBar(content: Text('Data user tidak ditemukan.')),
-        );
+        dialogMessage.errMsg('Data user tidak ditemukan.');
       }
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(content: Text('Gagal mengambil data.')),
-      );
+      dialogMessage.errMsg('Gagal mengambil data.');
     }
   }
 
@@ -84,15 +82,15 @@ class PinController extends GetxController {
         'pin': confirmNewPinController.text,
       });
 
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(content: Text('Pin kamu berhasil dibuat.')),
-      );
+      dialogMessage.successMsg('Pin kamu berhasil dibuat.');
 
       Get.offAllNamed(Routes.NAVBAR);
     } catch (e) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(content: Text('Gagal mengambil data.')),
-      );
+      dialogMessage.errMsg('Gagal mengambil data.');
     }
+  }
+
+  void deleteDataForm() {
+    confirmNewPinController.clear();
   }
 }

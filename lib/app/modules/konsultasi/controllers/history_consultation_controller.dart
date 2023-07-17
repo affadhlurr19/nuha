@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +22,28 @@ class HistoryConsultationController extends GetxController {
   RxBool isConsultationDone = false.obs;
   RxBool isLoadingConsultationDone = false.obs;
 
+  final StreamController<List<ConsultationHistory>> pendingHistoryController =
+      StreamController<List<ConsultationHistory>>.broadcast();
+  final StreamController<List<ConsultationHistory>> confirmHistoryController =
+      StreamController<List<ConsultationHistory>>.broadcast();
+  final StreamController<List<ConsultationHistory>> successHistoryController =
+      StreamController<List<ConsultationHistory>>.broadcast();
+  final StreamController<List<ConsultationHistory>> doneHistoryController =
+      StreamController<List<ConsultationHistory>>.broadcast();
+
   @override
   void onInit() {
     super.onInit();
     initializeDateFormatting('id', null);
+  }
+
+  @override
+  void onClose() {
+    pendingHistoryController.close();
+    confirmHistoryController.close();
+    successHistoryController.close();
+    doneHistoryController.close();
+    super.onClose();
   }
 
   String convertTimestampToDateTime(Timestamp timestamp) {
@@ -39,18 +59,17 @@ class HistoryConsultationController extends GetxController {
     return formatDatetime;
   }
 
-  Future<List<ConsultationHistory>> getPendingHistory() async {
-    try {
-      QuerySnapshot historyData = await FirebaseFirestore.instance
-          .collection('consultation_transaction')
-          .where('userId', isEqualTo: auth.currentUser!.uid)
-          .where('paymentStatus', isEqualTo: 'Menunggu Pembayaran')
-          .orderBy('createdAt', descending: true)
-          .get();
+  Stream<List<ConsultationHistory>> getPendingHistory() {
+    return FirebaseFirestore.instance
+        .collection('consultation_transaction')
+        .where('userId', isEqualTo: auth.currentUser!.uid)
+        .where('paymentStatus', isEqualTo: 'Menunggu Pembayaran')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<ConsultationHistory> tempHistoryList = [];
 
-      historyList.clear();
-
-      for (DocumentSnapshot historyDoc in historyData.docs) {
+      for (DocumentSnapshot historyDoc in snapshot.docs) {
         Map<String, dynamic> historyDatas =
             historyDoc.data() as Map<String, dynamic>;
 
@@ -82,29 +101,25 @@ class HistoryConsultationController extends GetxController {
             meetingLink: historyDatas['meetingLink'],
           );
 
-          historyList.add(consultationHistory);
+          tempHistoryList.add(consultationHistory);
         }
       }
 
-      return historyList;
-    } catch (e) {
-      Get.snackbar('Kesalahan', '$e');
-      return historyList;
-    }
+      return tempHistoryList;
+    });
   }
 
-  Future<List<ConsultationHistory>> getConfirmHistory() async {
-    try {
-      QuerySnapshot historyData = await FirebaseFirestore.instance
-          .collection('consultation_transaction')
-          .where('userId', isEqualTo: auth.currentUser!.uid)
-          .where('paymentStatus', isEqualTo: 'Menunggu Konfirmasi')
-          .orderBy('createdAt', descending: true)
-          .get();
+  Stream<List<ConsultationHistory>> getConfirmHistory() {
+    return FirebaseFirestore.instance
+        .collection('consultation_transaction')
+        .where('userId', isEqualTo: auth.currentUser!.uid)
+        .where('paymentStatus', isEqualTo: 'Menunggu Konfirmasi')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<ConsultationHistory> tempHistoryList = [];
 
-      historyList.clear();
-
-      for (DocumentSnapshot historyDoc in historyData.docs) {
+      for (DocumentSnapshot historyDoc in snapshot.docs) {
         Map<String, dynamic> historyDatas =
             historyDoc.data() as Map<String, dynamic>;
 
@@ -136,29 +151,25 @@ class HistoryConsultationController extends GetxController {
             meetingLink: historyDatas['meetingLink'],
           );
 
-          historyList.add(consultationHistory);
+          tempHistoryList.add(consultationHistory);
         }
       }
 
-      return historyList;
-    } catch (e) {
-      Get.snackbar('Kesalahan', '$e');
-      return historyList;
-    }
+      return tempHistoryList;
+    });
   }
 
-  Future<List<ConsultationHistory>> getSuccessHistory() async {
-    try {
-      QuerySnapshot historyData = await FirebaseFirestore.instance
-          .collection('consultation_transaction')
-          .where('userId', isEqualTo: auth.currentUser!.uid)
-          .where('paymentStatus', isEqualTo: 'Siap Konsultasi')
-          .orderBy('createdAt', descending: true)
-          .get();
+  Stream<List<ConsultationHistory>> getSuccessHistory() {
+    return FirebaseFirestore.instance
+        .collection('consultation_transaction')
+        .where('userId', isEqualTo: auth.currentUser!.uid)
+        .where('paymentStatus', isEqualTo: 'Siap Konsultasi')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<ConsultationHistory> tempHistoryList = [];
 
-      historyList.clear();
-
-      for (DocumentSnapshot historyDoc in historyData.docs) {
+      for (DocumentSnapshot historyDoc in snapshot.docs) {
         Map<String, dynamic> historyDatas =
             historyDoc.data() as Map<String, dynamic>;
 
@@ -190,29 +201,25 @@ class HistoryConsultationController extends GetxController {
             meetingLink: historyDatas['meetingLink'],
           );
 
-          historyList.add(consultationHistory);
+          tempHistoryList.add(consultationHistory);
         }
       }
 
-      return historyList;
-    } catch (e) {
-      Get.snackbar('Kesalahan', '$e');
-      return historyList;
-    }
+      return tempHistoryList;
+    });
   }
 
-  Future<List<ConsultationHistory>> getDoneHistory() async {
-    try {
-      QuerySnapshot historyData = await FirebaseFirestore.instance
-          .collection('consultation_transaction')
-          .where('userId', isEqualTo: auth.currentUser!.uid)
-          .where('paymentStatus', isEqualTo: 'Selesai')
-          .orderBy('createdAt', descending: true)
-          .get();
+  Stream<List<ConsultationHistory>> getDoneHistory() {
+    return FirebaseFirestore.instance
+        .collection('consultation_transaction')
+        .where('userId', isEqualTo: auth.currentUser!.uid)
+        .where('paymentStatus', isEqualTo: 'Selesai')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<ConsultationHistory> tempHistoryList = [];
 
-      historyList.clear();
-
-      for (DocumentSnapshot historyDoc in historyData.docs) {
+      for (DocumentSnapshot historyDoc in snapshot.docs) {
         Map<String, dynamic> historyDatas =
             historyDoc.data() as Map<String, dynamic>;
 
@@ -244,14 +251,23 @@ class HistoryConsultationController extends GetxController {
             meetingLink: historyDatas['meetingLink'],
           );
 
-          historyList.add(consultationHistory);
+          tempHistoryList.add(consultationHistory);
         }
       }
 
-      return historyList;
-    } catch (e) {
-      Get.snackbar('Kesalahan', '$e');
-      return historyList;
+      return tempHistoryList;
+    });
+  }
+
+  void refreshHistory() {
+    if (tag.value == 1) {
+      pendingHistoryController.addStream(getPendingHistory());
+    } else if (tag.value == 2) {
+      confirmHistoryController.addStream(getConfirmHistory());
+    } else if (tag.value == 3) {
+      successHistoryController.addStream(getSuccessHistory());
+    } else {
+      doneHistoryController.addStream(getDoneHistory());
     }
   }
 

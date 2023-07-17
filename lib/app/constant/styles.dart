@@ -13,8 +13,9 @@ const Color grey100 = Color(0XFFE1E1E1);
 const Color grey400 = Color(0XFF919191);
 const Color grey500 = Color(0XFF717171);
 const Color grey900 = Color(0XFF1F1F1F);
-const Color errColor = Colors.red;
-const Color succColor = Colors.green;
+const Color errColor = Color(0XFFdc3545);
+const Color succColor = Color(0XFF198754);
+const Color warnColor = Color(0XFFffc107);
 double heightDevice = Get.height;
 double widthDevice = Get.width;
 

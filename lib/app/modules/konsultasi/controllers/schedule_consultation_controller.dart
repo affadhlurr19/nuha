@@ -171,6 +171,7 @@ class ScheduleConsultationController extends GetxController {
     try {
       var data = await FirebaseFirestore.instance
           .collection('consultation_transaction')
+          .where('consultantId', isEqualTo: consultantId)
           .where('startDateTime', isEqualTo: consultationStartDate)
           .where('endDateTime', isEqualTo: consultationEndDate)
           .get();

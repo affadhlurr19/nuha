@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class RegisterController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -19,35 +19,10 @@ class RegisterController extends GetxController {
   RxBool isHiddenConfirmPass = true.obs;
   RxBool isLoading = false.obs;
   RxBool isLoadingG = false.obs;
+  DialogMessage dialogMessage = DialogMessage();
 
   //Google Sign In
   final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  void successMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: buttonColor1,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Berhasil",
-      msg,
-    );
-  }
-
-  void errMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: errColor,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Terjadi Kesalahan",
-      msg,
-    );
-  }
 
   void register() async {
     if (emailC.text.isNotEmpty &&
@@ -81,22 +56,22 @@ class RegisterController extends GetxController {
             "created_at": DateTime.now().toIso8601String(),
           });
           Get.offAllNamed(Routes.LOGIN);
-          successMsg('Silahkan verifikasi email anda');
+          dialogMessage.successMsg('Silahkan verifikasi email anda');
         } on FirebaseAuthException catch (e) {
           isLoading.value = false;
           if (e.code == 'weak-password') {
-            errMsg('The password provided is too weak.');
+            dialogMessage.errMsg('The password provided is too weak.');
           } else if (e.code == 'email-already-in-use') {
-            errMsg('The account already exists for that email.');
+            dialogMessage.errMsg('The account already exists for that email.');
           }
         } catch (e) {
           print(e);
         }
       } else {
-        errMsg("Konfirmasi password tidak cocok!");
+        dialogMessage.errMsg('Konfirmasi password tidak cocok!');
       }
     } else {
-      errMsg("Semua data tidak boleh kosong!");
+      dialogMessage.errMsg('Semua data tidak boleh kosong!');
     }
   }
 
@@ -142,7 +117,7 @@ class RegisterController extends GetxController {
     } on FirebaseAuthException catch (e) {
       isLoadingG.value = false;
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-        errMsg('This account exists with different credential.');
+        dialogMessage.errMsg('This account exists with different credential.');
       }
     } catch (e) {
       print(e);

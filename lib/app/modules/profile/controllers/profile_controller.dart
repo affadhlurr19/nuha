@@ -11,12 +11,14 @@ import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 
 class ProfileController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final storage = FirebaseStorage.instance;
+  DialogMessage dialogMessage = DialogMessage();
 
   //update profile
   TextEditingController emailC = TextEditingController();
@@ -40,38 +42,12 @@ class ProfileController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  void successMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: buttonColor1,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Berhasil",
-      msg,
-    );
-  }
-
-  void errMsg(String msg) {
-    Get.snackbar(
-      forwardAnimationCurve: Curves.easeOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      backgroundColor: errColor,
-      colorText: backgroundColor1,
-      duration: const Duration(seconds: 3),
-      snackPosition: SnackPosition.BOTTOM,
-      "Terjadi Kesalahan",
-      msg,
-    );
-  }
-
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamProfile() async* {
     try {
       String uid = auth.currentUser!.uid;
       yield* firestore.collection("users").doc(uid).snapshots();
     } catch (e) {
-      errMsg('Tidak dapat get data user');
+      dialogMessage.errMsg('Tidak dapat get data user');
     }
   }
 
@@ -84,7 +60,7 @@ class ProfileController extends GetxController {
       profile.value = true;
       return docUser.data();
     } catch (e) {
-      errMsg('Tidak dapat get data user');
+      dialogMessage.errMsg('Tidak dapat get data user');
       return null;
     }
   }
@@ -115,7 +91,7 @@ class ProfileController extends GetxController {
               headlineSmall: GoogleFonts.jost(),
               titleLarge: GoogleFonts.jost(),
               labelSmall: GoogleFonts.jost(),
-              bodyLarge: GoogleFonts.jost(),
+              bodyLarge: GoogleFonts.jost(color: Colors.black),
               titleMedium: GoogleFonts.jost(color: Colors.black),
               titleSmall: GoogleFonts.jost(),
               displaySmall: GoogleFonts.jost(),
@@ -149,10 +125,10 @@ class ProfileController extends GetxController {
       }
       isLoading.value = false;
       Get.back();
-      successMsg('Berhasil memperbarui foto profil');
+      dialogMessage.successMsg('Berhasil memperbarui foto profil');
     } catch (e) {
       isLoading.value = false;
-      errMsg('Gagal memperbarui foto profil');
+      dialogMessage.errMsg('Gagal memperbarui foto profil');
     }
   }
 
@@ -168,14 +144,14 @@ class ProfileController extends GetxController {
           "pekerjaan": workC.text,
         });
 
-        successMsg('Berhasil memperbarui data');
+        dialogMessage.successMsg('Berhasil memperbarui data');
         isLoading.value = false;
       } catch (e) {
         isLoading.value = false;
-        errMsg('Tidak dapat edit data user');
+        dialogMessage.errMsg('Tidak dapat edit data user');
       }
     } else {
-      errMsg('Semua data tidak boleh kosong');
+      dialogMessage.errMsg('Semua data tidak boleh kosong');
     }
   }
 
@@ -196,25 +172,26 @@ class ProfileController extends GetxController {
           await auth.currentUser!.updatePassword(newpassC.text);
           await auth.signOut();
           isLoading.value = false;
-          successMsg('Berhasil memperbarui kata sandi. Silahkan login kembali');
+          dialogMessage.successMsg(
+              'Berhasil memperbarui kata sandi. Silahkan login kembali');
           Get.offAllNamed(Routes.LOGIN);
         } else {
           isLoading.value = false;
-          errMsg('Konfirmasi kata sandi tidak cocok');
+          dialogMessage.errMsg('Konfirmasi kata sandi tidak cocok');
         }
       } on FirebaseAuthException catch (e) {
         isLoading.value = false;
         if (e.code == 'user-not-found') {
-          errMsg('Informasi pengguna tidak ditemukan');
+          dialogMessage.errMsg('Informasi pengguna tidak ditemukan');
         } else if (e.code == 'wrong-password') {
-          errMsg('Kata sandi saat ini yang diinputkan salah');
+          dialogMessage.errMsg('Kata sandi saat ini yang diinputkan salah');
         } else {
-          errMsg('Gagal mengubah kata sandi');
+          dialogMessage.errMsg('Gagal mengubah kata sandi');
         }
       }
     } else {
       isLoading.value = false;
-      errMsg('Semua data tidak boleh kosong');
+      dialogMessage.errMsg('Semua data tidak boleh kosong');
     }
   }
 
@@ -223,7 +200,7 @@ class ProfileController extends GetxController {
       await auth.signOut();
       Get.offAllNamed(Routes.LANDING);
     } catch (e) {
-      errMsg('Gagal Logout. $e');
+      dialogMessage.errMsg('Gagal Logout. $e');
     }
   }
 

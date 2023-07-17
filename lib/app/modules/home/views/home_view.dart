@@ -38,6 +38,11 @@ class HomeView extends GetView<HomeController> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container();
               }
+
+              if (!snapshot.hasData || snapshot.data == null) {
+                return Container();
+              }
+
               Map<String, dynamic>? data = snapshot.data!.data();
               String sentence = data?["name"];
               List<String> words = sentence.split(" ");

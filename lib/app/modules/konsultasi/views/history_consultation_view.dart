@@ -9,6 +9,7 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/konsultasi/controllers/history_consultation_controller.dart';
+import 'package:nuha/app/modules/konsultasi/models/consultation_history.dart';
 import 'package:sizer/sizer.dart';
 
 class HistoryConsultationView extends GetView<HistoryConsultationController> {
@@ -52,288 +53,339 @@ class HistoryConsultationView extends GetView<HistoryConsultationController> {
         elevation: 0.5,
         toolbarHeight: 7.375.h,
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(height: 1.875.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                child: Obx(
-                  () => ChipsChoice.single(
-                    spacing: 3.3.w,
-                    wrapped: true,
-                    padding: EdgeInsets.symmetric(horizontal: 0.w),
-                    value: c.tag.value,
-                    onChanged: (val) {
-                      c.tag.value = val;
-                    },
-                    choiceItems: const <C2Choice>[
-                      C2Choice(value: 1, label: 'Menunggu Pembayaran'),
-                      C2Choice(value: 2, label: 'Konfirmasi Pembayarani'),
-                      C2Choice(value: 3, label: 'Siap Konsultasi'),
-                      C2Choice(value: 4, label: 'Selesai'),
-                    ],
-                    choiceStyle: C2ChipStyle.filled(
-                      foregroundStyle: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(
-                              color: grey400,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 9.sp),
-                      color: grey50,
-                      borderRadius: const BorderRadius.all(Radius.circular(50)),
-                      selectedStyle: C2ChipStyle(
-                        backgroundColor: buttonColor1,
+      body: RefreshIndicator(
+        onRefresh: () async => c.refreshHistory(),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(height: 1.875.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  child: Obx(
+                    () => ChipsChoice.single(
+                      spacing: 3.3.w,
+                      wrapped: true,
+                      padding: EdgeInsets.symmetric(horizontal: 0.w),
+                      value: c.tag.value,
+                      onChanged: (val) {
+                        c.tag.value = val;
+                      },
+                      choiceItems: const <C2Choice>[
+                        C2Choice(value: 1, label: 'Menunggu Pembayaran'),
+                        C2Choice(value: 2, label: 'Konfirmasi Pembayarani'),
+                        C2Choice(value: 3, label: 'Siap Konsultasi'),
+                        C2Choice(value: 4, label: 'Selesai'),
+                      ],
+                      choiceStyle: C2ChipStyle.filled(
                         foregroundStyle: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .copyWith(
-                                color: backgroundColor1,
+                                color: grey400,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 9.sp),
+                        color: grey50,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50)),
+                        selectedStyle: C2ChipStyle(
+                          backgroundColor: buttonColor1,
+                          foregroundStyle: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                  color: backgroundColor1,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 9.sp),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 2.5.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
-              child: Obx(
-                () => FutureBuilder(
-                  future: (c.tag.value == 1)
-                      ? c.getPendingHistory()
-                      : (c.tag.value == 2)
-                          ? c.getConfirmHistory()
-                          : (c.tag.value == 3)
-                              ? c.getSuccessHistory()
-                              : c.getDoneHistory(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Padding(
-                        padding: EdgeInsets.only(top: 40.h),
-                        child: const Center(
-                          child: CircularProgressIndicator(color: buttonColor1),
-                        ),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const ScrollPhysics(),
-                        itemCount: c.historyList.length,
-                        itemBuilder: (context, index) {
-                          var datas = c.historyList[index];
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 1.5.h),
-                            child: Card(
-                              color: backgroundColor1,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 1.375.h, horizontal: 3.33.w),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
+              SizedBox(height: 2.5.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
+                child: Obx(
+                  () => StreamBuilder(
+                    stream: (c.tag.value == 1)
+                        ? c.getPendingHistory()
+                        : (c.tag.value == 2)
+                            ? c.getConfirmHistory()
+                            : (c.tag.value == 3)
+                                ? c.getSuccessHistory()
+                                : c.getDoneHistory(),
+                    // future: (c.tag.value == 1)
+                    //     ? c.getPendingHistory()
+                    //     : (c.tag.value == 2)
+                    //         ? c.getConfirmHistory()
+                    //         : (c.tag.value == 3)
+                    //             ? c.getSuccessHistory()
+                    //             : c.getDoneHistory(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Padding(
+                          padding: EdgeInsets.only(top: 40.h),
+                          child: const Center(
+                            child:
+                                CircularProgressIndicator(color: buttonColor1),
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        List<ConsultationHistory> historyList = snapshot.data!;
+                        if (historyList.isEmpty) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 25.h),
+                            child: Column(
+                              children: [
+                                Image.asset('assets/images/404_error.png'),
+                                SizedBox(height: 2.5.h),
+                                Text(
+                                  'Maaf, data riwayat konsultasi pada status ini kosong. Silahkan pilih status lainnya.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .copyWith(
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: grey500),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemCount: historyList.length,
+                            itemBuilder: (context, index) {
+                              var datas = historyList[index];
+                              return Padding(
+                                padding: EdgeInsets.only(bottom: 1.5.h),
+                                child: Card(
+                                  color: backgroundColor1,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 1.375.h, horizontal: 3.33.w),
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'Konsultasi pada :',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 9.sp,
-                                                color: const Color(0XFF0D4136),
-                                              ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Konsultasi pada :',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 9.sp,
+                                                    color:
+                                                        const Color(0XFF0D4136),
+                                                  ),
+                                            ),
+                                            Text(
+                                              datas.fixDateTimeConsultation,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 8.sp,
+                                                    color: grey400,
+                                                  ),
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          datas.fixDateTimeConsultation,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 8.sp,
-                                                color: grey400,
+                                        SizedBox(height: 1.h),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Flexible(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    width: 2,
+                                                    color: grey100,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                  child: Image.network(
+                                                    datas.consultantPhoto,
+                                                    height: 4.h,
+                                                    width: 4.h,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
+                                            ),
+                                            SizedBox(width: 1.h),
+                                            Expanded(
+                                              flex: 3,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    datas.consultantName,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium!
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: grey500,
+                                                            fontSize: 9.sp),
+                                                  ),
+                                                  Text(
+                                                    datas.consultantCategory,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium!
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color: grey400,
+                                                            fontSize: 9.sp),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 1.h),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Flexible(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                width: 2,
-                                                color: grey100,
-                                              ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                              child: Image.network(
-                                                datas.consultantPhoto,
-                                                height: 4.h,
-                                                width: 4.h,
-                                                fit: BoxFit.cover,
+                                                  BorderRadius.circular(50),
+                                              child: SizedBox(
+                                                height: 3.5.h,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    if (c.tag.value == 1) {
+                                                      c.getOrderDetail(
+                                                        datas.historyId,
+                                                        datas.consultantId,
+                                                      );
+                                                    } else if (c.tag.value ==
+                                                        2) {
+                                                      c.getProofOfPaymentImage(
+                                                          datas.proofOfPayment);
+                                                    } else if (c.tag.value ==
+                                                        3) {
+                                                      customShowDialog(
+                                                        context,
+                                                        datas.meetingLink,
+                                                        datas.historyId,
+                                                      );
+                                                    }
+                                                  },
+                                                  style: c.tag.value == 4
+                                                      ? ElevatedButton
+                                                          .styleFrom(
+                                                          backgroundColor:
+                                                              buttonColor2,
+                                                          foregroundColor:
+                                                              buttonColor2,
+                                                          disabledBackgroundColor:
+                                                              buttonColor2,
+                                                          disabledForegroundColor:
+                                                              buttonColor2,
+                                                          side: const BorderSide(
+                                                              color:
+                                                                  buttonColor2,
+                                                              width: 1),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50),
+                                                          ),
+                                                        )
+                                                      : ElevatedButton
+                                                          .styleFrom(
+                                                          backgroundColor:
+                                                              buttonColor2,
+                                                          side: const BorderSide(
+                                                              color:
+                                                                  buttonColor2,
+                                                              width: 1),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50),
+                                                          ),
+                                                        ),
+                                                  child: Text(
+                                                    c.tag.value == 1
+                                                        ? 'Bayar Sekarang'
+                                                        : c.tag.value == 2
+                                                            ? 'Bukti Pembayaran'
+                                                            : c.tag.value == 3
+                                                                ? 'Link Pertemuan'
+                                                                : 'Selesai',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelLarge!
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color:
+                                                                backgroundColor1,
+                                                            fontSize: 8.sp),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 1.h),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                datas.consultantName,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelMedium!
-                                                    .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: grey500,
-                                                        fontSize: 9.sp),
-                                              ),
-                                              Text(
-                                                datas.consultantCategory,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelMedium!
-                                                    .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: grey400,
-                                                        fontSize: 9.sp),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          child: SizedBox(
-                                            height: 3.5.h,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                if (c.tag.value == 1) {
-                                                  c.getOrderDetail(
-                                                    datas.historyId,
-                                                    datas.consultantId,
-                                                  );
-                                                } else if (c.tag.value == 2) {
-                                                  c.getProofOfPaymentImage(
-                                                      datas.proofOfPayment);
-                                                } else if (c.tag.value == 3) {
-                                                  customShowDialog(
-                                                    context,
-                                                    datas.meetingLink,
-                                                    datas.historyId,
-                                                  );
-                                                }
-                                              },
-                                              style: c.tag.value == 4
-                                                  ? ElevatedButton.styleFrom(
-                                                      backgroundColor:
-                                                          buttonColor2,
-                                                      foregroundColor:
-                                                          buttonColor2,
-                                                      disabledBackgroundColor:
-                                                          buttonColor2,
-                                                      disabledForegroundColor:
-                                                          buttonColor2,
-                                                      side: const BorderSide(
-                                                          color: buttonColor2,
-                                                          width: 1),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
-                                                      ),
-                                                    )
-                                                  : ElevatedButton.styleFrom(
-                                                      backgroundColor:
-                                                          buttonColor2,
-                                                      side: const BorderSide(
-                                                          color: buttonColor2,
-                                                          width: 1),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
-                                                      ),
-                                                    ),
-                                              child: Text(
-                                                c.tag.value == 1
-                                                    ? 'Bayar Sekarang'
-                                                    : c.tag.value == 2
-                                                        ? 'Bukti Pembayaran'
-                                                        : c.tag.value == 3
-                                                            ? 'Link Pertemuan'
-                                                            : 'Selesai',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelLarge!
-                                                    .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: backgroundColor1,
-                                                        fontSize: 8.sp),
-                                              ),
-                                            ),
-                                          ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                            },
                           );
-                        },
-                      );
-                    }
-                  },
+                        }
+                      }
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
