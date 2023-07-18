@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -17,6 +18,7 @@ import 'package:nuha/app/modules/literasi/controllers/komentar_video_controller.
 import 'package:nuha/app/modules/literasi/controllers/recommended_video_controller.dart';
 import 'package:nuha/app/modules/literasi/models/balasan_komentar_video_model.dart';
 import 'package:nuha/app/modules/literasi/models/komentar_video_model.dart';
+import 'package:nuha/app/routes/app_pages.dart';
 import 'package:nuha/app/utility/result_state.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
@@ -191,7 +193,7 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 12.2.w),
                                   child: Text(
-                                    DateFormat('dd MMMM yyyy, HH:mm')
+                                    DateFormat('dd MMMM yyyy')
                                         .format(detail.publishedAt),
                                     style: Theme.of(context)
                                         .textTheme
@@ -395,15 +397,52 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                                             contentPadding:
                                                                 const EdgeInsets
                                                                     .all(0),
-                                                            leading: SizedBox(
-                                                              height: 40,
-                                                              width: 40,
-                                                              child: CircleAvatar(
-                                                                  backgroundImage:
-                                                                      NetworkImage(
+                                                            leading:
+                                                                comment.imageURL ==
+                                                                        ""
+                                                                    ? Stack(
+                                                                        children: [
+                                                                          ClipOval(
+                                                                            child:
+                                                                                Image.asset(
+                                                                              'assets/images/jade_lemon.png',
+                                                                              width: 30.sp,
+                                                                              height: 30.sp,
+                                                                              fit: BoxFit.cover,
+                                                                            ),
+                                                                          ),
+                                                                          Positioned(
+                                                                            bottom:
+                                                                                0,
+                                                                            left:
+                                                                                0,
+                                                                            right:
+                                                                                0,
+                                                                            top:
+                                                                                0,
+                                                                            child:
+                                                                                Center(
+                                                                              child: Text(
+                                                                                comment.name[0],
+                                                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.sp, color: backgroundColor1, fontWeight: FontWeight.w600),
+                                                                              ),
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      )
+                                                                    : ClipOval(
+                                                                        child: Image
+                                                                            .network(
                                                                           comment
-                                                                              .imageURL)),
-                                                            ),
+                                                                              .imageURL,
+                                                                          width:
+                                                                              30.sp,
+                                                                          height:
+                                                                              30.sp,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
                                                             title: Column(
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
@@ -453,175 +492,183 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                   ),
                                 ),
                                 SizedBox(height: 2.5.h),
-                                // Container(
-                                //   padding:
-                                //       EdgeInsets.symmetric(horizontal: 12.2.w),
-                                //   child: GradientText(
-                                //     'Video Terkait',
-                                //     style: Theme.of(context)
-                                //         .textTheme
-                                //         .labelMedium!
-                                //         .copyWith(
-                                //             fontWeight: FontWeight.w600,
-                                //             fontSize: 17.sp),
-                                //     colors: const [buttonColor1, buttonColor2],
-                                //   ),
-                                // ),
-                                // SizedBox(height: 1.5.h),
-                                // Container(
-                                //   padding:
-                                //       EdgeInsets.symmetric(horizontal: 12.2.w),
-                                //   child: Obx(
-                                //     () {
-                                //       switch (recommendedC
-                                //           .resultState.value.status) {
-                                //         case ResultStatus.loading:
-                                //           return Container(
-                                //             padding: EdgeInsets.symmetric(
-                                //                 vertical: 30.h),
-                                //             child:
-                                //                 const CircularProgressIndicator(
-                                //               color: buttonColor1,
-                                //             ),
-                                //           );
-                                //         case ResultStatus.hasData:
-                                //           return ListView.separated(
-                                //             shrinkWrap: true,
-                                //             physics:
-                                //                 const NeverScrollableScrollPhysics(),
-                                //             itemCount:
-                                //                 recommendedC.result.data.length,
-                                //             itemBuilder: (context, index) {
-                                //               var recommended = recommendedC
-                                //                   .result.data[index];
-                                //               return GestureDetector(
-                                //                 onTap: () {},
-                                //                 child: Card(
-                                //                   color: backgroundColor1,
-                                //                   elevation: 0,
-                                //                   child: Row(
-                                //                     crossAxisAlignment:
-                                //                         CrossAxisAlignment
-                                //                             .start,
-                                //                     children: [
-                                //                       Flexible(
-                                //                         child: ClipRRect(
-                                //                           borderRadius:
-                                //                               BorderRadius
-                                //                                   .circular(18),
-                                //                           child: Image.network(
-                                //                             YoutubeThumbnail(
-                                //                               youtubeId: recommended
-                                //                                           .video
-                                //                                           .length ==
-                                //                                       28
-                                //                                   ? recommended
-                                //                                       .video
-                                //                                       .substring(
-                                //                                           17)
-                                //                                   : recommended
-                                //                                       .video
-                                //                                       .substring(
-                                //                                           32),
-                                //                             ).standard(),
-                                //                             height: 8.625.h,
-                                //                             width: 29.72.w,
-                                //                             fit: BoxFit.cover,
-                                //                             errorBuilder:
-                                //                                 (context,
-                                //                                     exception,
-                                //                                     stackTrace) {
-                                //                               return Container(
-                                //                                 height: 8.625.h,
-                                //                                 width: 29.72.w,
-                                //                                 color:
-                                //                                     Colors.grey,
-                                //                                 child: const Icon(
-                                //                                     Icons
-                                //                                         .error),
-                                //                               );
-                                //                             },
-                                //                           ),
-                                //                         ),
-                                //                       ),
-                                //                       SizedBox(width: 3.89.w),
-                                //                       Expanded(
-                                //                         child: Column(
-                                //                           mainAxisAlignment:
-                                //                               MainAxisAlignment
-                                //                                   .start,
-                                //                           crossAxisAlignment:
-                                //                               CrossAxisAlignment
-                                //                                   .start,
-                                //                           mainAxisSize:
-                                //                               MainAxisSize.max,
-                                //                           children: [
-                                //                             Text(
-                                //                               recommended.title,
-                                //                               maxLines: 3,
-                                //                               overflow:
-                                //                                   TextOverflow
-                                //                                       .ellipsis,
-                                //                               style: Theme.of(
-                                //                                       context)
-                                //                                   .textTheme
-                                //                                   .bodySmall!
-                                //                                   .copyWith(
-                                //                                       fontWeight:
-                                //                                           FontWeight
-                                //                                               .w600,
-                                //                                       color: const Color(
-                                //                                           0XFF0D4136),
-                                //                                       fontSize:
-                                //                                           9.sp),
-                                //                             ),
-                                //                             Text(
-                                //                               timeago.format(
-                                //                                   recommended
-                                //                                       .publishedAt,
-                                //                                   locale: 'id'),
-                                //                               maxLines: 1,
-                                //                               overflow:
-                                //                                   TextOverflow
-                                //                                       .ellipsis,
-                                //                               style: Theme.of(
-                                //                                       context)
-                                //                                   .textTheme
-                                //                                   .bodySmall!
-                                //                                   .copyWith(
-                                //                                       fontWeight:
-                                //                                           FontWeight
-                                //                                               .w400,
-                                //                                       color:
-                                //                                           grey500,
-                                //                                       fontSize:
-                                //                                           8.sp),
-                                //                             ),
-                                //                           ],
-                                //                         ),
-                                //                       ),
-                                //                     ],
-                                //                   ),
-                                //                 ),
-                                //               );
-                                //             },
-                                //             separatorBuilder: (context, index) {
-                                //               return Divider(
-                                //                 color: grey50,
-                                //                 thickness: 0.2.h,
-                                //               );
-                                //             },
-                                //           );
-                                //         case ResultStatus.noData:
-                                //           return const Text('Data Kosong');
-                                //         case ResultStatus.error:
-                                //           return const Text('Error');
-                                //         default:
-                                //           return const SizedBox();
-                                //       }
-                                //     },
-                                //   ),
-                                // ),
+                                Container(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 12.2.w),
+                                  child: GradientText(
+                                    'Video Terkait',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 17.sp),
+                                    colors: const [buttonColor1, buttonColor2],
+                                  ),
+                                ),
+                                SizedBox(height: 1.5.h),
+                                Container(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 12.2.w),
+                                  child: Obx(
+                                    () {
+                                      switch (recommendedC
+                                          .resultState.value.status) {
+                                        case ResultStatus.loading:
+                                          return Container(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 30.h),
+                                            child:
+                                                const CircularProgressIndicator(
+                                              color: buttonColor1,
+                                            ),
+                                          );
+                                        case ResultStatus.hasData:
+                                          return ListView.separated(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount:
+                                                recommendedC.result.data.length,
+                                            itemBuilder: (context, index) {
+                                              var recommended = recommendedC
+                                                  .result.data[index];
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Get.back();
+                                                  Get.toNamed(
+                                                      Routes.DETAIL_VIDEO,
+                                                      arguments: recommended.id
+                                                          .toString());
+                                                },
+                                                child: Card(
+                                                  color: backgroundColor1,
+                                                  elevation: 0,
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Flexible(
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(18),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl:
+                                                                YoutubeThumbnail(
+                                                              youtubeId: recommended
+                                                                          .video
+                                                                          .length ==
+                                                                      28
+                                                                  ? recommended
+                                                                      .video
+                                                                      .substring(
+                                                                          17)
+                                                                  : recommended
+                                                                      .video
+                                                                      .substring(
+                                                                          32),
+                                                            ).standard(),
+                                                            height: 8.625.h,
+                                                            width: 29.72.w,
+                                                            fit: BoxFit.cover,
+                                                            errorWidget:
+                                                                (context,
+                                                                    exception,
+                                                                    stackTrace) {
+                                                              return Container(
+                                                                height: 8.625.h,
+                                                                width: 29.72.w,
+                                                                color:
+                                                                    Colors.grey,
+                                                                child: const Icon(
+                                                                    Icons
+                                                                        .error),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 3.89.w),
+                                                      Expanded(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Text(
+                                                              recommended.title,
+                                                              maxLines: 3,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color: const Color(
+                                                                          0XFF0D4136),
+                                                                      fontSize:
+                                                                          9.sp),
+                                                            ),
+                                                            Text(
+                                                              timeago.format(
+                                                                  recommended
+                                                                      .publishedAt,
+                                                                  locale: 'id'),
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color:
+                                                                          grey500,
+                                                                      fontSize:
+                                                                          8.sp),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            separatorBuilder: (context, index) {
+                                              return Divider(
+                                                color: grey50,
+                                                thickness: 0.2.h,
+                                              );
+                                            },
+                                          );
+                                        case ResultStatus.noData:
+                                          return const Text('Data Kosong');
+                                        case ResultStatus.error:
+                                          return const Text('Error');
+                                        default:
+                                          return const SizedBox();
+                                      }
+                                    },
+                                  ),
+                                ),
                                 SizedBox(height: 1.h),
                               ],
                             ),
@@ -719,13 +766,48 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                     padding: EdgeInsets.only(top: 1.h),
                                     child: ListTile(
                                       contentPadding: const EdgeInsets.all(0),
-                                      leading: SizedBox(
-                                        height: 40,
-                                        width: 40,
-                                        child: CircleAvatar(
-                                            backgroundImage:
-                                                NetworkImage(comment.imageURL)),
-                                      ),
+                                      leading: comment.imageURL == ""
+                                          ? Stack(
+                                              children: [
+                                                ClipOval(
+                                                  child: Image.asset(
+                                                    'assets/images/jade_lemon.png',
+                                                    width: 30.sp,
+                                                    height: 30.sp,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Center(
+                                                    child: Text(
+                                                      comment.name[0],
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              fontSize: 15.sp,
+                                                              color:
+                                                                  backgroundColor1,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          : ClipOval(
+                                              child: Image.network(
+                                                comment.imageURL,
+                                                width: 30.sp,
+                                                height: 30.sp,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                       title: Row(
                                         children: [
                                           SizedBox(height: 1.h),
@@ -843,22 +925,47 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                   );
                                 } else {
                                   return snapshot.data!["profile"] != null
-                                      ? SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                snapshot.data!["profile"]),
+                                      ? ClipOval(
+                                          child: Image.network(
+                                            snapshot.data!["profile"]
+                                                .toString(),
+                                            width: 23.sp,
+                                            height: 23.sp,
+                                            fit: BoxFit.cover,
                                           ),
                                         )
-                                      : SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                              "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
+                                      : Stack(
+                                          children: [
+                                            Center(
+                                              child: ClipOval(
+                                                child: Image.asset(
+                                                  'assets/images/jade_lemon.png',
+                                                  width: 23.sp,
+                                                  height: 23.sp,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              bottom: 0,
+                                              left: 0,
+                                              right: 0,
+                                              top: 0,
+                                              child: Center(
+                                                child: Text(
+                                                  snapshot.data!["name"][0],
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                          color:
+                                                              backgroundColor1,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         );
                                 }
                               },
@@ -958,22 +1065,48 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                       );
                                     } else {
                                       return snapshot.data!["profile"] != null
-                                          ? SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    snapshot.data!["profile"]),
+                                          ? ClipOval(
+                                              child: Image.network(
+                                                snapshot.data!["profile"]
+                                                    .toString(),
+                                                width: 23.sp,
+                                                height: 23.sp,
+                                                fit: BoxFit.cover,
                                               ),
                                             )
-                                          : SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                  "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
+                                          : Stack(
+                                              children: [
+                                                Center(
+                                                  child: ClipOval(
+                                                    child: Image.asset(
+                                                      'assets/images/jade_lemon.png',
+                                                      width: 23.sp,
+                                                      height: 23.sp,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Center(
+                                                    child: Text(
+                                                      snapshot.data!["name"][0],
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color:
+                                                                  backgroundColor1,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             );
                                     }
                                   },
@@ -1144,13 +1277,48 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                     padding: EdgeInsets.only(top: 1.h),
                                     child: ListTile(
                                       contentPadding: const EdgeInsets.all(0),
-                                      leading: SizedBox(
-                                        width: 40,
-                                        height: 40,
-                                        child: CircleAvatar(
-                                            backgroundImage:
-                                                NetworkImage(reply.imageURL)),
-                                      ),
+                                      leading: reply.imageURL == ""
+                                          ? Stack(
+                                              children: [
+                                                ClipOval(
+                                                  child: Image.asset(
+                                                    'assets/images/jade_lemon.png',
+                                                    width: 30.sp,
+                                                    height: 30.sp,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Center(
+                                                    child: Text(
+                                                      reply.name[0],
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              fontSize: 15.sp,
+                                                              color:
+                                                                  backgroundColor1,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          : ClipOval(
+                                              child: Image.network(
+                                                reply.imageURL,
+                                                width: 30.sp,
+                                                height: 30.sp,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                       title: Row(
                                         children: [
                                           SizedBox(height: 1.h),
@@ -1250,22 +1418,47 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                   );
                                 } else {
                                   return snapshot.data!["profile"] != null
-                                      ? SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                snapshot.data!["profile"]),
+                                      ? ClipOval(
+                                          child: Image.network(
+                                            snapshot.data!["profile"]
+                                                .toString(),
+                                            width: 23.sp,
+                                            height: 23.sp,
+                                            fit: BoxFit.cover,
                                           ),
                                         )
-                                      : SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                              "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
+                                      : Stack(
+                                          children: [
+                                            Center(
+                                              child: ClipOval(
+                                                child: Image.asset(
+                                                  'assets/images/jade_lemon.png',
+                                                  width: 23.sp,
+                                                  height: 23.sp,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              bottom: 0,
+                                              left: 0,
+                                              right: 0,
+                                              top: 0,
+                                              child: Center(
+                                                child: Text(
+                                                  snapshot.data!["name"][0],
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                          color:
+                                                              backgroundColor1,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         );
                                 }
                               },
@@ -1365,22 +1558,48 @@ class DetailVideoView extends GetView<DetailVideoController> {
                                       );
                                     } else {
                                       return snapshot.data!["profile"] != null
-                                          ? SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    snapshot.data!["profile"]),
+                                          ? ClipOval(
+                                              child: Image.network(
+                                                snapshot.data!["profile"]
+                                                    .toString(),
+                                                width: 23.sp,
+                                                height: 23.sp,
+                                                fit: BoxFit.cover,
                                               ),
                                             )
-                                          : SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                  "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
+                                          : Stack(
+                                              children: [
+                                                Center(
+                                                  child: ClipOval(
+                                                    child: Image.asset(
+                                                      'assets/images/jade_lemon.png',
+                                                      width: 23.sp,
+                                                      height: 23.sp,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Center(
+                                                    child: Text(
+                                                      snapshot.data!["name"][0],
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color:
+                                                                  backgroundColor1,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             );
                                     }
                                   },

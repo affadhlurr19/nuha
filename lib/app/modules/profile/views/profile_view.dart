@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -58,53 +59,97 @@ class ProfileView extends GetView<ProfileController> {
                     Center(
                       child: GestureDetector(
                         onTap: () => Get.toNamed(Routes.GANTI_FOTO_PROFIL),
-                        child: SizedBox(
-                            height: 10.h,
-                            width: 10.h,
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              fit: StackFit.expand,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.grey[400],
-                                  backgroundImage: NetworkImage(
-                                    data?["profile"] != null
-                                        ? snapshot.data!["profile"].toString()
-                                        : "https://ui-avatars.com/api/?name=${data!["name"]}",
-                                  ),
+                        child: data?["profile"] != null
+                            ? ClipOval(
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      snapshot.data!["profile"].toString(),
+                                  width: 10.h,
+                                  height: 10.h,
+                                  fit: BoxFit.cover,
                                 ),
-                                Positioned(
-                                  bottom: -5,
-                                  right: -23,
-                                  child: Container(
-                                    height: 35,
-                                    width: 35,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 3,
-                                        color: Colors.white,
-                                      ),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(50)),
-                                      color: Colors.white,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: SizedBox(
-                                        child: IconButton(
-                                          padding: EdgeInsets.zero,
-                                          onPressed: () {},
-                                          color: buttonColor1,
-                                          iconSize: 18,
-                                          icon: const Icon(Icons.add_a_photo,
-                                              color: buttonColor1),
-                                        ),
+                              )
+                            : Stack(
+                                children: [
+                                  Center(
+                                    child: ClipOval(
+                                      child: Image.asset(
+                                        'assets/images/jade_lemon.png',
+                                        width: 10.h,
+                                        height: 10.h,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )),
+                                  Positioned(
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    child: Center(
+                                      child: Text(
+                                        data!["name"][0],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              color: backgroundColor1,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 23.sp,
+                                            ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                        // child: SizedBox(
+                        //   height: 10.h,
+                        //   width: 10.h,
+                        //   child: Stack(
+                        //     clipBehavior: Clip.none,
+                        //     fit: StackFit.expand,
+                        //     children: [
+                        //       CircleAvatar(
+                        //         backgroundColor: Colors.grey[400],
+                        //         backgroundImage: NetworkImage(
+                        //           data?["profile"] != null
+                        //               ? snapshot.data!["profile"].toString()
+                        //               : "https://ui-avatars.com/api/?name=${data!["name"]}",
+                        //         ),
+                        //       ),
+                        //       Positioned(
+                        //         bottom: -5,
+                        //         right: -23,
+                        //         child: Container(
+                        //           height: 35,
+                        //           width: 35,
+                        //           decoration: BoxDecoration(
+                        //             border: Border.all(
+                        //               width: 3,
+                        //               color: Colors.white,
+                        //             ),
+                        //             borderRadius: const BorderRadius.all(
+                        //                 Radius.circular(50)),
+                        //             color: Colors.white,
+                        //           ),
+                        //           child: Padding(
+                        //             padding: const EdgeInsets.all(2.0),
+                        //             child: SizedBox(
+                        //               child: IconButton(
+                        //                 padding: EdgeInsets.zero,
+                        //                 onPressed: () {},
+                        //                 color: buttonColor1,
+                        //                 iconSize: 18,
+                        //                 icon: const Icon(Icons.add_a_photo,
+                        //                     color: buttonColor1),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ),
                     ),
                     SizedBox(height: 1.h),
@@ -279,7 +324,7 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                       color: backgroundColor1,
                       child: SizedBox(
-                        height: 41.975.h,
+                        height: 34.5.h,
                         width: 84.4.w,
                         child: Column(
                           children: [
@@ -300,42 +345,6 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                             ),
                             SizedBox(height: 1.5.h),
-                            Container(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    width: 1,
-                                    color: Color(0XFFF1F1F1),
-                                  ),
-                                ),
-                              ),
-                              width: widthDevice,
-                              child: ListTile(
-                                leading: const Iconify(
-                                  MdiLight.help_circle,
-                                  size: 24,
-                                  color: titleColor,
-                                ),
-                                trailing: const Iconify(
-                                  Bi.chevron_right,
-                                  size: 24,
-                                  color: titleColor,
-                                ),
-                                title: Text(
-                                  'Bantuan',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 9.sp,
-                                        color: titleColor,
-                                      ),
-                                ),
-                                onTap: () => Get.toNamed(Routes.BANTUAN),
-                              ),
-                            ),
-                            SizedBox(height: 1.h),
                             Container(
                               decoration: const BoxDecoration(
                                 border: Border(

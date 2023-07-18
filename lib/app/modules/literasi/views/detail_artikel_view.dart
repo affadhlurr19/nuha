@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -140,10 +141,38 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                         padding: EdgeInsets.symmetric(horizontal: 12.2.w),
                         child: Row(
                           children: [
-                            CircleAvatar(
-                              radius: 5.w,
-                              backgroundColor: buttonColor2,
-                              child: Image.asset('assets/images/user.png'),
+                            Stack(
+                              children: [
+                                Center(
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      'assets/images/jade_lemon.png',
+                                      width: 23.sp,
+                                      height: 23.sp,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  top: 0,
+                                  child: Center(
+                                    child: Text(
+                                      detail.writer[0],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                            color: backgroundColor1,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 11.5.sp,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(width: 3.3.w),
                             Column(
@@ -179,8 +208,8 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                         padding: EdgeInsets.symmetric(horizontal: 12.2.w),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.network(
-                            detail.imageUrl,
+                          child: CachedNetworkImage(
+                            imageUrl: detail.imageUrl,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -338,14 +367,53 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                                 child: ListTile(
                                                   contentPadding:
                                                       const EdgeInsets.all(0),
-                                                  leading: SizedBox(
-                                                    height: 40,
-                                                    width: 40,
-                                                    child: CircleAvatar(
-                                                        backgroundImage:
-                                                            NetworkImage(comment
-                                                                .imageURL)),
-                                                  ),
+                                                  leading: comment.imageURL ==
+                                                          ""
+                                                      ? Stack(
+                                                          children: [
+                                                            ClipOval(
+                                                              child:
+                                                                  Image.asset(
+                                                                'assets/images/jade_lemon.png',
+                                                                width: 30.sp,
+                                                                height: 30.sp,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                            Positioned(
+                                                              bottom: 0,
+                                                              left: 0,
+                                                              right: 0,
+                                                              top: 0,
+                                                              child: Center(
+                                                                child: Text(
+                                                                  comment
+                                                                      .name[0],
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .copyWith(
+                                                                          fontSize: 15
+                                                                              .sp,
+                                                                          color:
+                                                                              backgroundColor1,
+                                                                          fontWeight:
+                                                                              FontWeight.w600),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
+                                                      : ClipOval(
+                                                          child: Image.network(
+                                                            comment.imageURL,
+                                                            width: 30.sp,
+                                                            height: 30.sp,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
                                                   title: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -440,8 +508,9 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(18),
-                                                child: Image.network(
-                                                  recommended.imageUrl,
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      recommended.imageUrl,
                                                   height: 8.625.h,
                                                   width: 29.72.w,
                                                   fit: BoxFit.cover,
@@ -605,13 +674,48 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                     padding: EdgeInsets.only(top: 1.h),
                                     child: ListTile(
                                       contentPadding: const EdgeInsets.all(0),
-                                      leading: SizedBox(
-                                        height: 40,
-                                        width: 40,
-                                        child: CircleAvatar(
-                                            backgroundImage:
-                                                NetworkImage(comment.imageURL)),
-                                      ),
+                                      leading: comment.imageURL == ""
+                                          ? Stack(
+                                              children: [
+                                                ClipOval(
+                                                  child: Image.asset(
+                                                    'assets/images/jade_lemon.png',
+                                                    width: 30.sp,
+                                                    height: 30.sp,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Center(
+                                                    child: Text(
+                                                      comment.name[0],
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              fontSize: 15.sp,
+                                                              color:
+                                                                  backgroundColor1,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          : ClipOval(
+                                              child: Image.network(
+                                                comment.imageURL,
+                                                width: 30.sp,
+                                                height: 30.sp,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                       title: Row(
                                         children: [
                                           SizedBox(height: 1.h),
@@ -729,22 +833,47 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                   );
                                 } else {
                                   return snapshot.data!["profile"] != null
-                                      ? SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                snapshot.data!["profile"]),
+                                      ? ClipOval(
+                                          child: Image.network(
+                                            snapshot.data!["profile"]
+                                                .toString(),
+                                            width: 23.sp,
+                                            height: 23.sp,
+                                            fit: BoxFit.cover,
                                           ),
                                         )
-                                      : SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                              "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
+                                      : Stack(
+                                          children: [
+                                            Center(
+                                              child: ClipOval(
+                                                child: Image.asset(
+                                                  'assets/images/jade_lemon.png',
+                                                  width: 23.sp,
+                                                  height: 23.sp,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              bottom: 0,
+                                              left: 0,
+                                              right: 0,
+                                              top: 0,
+                                              child: Center(
+                                                child: Text(
+                                                  snapshot.data!["name"][0],
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                          color:
+                                                              backgroundColor1,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         );
                                 }
                               },
@@ -844,22 +973,48 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                       );
                                     } else {
                                       return snapshot.data!["profile"] != null
-                                          ? SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    snapshot.data!["profile"]),
+                                          ? ClipOval(
+                                              child: Image.network(
+                                                snapshot.data!["profile"]
+                                                    .toString(),
+                                                width: 23.sp,
+                                                height: 23.sp,
+                                                fit: BoxFit.cover,
                                               ),
                                             )
-                                          : SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                  "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
+                                          : Stack(
+                                              children: [
+                                                Center(
+                                                  child: ClipOval(
+                                                    child: Image.asset(
+                                                      'assets/images/jade_lemon.png',
+                                                      width: 23.sp,
+                                                      height: 23.sp,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Center(
+                                                    child: Text(
+                                                      snapshot.data!["name"][0],
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color:
+                                                                  backgroundColor1,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             );
                                     }
                                   },
@@ -1030,13 +1185,48 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                     padding: EdgeInsets.only(top: 1.h),
                                     child: ListTile(
                                       contentPadding: const EdgeInsets.all(0),
-                                      leading: SizedBox(
-                                        height: 40,
-                                        width: 40,
-                                        child: CircleAvatar(
-                                            backgroundImage:
-                                                NetworkImage(reply.imageURL)),
-                                      ),
+                                      leading: reply.imageURL == ""
+                                          ? Stack(
+                                              children: [
+                                                ClipOval(
+                                                  child: Image.asset(
+                                                    'assets/images/jade_lemon.png',
+                                                    width: 30.sp,
+                                                    height: 30.sp,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Center(
+                                                    child: Text(
+                                                      reply.name[0],
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              fontSize: 15.sp,
+                                                              color:
+                                                                  backgroundColor1,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          : ClipOval(
+                                              child: Image.network(
+                                                reply.imageURL,
+                                                width: 30.sp,
+                                                height: 30.sp,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                       title: Row(
                                         children: [
                                           SizedBox(height: 1.h),
@@ -1136,22 +1326,47 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                   );
                                 } else {
                                   return snapshot.data!["profile"] != null
-                                      ? SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                snapshot.data!["profile"]),
+                                      ? ClipOval(
+                                          child: Image.network(
+                                            snapshot.data!["profile"]
+                                                .toString(),
+                                            width: 23.sp,
+                                            height: 23.sp,
+                                            fit: BoxFit.cover,
                                           ),
                                         )
-                                      : SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                              "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
+                                      : Stack(
+                                          children: [
+                                            Center(
+                                              child: ClipOval(
+                                                child: Image.asset(
+                                                  'assets/images/jade_lemon.png',
+                                                  width: 23.sp,
+                                                  height: 23.sp,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              bottom: 0,
+                                              left: 0,
+                                              right: 0,
+                                              top: 0,
+                                              child: Center(
+                                                child: Text(
+                                                  snapshot.data!["name"][0],
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                          color:
+                                                              backgroundColor1,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         );
                                 }
                               },
@@ -1251,22 +1466,48 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                       );
                                     } else {
                                       return snapshot.data!["profile"] != null
-                                          ? SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    snapshot.data!["profile"]),
+                                          ? ClipOval(
+                                              child: Image.network(
+                                                snapshot.data!["profile"]
+                                                    .toString(),
+                                                width: 23.sp,
+                                                height: 23.sp,
+                                                fit: BoxFit.cover,
                                               ),
                                             )
-                                          : SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                  "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
+                                          : Stack(
+                                              children: [
+                                                Center(
+                                                  child: ClipOval(
+                                                    child: Image.asset(
+                                                      'assets/images/jade_lemon.png',
+                                                      width: 23.sp,
+                                                      height: 23.sp,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: Center(
+                                                    child: Text(
+                                                      snapshot.data!["name"][0],
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color:
+                                                                  backgroundColor1,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             );
                                     }
                                   },

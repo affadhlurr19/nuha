@@ -64,7 +64,9 @@ class TransaksiEditView extends GetView<TransaksiController> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: buttonColor1,
+                ),
               );
             }
             if (snapshot.data == null) {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -104,20 +105,14 @@ class GantiFotoProfilView extends GetView {
                                             choose.profile.isTrue
                                         ? Column(
                                             children: [
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                    right: 4.4.w, left: 4.4.w),
-                                                width: 150,
-                                                height: 150,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100),
-                                                  color: Colors.grey[400],
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(snapshot
-                                                        .data!["profile"]),
-                                                  ),
+                                              ClipOval(
+                                                child: CachedNetworkImage(
+                                                  imageUrl: snapshot
+                                                      .data!["profile"]
+                                                      .toString(),
+                                                  width: 113.sp,
+                                                  height: 113.sp,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
                                               TextButton(
@@ -204,18 +199,43 @@ class GantiFotoProfilView extends GetView {
                                               Container(
                                                 padding: EdgeInsets.only(
                                                     right: 4.4.w, left: 4.4.w),
-                                                width: 150,
-                                                height: 150,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100),
-                                                  color: Colors.grey[400],
-                                                  image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: NetworkImage(
-                                                        "https://ui-avatars.com/api/?name=${snapshot.data!["name"]}",
-                                                      )),
+                                                child: Stack(
+                                                  children: [
+                                                    Center(
+                                                      child: ClipOval(
+                                                        child: Image.asset(
+                                                          'assets/images/jade_lemon.png',
+                                                          width: 113.sp,
+                                                          height: 113.sp,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      bottom: 0,
+                                                      left: 0,
+                                                      right: 0,
+                                                      top: 0,
+                                                      child: Center(
+                                                        child: Text(
+                                                          snapshot.data!["name"]
+                                                              [0],
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      56.5.sp,
+                                                                  color:
+                                                                      backgroundColor1,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
                                               ),
                                               SizedBox(height: 7.5.h),
@@ -250,7 +270,7 @@ class GantiFotoProfilView extends GetView {
                     ),
                   ),
                 ),
-                SizedBox(height: 37.5.h),
+                SizedBox(height: 35.5.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.056.w),
                   child: Row(

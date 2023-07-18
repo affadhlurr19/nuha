@@ -2,9 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:nuha/app/modules/literasi/models/notifikasi_artikel_model.dart';
+
+import 'package:nuha/app/modules/literasi/providers/list_artikel_provider.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart' as s;
+import 'package:nuha/app/utility/result_state.dart';
+import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -21,6 +26,15 @@ class HomeController extends GetxController {
   var totalNominal = 0;
   var rekomendasiZakat = 0.0.obs;
   var dataAnggaran = 0.obs;
+
+  var resultState = ResultState.loading().obs;
+  ListArtikelProvider _listArtikelProvider = ListArtikelProvider();
+
+  String _message = '';
+  late NotifikasiArtikel _notifikasiArtikel;
+
+  NotifikasiArtikel get result => _notifikasiArtikel;
+  String get message => _message;
 
   @override
   void onInit() {
@@ -117,6 +131,23 @@ class HomeController extends GetxController {
     } catch (error) {
       print('Terjadi kesalahan: $error');
       return false;
+    }
+  }
+
+  Future<dynamic> fetchArticleInformation() async {
+    try {
+      final inform =
+          await _listArtikelProvider.getNotificationArticle(http.Client());
+      if (inform.data.isEmpty) {
+        resultState.value = ResultState.noData();
+        return _message = 'Data Kosong';
+      } else {
+        resultState.value = ResultState.hasData(inform);
+        return _notifikasiArtikel = inform;
+      }
+    } catch (e) {
+      resultState.value = ResultState.error('An error occurred: $e');
+      return _message = '$e';
     }
   }
 }

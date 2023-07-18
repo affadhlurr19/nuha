@@ -83,15 +83,15 @@ class KomentarArtikelController extends GetxController
                       createdAt: commentData['createdAt'].toDate(),
                     );
                   } else {
-                    var linkProfile = userData['name'];
-                    var profile =
-                        "https://ui-avatars.com/api/?name=$linkProfile";
+                    // var linkProfile = userData['name'];
+                    // var profile =
+                    //     "https://ui-avatars.com/api/?name=$linkProfile";
                     return Komentar(
                       idKomentar: commentDoc.id,
                       idArtikel: commentData['idArtikel'],
                       idUser: commentData['idUser'],
                       name: userData['name'],
-                      imageURL: profile,
+                      imageURL: "",
                       descKomentar: commentData['descKomentar'],
                       createdAt: commentData['createdAt'].toDate(),
                     );
@@ -152,16 +152,16 @@ class KomentarArtikelController extends GetxController
                       createdAt: commentData['createdAt'].toDate(),
                     );
                   } else {
-                    var linkProfile = userData['name'];
-                    var profile =
-                        "https://ui-avatars.com/api/?name=$linkProfile]";
+                    // var linkProfile = userData['name'];
+                    // var profile =
+                    //     "https://ui-avatars.com/api/?name=$linkProfile]";
                     return Reply(
                       idReply: commentDoc.id,
                       idKomentar: commentDoc.id,
                       idArtikel: commentData['idArtikel'],
                       idUser: commentData['idUser'],
                       name: userData['name'],
-                      imageURL: profile,
+                      imageURL: "",
                       descBalasan: commentData['descBalasan'],
                       createdAt: commentData['createdAt'].toDate(),
                     );

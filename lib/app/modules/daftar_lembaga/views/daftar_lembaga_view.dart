@@ -156,7 +156,9 @@ class DataIKD extends StatelessWidget {
                               switch (controller.resultState.value.status) {
                                 case ResultStatus.loading:
                                   return const Center(
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                      color: buttonColor1,
+                                    ),
                                   );
                                 case ResultStatus.hasData:
                                   // print(controller.resultIKD.data.length);
@@ -292,7 +294,9 @@ class DataIKD extends StatelessWidget {
                                     controller.resultStateSearch.value.status) {
                                   case ResultStatus.loading:
                                     return const Center(
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                        color: buttonColor1,
+                                      ),
                                     );
                                   case ResultStatus.hasData:
                                     // print(controller.resultSearch.data.length);
@@ -513,7 +517,9 @@ class DataPinjol extends StatelessWidget {
                               switch (c.resultState.value.status) {
                                 case ResultStatus.loading:
                                   return const Center(
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                      color: buttonColor1,
+                                    ),
                                   );
                                 case ResultStatus.hasData:
                                   return GroupedListView<dynamic, String>(
@@ -643,7 +649,9 @@ class DataPinjol extends StatelessWidget {
                               switch (c.resultStateSearch.value.status) {
                                 case ResultStatus.loading:
                                   return const Center(
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                      color: buttonColor1,
+                                    ),
                                   );
                                 case ResultStatus.hasData:
                                   return GroupedListView<dynamic, String>(

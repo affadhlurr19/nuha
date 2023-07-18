@@ -835,7 +835,9 @@ class BottomSheetPengeluaran extends StatelessWidget {
                         return Text('Error: ${snapshot.error}');
                       } else if (snapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
+                        return const CircularProgressIndicator(
+                          color: buttonColor1,
+                        );
                       } else if (snapshot.hasData) {
                         List<DocumentSnapshot> documents = snapshot.data!.docs;
                         List<Map<String, dynamic>> data = documents

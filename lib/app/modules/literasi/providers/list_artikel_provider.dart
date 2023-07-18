@@ -145,7 +145,7 @@ class ListArtikelProvider {
   Future<RecommendedArticle> getRecommendArticleById(String idArtikel) async {
     try {
       final response = await http.get(Uri.parse(
-          "https://nuharekomendasiartikelapi-production.up.railway.app/recommend/article?id=$idArtikel"));
+          "http://167.172.90.92:8000/recommend/article?id=$idArtikel"));
       if (response.statusCode == 200) {
         return RecommendedArticle.fromJson(json.decode(response.body));
       } else {

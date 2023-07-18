@@ -158,8 +158,8 @@ class ListVideoProvider {
 
   Future<RecommendedVideo> getRecommendVideoById(String idVideo) async {
     try {
-      final response = await http.get(Uri.parse(
-          "https://web-production-6274.up.railway.app/recommend/video?id=$idVideo"));
+      final response = await http.get(
+          Uri.parse("http://159.223.62.87:8000/recommend/video?id=$idVideo"));
       if (response.statusCode == 200) {
         return RecommendedVideo.fromJson(json.decode(response.body));
       } else {

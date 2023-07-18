@@ -252,7 +252,9 @@ class CashflowView extends GetView<CashflowController> {
                                                         MainAxisSize.min,
                                                     children: [
                                                       // The loading indicator
-                                                      const CircularProgressIndicator(),
+                                                      const CircularProgressIndicator(
+                                                        color: buttonColor1,
+                                                      ),
                                                       const SizedBox(
                                                         height: 15,
                                                       ),
@@ -351,7 +353,9 @@ class CashflowView extends GetView<CashflowController> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: buttonColor1,
+                          ),
                         );
                       }
                       if (snapshot.data!.docs.isEmpty) {

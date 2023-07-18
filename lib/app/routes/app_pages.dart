@@ -22,9 +22,7 @@ import '../modules/add_note/bindings/add_note_binding.dart';
 import '../modules/add_note/views/add_note_view.dart';
 import '../modules/cashflow/bindings/cashflow_binding.dart';
 import '../modules/cashflow/views/cashflow_view.dart';
-import '../modules/cashflow/views/anggaran_view.dart';
 import '../modules/cashflow/views/anggaran_create_view.dart';
-import '../modules/cashflow/views/laporankeuangan_view.dart';
 import '../modules/daftar_lembaga/bindings/daftar_lembaga_binding.dart';
 import '../modules/daftar_lembaga/views/daftar_lembaga_view.dart';
 import '../modules/edit_note/bindings/edit_note_binding.dart';
@@ -309,6 +307,9 @@ class AppPages {
     GetPage(
       name: _Paths.SETEL_ULANG_PIN_AUTH,
       page: () => ResetPinOnAuthView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
       name: _Paths.RS_DARURAT,
       page: () => RsDaruratView(),
       binding: PerencanaanKeuanganBinding(),

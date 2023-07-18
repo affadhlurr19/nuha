@@ -265,7 +265,9 @@ class LaporankeuanganController extends GetxController {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // The loading indicator
-                  const CircularProgressIndicator(),
+                  const CircularProgressIndicator(
+                    color: buttonColor1,
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
