@@ -11,13 +11,14 @@ import 'package:nuha/app/widgets/progress_bar.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_darurat_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/perencanaan_keuangan_controller.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 
 class RsDaruratView extends GetView<PkDaruratController> {
   RsDaruratView({Key? key}) : super(key: key);
 
   final c = Get.find<PkDaruratController>();
-
   final con = Get.find<PerencanaanKeuanganController>();
+  final CashflowController cn = Get.put(CashflowController());
 
   @override
   Widget build(BuildContext context) {

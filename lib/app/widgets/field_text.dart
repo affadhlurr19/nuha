@@ -33,6 +33,7 @@ class FieldText extends StatelessWidget {
         SizedBox(
           height: 5.5.h,
           child: TextField(
+            cursorColor: buttonColor1,
             textCapitalization: TextCapitalization.sentences,
             controller: contr,
             keyboardType: TextInputType.text,
