@@ -20,6 +20,8 @@ class DeleteAccountController extends GetxController {
       String uid = auth.currentUser!.uid;
       accountDeleted.value = uid;
 
+      user!.delete();
+
       auth.currentUser!.providerData[0].providerId == 'google.com'
           ? _profileController.logoutGoogle()
           : _profileController.logout();
@@ -66,8 +68,6 @@ class DeleteAccountController extends GetxController {
           await doc4.reference.delete();
         }
       }
-
-      user!.delete();
 
       dialogMessage.successMsg('Akun anda berhasil dihapus');
 
