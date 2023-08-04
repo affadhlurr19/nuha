@@ -5,7 +5,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class DaftarIkdProvider {
-  static const String _baseUrl = 'http://nuha.my.id/api/';
+  static const String _baseUrl =
+      'https://starfish-app-pua4v.ondigitalocean.app/api/';
 
   Future<DaftarIkd> getDaftarIKD(http.Client client) async {
     try {
