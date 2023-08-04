@@ -52,15 +52,6 @@ class FincheckEmpatView extends GetView<FincheckController> {
             ],
           ),
           SizedBox(
-            height: 0.5.h,
-          ),
-          Text(
-            "(Jika tidak ada, ketika 0)",
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: grey400,
-                ),
-          ),
-          SizedBox(
             height: 3.125.h,
           ),
           FieldCurrency(

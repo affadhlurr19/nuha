@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:nuha/app/modules/cashflow/controllers/anggaran_detail_controller.dart';
 import 'package:nuha/app/modules/cashflow/controllers/transaksi_controller.dart';
-
+import 'package:nuha/app/modules/home/controllers/home_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/laporankeuangan_controller.dart';
+import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_darurat_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_kendaraan_controller.dart';
 import 'package:nuha/app/modules/perencanaan_keuangan/controllers/pk_pendidikan_controller.dart';
@@ -43,6 +45,15 @@ class PerencanaanKeuanganBinding extends Bindings {
     );
     Get.lazyPut<TransaksiController>(
       () => TransaksiController(),
+    );
+    Get.lazyPut<HomeController>(
+      () => HomeController(),
+    );
+    Get.lazyPut<CashflowController>(
+      () => CashflowController(),
+    );
+    Get.lazyPut<LaporankeuanganController>(
+      () => LaporankeuanganController(),
     );
   }
 }

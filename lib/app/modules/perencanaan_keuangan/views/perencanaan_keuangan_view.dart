@@ -16,13 +16,14 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:sizer/sizer.dart';
 import '../controllers/perencanaan_keuangan_controller.dart';
-
 import '../controllers/pk_darurat_controller.dart';
 import '../controllers/pk_kendaraan_controller.dart';
 import '../controllers/pk_pendidikan_controller.dart';
 import '../controllers/pk_pensiun_controller.dart';
 import '../controllers/pk_rumah_controller.dart';
 import '../controllers/pk_umroh_controller.dart';
+// import 'package:nuha/app/modules/cashflow/controllers/cashflow_controller.dart';
+// import 'package:nuha/app/modules/cashflow/controllers/laporankeuangan_controller.dart';
 
 class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
   PerencanaanKeuanganView({Key? key}) : super(key: key);
@@ -33,6 +34,8 @@ class PerencanaanKeuanganView extends GetView<PerencanaanKeuanganController> {
   final abcde = Get.find<PkPernikahanController>();
   final abcdef = Get.find<PkRumahController>();
   final abcdefg = Get.find<PkUmrohController>();
+  // final CashflowController con = Get.put(CashflowController());
+  // final LaporankeuanganController co = Get.put(LaporankeuanganController());
 
   @override
   Widget build(BuildContext context) {

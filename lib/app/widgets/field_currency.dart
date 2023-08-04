@@ -37,6 +37,7 @@ class FieldCurrency extends StatelessWidget {
         SizedBox(
           height: 5.5.h,
           child: TextField(
+            cursorColor: buttonColor1,
             inputFormatters: <TextInputFormatter>[
               CurrencyTextInputFormatter(
                 locale: 'id',

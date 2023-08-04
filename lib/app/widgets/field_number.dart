@@ -32,6 +32,7 @@ class FieldNumber extends StatelessWidget {
         SizedBox(
           height: 5.5.h,
           child: TextField(
+            cursorColor: buttonColor1,
             controller: contr,
             keyboardType: TextInputType.number,
             textAlign: TextAlign.left,
