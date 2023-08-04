@@ -39,13 +39,13 @@ class CariArtikel {
 
 class Datum {
   int id;
-  String adminId;
+  int adminId;
   String title;
   String category;
   String content;
   String imageUrl;
   String writer;
-  String readTime;
+  int readTime;
   DateTime publishedAt;
   dynamic createdAt;
   dynamic updatedAt;

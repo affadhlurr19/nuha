@@ -40,7 +40,7 @@ class CariVideo {
 
 class Datum {
   int id;
-  String adminId;
+  int adminId;
   Category category;
   String title;
   String video;

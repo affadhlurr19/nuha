@@ -39,13 +39,13 @@ class NotifikasiArtikel {
 
 class Datum {
   int id;
-  String adminId;
+  int adminId;
   String title;
   Category category;
   String content;
   String imageUrl;
   Writer writer;
-  String readTime;
+  int readTime;
   DateTime publishedAt;
   DateTime? createdAt;
   DateTime? updatedAt;
