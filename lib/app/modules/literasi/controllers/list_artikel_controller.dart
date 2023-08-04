@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:nuha/app/modules/literasi/models/list_artikel_model.dart';
@@ -15,7 +14,7 @@ class ListArtikelController extends GetxController {
   RxInt tag = 1.obs;
   var isDataLoading = false.obs;
 
-  String _message = '';
+  final String _message = '';
   String get message => _message;
 
   int limit = 5;

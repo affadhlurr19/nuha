@@ -1,6 +1,7 @@
 class Consultant {
   String consultantId;
   String name;
+  String consultantEmail;
   String category;
   String description;
   String imageUrl;
@@ -8,11 +9,11 @@ class Consultant {
   String location;
   String price;
   String sertificationId;
-  bool isAvailable;
 
   Consultant({
     required this.consultantId,
     required this.name,
+    required this.consultantEmail,
     required this.category,
     required this.description,
     required this.imageUrl,
@@ -20,6 +21,5 @@ class Consultant {
     required this.location,
     required this.price,
     required this.sertificationId,
-    required this.isAvailable,
   });
 }

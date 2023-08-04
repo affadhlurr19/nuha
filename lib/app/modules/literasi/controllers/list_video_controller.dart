@@ -18,7 +18,7 @@ class ListVideoController extends GetxController {
   late ListVideo _listVideo;
   ListVideo get result => _listVideo;
 
-  String _message = '';
+  final String _message = '';
   String get message => _message;
 
   int limit = 5;

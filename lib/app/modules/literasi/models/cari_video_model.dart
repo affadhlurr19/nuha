@@ -2,6 +2,8 @@
 //
 //     final cariVideo = cariVideoFromJson(jsonString);
 
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 CariVideo cariVideoFromJson(String str) => CariVideo.fromJson(json.decode(str));

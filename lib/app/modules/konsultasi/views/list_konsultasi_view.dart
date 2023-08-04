@@ -115,55 +115,6 @@ class ListKonsultasiView extends GetView<KonsultasiController> {
                 ),
               ),
               SizedBox(height: 2.5.h),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
-              //   child: TextField(
-              //     onTap: () {},
-              //     readOnly: true,
-              //     cursorColor: buttonColor1,
-              //     autocorrect: false,
-              //     style: Theme.of(context)
-              //         .textTheme
-              //         .bodySmall!
-              //         .copyWith(
-              //             fontWeight: FontWeight.w400,
-              //             fontSize: 9.sp,
-              //             color: grey400),
-              //     decoration: InputDecoration(
-              //       hintText: 'Cari konsultan disini',
-              //       hintStyle: Theme.of(context)
-              //           .textTheme
-              //           .bodySmall!
-              //           .copyWith(
-              //               fontWeight: FontWeight.w400,
-              //               fontSize: 9.sp,
-              //               color: grey400),
-              //       filled: true,
-              //       fillColor: backgroundColor1,
-              //       contentPadding: EdgeInsets.symmetric(
-              //           horizontal: 1.h, vertical: 1.h),
-              //       enabledBorder: OutlineInputBorder(
-              //           borderSide:
-              //               const BorderSide(width: 0, color: grey50),
-              //           borderRadius: BorderRadius.circular(10)),
-              //       focusedBorder: OutlineInputBorder(
-              //           borderSide:
-              //               const BorderSide(width: 0, color: grey50),
-              //           borderRadius: BorderRadius.circular(10)),
-              //       suffixIcon: IconButton(
-              //         splashColor: Colors.transparent,
-              //         highlightColor: Colors.transparent,
-              //         onPressed: () {},
-              //         icon: Iconify(
-              //           Ri.search_line,
-              //           size: 12.sp,
-              //           color: grey400,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(height: 2.5.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
                 child: Obx(

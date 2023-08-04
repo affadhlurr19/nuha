@@ -6,13 +6,16 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/fa6_solid.dart';
 
 class ProgressBarView extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   ProgressBarView({this.value});
+  // ignore: prefer_typing_uninitialized_variables
   final value;
   final _iconSize = 3.5.h;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      // ignore: prefer_const_constructors
       padding: EdgeInsets.only(left: 2, right: 2),
       child: Stack(fit: StackFit.loose, children: [
         // LinearProgressIndicator(
@@ -20,6 +23,7 @@ class ProgressBarView extends StatelessWidget {
         //     valueColor: AlwaysStoppedAnimation<Color>(buttonColor1),
         //     backgroundColor: grey100,
         //     minHeight: 40),
+        // ignore: sized_box_for_whitespace
         Container(
           height: 5.h,
           child: LinearPercentIndicator(

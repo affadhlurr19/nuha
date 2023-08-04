@@ -6,39 +6,36 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/konsultasi/models/consultation_transaction_model.dart';
+import 'package:nuha/app/modules/konsultasi/models/post_payment_with_midtrans_model.dart';
+import 'package:nuha/app/modules/konsultasi/providers/payment_provider.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
+import 'package:uuid/uuid.dart';
 
 class OrderConstultationController extends GetxController {
   ConsultationTransaction consultationTransaction = Get.arguments;
+  final PaymentProvider _paymentProvider = PaymentProvider();
   RxList<String> paymentMethodList = <String>[].obs;
   RxString currentPaymentMethod = ''.obs;
   RxBool isPaymentMethodSelected = false.obs;
   final GlobalKey<ExpansionTileCardState> mandiriCard = GlobalKey();
   final GlobalKey<ExpansionTileCardState> bcaCard = GlobalKey();
   final GlobalKey<ExpansionTileCardState> bniCard = GlobalKey();
-  final GlobalKey<ExpansionTileCardState> bsiCard = GlobalKey();
   final GlobalKey<ExpansionTileCardState> briCard = GlobalKey();
-  final GlobalKey<ExpansionTileCardState> gopayCard = GlobalKey();
-  final GlobalKey<ExpansionTileCardState> danaCard = GlobalKey();
-  final GlobalKey<ExpansionTileCardState> linkajaCard = GlobalKey();
   RxInt totalFixedPrice = 0.obs;
   RxBool isLoading = false.obs;
   String? fixStartTime;
   String? fixEndTime;
+  var uuid = const Uuid();
 
   @override
   void onInit() {
     initializeDateFormatting('id', null);
     paymentMethodList.value = [
-      'Bank Mandiri',
-      'Bank BCA',
-      'Bank BNI',
-      'Bank BSI',
-      'Bank BRI',
-      'GoPay',
-      'DANA',
-      'LinkAja',
+      'bank_transfer_mandiri',
+      'bank_transfer_bca',
+      'bank_transfer_bni',
+      'bank_transfer_bri',
     ];
     super.onInit();
   }
@@ -71,6 +68,7 @@ class OrderConstultationController extends GetxController {
           consultantId: consultationTransaction.consultantId,
           consultantImg: snapshot.data()!['imageUrl'],
           consultantName: snapshot.data()!['name'],
+          consultantEmail: snapshot.data()!['consultant_email'],
           consultantCategory: snapshot.data()!['category'],
           consultantPrice: consultantPrice,
           scheduleId: consultationTransaction.scheduleId,
@@ -83,6 +81,7 @@ class OrderConstultationController extends GetxController {
         totalFixedPrice.value = totalPrice;
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -120,7 +119,42 @@ class OrderConstultationController extends GetxController {
                 ),
               ),
               ElevatedButton(
-                onPressed: () => createPayment(),
+                onPressed: () {
+                  try {
+                    isLoading.value = true;
+                    final currentUser = FirebaseAuth.instance.currentUser;
+                    PostPayment postPaymentWithMidtrans = PostPayment(
+                      bookingId: uuid.v4().toString(),
+                      userId: currentUser!.uid,
+                      consultantId: consultationTransaction.consultantId,
+                      consultantName:
+                          consultationTransaction.consultantName.toString(),
+                      mailConsultant:
+                          consultationTransaction.consultantEmail.toString(),
+                      mailUser: currentUser.email.toString(),
+                      kategori:
+                          consultationTransaction.consultantCategory.toString(),
+                      imageUrl:
+                          consultationTransaction.consultantImg.toString(),
+                      grossAmount: totalFixedPrice.value,
+                      paymentMethod: currentPaymentMethod.value,
+                      vaNumber: "none",
+                      startDateTime:
+                          consultationTransaction.consultationStartDate,
+                      endDateTime: consultationTransaction.consultationEndDate,
+                    );
+                    _paymentProvider.postPayment(postPaymentWithMidtrans);
+
+                    isLoading.value = false;
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                  } catch (e) {
+                    isLoading.value = false;
+                    // ignore: avoid_print
+                    print(e);
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: buttonColor2,
                 ),
@@ -182,6 +216,7 @@ class OrderConstultationController extends GetxController {
       Get.toNamed(Routes.RIWAYAT_KONSULTASI);
     } catch (e) {
       isLoading.value = false;
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -214,6 +249,7 @@ class OrderConstultationController extends GetxController {
           onChanged: (value) {
             currentPaymentMethod.value = value.toString();
             isPaymentMethodSelected.value = true;
+            // ignore: avoid_print
             print(value);
           },
         ),

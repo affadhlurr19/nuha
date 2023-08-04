@@ -22,6 +22,7 @@ class BackgroundServiceController {
     IsolateNameServer.registerPortWithName(port.sendPort, _isolateName);
   }
 
+  @pragma('vm:entry-point')
   static Future<void> callback() async {
     var getTimeNow = DateTime.now();
     // ignore: avoid_print
@@ -36,6 +37,7 @@ class BackgroundServiceController {
     _uiSendPort ??= IsolateNameServer.lookupPortByName(_isolateName);
   }
 
+  @pragma('vm:entry-point')
   static Future<void> cashflowCallback() async {
     var getTimeNow = DateTime.now();
     // ignore: avoid_print
@@ -48,6 +50,7 @@ class BackgroundServiceController {
     _uiSendPort ??= IsolateNameServer.lookupPortByName(_isolateName);
   }
 
+  @pragma('vm:entry-point')
   static Future<void> zakatCallback() async {
     var getTimeNow = DateTime.now();
     // ignore: avoid_print

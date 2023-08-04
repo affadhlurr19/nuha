@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 ListVideo listVideoFromJson(String str) => ListVideo.fromJson(json.decode(str));

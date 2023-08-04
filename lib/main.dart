@@ -25,7 +25,6 @@ final NotificationServiceController notificationServiceController =
 final BackgroundServiceController service = BackgroundServiceController();
 final c = Get.put(NotificationController());
 
-@pragma('vm:entry-point')
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -53,56 +52,51 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return StreamBuilder<User?>(
-    //   stream: auth.authStateChanges(),
-    //   builder: (context, snap) {
-    //     if (snap.connectionState == ConnectionState.waiting) {
-    //       return const CircularProgressIndicator();
-    //     }
-    //     return Sizer(
-    //       builder: (context, orientation, deviceType) {
-    //         return GetMaterialApp(
-    //           initialBinding: NotificationBindings(),
-    //           debugShowCheckedModeBanner: false,
-    //           theme: ThemeData(
-    //             colorScheme: Theme.of(context).colorScheme.copyWith(
-    //                   primary: backgroundColor1,
-    //                   onPrimary: Colors.white,
-    //                   secondary: buttonColor1,
-    //                 ),
-    //             textTheme: myTextTheme,
-    //             visualDensity: VisualDensity.adaptivePlatformDensity,
-    //           ),
-    //           title: "Nuha Financial",
-    //           initialRoute:
-    //               snap.data != null && snap.data!.emailVerified == true
-    //                   ? Routes.NAVBAR
-    //                   : Routes.LANDING,
-    //           getPages: AppPages.routes,
-    //         );
-    //       },
-    //     );
-    //   },
-    // );
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return GetMaterialApp(
-          initialBinding: NotificationBindings(),
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            // colorScheme: Theme.of(context).colorScheme.copyWith(
-            //       primary: backgroundColor1,
-            //       onPrimary: Colors.white,
-            //       secondary: buttonColor1,
-            //     ),
-            textTheme: myTextTheme,
-            // visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          title: "Nuha Financial",
-          initialRoute: Routes.LANDING,
-          getPages: AppPages.routes,
+    return StreamBuilder<User?>(
+      stream: auth.authStateChanges(),
+      builder: (context, snap) {
+        if (snap.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        return Sizer(
+          builder: (context, orientation, deviceType) {
+            return GetMaterialApp(
+              initialBinding: NotificationBindings(),
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                textTheme: myTextTheme,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              title: "Nuha Financial",
+              initialRoute:
+                  snap.data != null && snap.data!.emailVerified == true
+                      ? Routes.NAVBAR
+                      : Routes.LANDING,
+              getPages: AppPages.routes,
+            );
+          },
         );
       },
     );
+    // return Sizer(
+    //   builder: (context, orientation, deviceType) {
+    //     return GetMaterialApp(
+    //       initialBinding: NotificationBindings(),
+    //       debugShowCheckedModeBanner: false,
+    //       theme: ThemeData(
+    //         // colorScheme: Theme.of(context).colorScheme.copyWith(
+    //         //       primary: backgroundColor1,
+    //         //       onPrimary: Colors.white,
+    //         //       secondary: buttonColor1,
+    //         //     ),
+    //         textTheme: myTextTheme,
+    //         // visualDensity: VisualDensity.adaptivePlatformDensity,
+    //       ),
+    //       title: "Nuha Financial",
+    //       initialRoute: Routes.LANDING,
+    //       getPages: AppPages.routes,
+    //     );
+    //   },
+    // );
   }
 }

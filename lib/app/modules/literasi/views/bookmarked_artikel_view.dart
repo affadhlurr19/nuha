@@ -23,6 +23,7 @@ class BookmarkedArtikelView extends GetView<BookmarkedArtikelController> {
           );
         }
 
+        // ignore: prefer_is_empty
         if (snapshot.data?.docs.length == 0 || snapshot.data == null) {
           return const Center(
             child: Text('Belum ada data bookmark'),

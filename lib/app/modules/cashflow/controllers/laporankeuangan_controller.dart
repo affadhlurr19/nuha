@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -110,6 +112,7 @@ class LaporankeuanganController extends GetxController {
         .get();
     Map<String, int> kategoriTotal = {};
 
+    // ignore: avoid_function_literals_in_foreach_calls
     snapshotsPendapatan.docs.forEach((doc) {
       String kategori = doc.data()['kategori'];
       int nominal = doc.data()['nominal'];
@@ -149,6 +152,7 @@ class LaporankeuanganController extends GetxController {
 
     Map<String, Map<String, dynamic>> kategoriTotal = {};
 
+    // ignore: avoid_function_literals_in_foreach_calls
     snapshotsPengeluaran.docs.forEach((doc) {
       String kategori = doc.data()['kategori'];
       String imgKategori = doc.data()['imgKategori'];

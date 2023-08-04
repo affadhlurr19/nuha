@@ -333,6 +333,7 @@ class RsPensiunView extends GetView<PkPensiunController> {
                             .then((capturedImage) async {
                           con.getPdf(capturedImage!, "Dana Pensiun");
                         }).catchError((onError) {
+                          // ignore: avoid_print
                           print(onError);
                         });
                       },

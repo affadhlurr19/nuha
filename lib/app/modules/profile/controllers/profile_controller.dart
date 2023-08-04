@@ -210,6 +210,7 @@ class ProfileController extends GetxController {
       await auth.signOut();
       Get.offAllNamed(Routes.LANDING);
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -237,6 +238,7 @@ class ProfileController extends GetxController {
       profile.value = false;
       update();
     } catch (e) {
+      // ignore: avoid_print
       print(e);
       Get.snackbar("Terjadi Kesalahan", "Tidak dapat menghapus profile");
     }

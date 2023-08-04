@@ -288,6 +288,7 @@ class CashWidget extends StatelessWidget {
                     .then((capturedImage) async {
                   con.getPdf(capturedImage!, "Dana Beli Rumah");
                 }).catchError((onError) {
+                  // ignore: avoid_print
                   print(onError);
                 });
               },
@@ -667,6 +668,7 @@ class MurabahahWidget extends StatelessWidget {
                     .then((capturedImage) async {
                   con.getPdf(capturedImage!, "Dana Beli Rumah");
                 }).catchError((onError) {
+                  // ignore: avoid_print
                   print(onError);
                 });
               },

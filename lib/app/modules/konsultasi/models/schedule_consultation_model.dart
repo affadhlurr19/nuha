@@ -5,14 +5,12 @@ class ScheduleConsultation {
   String day;
   String startTime;
   String endTime;
-  String isAvailable;
 
   ScheduleConsultation({
     required this.scheduleId,
     required this.day,
     required this.startTime,
     required this.endTime,
-    required this.isAvailable,
   });
 
   factory ScheduleConsultation.fromSnapshot(DocumentSnapshot snapshot) {
@@ -22,7 +20,6 @@ class ScheduleConsultation {
       day: data['day'],
       startTime: data['startTime'],
       endTime: data['endTime'],
-      isAvailable: data['isAvailable'].toString(),
     );
   }
 }

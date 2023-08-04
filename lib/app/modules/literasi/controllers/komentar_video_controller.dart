@@ -188,6 +188,7 @@ class KomentarVideoController extends GetxController
           await FirebaseFirestore.instance.collection("users").doc(uid).get();
       return docUser.data();
     } catch (e) {
+      // ignore: avoid_print
       print('Tidak dapat get data user');
       return null;
     }

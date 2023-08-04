@@ -334,6 +334,7 @@ class RsUmrohView extends GetView<PkUmrohController> {
                             .then((capturedImage) async {
                           con.getPdf(capturedImage!, "Dana Umroh atau Haji");
                         }).catchError((onError) {
+                          // ignore: avoid_print
                           print(onError);
                         });
                       },

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/fincheck/views/fincheck_result_view.dart';
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as s;
@@ -12,7 +11,6 @@ import 'package:nuha/mobile.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:nuha/app/utility/dialog_message.dart';
 
 class FincheckController extends GetxController {

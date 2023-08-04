@@ -283,6 +283,7 @@ class RsPernikahanView extends GetView<PkPernikahanController> {
                       .then((capturedImage) async {
                     con.getPdf(capturedImage!, "Dana Pernikahan");
                   }).catchError((onError) {
+                    // ignore: avoid_print
                     print(onError);
                   });
                 },

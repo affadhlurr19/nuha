@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:nuha/app/modules/profile/controllers/profile_controller.dart';
-import 'package:nuha/app/routes/app_pages.dart';
 import 'package:nuha/app/utility/dialog_message.dart';
 
 class DeleteAccountController extends GetxController {

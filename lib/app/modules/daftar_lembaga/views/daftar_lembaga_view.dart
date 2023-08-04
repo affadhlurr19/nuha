@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,7 +6,6 @@ import 'package:nuha/app/modules/daftar_lembaga/controllers/daftar_pinjol_contro
 import 'package:nuha/app/modules/daftar_lembaga/providers/daftar_ikd_provider.dart';
 import 'package:nuha/app/modules/daftar_lembaga/providers/daftar_pinjol_provider.dart';
 import 'package:nuha/app/utility/result_state.dart';
-import 'package:iconify_flutter/icons/material_symbols.dart';
 import '../controllers/daftar_lembaga_controller.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:sizer/sizer.dart';
@@ -803,7 +800,9 @@ class IKDDialog extends StatelessWidget {
 
   void _launchGoogleSearch(String query) async {
     final url = 'https://www.google.com/search?q=$query';
+    // ignore: deprecated_member_use
     if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
       await launch(url);
     } else {
       throw 'Could not launch $url';
@@ -969,7 +968,9 @@ class PinjolDialog extends StatelessWidget {
 
   void _launchGoogleSearch(String query) async {
     final url = 'https://$query';
+    // ignore: deprecated_member_use
     if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
       await launch(url);
     } else {
       throw 'Could not launch $url';

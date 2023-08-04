@@ -282,6 +282,7 @@ class CashWidget extends StatelessWidget {
                     .then((capturedImage) async {
                   con.getPdf(capturedImage!, "Dana Beli Kendaraan");
                 }).catchError((onError) {
+                  // ignore: avoid_print
                   print(onError);
                 });
               },
@@ -643,6 +644,7 @@ class BSIWidget extends StatelessWidget {
                     .then((capturedImage) async {
                   con.getPdf(capturedImage!, "Dana Beli Kendaraan");
                 }).catchError((onError) {
+                  // ignore: avoid_print
                   print(onError);
                 });
               },

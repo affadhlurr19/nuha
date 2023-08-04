@@ -1,3 +1,7 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +15,12 @@ import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
 import 'package:nuha/app/modules/konsultasi/models/consultant_model.dart';
 import 'package:nuha/app/modules/konsultasi/models/consultation_transaction_model.dart';
+import 'package:nuha/app/modules/konsultasi/models/get_payment_history_model.dart';
 import 'package:nuha/app/modules/konsultasi/models/schedule_consultation_model.dart';
 import 'package:nuha/app/routes/app_pages.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:http/http.dart' as http;
 
 class ScheduleConsultationController extends GetxController {
   String? consultantId;
@@ -31,6 +37,7 @@ class ScheduleConsultationController extends GetxController {
   String scheduleConsultationId = "";
   FirebaseAuth auth = FirebaseAuth.instance;
   RxList<String> scheduleIds = <String>[].obs;
+  RxList<PaymentData> scheduleAvailable = <PaymentData>[].obs;
 
   ScheduleConsultationController({required this.consultantId});
 
@@ -40,7 +47,8 @@ class ScheduleConsultationController extends GetxController {
     initializeDateFormatting('id', null);
     fetchAvailableDays();
     fetchSchedule(selectedDate.value);
-    Future.delayed(Duration(seconds: 0)).then((_) => showConsultationInfo());
+    Future.delayed(const Duration(seconds: 0))
+        .then((_) => showConsultationInfo());
     convertToScheduleIds(schedules);
   }
 
@@ -169,14 +177,17 @@ class ScheduleConsultationController extends GetxController {
     DateTime consultationEndDate,
   ) async {
     try {
-      var data = await FirebaseFirestore.instance
-          .collection('consultation_transaction')
-          .where('consultantId', isEqualTo: consultantId)
-          .where('startDateTime', isEqualTo: consultationStartDate)
-          .where('endDateTime', isEqualTo: consultationEndDate)
-          .get();
+      final response = await http.get(Uri.parse(
+          "https://starfish-app-pua4v.ondigitalocean.app/api/booking/check/$consultantId/$consultationStartDate"));
+      if (response.statusCode == 200) {
+        PaymentHistory data =
+            PaymentHistory.fromJson(json.decode(response.body));
+        scheduleAvailable.value = data.data;
+      } else {
+        throw Exception('Gagal mengambil data payment');
+      }
 
-      if (data.docs.isEmpty) {
+      if (scheduleAvailable.isEmpty) {
         ConsultationTransaction consultationTransaction =
             ConsultationTransaction(
           uid: auth.currentUser!.uid,

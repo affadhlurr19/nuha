@@ -330,6 +330,7 @@ class RsPendidikanView extends GetView<PkPendidikanController> {
                     con.getPdf(capturedImage!,
                         "Dana Pendidikan ${c.namaAnak.value.text}");
                   }).catchError((onError) {
+                    // ignore: avoid_print
                     print(onError);
                   });
                 },

@@ -30,6 +30,7 @@ class KonsultasiController extends GetxController {
         Consultant consultant = Consultant(
           consultantId: doc.id,
           name: data['name'],
+          consultantEmail: data['consultant_email'],
           category: data['category'],
           description: data['description'],
           imageUrl: data['imageUrl'],
@@ -37,7 +38,6 @@ class KonsultasiController extends GetxController {
           location: data['location'],
           price: data['price'].toString(),
           sertificationId: data['sertificationId'],
-          isAvailable: data['isAvailable'],
         );
 
         return consultant;
@@ -45,6 +45,7 @@ class KonsultasiController extends GetxController {
 
       return consultantList;
     } catch (e) {
+      // ignore: avoid_print
       print(e);
       return consultantList;
     }
@@ -65,6 +66,7 @@ class KonsultasiController extends GetxController {
         Consultant consultant = Consultant(
           consultantId: doc.id,
           name: data['name'],
+          consultantEmail: data['consultant_email'],
           category: data['category'],
           description: data['description'],
           imageUrl: data['imageUrl'],
@@ -72,7 +74,6 @@ class KonsultasiController extends GetxController {
           location: data['location'],
           price: data['price'].toString(),
           sertificationId: data['sertificationId'],
-          isAvailable: data['isAvailable'],
         );
 
         return consultant;
@@ -99,6 +100,7 @@ class KonsultasiController extends GetxController {
         Consultant consultant = Consultant(
           consultantId: doc.id,
           name: data['name'],
+          consultantEmail: data['consultant_email'],
           category: data['category'],
           description: data['description'],
           imageUrl: data['imageUrl'],
@@ -106,7 +108,6 @@ class KonsultasiController extends GetxController {
           location: data['location'],
           price: data['price'].toString(),
           sertificationId: data['sertificationId'],
-          isAvailable: data['isAvailable'],
         );
 
         return consultant;
@@ -133,6 +134,7 @@ class KonsultasiController extends GetxController {
         Consultant consultant = Consultant(
           consultantId: doc.id,
           name: data['name'],
+          consultantEmail: data['consultant_email'],
           category: data['category'],
           description: data['description'],
           imageUrl: data['imageUrl'],
@@ -140,7 +142,6 @@ class KonsultasiController extends GetxController {
           location: data['location'],
           price: data['price'].toString(),
           sertificationId: data['sertificationId'],
-          isAvailable: data['isAvailable'],
         );
 
         return consultant;
@@ -167,6 +168,7 @@ class KonsultasiController extends GetxController {
         Consultant consultant = Consultant(
           consultantId: doc.id,
           name: data['name'],
+          consultantEmail: data['consultant_email'],
           category: data['category'],
           description: data['description'],
           imageUrl: data['imageUrl'],
@@ -174,7 +176,6 @@ class KonsultasiController extends GetxController {
           location: data['location'],
           price: data['price'].toString(),
           sertificationId: data['sertificationId'],
-          isAvailable: data['isAvailable'],
         );
 
         return consultant;

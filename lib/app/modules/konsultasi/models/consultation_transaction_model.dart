@@ -4,6 +4,7 @@ class ConsultationTransaction {
   String? consultantImg;
   String? consultantName;
   String? consultantCategory;
+  String? consultantEmail;
   int? consultantPrice;
   String scheduleId;
   String? fixScheduleTime;
@@ -17,6 +18,7 @@ class ConsultationTransaction {
     this.consultantImg,
     this.consultantName,
     this.consultantCategory,
+    this.consultantEmail,
     this.consultantPrice,
     required this.scheduleId,
     this.fixScheduleTime,

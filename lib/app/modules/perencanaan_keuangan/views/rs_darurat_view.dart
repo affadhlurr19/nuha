@@ -342,6 +342,7 @@ class RsDaruratView extends GetView<PkDaruratController> {
                                     .then((capturedImage) async {
                                   con.getPdf(capturedImage!, "Dana Darurat");
                                 }).catchError((onError) {
+                                  // ignore: avoid_print
                                   print(onError);
                                 });
                               },

@@ -54,6 +54,7 @@ class DetailArtikelController extends GetxController {
     final bool doesDocExist = doc.exists;
 
     if (doesDocExist == true) {
+      // ignore: avoid_print
       print('Hapus');
       isBookmarked.value = false;
       isLoading.value = false;

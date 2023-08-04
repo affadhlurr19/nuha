@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

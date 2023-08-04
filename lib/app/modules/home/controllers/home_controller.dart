@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -28,7 +30,7 @@ class HomeController extends GetxController {
   var dataAnggaran = 0.obs;
 
   var resultState = ResultState.loading().obs;
-  ListArtikelProvider _listArtikelProvider = ListArtikelProvider();
+  final ListArtikelProvider _listArtikelProvider = ListArtikelProvider();
 
   String _message = '';
   late NotifikasiArtikel _notifikasiArtikel;
@@ -108,6 +110,7 @@ class HomeController extends GetxController {
             isLessThanOrEqualTo: endDate.value)
         .get();
 
+    // ignore: avoid_function_literals_in_foreach_calls
     snapshotsPendapatan.docs.forEach((doc) {
       int nominal = doc.data()['nominal'];
 

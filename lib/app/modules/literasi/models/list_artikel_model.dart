@@ -2,6 +2,8 @@
 //
 //     final listArtikel = listArtikelFromJson(jsonString);
 
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 ListArtikel listArtikelFromJson(String str) =>

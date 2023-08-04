@@ -79,7 +79,7 @@ class NotificationServiceController {
     );
 
     var randomArticle = article.data[Random().nextInt(article.data.length)];
-    var titleNotification = "Rekomendasi Artikel Untuk Anda Hari Ini";
+    var titleNotification = "Rekomendasi Artikel Untuk Kamu Hari Ini";
     var titleArticle = randomArticle.title;
 
     flutterLocalNotificationsPlugin.show(
@@ -107,7 +107,7 @@ class NotificationServiceController {
       iOS: iOSPlatformChannelSpecifics,
     );
 
-    var titleNotification = "Apakah anda sudah mengatur alur kas hari ini?";
+    var titleNotification = "Apakah kamu sudah mengatur alur kas hari ini?";
     var titleArticle = 'Yuk, atur alur kas anda sekarang disini!';
 
     flutterLocalNotificationsPlugin.show(

@@ -66,6 +66,7 @@ class BookmarkArtikelController extends GetxController {
         isBookmarked.value = false;
       }
     } catch (error) {
+      // ignore: avoid_print
       print(error.toString());
     }
   }

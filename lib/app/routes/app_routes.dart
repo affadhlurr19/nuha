@@ -17,8 +17,6 @@ abstract class Routes {
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
   static const PENGATURAN_KEAMANAN = _Paths.PENGATURAN_KEAMANAN;
   static const GANTI_KATA_SANDI = _Paths.GANTI_KATA_SANDI;
-  static const ADD_NOTE = _Paths.ADD_NOTE;
-  static const EDIT_NOTE = _Paths.EDIT_NOTE;
   static const GANTI_FOTO_PROFIL = _Paths.GANTI_FOTO_PROFIL;
   static const LITERASI = _Paths.LITERASI;
   static const LITERASI_LIST_ARTIKEL = _Paths.LITERASI_LIST_ARTIKEL;
@@ -38,8 +36,7 @@ abstract class Routes {
   static const CARI_VIDEO = _Paths.CARI_VIDEO;
   static const PENGATURAN_NOTIFIKASI = _Paths.PENGATURAN_NOTIFIKASI;
   static const CREATE_PESANAN_KONSULTASI = _Paths.CREATE_PESANAN_KONSULTASI;
-  static const CONFIRM_CONSULTATION_PAYMENT =
-      _Paths.CONFIRM_CONSULTATION_PAYMENT;
+
   static const PIN = _Paths.PIN;
   static const EDIT_PIN = _Paths.EDIT_PIN;
   static const CREATE_PIN = _Paths.CREATE_PIN;
@@ -83,8 +80,6 @@ abstract class _Paths {
   static const EDIT_PROFILE = '/edit-profile';
   static const PENGATURAN_KEAMANAN = '/pengaturan-keamanan';
   static const GANTI_KATA_SANDI = '/ganti-kata-santi';
-  static const ADD_NOTE = '/add-note';
-  static const EDIT_NOTE = '/edit-note';
   static const GANTI_FOTO_PROFIL = '/ganti-foto-profil';
   static const LITERASI = '/literasi';
   static const LITERASI_LIST_ARTIKEL = '/literasi-list-artikel';
@@ -104,7 +99,6 @@ abstract class _Paths {
   static const CARI_VIDEO = '/cari-video';
   static const PENGATURAN_NOTIFIKASI = '/pengaturan-notifikasi';
   static const CREATE_PESANAN_KONSULTASI = '/create-pesanan-konsultasi';
-  static const CONFIRM_CONSULTATION_PAYMENT = '/confirm-consultation-payment';
   static const PIN = '/pin';
   static const EDIT_PIN = '/edit-pin';
   static const CREATE_PIN = '/create-pin';

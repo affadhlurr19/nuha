@@ -75,6 +75,7 @@ class PkKendaraanController extends GetxController {
 
       bulan = (int.parse(tahunTercapai.text) * 12).ceil();
 
+      // ignore: division_optimization
       tabunganPerbulan = (perkiraanHarga / bulan).toInt();
 
       if (int.parse(nomDanaDisisihkan.text.replaceAll(".", "")) >

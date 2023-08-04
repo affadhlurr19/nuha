@@ -495,69 +495,8 @@ class CreatePesananKonsultasiView
                     padding: EdgeInsets.symmetric(horizontal: 4.w),
                     child: c.paymentMethodDetails(
                       context,
-                      c.bsiCard,
-                      c.paymentMethodList[3],
-                      'assets/images/logo-bank-bsi.png',
-                      'Bank BSI',
-                      "Melalui BSI Mobile:",
-                      '1. \n'
-                          '2. \n'
-                          '3. \n'
-                          '4. \n\n'
-                          '5. \n'
-                          '6. \n'
-                          '7 \n',
-                      "Buka aplikasi BSI Mobile. \n"
-                          'Pilih menu "Transfer" atau "Transfer antarbank". \n'
-                          'Pilih bank tujuan (Mandiri). \n'
-                          'Masukkan nomor rekening, yaitu 0123456789 a.n. Nuha Financial. \n'
-                          'Masukkan nominal transfer. \n'
-                          'Verifikasi detail transfer. \n'
-                          'Konfirmasikan transfer. \n',
-                      "Melalui ATM BSI:",
-                      '1. \n'
-                          '2. \n'
-                          '3. \n\n'
-                          '4. \n'
-                          '5. \n\n'
-                          '6. \n'
-                          '7. \n'
-                          '8. \n',
-                      "Masukkan kartu ATM BSI dan PIN. \n"
-                          'Pilih menu "Transfer" atau "Transfer antarbank". \n'
-                          'Pilih "Transfer ke Bank Lain" atau "Transfer ke Bank Lain dalam Negeri". \n'
-                          'Pilih bank tujuan (Mandiri). \n'
-                          'Masukkan nomor rekening tujuan, yaitu 0123456789 a.n. Nuha Financial. \n'
-                          'Masukkan nominal transfer. \n'
-                          'Verifikasi detail transfer. \n'
-                          'Konfirmasikan transfer. \n',
-                      "Melalui Internet Banking BSI:",
-                      '1. \n'
-                          '2. \n'
-                          '3. \n\n'
-                          '4. \n\n'
-                          '5. \n'
-                          '6. \n\n'
-                          '7. \n'
-                          '8. \n'
-                          '9.',
-                      "Buka situs web Internet Banking BSI \n"
-                          'Masuk ke akun Anda. \n'
-                          'Pilih menu "Transfer Dana" atau "Transfer antarbank". \n'
-                          'Pilih "Transfer ke Bank Lain" atau "Transfer ke Bank Lain dalam Negeri". \n'
-                          'Pilih bank tujuan (Mandiri). \n'
-                          'Masukkan nomor rekening tujuan, yaitu 0123456789 a.n. Nuha Financial. \n'
-                          'Masukkan nominal transfer. \n'
-                          'Verifikasi detail transfer. \n'
-                          'Konfirmasikan transfer. ',
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.w),
-                    child: c.paymentMethodDetails(
-                      context,
                       c.briCard,
-                      c.paymentMethodList[4],
+                      c.paymentMethodList[3],
                       'assets/images/logo-bank-bri.png',
                       'Bank BRI',
                       "Melalui Aplikasi BRImo BRI:",
@@ -611,103 +550,6 @@ class CreatePesananKonsultasiView
                           'Masukkan nominal transfer. \n'
                           'Verifikasi detail transfer. \n'
                           'Konfirmasikan transfer. ',
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.w),
-                    child: c.paymentMethodDetails(
-                      context,
-                      c.gopayCard,
-                      c.paymentMethodList[5],
-                      'assets/images/logo-gopay.png',
-                      'GoPay',
-                      "Berikut langkah-langkah menggunakan GoPay:",
-                      '1. \n'
-                          '2. \n'
-                          '3. \n'
-                          '4. \n\n'
-                          '5. \n'
-                          '6. \n\n\n'
-                          '7 \n'
-                          '8 ',
-                      "Buka aplikasi Gojek. \n"
-                          'Pastikan akun telah terhubung dengan GoPay. \n'
-                          'Pilih menu "Bayar" atau "Pay". \n'
-                          'Pilih menu "Ke Rekening Bank" atau "To Bank Account". \n'
-                          'Pilih ke Bank Mandiri. \n'
-                          'Masukkan nomor rekening tujuan, yaitu 0123456789 a.n. Nuha Financial dan lakukan verifikasi. \n'
-                          'Masukkan nominal transfer. \n'
-                          'Konfirmasi dan masukkan PIN. ',
-                      null,
-                      null,
-                      null,
-                      null,
-                      null,
-                      null,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.w),
-                    child: c.paymentMethodDetails(
-                      context,
-                      c.danaCard,
-                      c.paymentMethodList[6],
-                      'assets/images/logo-dana.png',
-                      'DANA',
-                      "Berikut langkah-langkah menggunakan DANA:",
-                      '1. \n'
-                          '2. \n'
-                          '3. \n'
-                          '4. \n\n'
-                          '5. \n'
-                          '6. \n\n'
-                          '7 \n\n'
-                          '8 \n'
-                          '9 ',
-                      "Buka aplikasi DANA. \n"
-                          'Pilih menu "Kirim" atau "Send". \n'
-                          'Pilih menu "Kirim ke Bank" atau "Send to Bank". \n'
-                          'Klik "Tambah akun bank baru" atau "Add new bank account". \n'
-                          'Pilih ke Bank Mandiri. \n'
-                          'Masukkan nomor rekening tujuan, yaitu 0123456789 a.n Nuha Financial. \n'
-                          'Klik "Simpan & Lanjutkan" atau "Save & Continue". \n'
-                          'Masukkan nominal transfer. \n'
-                          'Konfirmasi dan masukkan PIN. ',
-                      null,
-                      null,
-                      null,
-                      null,
-                      null,
-                      null,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.w),
-                    child: c.paymentMethodDetails(
-                      context,
-                      c.linkajaCard,
-                      c.paymentMethodList[7],
-                      'assets/images/logo-linkaja.png',
-                      'LinkAja',
-                      "Berikut langkah-langkah menggunakan LinkAja:",
-                      '1. \n'
-                          '2. \n'
-                          '3. \n\n'
-                          '4. \n\n'
-                          '5. \n'
-                          '6. ',
-                      "Buka aplikasi LinkAja. \n"
-                          'Pilih menu "Kirim Uang". \n'
-                          'Pilih metode Rekening Bank dan pilih Bank Tujuan (Mandiri). \n'
-                          'Masukkan nomor rekening tujuan, yaitu 0123456789 a.n Nuha Financial. \n'
-                          'Masukkan nominal transfer. \n'
-                          'Konfirmasi dan masukkan PIN. ',
-                      null,
-                      null,
-                      null,
-                      null,
-                      null,
-                      null,
                     ),
                   ),
                   SizedBox(height: 2.h),
@@ -809,7 +651,7 @@ class CreatePesananKonsultasiView
                         ),
                         child: c.isLoading.isFalse
                             ? Text(
-                                'Konfirmasi Pembayaran',
+                                'Pesan Sekarang',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!

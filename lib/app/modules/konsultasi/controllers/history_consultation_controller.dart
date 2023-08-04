@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,28 +11,29 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:nuha/app/constant/styles.dart';
-import 'package:nuha/app/modules/konsultasi/models/confirm_consultation_payment.dart';
 import 'package:nuha/app/modules/konsultasi/models/consultation_history.dart';
-import 'package:nuha/app/routes/app_pages.dart';
+import 'package:nuha/app/modules/konsultasi/models/get_payment_history_model.dart';
+import 'package:nuha/app/modules/konsultasi/models/get_zoom_meeting_link_model.dart';
+import 'package:nuha/app/modules/konsultasi/providers/payment_provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:http/http.dart' as http;
 
 class HistoryConsultationController extends GetxController {
   RxBool isSelected = false.obs;
   RxInt tag = RxInt(1);
   FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   RxList<ConsultationHistory> historyList = <ConsultationHistory>[].obs;
   TextEditingController meetingLinkC = TextEditingController();
   RxBool isConsultationDone = false.obs;
   RxBool isLoadingConsultationDone = false.obs;
 
-  final StreamController<List<ConsultationHistory>> pendingHistoryController =
-      StreamController<List<ConsultationHistory>>.broadcast();
-  final StreamController<List<ConsultationHistory>> confirmHistoryController =
-      StreamController<List<ConsultationHistory>>.broadcast();
-  final StreamController<List<ConsultationHistory>> successHistoryController =
-      StreamController<List<ConsultationHistory>>.broadcast();
-  final StreamController<List<ConsultationHistory>> doneHistoryController =
-      StreamController<List<ConsultationHistory>>.broadcast();
+  final PaymentProvider _paymentProvider = PaymentProvider();
+  RxList<PaymentData> paymentList = <PaymentData>[].obs;
+  RxList<MeetingData> meetingData = <MeetingData>[].obs;
+  TextEditingController waktukonsultasiC = TextEditingController();
+  TextEditingController zoomLinkC = TextEditingController();
+  RxString message = ''.obs;
 
   @override
   void onInit() {
@@ -37,266 +41,144 @@ class HistoryConsultationController extends GetxController {
     initializeDateFormatting('id', null);
   }
 
-  @override
-  void onClose() {
-    pendingHistoryController.close();
-    confirmHistoryController.close();
-    successHistoryController.close();
-    doneHistoryController.close();
-    super.onClose();
-  }
-
-  String convertTimestampToDateTime(Timestamp timestamp) {
-    DateTime dateTime = timestamp.toDate();
+  String convertTimestampToDateTime(DateTime timestamp) {
+    DateTime dateTime = timestamp;
     String formatDatetime =
         DateFormat('EEEE d MMMM yyyy, HH:mm', 'id_ID').format(dateTime);
     return formatDatetime;
   }
 
-  String getTimeFromTimestamp(Timestamp timestamp) {
-    DateTime datetime = timestamp.toDate();
+  String getTimeFromTimestamp(DateTime timestamp) {
+    DateTime datetime = timestamp;
     String formatDatetime = DateFormat('HH:mm').format(datetime);
     return formatDatetime;
   }
 
-  Stream<List<ConsultationHistory>> getPendingHistory() {
-    return FirebaseFirestore.instance
-        .collection('consultation_transaction')
-        .where('userId', isEqualTo: auth.currentUser!.uid)
-        .where('paymentStatus', isEqualTo: 'Menunggu Pembayaran')
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .asyncMap((snapshot) async {
-      List<ConsultationHistory> tempHistoryList = [];
-
-      for (DocumentSnapshot historyDoc in snapshot.docs) {
-        Map<String, dynamic> historyDatas =
-            historyDoc.data() as Map<String, dynamic>;
-
-        DocumentSnapshot consultantDoc = await FirebaseFirestore.instance
-            .collection('consultant')
-            .doc(historyDatas['consultantId'])
-            .get();
-
-        if (consultantDoc.exists) {
-          Map<String, dynamic> consultantDatas =
-              consultantDoc.data() as Map<String, dynamic>;
-
-          var startDate =
-              convertTimestampToDateTime(historyDatas['startDateTime']);
-          var endDate = getTimeFromTimestamp(historyDatas['endDateTime']);
-          var fixDateTimeConsultation = '$startDate - $endDate';
-
-          ConsultationHistory consultationHistory = ConsultationHistory(
-            historyId: historyDoc.id,
-            scheduleId: historyDatas['scheduleId'],
-            fixDateTimeConsultation: fixDateTimeConsultation,
-            userId: historyDatas['userId'],
-            consultantId: historyDatas['consultantId'],
-            paymentStatus: historyDatas['paymentStatus'],
-            consultantName: consultantDatas['name'],
-            consultantCategory: consultantDatas['category'],
-            consultantPhoto: consultantDatas['imageUrl'],
-            proofOfPayment: historyDatas['proofOfPayment'],
-            meetingLink: historyDatas['meetingLink'],
-          );
-
-          tempHistoryList.add(consultationHistory);
-        }
-      }
-
-      return tempHistoryList;
-    });
-  }
-
-  Stream<List<ConsultationHistory>> getConfirmHistory() {
-    return FirebaseFirestore.instance
-        .collection('consultation_transaction')
-        .where('userId', isEqualTo: auth.currentUser!.uid)
-        .where('paymentStatus', isEqualTo: 'Menunggu Konfirmasi')
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .asyncMap((snapshot) async {
-      List<ConsultationHistory> tempHistoryList = [];
-
-      for (DocumentSnapshot historyDoc in snapshot.docs) {
-        Map<String, dynamic> historyDatas =
-            historyDoc.data() as Map<String, dynamic>;
-
-        DocumentSnapshot consultantDoc = await FirebaseFirestore.instance
-            .collection('consultant')
-            .doc(historyDatas['consultantId'])
-            .get();
-
-        if (consultantDoc.exists) {
-          Map<String, dynamic> consultantDatas =
-              consultantDoc.data() as Map<String, dynamic>;
-
-          var startDate =
-              convertTimestampToDateTime(historyDatas['startDateTime']);
-          var endDate = getTimeFromTimestamp(historyDatas['endDateTime']);
-          var fixDateTimeConsultation = '$startDate - $endDate';
-
-          ConsultationHistory consultationHistory = ConsultationHistory(
-            historyId: historyDoc.id,
-            scheduleId: historyDatas['scheduleId'],
-            fixDateTimeConsultation: fixDateTimeConsultation,
-            userId: historyDatas['userId'],
-            consultantId: historyDatas['consultantId'],
-            paymentStatus: historyDatas['paymentStatus'],
-            consultantName: consultantDatas['name'],
-            consultantCategory: consultantDatas['category'],
-            consultantPhoto: consultantDatas['imageUrl'],
-            proofOfPayment: historyDatas['proofOfPayment'],
-            meetingLink: historyDatas['meetingLink'],
-          );
-
-          tempHistoryList.add(consultationHistory);
-        }
-      }
-
-      return tempHistoryList;
-    });
-  }
-
-  Stream<List<ConsultationHistory>> getSuccessHistory() {
-    return FirebaseFirestore.instance
-        .collection('consultation_transaction')
-        .where('userId', isEqualTo: auth.currentUser!.uid)
-        .where('paymentStatus', isEqualTo: 'Siap Konsultasi')
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .asyncMap((snapshot) async {
-      List<ConsultationHistory> tempHistoryList = [];
-
-      for (DocumentSnapshot historyDoc in snapshot.docs) {
-        Map<String, dynamic> historyDatas =
-            historyDoc.data() as Map<String, dynamic>;
-
-        DocumentSnapshot consultantDoc = await FirebaseFirestore.instance
-            .collection('consultant')
-            .doc(historyDatas['consultantId'])
-            .get();
-
-        if (consultantDoc.exists) {
-          Map<String, dynamic> consultantDatas =
-              consultantDoc.data() as Map<String, dynamic>;
-
-          var startDate =
-              convertTimestampToDateTime(historyDatas['startDateTime']);
-          var endDate = getTimeFromTimestamp(historyDatas['endDateTime']);
-          var fixDateTimeConsultation = '$startDate - $endDate';
-
-          ConsultationHistory consultationHistory = ConsultationHistory(
-            historyId: historyDoc.id,
-            scheduleId: historyDatas['scheduleId'],
-            fixDateTimeConsultation: fixDateTimeConsultation,
-            userId: historyDatas['userId'],
-            consultantId: historyDatas['consultantId'],
-            paymentStatus: historyDatas['paymentStatus'],
-            consultantName: consultantDatas['name'],
-            consultantCategory: consultantDatas['category'],
-            consultantPhoto: consultantDatas['imageUrl'],
-            proofOfPayment: historyDatas['proofOfPayment'],
-            meetingLink: historyDatas['meetingLink'],
-          );
-
-          tempHistoryList.add(consultationHistory);
-        }
-      }
-
-      return tempHistoryList;
-    });
-  }
-
-  Stream<List<ConsultationHistory>> getDoneHistory() {
-    return FirebaseFirestore.instance
-        .collection('consultation_transaction')
-        .where('userId', isEqualTo: auth.currentUser!.uid)
-        .where('paymentStatus', isEqualTo: 'Selesai')
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .asyncMap((snapshot) async {
-      List<ConsultationHistory> tempHistoryList = [];
-
-      for (DocumentSnapshot historyDoc in snapshot.docs) {
-        Map<String, dynamic> historyDatas =
-            historyDoc.data() as Map<String, dynamic>;
-
-        DocumentSnapshot consultantDoc = await FirebaseFirestore.instance
-            .collection('consultant')
-            .doc(historyDatas['consultantId'])
-            .get();
-
-        if (consultantDoc.exists) {
-          Map<String, dynamic> consultantDatas =
-              consultantDoc.data() as Map<String, dynamic>;
-
-          var startDate =
-              convertTimestampToDateTime(historyDatas['startDateTime']);
-          var endDate = getTimeFromTimestamp(historyDatas['endDateTime']);
-          var fixDateTimeConsultation = '$startDate - $endDate';
-
-          ConsultationHistory consultationHistory = ConsultationHistory(
-            historyId: historyDoc.id,
-            scheduleId: historyDatas['scheduleId'],
-            fixDateTimeConsultation: fixDateTimeConsultation,
-            userId: historyDatas['userId'],
-            consultantId: historyDatas['consultantId'],
-            paymentStatus: historyDatas['paymentStatus'],
-            consultantName: consultantDatas['name'],
-            consultantCategory: consultantDatas['category'],
-            consultantPhoto: consultantDatas['imageUrl'],
-            proofOfPayment: historyDatas['proofOfPayment'],
-            meetingLink: historyDatas['meetingLink'],
-          );
-
-          tempHistoryList.add(consultationHistory);
-        }
-      }
-
-      return tempHistoryList;
-    });
-  }
-
-  void refreshHistory() {
-    if (tag.value == 1) {
-      pendingHistoryController.addStream(getPendingHistory());
-    } else if (tag.value == 2) {
-      confirmHistoryController.addStream(getConfirmHistory());
-    } else if (tag.value == 3) {
-      successHistoryController.addStream(getSuccessHistory());
-    } else {
-      doneHistoryController.addStream(getDoneHistory());
-    }
-  }
-
-  Future<void> getOrderDetail(
-    String historyId,
-    String consultantId,
-  ) async {
+  Future<ZoomMeetingLink> getDetailZoomLink(String bookingId) async {
     try {
-      ConfirmConsultationPayment confirmConsultationPayment =
-          ConfirmConsultationPayment(
-        historyId: historyId,
-        consultantId: consultantId,
-      );
-
-      Get.toNamed(Routes.CONFIRM_CONSULTATION_PAYMENT,
-          arguments: confirmConsultationPayment);
+      final response = await http.get(Uri.parse(
+          "https://starfish-app-pua4v.ondigitalocean.app/api/zoom/$bookingId"));
+      if (response.statusCode == 200) {
+        ZoomMeetingLink data =
+            ZoomMeetingLink.fromJson(json.decode(response.body));
+        meetingData.value = data.data;
+        return data;
+      } else {
+        throw Exception('Gagal mengambil zoom meeting data');
+      }
     } catch (e) {
-      Get.snackbar('Kesalahan', '$e');
+      print(e.toString());
+      throw Exception('Gagal mengambil zoom meeting data');
     }
   }
 
-  void getProofOfPaymentImage(String imageUrl) {
-    Get.dialog(
-      Image.network(
-        imageUrl,
-        fit: BoxFit.fitWidth,
-      ),
-    );
+  Future<void> getPendingPaymentHistory() async {
+    try {
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final response = await http.get(Uri.parse(
+          "https://starfish-app-pua4v.ondigitalocean.app/api/booking/isItDone/$uid/PENDING/false"));
+      if (response.statusCode == 200) {
+        PaymentHistory data =
+            PaymentHistory.fromJson(json.decode(response.body));
+        paymentList.value = data.data;
+      } else {
+        throw Exception('Gagal mengambil data payment');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
+
+  Future<void> getSuccessPaymentHistory() async {
+    try {
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final response = await http.get(Uri.parse(
+          "https://starfish-app-pua4v.ondigitalocean.app/api/booking/isItDone/$uid/SUCCESS/false"));
+      if (response.statusCode == 200) {
+        PaymentHistory data =
+            PaymentHistory.fromJson(json.decode(response.body));
+        paymentList.value = data.data;
+      } else {
+        throw Exception('Gagal mengambil data payment');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> getDoneConsultationHistory() async {
+    try {
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final response = await http.get(Uri.parse(
+          "https://starfish-app-pua4v.ondigitalocean.app/api/booking/isItDone/$uid/SUCCESS/true"));
+      if (response.statusCode == 200) {
+        PaymentHistory data =
+            PaymentHistory.fromJson(json.decode(response.body));
+        paymentList.value = data.data;
+      } else {
+        throw Exception('Gagal mengambil data payment');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Stream<PaymentHistory> getPendingRealtimeData() async* {
+    while (true) {
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final response = await http.get(Uri.parse(
+          "https://starfish-app-pua4v.ondigitalocean.app/api/booking/isItDone/$uid/PENDING/false"));
+      if (response.statusCode == 200) {
+        PaymentHistory data =
+            PaymentHistory.fromJson(json.decode(response.body));
+        yield data;
+      }
+      await Future.delayed(const Duration(seconds: 5));
+      print('refresh');
+    }
+  }
+
+  Stream<PaymentHistory> getSuccessRealtimeData() async* {
+    while (true) {
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final response = await http.get(Uri.parse(
+          "https://starfish-app-pua4v.ondigitalocean.app/api/booking/isItDone/$uid/SUCCESS/false"));
+      if (response.statusCode == 200) {
+        PaymentHistory data =
+            PaymentHistory.fromJson(json.decode(response.body));
+        yield data;
+      }
+      await Future.delayed(const Duration(seconds: 5));
+      print('refresh');
+    }
+  }
+
+  Stream<PaymentHistory> getDoneRealtimeData() async* {
+    while (true) {
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final response = await http.get(Uri.parse(
+          "https://starfish-app-pua4v.ondigitalocean.app/api/booking/isItDone/$uid/SUCCESS/true"));
+      if (response.statusCode == 200) {
+        PaymentHistory data =
+            PaymentHistory.fromJson(json.decode(response.body));
+        yield data;
+      }
+      await Future.delayed(const Duration(seconds: 5));
+      print('refresh');
+    }
+  }
+
+  // void refreshHistory() {
+  //   if (tag.value == 1) {
+  //     pendingHistoryController.addStream(getPendingHistory());
+  //   } else if (tag.value == 2) {
+  //     confirmHistoryController.addStream(getConfirmHistory());
+  //   } else if (tag.value == 3) {
+  //     successHistoryController.addStream(getSuccessHistory());
+  //   } else {
+  //     doneHistoryController.addStream(getDoneHistory());
+  //   }
+  // }
 
   void getMeetingLink() {
     Get.defaultDialog(
@@ -353,22 +235,10 @@ class HistoryConsultationController extends GetxController {
     );
   }
 
-  void copyTextToClipboard(String text) {
-    Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(Get.context!).showSnackBar(
-      const SnackBar(content: Text('Link berhasil disalin ke clipboard')),
-    );
-  }
-
-  Future<void> consultationDone(String paymentId) async {
+  void consultationDoneStatusUpdate(String bookingId) async {
     try {
       isLoadingConsultationDone.value = true;
-
-      await FirebaseFirestore.instance
-          .collection('consultation_transaction')
-          .doc(paymentId)
-          .update({'paymentStatus': 'Selesai'});
-
+      await _paymentProvider.consultationDoneStatusUpdate(bookingId);
       isLoadingConsultationDone.value = false;
       Get.back();
     } catch (e) {
@@ -376,5 +246,12 @@ class HistoryConsultationController extends GetxController {
         SnackBar(content: Text('$e')),
       );
     }
+  }
+
+  void copyTextToClipboard(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
+      const SnackBar(content: Text('Link berhasil disalin ke clipboard')),
+    );
   }
 }
