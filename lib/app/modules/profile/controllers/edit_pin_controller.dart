@@ -73,11 +73,11 @@ class EditPinController extends GetxController {
   }
 
   Future<void> forgotPIN() async {
-    if (resetPINC.text.isNotEmpty && conResetPINC.text.isNotEmpty) {
-      isLoadingResetPIN.value = true;
-      final user = FirebaseAuth.instance.currentUser;
+    isLoadingResetPIN.value = true;
+    final user = FirebaseAuth.instance.currentUser;
 
-      if (resetPINC.text.isNotEmpty && conResetPINC.text.isNotEmpty) {
+    if (resetPINC.text.isNotEmpty && conResetPINC.text.isNotEmpty) {
+      if (resetPINC.text.length == 6 && conResetPINC.text.length == 6) {
         if (resetPINC.text == conResetPINC.text) {
           await FirebaseFirestore.instance
               .collection('users')
@@ -99,20 +99,20 @@ class EditPinController extends GetxController {
         }
       } else {
         isLoadingResetPIN.value = false;
-        dialogMessage.errMsg('PIN harus 6 karakter angka.');
+        dialogMessage.errMsg('PIN harus 6 digit angka.');
       }
     } else {
       isLoadingResetPIN.value = false;
-      dialogMessage.errMsg('Data tidak boleh kosong.');
+      dialogMessage.errMsg('Semua kolom tidak boleh kosong');
     }
   }
 
   Future<void> forgotPINOnAuth() async {
-    if (resetPINAuthC.text.isNotEmpty && conResetAuthPINC.text.isNotEmpty) {
-      isLoadingResetPINAuth.value = true;
-      final user = FirebaseAuth.instance.currentUser;
+    isLoadingResetPINAuth.value = true;
+    final user = FirebaseAuth.instance.currentUser;
 
-      if (resetPINAuthC.text.isNotEmpty && conResetAuthPINC.text.isNotEmpty) {
+    if (resetPINAuthC.text.isNotEmpty && conResetAuthPINC.text.isNotEmpty) {
+      if (resetPINAuthC.text.length == 6 && conResetAuthPINC.text.length == 6) {
         if (resetPINAuthC.text == conResetAuthPINC.text) {
           await FirebaseFirestore.instance
               .collection('users')
@@ -135,11 +135,11 @@ class EditPinController extends GetxController {
         }
       } else {
         isLoadingResetPINAuth.value = false;
-        dialogMessage.errMsg('PIN harus 6 karakter angka.');
+        dialogMessage.errMsg('PIN harus 6 digit angka.');
       }
     } else {
       isLoadingResetPINAuth.value = false;
-      dialogMessage.errMsg('Data tidak boleh kosong.');
+      dialogMessage.errMsg('DSemua kolom tidak boleh kosong');
     }
   }
 }

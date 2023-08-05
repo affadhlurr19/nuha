@@ -146,13 +146,13 @@ class LoginController extends GetxController {
       } on FirebaseAuthException catch (e) {
         isLoading.value = false;
         if (e.code == 'user-not-found') {
-          dialogMessage.errMsg('No user found for that email.');
+          dialogMessage.errMsg('Akun tidak ditemukan, silahkan coba lagi');
         } else if (e.code == 'wrong-password') {
-          dialogMessage.errMsg('Wrong password provided for that user.');
+          dialogMessage.errMsg('Kata sandi yang kamu masukkan salah');
         }
       }
     } else {
-      dialogMessage.errMsg('Email dan Password tidak boleh kosong');
+      dialogMessage.errMsg('Alamat email dan kata sandi tidak boleh kosong');
     }
   }
 

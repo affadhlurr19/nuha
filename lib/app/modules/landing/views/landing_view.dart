@@ -14,6 +14,15 @@ class LandingView extends GetView<LandingController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: backgroundColor1,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        elevation: 0,
+        toolbarHeight: 0,
+      ),
       body: Stack(
         children: [
           SafeArea(
@@ -184,6 +193,15 @@ class SecondLanding extends GetView<LandingController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: backgroundColor1,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        elevation: 0,
+        toolbarHeight: 0,
+      ),
       body: Stack(
         children: [
           SafeArea(
@@ -355,6 +373,15 @@ class ThirdLanding extends GetView<LandingController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: backgroundColor1,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+        elevation: 0,
+        toolbarHeight: 0,
+      ),
       body: Stack(
         children: [
           SafeArea(

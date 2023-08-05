@@ -29,7 +29,7 @@ class ResetPasswordController extends GetxController {
       }
     } else {
       isLoading.value = false;
-      dialogMessage.errMsg('Email harus diisi.');
+      dialogMessage.errMsg('Email harus diisi');
     }
   }
 }

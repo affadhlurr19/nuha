@@ -151,7 +151,7 @@ class ProfileController extends GetxController {
         dialogMessage.errMsg('Tidak dapat edit data user');
       }
     } else {
-      dialogMessage.errMsg('Semua data tidak boleh kosong');
+      dialogMessage.errMsg('Nama lengkap tidak boleh kosong');
     }
   }
 

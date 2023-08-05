@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nuha/app/modules/literasi/models/balasan_komentar_video_model.dart';
 import 'package:nuha/app/modules/literasi/models/komentar_video_model.dart';
 import 'package:nuha/app/modules/literasi/models/pengguna_model.dart';
+import 'package:nuha/app/utility/dialog_message.dart';
 import 'package:rxdart/rxdart.dart';
 
 class KomentarVideoController extends GetxController
@@ -17,6 +18,7 @@ class KomentarVideoController extends GetxController
   FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController descC = TextEditingController();
   TextEditingController replyDescC = TextEditingController();
+  DialogMessage dialogMessage = DialogMessage();
 
   //inisialisasi animmasi transisi
   late AnimationController animationController;

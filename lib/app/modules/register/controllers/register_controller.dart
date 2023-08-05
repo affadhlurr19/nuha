@@ -60,15 +60,16 @@ class RegisterController extends GetxController {
         } on FirebaseAuthException catch (e) {
           isLoading.value = false;
           if (e.code == 'weak-password') {
-            dialogMessage.errMsg('The password provided is too weak.');
+            dialogMessage.errMsg('Kata Sandi yang diberikan terlalu lemah');
           } else if (e.code == 'email-already-in-use') {
-            dialogMessage.errMsg('The account already exists for that email.');
+            dialogMessage
+                .errMsg('Alamat email sudah terdaftar pada akun lainnya');
           }
         } catch (e) {
           print(e);
         }
       } else {
-        dialogMessage.errMsg('Konfirmasi password tidak cocok!');
+        dialogMessage.errMsg('Konfirmasi kata sandi tidak cocok');
       }
     } else {
       dialogMessage.errMsg('Semua data tidak boleh kosong!');

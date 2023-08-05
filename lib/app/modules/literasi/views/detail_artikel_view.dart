@@ -1072,9 +1072,16 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                   padding: EdgeInsets.zero,
                                   constraints: const BoxConstraints(),
                                   onPressed: () {
-                                    komentarC.addComment(komentarC.descC.text);
-                                    komentarC.descC.clear();
-                                    Get.back();
+                                    if (komentarC.descC.text.isEmpty) {
+                                      Get.back();
+                                      komentarC.dialogMessage.errMsg(
+                                          'Kolom komentar tidak boleh kosong');
+                                    } else {
+                                      komentarC
+                                          .addComment(komentarC.descC.text);
+                                      komentarC.descC.clear();
+                                      Get.back();
+                                    }
                                   },
                                   icon: const Iconify(
                                     MaterialSymbols.send_outline,
@@ -1565,10 +1572,17 @@ class DetailArtikelView extends GetView<DetailArtikelController> {
                                   padding: EdgeInsets.zero,
                                   constraints: const BoxConstraints(),
                                   onPressed: () {
-                                    komentarC.addReplyComment(
-                                        idKomentar, komentarC.replyDescC.text);
-                                    komentarC.replyDescC.clear();
-                                    Get.back();
+                                    if (komentarC.replyDescC.text.isEmpty) {
+                                      Get.back();
+                                      Get.back();
+                                      komentarC.dialogMessage.errMsg(
+                                          'Kolom balasan komentar tidak boleh kosong');
+                                    } else {
+                                      komentarC.addReplyComment(idKomentar,
+                                          komentarC.replyDescC.text);
+                                      komentarC.replyDescC.clear();
+                                      Get.back();
+                                    }
                                   },
                                   icon: const Iconify(
                                     MaterialSymbols.send_outline,

@@ -200,7 +200,7 @@ class CariArtikelView extends GetView<CariArtikelController> {
                             Image.asset('assets/images/found_error.png'),
                             SizedBox(height: 2.5.h),
                             Text(
-                              'Maaf, sepertinya terjadi kesalahan. Silahkan untuk mencoba kembali atau hubungi kami  jika masalah masih berlanjut.',
+                              'Maaf, sepertinya terjadi kesalahan. Silahkan untuk mencoba kembali atau hubungi kami jika masalah masih berlanjut.',
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineMedium!

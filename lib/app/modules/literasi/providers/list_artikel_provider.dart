@@ -11,6 +11,8 @@ import 'package:nuha/app/modules/literasi/models/recommended_artikel_model.dart'
 class ListArtikelProvider {
   static const String _baseUrl =
       'https://starfish-app-pua4v.ondigitalocean.app/api/';
+  // 'https://starfish-app-pua4v.ondigitalocean.app/api/';
+  //
 
   Future<ListArtikel> getListArtikel(
       http.Client client, int page, int limit) async {
