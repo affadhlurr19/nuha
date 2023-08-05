@@ -198,13 +198,14 @@ class TransaksiController extends GetxController {
   }
 
   void updateTransaksiById(context, String docId) async {
-    isLoading.value = true;
     if (jenisC.isNotEmpty &&
         nominalTransaksiC.text.isNotEmpty &&
         kategoriC.isNotEmpty &&
         kategoriC.value != "Pilih Kategori" &&
         namaTransaksiC.text.isNotEmpty &&
-        selectDate.toString().isNotEmpty) {
+        selectDate.toString().isNotEmpty &&
+        nominalTransaksiC.text != "0") {
+      isLoading.value = true;
       String uid = auth.currentUser!.uid;
 
       if (image != null) {
@@ -250,6 +251,8 @@ class TransaksiController extends GetxController {
         isLoading.value = false;
         dialogMessage.errMsg("Tidak dapat merubah data, coba lagi nanti!");
       }
+    } else {
+      dialogMessage.errMsg("Tidak dapat menambahkan data");
     }
   }
 

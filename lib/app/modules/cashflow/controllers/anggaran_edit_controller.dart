@@ -40,37 +40,41 @@ class AnggaranEditController extends GetxController {
   }
 
   void updateAnggaranById(context, String docId) async {
-    isLoading.value = true;
-    try {
-      String uid = auth.currentUser!.uid;
-      DocumentSnapshot<Map<String, dynamic>> doc = await firestore
-          .collection("users")
-          .doc(uid)
-          .collection("anggaran")
-          .doc(docId)
-          .get();
+    if (nomAnggaranC.text.isNotEmpty && nomAnggaranC.text != "0") {
+      isLoading.value = true;
+      try {
+        String uid = auth.currentUser!.uid;
+        DocumentSnapshot<Map<String, dynamic>> doc = await firestore
+            .collection("users")
+            .doc(uid)
+            .collection("anggaran")
+            .doc(docId)
+            .get();
 
-      con.countAnggaranDetail(doc.data()?["kategori"]);
+        con.countAnggaranDetail(doc.data()?["kategori"]);
 
-      await firestore
-          .collection("users")
-          .doc(uid)
-          .collection("anggaran")
-          .doc(docId)
-          .update({
-        "nominal": int.parse(nomAnggaranC.text.replaceAll('.', '')),
-        "updatedAt": DateTime.now().toIso8601String(),
-      });
+        await firestore
+            .collection("users")
+            .doc(uid)
+            .collection("anggaran")
+            .doc(docId)
+            .update({
+          "nominal": int.parse(nomAnggaranC.text.replaceAll('.', '')),
+          "updatedAt": DateTime.now().toIso8601String(),
+        });
 
-      isLoading.value = false;
-      con.totalNominalKategori();
-      dialogMessage.successMsg("Date berhasil diubah!");
+        isLoading.value = false;
+        con.totalNominalKategori();
+        dialogMessage.successMsg("Data berhasil diubah!");
 
-      Navigator.pop(context);
-    } catch (e) {
-      // print(e);
-      isLoading.value = false;
-      dialogMessage.errMsg("Data gagal diubah, coba lagi nanti!");
+        Navigator.pop(context);
+      } catch (e) {
+        // print(e);
+        isLoading.value = false;
+        dialogMessage.errMsg("Data gagal diubah, coba lagi nanti!");
+      }
+    } else {
+      dialogMessage.errMsg("Kategori dan nominal wajib diisi.");
     }
   }
 

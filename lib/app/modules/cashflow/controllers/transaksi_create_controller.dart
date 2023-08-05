@@ -133,7 +133,8 @@ class TransaksiCreateController extends GetxController {
         kategoriC.isNotEmpty &&
         kategoriC.value != "Pilih Kategori" &&
         namaTransaksiC.text.isNotEmpty &&
-        selectDate.toString().isNotEmpty) {
+        selectDate.toString().isNotEmpty &&
+        nominalTransaksiC.text != "0") {
       isLoading.value = true;
       String uid = auth.currentUser!.uid;
       String random = DateTime.now().toIso8601String();

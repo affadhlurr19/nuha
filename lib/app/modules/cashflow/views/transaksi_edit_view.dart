@@ -119,17 +119,17 @@ class TransaksiEditView extends GetView<TransaksiController> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.defaultDialog(
-                                radius: 25,
-                                title: "Pilih Jenis Transaksi",
-                                titleStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                        color: grey900,
-                                        fontWeight: FontWeight.w600),
-                                content: const DialogContent(),
-                              );
+                              // Get.defaultDialog(
+                              //   radius: 25,
+                              //   title: "Pilih Jenis Transaksi",
+                              //   titleStyle: Theme.of(context)
+                              //       .textTheme
+                              //       .bodyMedium!
+                              //       .copyWith(
+                              //           color: grey900,
+                              //           fontWeight: FontWeight.w600),
+                              //   content: const DialogContent(),
+                              // );
                             },
                             child: Container(
                               height: 5.5.h,
@@ -156,10 +156,10 @@ class TransaksiEditView extends GetView<TransaksiController> {
                                                 color: grey900,
                                               ),
                                         )),
-                                    Iconify(
-                                      Gridicons.dropdown,
-                                      size: 18.sp,
-                                    )
+                                    // Iconify(
+                                    //   Gridicons.dropdown,
+                                    //   size: 18.sp,
+                                    // )
                                   ],
                                 ),
                               ),
@@ -336,11 +336,11 @@ class TransaksiEditView extends GetView<TransaksiController> {
                                 color: backgroundColor1),
                             child: GestureDetector(
                               onTap: () {
-                                Get.bottomSheet(
-                                  c.jenisC.value == "Pengeluaran"
-                                      ? BottomSheetPengeluaran()
-                                      : const BottomSheetPendapatan(),
-                                );
+                                // Get.bottomSheet(
+                                //   c.jenisC.value == "Pengeluaran"
+                                //       ? BottomSheetPengeluaran()
+                                //       : const BottomSheetPendapatan(),
+                                // );
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -358,11 +358,11 @@ class TransaksiEditView extends GetView<TransaksiController> {
                                             .copyWith(
                                               color: grey900,
                                             ))),
-                                    Iconify(
-                                      Gridicons.dropdown,
-                                      size: 18.sp,
-                                      color: grey900,
-                                    )
+                                    // Iconify(
+                                    //   Gridicons.dropdown,
+                                    //   size: 18.sp,
+                                    //   color: grey900,
+                                    // )
                                   ],
                                 ),
                               ),

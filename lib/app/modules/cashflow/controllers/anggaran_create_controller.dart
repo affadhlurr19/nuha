@@ -69,7 +69,10 @@ class AnggaranCreateController extends GetxController {
   }
 
   void addAnggaran(context) async {
-    if (nomAnggaranC.text.isNotEmpty && kategoriC.isNotEmpty) {
+    if (nomAnggaranC.text.isNotEmpty &&
+        kategoriC.isNotEmpty &&
+        nomAnggaranC.text != "0" &&
+        kategoriC != "Pilih Kategori") {
       isLoading.value = true;
       try {
         String uid = auth.currentUser!.uid;
