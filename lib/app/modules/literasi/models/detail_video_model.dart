@@ -35,7 +35,7 @@ class DetailVideo {
 
 class Data {
   int id;
-  String adminId;
+  int adminId;
   String category;
   String title;
   String video;

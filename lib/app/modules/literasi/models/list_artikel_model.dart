@@ -29,13 +29,13 @@ class ListArtikel {
 
 class Datum {
   int id;
-  String adminId;
+  int adminId;
   String title;
   Category category;
   String content;
   String imageUrl;
   String writer;
-  String readTime;
+  int readTime;
   DateTime publishedAt;
   dynamic createdAt;
   dynamic updatedAt;

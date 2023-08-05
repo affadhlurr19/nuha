@@ -91,7 +91,8 @@ class AnggaranEditController extends GetxController {
 
       // Get.to(() => AnggaranView());
 
-      Get.offAllNamed('/navbar');
+      Get.back();
+      Navigator.pop(context);
 
       dialogMessage.successMsg("Data berhasil kami hapus dari database.");
     } catch (e) {
