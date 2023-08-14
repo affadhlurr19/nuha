@@ -55,398 +55,386 @@ class HistoryConsultationView extends GetView<HistoryConsultationController> {
         elevation: 0.5,
         toolbarHeight: 7.375.h,
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {},
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(height: 1.875.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  child: Obx(
-                    () => ChipsChoice.single(
-                      spacing: 3.3.w,
-                      wrapped: true,
-                      padding: EdgeInsets.symmetric(horizontal: 0.w),
-                      value: c.tag.value,
-                      onChanged: (val) {
-                        c.tag.value = val;
-                      },
-                      choiceItems: const <C2Choice>[
-                        C2Choice(value: 1, label: 'Menunggu Pembayaran'),
-                        C2Choice(value: 2, label: 'Siap Konsultasi'),
-                        C2Choice(value: 3, label: 'Selesai'),
-                      ],
-                      choiceStyle: C2ChipStyle.filled(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            SizedBox(height: 1.875.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Obx(
+                  () => ChipsChoice.single(
+                    spacing: 3.3.w,
+                    wrapped: true,
+                    padding: EdgeInsets.symmetric(horizontal: 0.w),
+                    value: c.tag.value,
+                    onChanged: (val) {
+                      c.tag.value = val;
+                    },
+                    choiceItems: const <C2Choice>[
+                      C2Choice(value: 1, label: 'Menunggu Pembayaran'),
+                      C2Choice(value: 2, label: 'Siap Konsultasi'),
+                      C2Choice(value: 3, label: 'Selesai'),
+                    ],
+                    choiceStyle: C2ChipStyle.filled(
+                      foregroundStyle: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(
+                              color: grey400,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 9.sp),
+                      color: grey50,
+                      borderRadius: const BorderRadius.all(Radius.circular(50)),
+                      selectedStyle: C2ChipStyle(
+                        backgroundColor: buttonColor1,
                         foregroundStyle: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .copyWith(
-                                color: grey400,
+                                color: backgroundColor1,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 9.sp),
-                        color: grey50,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(50)),
-                        selectedStyle: C2ChipStyle(
-                          backgroundColor: buttonColor1,
-                          foregroundStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color: backgroundColor1,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 9.sp),
-                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 2.5.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
-                child: Obx(
-                  () => StreamBuilder<PaymentHistory>(
-                    stream: (c.tag.value == 1)
-                        ? c.getPendingRealtimeData()
-                        : (c.tag.value == 2)
-                            ? c.getSuccessRealtimeData()
-                            : c.getDoneRealtimeData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: 40.h),
-                          child: const Center(
-                            child:
-                                CircularProgressIndicator(color: buttonColor1),
+            ),
+            SizedBox(height: 2.5.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 7.9167.w),
+              child: Obx(
+                () => StreamBuilder<PaymentHistory>(
+                  stream: (c.tag.value == 1)
+                      ? c.getPendingRealtimeData()
+                      : (c.tag.value == 2)
+                          ? c.getSuccessRealtimeData()
+                          : c.getDoneRealtimeData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Padding(
+                        padding: EdgeInsets.only(top: 40.h),
+                        child: const Center(
+                          child: CircularProgressIndicator(color: buttonColor1),
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      final historyList = snapshot.data!;
+                      if (historyList.data.isEmpty) {
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.w, vertical: 25.h),
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/404_error.png'),
+                              SizedBox(height: 2.5.h),
+                              Text(
+                                'Maaf, data riwayat konsultasi pada status ini kosong. Silahkan pilih status lainnya.',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
+                                        fontSize: 9.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: grey500),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
                         );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
                       } else {
-                        final historyList = snapshot.data!;
-                        if (historyList.data.isEmpty) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 25.h),
-                            child: Column(
-                              children: [
-                                Image.asset('assets/images/404_error.png'),
-                                SizedBox(height: 2.5.h),
-                                Text(
-                                  'Maaf, data riwayat konsultasi pada status ini kosong. Silahkan pilih status lainnya.',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(
-                                          fontSize: 9.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: grey500),
-                                  textAlign: TextAlign.center,
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const ScrollPhysics(),
+                          itemCount: historyList.data.length,
+                          itemBuilder: (context, index) {
+                            final datas = historyList.data[index];
+                            var startDate = c.convertTimestampToDateTime(
+                                datas.startDateTime);
+                            var endDate =
+                                c.getTimeFromTimestamp(datas.endDateTime);
+                            var fixDateTimeConsultation =
+                                '$startDate - $endDate';
+                            return Padding(
+                              padding: EdgeInsets.only(bottom: 1.5.h),
+                              child: Card(
+                                color: backgroundColor1,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
                                 ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const ScrollPhysics(),
-                            itemCount: historyList.data.length,
-                            itemBuilder: (context, index) {
-                              final datas = historyList.data[index];
-                              var startDate = c.convertTimestampToDateTime(
-                                  datas.startDateTime);
-                              var endDate =
-                                  c.getTimeFromTimestamp(datas.endDateTime);
-                              var fixDateTimeConsultation =
-                                  '$startDate - $endDate';
-                              return Padding(
-                                padding: EdgeInsets.only(bottom: 1.5.h),
-                                child: Card(
-                                  color: backgroundColor1,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 1.375.h, horizontal: 3.33.w),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 1.375.h, horizontal: 3.33.w),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Konsultasi pada :',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelMedium!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 9.sp,
+                                                      color: const Color(
+                                                          0XFF0D4136),
+                                                    ),
+                                              ),
+                                              Text(
+                                                fixDateTimeConsultation,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelMedium!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 8.sp,
+                                                      color: grey400,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 3.5.h,
+                                            child: OutlinedButton(
+                                              onPressed: () {},
+                                              style: OutlinedButton.styleFrom(
+                                                splashFactory:
+                                                    NoSplash.splashFactory,
+                                                side: datas.status == 'PENDING'
+                                                    ? const BorderSide(
+                                                        color: warnColor,
+                                                        width: 1)
+                                                    : const BorderSide(
+                                                        color: succColor,
+                                                        width: 1),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                ),
+                                              ),
+                                              child: datas.status == 'PENDING'
+                                                  ? Text(
+                                                      datas.status,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .labelLarge!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: warnColor,
+                                                              fontSize: 8.sp),
+                                                    )
+                                                  : Text(
+                                                      datas.status,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .labelLarge!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: succColor,
+                                                              fontSize: 8.sp),
+                                                    ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 1.h),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Flexible(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  width: 2,
+                                                  color: grey100,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                                child: Image.network(
+                                                  datas.imageUrl,
+                                                  height: 5.h,
+                                                  width: 5.h,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 1.h),
+                                          Expanded(
+                                            flex: 3,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Konsultasi pada :',
+                                                  datas.consultantName,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .labelMedium!
                                                       .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 9.sp,
-                                                        color: const Color(
-                                                            0XFF0D4136),
-                                                      ),
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: grey500,
+                                                          fontSize: 10.sp),
                                                 ),
+                                                const SizedBox(height: 0.5),
                                                 Text(
-                                                  fixDateTimeConsultation,
+                                                  datas.kategori,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .labelMedium!
                                                       .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 8.sp,
-                                                        color: grey400,
-                                                      ),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: grey400,
+                                                          fontSize: 10.sp),
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            child: SizedBox(
                                               height: 3.5.h,
-                                              child: OutlinedButton(
-                                                onPressed: () {},
-                                                style: OutlinedButton.styleFrom(
-                                                  splashFactory:
-                                                      NoSplash.splashFactory,
-                                                  side:
-                                                      datas.status == 'PENDING'
-                                                          ? const BorderSide(
-                                                              color: warnColor,
-                                                              width: 1)
-                                                          : const BorderSide(
-                                                              color: succColor,
-                                                              width: 1),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                  ),
-                                                ),
-                                                child: datas.status == 'PENDING'
-                                                    ? Text(
-                                                        datas.status,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .labelLarge!
-                                                            .copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color:
-                                                                    warnColor,
-                                                                fontSize: 8.sp),
-                                                      )
-                                                    : Text(
-                                                        datas.status,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .labelLarge!
-                                                            .copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color:
-                                                                    succColor,
-                                                                fontSize: 8.sp),
-                                                      ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 1.h),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Flexible(
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    width: 2,
-                                                    color: grey100,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                  child: Image.network(
-                                                    datas.imageUrl,
-                                                    height: 5.h,
-                                                    width: 5.h,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(width: 1.h),
-                                            Expanded(
-                                              flex: 3,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    datas.consultantName,
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelMedium!
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: grey500,
-                                                            fontSize: 10.sp),
-                                                  ),
-                                                  const SizedBox(height: 0.5),
-                                                  Text(
-                                                    datas.kategori,
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelMedium!
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: grey400,
-                                                            fontSize: 10.sp),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              child: SizedBox(
-                                                height: 3.5.h,
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    (c.tag.value == 1)
-                                                        ? customShowDialog(
-                                                            context,
-                                                            datas.vaNumber,
-                                                            datas.bookingId,
-                                                            datas.paymentMethod,
-                                                          )
-                                                        : (c.tag.value == 2)
-                                                            ? meetDialog(
-                                                                context,
-                                                                datas.bookingId)
-                                                            : '';
-                                                  },
-                                                  style: (c.tag.value == 1)
-                                                      ? ElevatedButton
-                                                          .styleFrom(
-                                                          backgroundColor:
-                                                              buttonColor2,
-                                                          side: const BorderSide(
-                                                              color:
-                                                                  buttonColor2,
-                                                              width: 1),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50),
-                                                          ),
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  (c.tag.value == 1)
+                                                      ? customShowDialog(
+                                                          context,
+                                                          datas.vaNumber,
+                                                          datas.bookingId,
+                                                          datas.paymentMethod,
                                                         )
                                                       : (c.tag.value == 2)
-                                                          ? ElevatedButton
-                                                              .styleFrom(
-                                                              backgroundColor:
-                                                                  buttonColor1,
-                                                              side: const BorderSide(
-                                                                  color:
-                                                                      buttonColor1,
-                                                                  width: 1),
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50),
-                                                              ),
-                                                            )
-                                                          : ElevatedButton
-                                                              .styleFrom(
-                                                              backgroundColor:
-                                                                  grey400,
-                                                              side: const BorderSide(
-                                                                  color:
-                                                                      grey400,
-                                                                  width: 1),
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50),
-                                                              ),
+                                                          ? meetDialog(context,
+                                                              datas.bookingId)
+                                                          : '';
+                                                },
+                                                style: (c.tag.value == 1)
+                                                    ? ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            buttonColor2,
+                                                        side: const BorderSide(
+                                                            color: buttonColor2,
+                                                            width: 1),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(50),
+                                                        ),
+                                                      )
+                                                    : (c.tag.value == 2)
+                                                        ? ElevatedButton
+                                                            .styleFrom(
+                                                            backgroundColor:
+                                                                buttonColor1,
+                                                            side: const BorderSide(
+                                                                color:
+                                                                    buttonColor1,
+                                                                width: 1),
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50),
                                                             ),
-                                                  child: Text(
-                                                    (c.tag.value == 1)
-                                                        ? 'Bayar Sekarang'
-                                                        : (c.tag.value == 2)
-                                                            ? 'Lihat Detail'
-                                                            : 'Selesai',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelLarge!
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color:
-                                                                backgroundColor1,
-                                                            fontSize: 8.sp),
-                                                  ),
+                                                          )
+                                                        : ElevatedButton
+                                                            .styleFrom(
+                                                            backgroundColor:
+                                                                grey400,
+                                                            side:
+                                                                const BorderSide(
+                                                                    color:
+                                                                        grey400,
+                                                                    width: 1),
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50),
+                                                            ),
+                                                          ),
+                                                child: Text(
+                                                  (c.tag.value == 1)
+                                                      ? 'Bayar Sekarang'
+                                                      : (c.tag.value == 2)
+                                                          ? 'Lihat Detail'
+                                                          : 'Selesai',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .labelLarge!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color:
+                                                              backgroundColor1,
+                                                          fontSize: 8.sp),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            },
-                          );
-                        }
+                              ),
+                            );
+                          },
+                        );
                       }
-                    },
-                  ),
+                    }
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

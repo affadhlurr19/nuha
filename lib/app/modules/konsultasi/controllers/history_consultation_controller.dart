@@ -168,18 +168,6 @@ class HistoryConsultationController extends GetxController {
     }
   }
 
-  // void refreshHistory() {
-  //   if (tag.value == 1) {
-  //     pendingHistoryController.addStream(getPendingHistory());
-  //   } else if (tag.value == 2) {
-  //     confirmHistoryController.addStream(getConfirmHistory());
-  //   } else if (tag.value == 3) {
-  //     successHistoryController.addStream(getSuccessHistory());
-  //   } else {
-  //     doneHistoryController.addStream(getDoneHistory());
-  //   }
-  // }
-
   void getMeetingLink() {
     Get.defaultDialog(
       title: 'Perhatian',

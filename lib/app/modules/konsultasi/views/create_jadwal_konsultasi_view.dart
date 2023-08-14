@@ -113,9 +113,9 @@ class CreateJadwalKonsultasiView
                                       borderRadius: BorderRadius.circular(18),
                                       child: Image.network(
                                         snapshot.data!['imageUrl'],
-                                        height: 8.625.h,
-                                        width: 8.625.h,
-                                        fit: BoxFit.fill,
+                                        height: 8.375.h,
+                                        width: 8.375.h,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
